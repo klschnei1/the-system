@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The System">
+<meta name="theme-color" content="#07070f">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>THE SYSTEM // CSS v3</title>
+<style>
+  :root {
+    --bg: #07070f;
+    --bg2: #0d0d1a;
+    --bg3: #111128;
+    --border: #1e1e3a;
+    --accent: #5b6fff;
+    --accent2: #9b5de5;
+    --gold: #c9a84c;
+    --teal: #2dd4bf;
+    --red: #e05555;
+    --green: #4ade80;
+    --text: #d8d8f0;
+    --text2: #7878aa;
+    --text3: #4444aa;
+    --hod: #d85a30;
+    --geburah: #e05555;
+    --chesed: #2dd4bf;
+    --malkuth: #8b6914;
+    --yesod: #9b5de5;
+    --binah: #5b6fff;
+    --netzach: #e8b4b8;
+    --pillar: #c9a84c;
+    --glow: 0 0 20px rgba(91,111,255,0.15);
+    --glow-accent: 0 0 30px rgba(91,111,255,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(180deg, #0a0a1f 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 12px;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: center; }
+  .system-title {
+    font-size: 11px; letter-spacing: 4px; color: var(--text2);
+    text-transform: uppercase;
+  }
+  .hunter-badge {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rank-badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; font-size: 13px; font-weight: bold;
+    padding: 3px 10px; border-radius: 2px;
+    letter-spacing: 2px;
+    box-shadow: var(--glow-accent);
+  }
+  .xp-display { font-size: 12px; color: var(--gold); }
+  .xp-bar-wrap {
+    margin-top: 8px; height: 3px; background: var(--border);
+    border-radius: 2px; overflow: hidden;
+  }
+  .xp-bar {
+    height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .header-status {
+    display: flex; gap: 16px; margin-top: 10px; align-items: center;
+  }
+  .streak-pill {
+    font-size: 11px; color: var(--gold);
+    border: 1px solid #3a2d00; padding: 2px 8px; border-radius: 20px;
+  }
+  .coherence-label { font-size: 11px; color: var(--text2); }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex; background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1; min-width: 70px; padding: 12px 8px;
+    text-align: center; font-size: 10px; letter-spacing: 2px;
+    color: var(--text3); cursor: pointer; border: none; background: none;
+    text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab:hover { color: var(--text); }
+
+  /* ── VIEWS ── */
+  .view { display: none; padding: 16px; max-width: 600px; margin: 0 auto; }
+  .view.active { display: block; }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    font-size: 9px; letter-spacing: 4px; color: var(--text3);
+    text-transform: uppercase; margin-bottom: 12px;
+    border-bottom: 1px solid var(--border); padding-bottom: 6px;
+  }
+
+  /* ── QUEST CARDS ── */
+  .quest-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; margin-bottom: 10px; overflow: hidden;
+    transition: all 0.2s;
+  }
+  .quest-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .quest-card.completed { opacity: 0.4; }
+  .quest-card.completed .quest-name { text-decoration: line-through; }
+  .quest-header {
+    display: flex; align-items: center; padding: 10px 12px; gap: 10px;
+    cursor: pointer;
+  }
+  .domain-pip {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .quest-name { flex: 1; font-size: 13px; line-height: 1.3; }
+  .quest-xp { font-size: 11px; color: var(--gold); white-space: nowrap; }
+  .quest-tier {
+    font-size: 9px; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 2px;
+  }
+  .tier-high { background: #2a0a0a; color: var(--red); border: 1px solid #3a1010; }
+  .tier-mid { background: #0a1a2a; color: var(--accent); border: 1px solid #0a1a3a; }
+  .tier-low { background: #0a1a0a; color: var(--green); border: 1px solid #0a2a0a; }
+  .quest-log-area {
+    padding: 0 12px 12px;
+    display: none;
+  }
+  .quest-log-area.open { display: block; }
+  .log-input {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); font-family: inherit; font-size: 12px;
+    padding: 8px 10px; border-radius: 3px; resize: none;
+    outline: none; min-height: 60px;
+  }
+  .log-input:focus { border-color: var(--accent); }
+  .log-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .btn {
+    padding: 7px 14px; font-family: inherit; font-size: 11px;
+    letter-spacing: 1px; border: none; border-radius: 3px; cursor: pointer;
+    text-transform: uppercase; transition: all 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.85; box-shadow: var(--glow-accent); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+  .btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+  .evidence-req { font-size: 10px; color: var(--text3); margin-bottom: 4px; }
+
+  /* ── DOMAIN GROUPS ── */
+  .domain-group { margin-bottom: 20px; }
+  .domain-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  .domain-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .domain-name { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+  .domain-anchor { font-size: 10px; color: var(--text2); }
+  .daily-xp-tally {
+    font-size: 12px; color: var(--gold); margin-bottom: 16px;
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 8px 12px; border-radius: 4px; text-align: center;
+  }
+
+  /* ── TREE OF LIFE ── */
+  .tol-container { display: flex; justify-content: center; padding: 16px 0 8px; }
+  .tol-svg { max-width: 280px; width: 100%; }
+  .sephira-node { cursor: pointer; transition: all 0.2s; }
+  .sephira-circle { stroke-width: 1.5; }
+  .sephira-label { font-family: 'Courier New', monospace; font-size: 8px; }
+  .tol-path { stroke-opacity: 0.3; }
+
+  /* ── STAT BARS ── */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .stat-item { background: var(--bg2); border: 1px solid var(--border); padding: 10px; border-radius: 4px; }
+  .stat-label { font-size: 9px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; margin-bottom: 4px; }
+  .stat-value { font-size: 18px; font-weight: bold; }
+  .stat-bar-wrap { margin-top: 4px; height: 2px; background: var(--border); border-radius: 1px; }
+  .stat-bar { height: 100%; border-radius: 1px; transition: width 0.5s; }
+
+  /* ── SEPHIRA DETAIL ── */
+  .sephira-detail {
+    background: var(--bg2); border: 1px solid var(--accent);
+    border-radius: 4px; padding: 14px; margin-top: 12px;
+    box-shadow: var(--glow);
+  }
+  .sephira-detail-name { font-size: 14px; color: var(--accent); margin-bottom: 4px; }
+  .sephira-detail-anchor { font-size: 11px; color: var(--text2); margin-bottom: 8px; }
+  .sephira-detail-stat { font-size: 24px; font-weight: bold; color: var(--gold); }
+
+  /* ── TRANSMISSIONS ── */
+  .transmission {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 14px; margin-bottom: 12px;
+    position: relative; overflow: hidden;
+  }
+  .transmission::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+  .transmission-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .transmission-source { font-size: 10px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+  .transmission-date { font-size: 10px; color: var(--text3); }
+  .transmission-body { font-size: 13px; line-height: 1.7; color: var(--text); font-style: italic; }
+  .system-voice {
+    background: linear-gradient(135deg, #0a0a1f, #0d0d2a);
+    border: 1px solid #2a2a5a;
+    padding: 14px; border-radius: 4px; margin-bottom: 16px;
+    font-size: 12px; color: var(--text2); line-height: 1.6;
+  }
+  .system-voice strong { color: var(--accent); }
+
+  /* ── MILESTONES ── */
+  .milestone-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 12px; border-radius: 4px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .milestone-card.done { opacity: 0.5; }
+  .milestone-check {
+    width: 18px; height: 18px; border-radius: 2px; flex-shrink: 0;
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+  .milestone-check.done { background: var(--green); border-color: var(--green); color: #000; }
+  .milestone-text { font-size: 12px; flex: 1; }
+  .goal-title { font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; margin-top: 16px; text-transform: uppercase; }
+
+  /* ── CHECKIN MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 200;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--accent);
+    border-radius: 6px; padding: 20px; width: 100%; max-width: 420px;
+    box-shadow: var(--glow-accent); max-height: 85vh; overflow-y: auto;
+  }
+  .modal-title { font-size: 11px; letter-spacing: 3px; color: var(--accent); margin-bottom: 16px; text-transform: uppercase; }
+  .modal-close { float: right; cursor: pointer; color: var(--text2); font-size: 18px; line-height: 1; }
+  .modal-section { margin-bottom: 16px; }
+  .modal-label { font-size: 10px; letter-spacing: 2px; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; }
+  .modal-textarea {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); font-family: inherit; font-size: 12px;
+    padding: 10px; border-radius: 3px; resize: none; outline: none;
+  }
+  .modal-textarea:focus { border-color: var(--accent); }
+
+  /* ── COHERENCE RING ── */
+  .coherence-ring { display: flex; justify-content: center; margin: 12px 0; }
+
+  /* ── FAB ── */
+  .fab {
+    position: fixed; bottom: 24px; right: 20px;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; color: #fff; font-size: 24px; cursor: pointer;
+    box-shadow: var(--glow-accent), 0 4px 20px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; z-index: 150;
+  }
+  .fab:hover { transform: scale(1.1); }
+  .fab:active { transform: scale(0.95); }
+
+  /* ── NOTIFICATION ── */
+  .notify {
+    position: fixed; bottom: 90px; right: 20px; left: 20px;
+    background: var(--bg2); border: 1px solid var(--accent);
+    border-radius: 4px; padding: 12px 16px; font-size: 12px;
+    box-shadow: var(--glow-accent); z-index: 300;
+    transform: translateY(20px); opacity: 0;
+    transition: all 0.3s; pointer-events: none;
+    max-width: 400px; margin: 0 auto;
+  }
+  .notify.show { transform: translateY(0); opacity: 1; }
+
+  /* ── SIGNAL METER ── */
+  .signal-row { display: flex; gap: 3px; align-items: center; }
+  .signal-bar { width: 8px; border-radius: 1px; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── EVOLUTION PANEL ── */
+  .evo-alert {
+    background: linear-gradient(135deg, #0f0a1f, #1a0f2e);
+    border: 1px solid var(--accent2); border-radius: 4px; padding: 12px;
+    margin-bottom: 12px; font-size: 12px; color: var(--text2); line-height: 1.6;
+  }
+  .evo-alert-title { color: var(--accent2); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+
+  @media (max-width: 380px) {
+    .header { padding: 12px 14px 10px; }
+    .view { padding: 12px; }
+    .tab { min-width: 60px; font-size: 9px; }
+  }
+
+  /* ── COLLAPSIBLE DOMAINS ── */
+  .domain-header { cursor: pointer; user-select: none; }
+  .domain-header:hover .domain-name { opacity: 0.85; }
+  .domain-collapse-arrow {
+    display: inline-block; transition: transform 0.2s ease;
+    color: var(--text3); font-size: 13px; line-height: 1;
+  }
+  .quests-container {
+    overflow: hidden;
+    max-height: 2000px;
+    transition: max-height 0.3s ease;
+  }
+  .quests-container.collapsed { max-height: 0; }
+
+  /* ── DISPATCH BANNER ── */
+  .dispatch-banner {
+    margin-bottom: 14px; padding: 10px 14px;
+    border-left: 2px solid var(--accent); background: rgba(201,168,76,0.04);
+    font-size: 11px; line-height: 1.6; color: var(--text2);
+    position: relative;
+  }
+  .dispatch-banner .dispatch-label {
+    font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 4px; opacity: 0.7;
+    padding-right: 30px;
+  }
+  .dispatch-banner .dispatch-body { opacity: 0.85; }
+  .dispatch-banner .dispatch-dismiss {
+    position: absolute; top: 6px; right: 8px;
+    background: none; border: none; color: var(--text2);
+    cursor: pointer; font-size: 14px; padding: 4px 8px;
+    opacity: 0.4; z-index: 1;
+  }
+  .dispatch-banner .dispatch-dismiss:hover { opacity: 0.8; }
+
+  /* ── FOCUS TOGGLE ── */
+  .tally-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .daily-xp-tally { flex: 1; margin-bottom: 0 !important; }
+  .btn-focus {
+    padding: 5px 10px; font-family: inherit; font-size: 9px;
+    letter-spacing: 2px; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); border-radius: 3px;
+    cursor: pointer; text-transform: uppercase; white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .btn-focus:hover { border-color: var(--text2); color: var(--text); }
+  .btn-focus.active { color: var(--gold); border-color: var(--gold); }
+
+  /* ── SIGNAL LOADING ── */
+  .signal-loading {
+    font-size: 11px; color: var(--text2); padding: 8px 0;
+    letter-spacing: 2px; display: none;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="system-title">Cybernetic Self System // v3.1</div>
+    </div>
+    <div class="hunter-badge">
+      <div class="rank-badge" id="rankBadge">E</div>
+      <div>
+        <div class="xp-display" id="xpDisplay">0 XP</div>
+        <div class="xp-display" style="color:var(--text2); font-size:10px" id="todayXp">+0 today</div>
+      </div>
+    </div>
+  </div>
+  <div class="xp-bar-wrap">
+    <div class="xp-bar" id="xpBar" style="width:0%"></div>
+  </div>
+  <div class="header-status">
+    <div class="streak-pill" id="streakPill">◈ 0-day streak</div>
+    <div class="coherence-label" id="coherenceLabel">signal: scattered</div>
+    <div class="signal-row" id="signalRow"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('quests')">Quests</button>
+  <button class="tab" onclick="switchTab('tree')">Tree</button>
+  <button class="tab" onclick="switchTab('codex')">Codex</button>
+  <button class="tab" onclick="switchTab('transmit')">Signal</button>
+  <button class="tab" onclick="switchTab('system')">Evo</button>
+</div>
+
+<!-- VIEW: QUESTS -->
+<div class="view active" id="view-quests">
+  <div class="tally-row">
+    <div class="daily-xp-tally" id="dailyTally">Today: 0 XP earned — 0 quests complete</div>
+    <button class="btn-focus" id="focusBtn" onclick="toggleFocusMode()">◎ Focus</button>
+  </div>
+  <div id="dispatchBanner" class="dispatch-banner" style="display:none"></div>
+  <div id="questList"></div>
+</div>
+
+<!-- VIEW: TREE -->
+<div class="view" id="view-tree">
+  <div class="section-label">Tree of Life // Domain Map</div>
+  <div class="tol-container">
+    <svg class="tol-svg" viewBox="0 0 220 340" id="tolSvg">
+      <!-- Paths (22 paths, simplified to key connections) -->
+      <g stroke="var(--border)" stroke-width="1" fill="none" class="tol-path">
+        <!-- Vertical paths -->
+        <line x1="110" y1="30" x2="110" y2="80"/>
+        <line x1="110" y1="100" x2="110" y2="140"/>
+        <line x1="110" y1="160" x2="110" y2="200"/>
+        <line x1="110" y1="220" x2="110" y2="260"/>
+        <line x1="110" y1="280" x2="110" y2="320"/>
+        <!-- Left pillar -->
+        <line x1="55" y1="80" x2="55" y2="160"/>
+        <line x1="55" y1="180" x2="55" y2="260"/>
+        <!-- Right pillar -->
+        <line x1="165" y1="80" x2="165" y2="160"/>
+        <line x1="165" y1="180" x2="165" y2="260"/>
+        <!-- Cross connections -->
+        <line x1="55" y1="90" x2="165" y2="90"/>
+        <line x1="55" y1="170" x2="165" y2="170"/>
+        <line x1="55" y1="250" x2="165" y2="250"/>
+        <!-- Diagonals -->
+        <line x1="110" y1="30" x2="55" y2="80"/>
+        <line x1="110" y1="30" x2="165" y2="80"/>
+        <line x1="55" y1="90" x2="110" y2="150"/>
+        <line x1="165" y1="90" x2="110" y2="150"/>
+        <line x1="55" y1="170" x2="110" y2="210"/>
+        <line x1="165" y1="170" x2="110" y2="210"/>
+        <line x1="55" y1="250" x2="110" y2="290"/>
+        <line x1="165" y1="250" x2="110" y2="290"/>
+        <line x1="110" y1="150" x2="55" y2="170"/>
+        <line x1="110" y1="150" x2="165" y2="170"/>
+        <line x1="110" y1="210" x2="55" y2="250"/>
+        <line x1="110" y1="210" x2="165" y2="250"/>
+      </g>
+      <!-- Sephirot nodes -->
+      <!-- Keter (Crown) - top center -->
+      <g class="sephira-node" onclick="showSephira('keter')" id="node-keter">
+        <circle cx="110" cy="22" r="16" fill="#0a0a1f" stroke="var(--gold)" stroke-width="1.5" class="sephira-circle"/>
+        <text x="110" y="19" text-anchor="middle" fill="var(--gold)" class="sephira-label">Keter</text>
+        <text x="110" y="27" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Crown</text>
+      </g>
+      <!-- Binah (Understanding) - left -->
+      <g class="sephira-node" onclick="showSephira('binah')" id="node-binah">
+        <circle cx="55" cy="88" r="18" fill="#0a0a1f" stroke="var(--binah)" stroke-width="1.5" class="sephira-circle" id="circle-binah"/>
+        <text x="55" y="85" text-anchor="middle" fill="var(--binah)" class="sephira-label">Binah</text>
+        <text x="55" y="93" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Structure</text>
+      </g>
+      <!-- Chokmah (Wisdom) - right -->
+      <g class="sephira-node" onclick="showSephira('chokmah')" id="node-chokmah">
+        <circle cx="165" cy="88" r="18" fill="#0a0a1f" stroke="var(--accent2)" stroke-width="1.5" class="sephira-circle"/>
+        <text x="165" y="85" text-anchor="middle" fill="var(--accent2)" class="sephira-label">Chokmah</text>
+        <text x="165" y="93" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Wisdom</text>
+      </g>
+      <!-- Daat (Knowledge) - hidden center -->
+      <g class="sephira-node" onclick="showSephira('daat')">
+        <circle cx="110" cy="140" r="14" fill="#0a0a1f" stroke="var(--text3)" stroke-width="1" stroke-dasharray="4,2"/>
+        <text x="110" y="137" text-anchor="middle" fill="var(--text3)" class="sephira-label">Da'at</text>
+        <text x="110" y="145" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Knowledge</text>
+      </g>
+      <!-- Chesed (Lovingkindness) - right -->
+      <g class="sephira-node" onclick="showSephira('chesed')" id="node-chesed">
+        <circle cx="165" cy="168" r="18" fill="#0a0a1f" stroke="var(--chesed)" stroke-width="1.5" class="sephira-circle" id="circle-chesed"/>
+        <text x="165" y="165" text-anchor="middle" fill="var(--chesed)" class="sephira-label">Chesed</text>
+        <text x="165" y="173" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Capital</text>
+      </g>
+      <!-- Geburah (Judgment) - left -->
+      <g class="sephira-node" onclick="showSephira('geburah')" id="node-geburah">
+        <circle cx="55" cy="168" r="18" fill="#0a0a1f" stroke="var(--geburah)" stroke-width="1.5" class="sephira-circle" id="circle-geburah"/>
+        <text x="55" y="165" text-anchor="middle" fill="var(--geburah)" class="sephira-label">Geburah</text>
+        <text x="55" y="173" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Strength</text>
+      </g>
+      <!-- Tiferet (Harmony/Beauty) - center -->
+      <g class="sephira-node" onclick="showSephira('tiferet')">
+        <circle cx="110" cy="210" r="20" fill="#0a0a1f" stroke="var(--gold)" stroke-width="2" class="sephira-circle"/>
+        <text x="110" y="207" text-anchor="middle" fill="var(--gold)" class="sephira-label">Tiferet</text>
+        <text x="110" y="215" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Harmony</text>
+      </g>
+      <!-- Netzach (Victory/Endurance) - right -->
+      <g class="sephira-node" onclick="showSephira('netzach')" id="node-netzach">
+        <circle cx="165" cy="250" r="18" fill="#0a0a1f" stroke="var(--netzach)" stroke-width="1.5" class="sephira-circle" id="circle-netzach"/>
+        <text x="165" y="247" text-anchor="middle" fill="var(--netzach)" class="sephira-label">Netzach</text>
+        <text x="165" y="255" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Creation</text>
+      </g>
+      <!-- Hod (Majesty) - left -->
+      <g class="sephira-node" onclick="showSephira('hod')" id="node-hod">
+        <circle cx="55" cy="250" r="18" fill="#0a0a1f" stroke="var(--hod)" stroke-width="2" class="sephira-circle" id="circle-hod"/>
+        <text x="55" y="247" text-anchor="middle" fill="var(--hod)" class="sephira-label">Hod</text>
+        <text x="55" y="255" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Intellect</text>
+      </g>
+      <!-- Yesod (Foundation) - center -->
+      <g class="sephira-node" onclick="showSephira('yesod')" id="node-yesod">
+        <circle cx="110" cy="288" r="18" fill="#0a0a1f" stroke="var(--yesod)" stroke-width="1.5" class="sephira-circle" id="circle-yesod"/>
+        <text x="110" y="285" text-anchor="middle" fill="var(--yesod)" class="sephira-label">Yesod</text>
+        <text x="110" y="293" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Recovery</text>
+      </g>
+      <!-- Malkuth (Kingdom) - bottom -->
+      <g class="sephira-node" onclick="showSephira('malkuth')" id="node-malkuth">
+        <circle cx="110" cy="328" r="18" fill="#0a0a1f" stroke="var(--malkuth)" stroke-width="1.5" class="sephira-circle" id="circle-malkuth"/>
+        <text x="110" y="325" text-anchor="middle" fill="var(--malkuth)" class="sephira-label">Malkuth</text>
+        <text x="110" y="333" text-anchor="middle" fill="var(--text3)" style="font-size:6px">Presence</text>
+      </g>
+    </svg>
+  </div>
+  <div id="sephiraDetail"></div>
+  <div class="section-label" style="margin-top:16px">Domain Statistics</div>
+  <div class="stat-grid" id="statGrid"></div>
+</div>
+
+<!-- VIEW: CODEX -->
+<div class="view" id="view-codex">
+  <div class="section-label">Long-Term Milestones // The Great Work</div>
+  <div id="codexContent"></div>
+</div>
+
+<!-- VIEW: TRANSMISSIONS -->
+<div class="view" id="view-transmit">
+  <div class="section-label">Signal // System Transmissions</div>
+  <div class="system-voice" id="systemVoice"></div>
+  <div id="transmitList"></div>
+  <div style="margin-top:16px">
+    <div class="section-label">Broadcast to The System</div>
+    <textarea class="log-input" id="broadcastInput" rows="4" placeholder="Report your status, ask for assessment, or declare intent..."></textarea>
+    <div style="margin-top:8px; display:flex; align-items:center; gap:10px">
+      <button class="btn btn-primary" id="transmitBtn" onclick="processBroadcast()">Transmit</button>
+      <div class="signal-loading" id="signalLoading">∴ transmitting...</div>
+    </div>
+    <div style="margin-top:6px; font-size:10px; color:var(--text3)" id="signalKeyStatus"></div>
+  </div>
+</div>
+
+<!-- VIEW: EVOLUTION -->
+<div class="view" id="view-system">
+  <div class="section-label">System Evolution // Adaptive State</div>
+  <div id="evoPanel"></div>
+  <div style="margin-top:16px" class="section-label">Feedback Triads // Control Architecture</div>
+  <div id="feedbackPanel"></div>
+  <div style="margin-top:16px" class="section-label">Harvest from Claude Conversation</div>
+  <div style="font-size:11px; color:var(--text2); margin-bottom:8px; line-height:1.6">
+    Paste a summary of a Claude conversation or describe what you accomplished. The System will extract quest completions and log them.
+  </div>
+  <textarea class="log-input" id="harvestInput" rows="5" placeholder="e.g. 'Had a 2-hour lab session today, ran ddPCR protocol on samples 3-7. Hit protein at 215g. Didn't get to gym.'"></textarea>
+  <div style="margin-top:8px">
+    <button class="btn btn-primary" onclick="harvestData()">Harvest</button>
+  </div>
+  <div id="harvestResult" style="margin-top:12px; font-size:12px; color:var(--green); line-height:1.8; display:none;"></div>
+
+  <div style="margin-top:24px" class="section-label">Signal Configuration</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:8px;line-height:1.6">
+    Anthropic API key for live sensei responses in the Signal tab. Stored in browser only.
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:4px">
+    <input type="password" id="apiKeyInput"
+      style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:12px;padding:6px 10px;border-radius:3px;outline:none"
+      placeholder="sk-ant-...">
+    <button class="btn btn-ghost" onclick="saveApiKey()">Save</button>
+  </div>
+  <div style="font-size:10px;color:var(--text3)">Never transmitted except to api.anthropic.com during broadcasts.</div>
+</div>
+
+<!-- FAB: Quick Log -->
+<button class="fab" onclick="openModal()" title="Quick Log">＋</button>
+
+<!-- CHECK-IN MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">Quick Log <span class="modal-close" onclick="closeModal()">✕</span></div>
+    <div class="modal-section">
+      <div class="modal-label">What did you complete?</div>
+      <textarea class="modal-textarea" id="quickLogInput" rows="3" placeholder="e.g. 'Gym — legs, 4 sets squats 185lb, hit protein at 210g'"></textarea>
+    </div>
+    <div id="quickQuestSelect"></div>
+    <div style="display:flex; gap:8px; margin-top:12px">
+      <button class="btn btn-primary" onclick="submitQuickLog()">Log It</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFY -->
+<div class="notify" id="notify"></div>
+
+<script>
+// ── DATASTORE LAYER (GitHub → Electron → CRDT) ───────────────────────
+// ═══════════════════════════════════════════════════════════════════════
+// CSS DataStore — pluggable data backend
+// v1.0 | Driver: GitHub API + localStorage cache
+//
+// Architecture: three-driver progression
+//   Phase 1 (now)      GitHubDriver     — GitHub API + localStorage cache
+//   Phase 2 (Electron) FileSystemDriver — direct filesystem read/write
+//   Phase 3 (CRDT)     AutomergeDriver  — conflict-free replicated sync
+//
+// Nothing above this layer should care which driver is active.
+// Swap the driver, the rest of the system is unchanged.
+// ═══════════════════════════════════════════════════════════════════════
+
+// ── DATASTORE INTERFACE ─────────────────────────────────────────────────
+// All drivers must implement: init(), load(), save(data), status()
+// DataStore exposes the same API regardless of driver.
+
+const DataStore = {
+  _driver: null,
+  _ready: false,
+  _listeners: [],
+
+  // Set which driver to use before calling init()
+  use(driver) {
+    this._driver = driver;
+    return this;
+  },
+
+  async init() {
+    if (!this._driver) throw new Error('DataStore: no driver set. Call DataStore.use(driver) first.');
+    await this._driver.init();
+    this._ready = true;
+    return this;
+  },
+
+  async load() {
+    if (!this._ready) throw new Error('DataStore: call init() before load()');
+    const data = await this._driver.load();
+    this._emit('load', data);
+    return data;
+  },
+
+  async save(data) {
+    if (!this._ready) throw new Error('DataStore: call init() before save()');
+    await this._driver.save(data);
+    this._emit('save', data);
+  },
+
+  status() {
+    return this._driver?.status?.() || { driver: 'none', ready: this._ready };
+  },
+
+  // Simple event bus for UI reactivity
+  on(event, fn) { this._listeners.push({ event, fn }); },
+  _emit(event, payload) {
+    this._listeners
+      .filter(l => l.event === event)
+      .forEach(l => l.fn(payload));
+  }
+};
+
+
+// ── PHASE 1: GITHUB DRIVER ──────────────────────────────────────────────
+// Reads/writes CSS_DATA.json in a private GitHub repository.
+// localStorage acts as cache — writes are immediate locally,
+// async-pushed to GitHub. Offline: works from cache, syncs on reconnect.
+//
+// Required localStorage keys (set via DataStore setup UI or direct):
+//   css_github_token  — personal access token (repo scope)
+//   css_github_repo   — "username/reponame"
+//   css_github_path   — file path in repo (default: "CSS_DATA.json")
+
+const GitHubDriver = {
+  _token: null,
+  _repo: null,
+  _path: 'CSS/CSS_DATA.json',
+  _sha: null,           // GitHub requires SHA for updates
+  _cache: null,
+  _pushPending: false,
+  _baseUrl: 'https://api.github.com',
+  CACHE_KEY: 'css_v3_data',
+  SHA_KEY: 'css_github_sha',
+
+  async init() {
+    this._token = localStorage.getItem('css_github_token');
+    this._repo  = localStorage.getItem('css_github_repo');
+    const path  = localStorage.getItem('css_github_path');
+    if (path) this._path = path;
+    this._sha   = localStorage.getItem(this.SHA_KEY) || null;
+
+    if (!this._token || !this._repo) {
+      throw new Error('GitHubDriver: missing css_github_token or css_github_repo in localStorage.');
+    }
+  },
+
+  async load() {
+    try {
+      const url = `${this._baseUrl}/repos/${this._repo}/contents/${this._path}`;
+      const res = await fetch(url, { headers: this._headers() });
+
+      if (res.status === 404) {
+        // File doesn't exist yet — start from cache or empty
+        console.warn('GitHubDriver: file not found on remote. Using local cache.');
+        return this._loadFromCache();
+      }
+
+      if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+      const json = await res.json();
+      this._sha = json.sha;
+      localStorage.setItem(this.SHA_KEY, this._sha);
+
+      const data = JSON.parse(decodeURIComponent(escape(atob(json.content.replace(/\n/g, '')))));
+      // Update local cache
+      localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
+      this._cache = data;
+      return data;
+
+    } catch (e) {
+      console.warn('GitHubDriver: load failed, falling back to cache.', e.message);
+      return this._loadFromCache();
+    }
+  },
+
+  async save(data) {
+    // Write to localStorage immediately — UI is always fast
+    localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
+    this._cache = data;
+
+    // Push to GitHub async — don't block UI
+    this._schedulePush(data);
+  },
+
+  _schedulePush(data) {
+    if (this._pushPending) return; // debounce — one push per cycle
+    this._pushPending = true;
+    setTimeout(async () => {
+      try {
+        await this._pushToGitHub(data);
+      } catch (e) {
+        console.warn('GitHubDriver: push failed, will retry on next save.', e.message);
+      }
+      this._pushPending = false;
+    }, 1500); // 1.5s debounce
+  },
+
+  async _pushToGitHub(data) {
+    const url = `${this._baseUrl}/repos/${this._repo}/contents/${this._path}`;
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const body = {
+      message: `css: sync ${new Date().toISOString().slice(0,10)}`,
+      content,
+      ...(this._sha ? { sha: this._sha } : {})
+    };
+
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: this._headers(),
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(`GitHub push failed: ${err.message}`);
+    }
+
+    const json = await res.json();
+    this._sha = json.content.sha;
+    localStorage.setItem(this.SHA_KEY, this._sha);
+  },
+
+  _loadFromCache() {
+    try {
+      const raw = localStorage.getItem(this.CACHE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch(e) { return null; }
+  },
+
+  _headers() {
+    return {
+      'Authorization': `token ${this._token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    };
+  },
+
+  status() {
+    return {
+      driver: 'GitHub',
+      repo: this._repo,
+      path: this._path,
+      sha: this._sha,
+      hasCachedData: !!localStorage.getItem(this.CACHE_KEY),
+      pushPending: this._pushPending
+    };
+  }
+};
+
+
+// ── PHASE 2: FILESYSTEM DRIVER (Electron — stub) ────────────────────────
+// When system.html is packaged as an Electron app, swap this driver in.
+// Electron exposes `window.electronAPI` via preload script.
+// No changes needed anywhere else in the codebase.
+
+const FileSystemDriver = {
+  _path: null,
+  _cache: null,
+
+  async init() {
+    // Electron preload exposes the file path from app config
+    this._path = window.electronAPI?.dataPath || './CSS_DATA.json';
+    console.log('FileSystemDriver: initialized. Path:', this._path);
+  },
+
+  async load() {
+    // window.electronAPI.readFile() exposed via Electron's contextBridge
+    const raw = await window.electronAPI.readFile(this._path);
+    this._cache = JSON.parse(raw);
+    return this._cache;
+  },
+
+  async save(data) {
+    this._cache = data;
+    await window.electronAPI.writeFile(this._path, JSON.stringify(data, null, 2));
+  },
+
+  status() {
+    return { driver: 'FileSystem (Electron)', path: this._path };
+  }
+};
+
+
+// ── PHASE 3: CRDT DRIVER (Automerge — stub) ─────────────────────────────
+// When multi-device sync and conflict-free editing is needed.
+// Automerge documents are CRDTs — any two versions can be merged without conflict.
+// Sync happens via a relay (could be GitHub, a local relay server, or P2P).
+// The document's change history IS the evolution log.
+
+const AutomergeDriver = {
+  _doc: null,
+  _repo: null, // Automerge.Repo instance
+
+  async init() {
+    // import * as Automerge from '@automerge/automerge'
+    // this._repo = new Automerge.Repo({ ... sync config ... })
+    // this._doc = await this._repo.find(docId)
+    console.log('AutomergeDriver: stub — implement when ready for Phase 3.');
+  },
+
+  async load() {
+    // return Automerge.toJS(this._doc)
+    return null;
+  },
+
+  async save(data) {
+    // this._doc = Automerge.change(this._doc, doc => { Object.assign(doc, data) })
+    // sync happens automatically via Repo
+  },
+
+  status() {
+    return { driver: 'Automerge (CRDT)', ready: false, note: 'Phase 3 — not yet implemented' };
+  }
+};
+
+
+// ── SETUP HELPER ────────────────────────────────────────────────────────
+// Called once during initial GitHub setup.
+// Stores credentials in localStorage, initializes the driver.
+
+async function setupGitHubDataStore(token, repo, path = 'CSS/CSS_DATA.json') {
+  localStorage.setItem('css_github_token', token);
+  localStorage.setItem('css_github_repo', repo);
+  localStorage.setItem('css_github_path', path);
+  await DataStore.use(GitHubDriver).init();
+  return DataStore.status();
+}
+
+
+// ── EXPORT ──────────────────────────────────────────────────────────────
+// In a module environment: export { DataStore, GitHubDriver, FileSystemDriver, AutomergeDriver }
+// In the current inline-script environment: these are available as globals.
+
+
+// ── DATA ──────────────────────────────────────────────────────────────
+const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","daysActive":0,"coherenceHistory":[],"stats":{"lab":0,"gym":0,"nutrition":0,"hygiene":0,"sleep":0,"finance":0,"art":0,"practice":0},"ltDone":{"ddpcr":false,"viab":false,"ctg":false,"draft":false,"def":false,"fit_3w":true,"fit_pro":false,"fit_4x":false,"fin_budget30":false,"fin_dca":false,"fin_emergency":false,"fin_grad":false,"gf1":false,"gf2":false,"gf3":false},"longTermGoals":{"dissertation":{"name":"Dissertation Defense","color":"#D85A30","domain":"hod","milestones":{"ddpcr":"ddPCR probe validation complete","viab":"All cell viability assays finalized","ctg":"CT genes data analysis done","draft":"Full draft submitted to advisor","def":"Defense scheduled"}},"fitness":{"name":"Fitness Baseline Restored","color":"#1D9E75","domain":"geburah","milestones":{"fit_3w":"3 gym sessions in one week (confirmed with evidence)","fit_pro":"14-day protein streak (200g+ confirmed)","fit_4x":"Back on 4x/week program"}},"finance":{"name":"Financial System Operational","color":"#4ddebb","domain":"chesed","milestones":{"fin_budget30":"Budget tracked for 30 consecutive days","fin_dca":"Weekly DCA established and automated","fin_emergency":"Emergency fund: $2k baseline","fin_grad":"Graduation fund: rent + moving costs + $1k buffer"}},"graduation":{"name":"Post-Defense Transition","color":"#378ADD","domain":"chesed","milestones":{"gf1":"$1k saved post-defense","gf2":"Moving costs covered","gf3":"First month rent secured"}}},"evidenceLog":[],"weeklyAssessments":[],"dailyLogs":{},"currentWeekQuests":["HOD: Complete and log 3 full lab sessions this week","HOD: Write dissertation text at least twice this week","GEBURAH: Log protein intake at 200g+ on 5 of 7 days"],"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Identify minimum objectives for the day and create an action checklist","xp":15,"tier":"mid","stat":"lab","type":"intent","inputType":"text","placeholder":"Today's objectives..."},"h2":{"name":"Lab session \u2014 log output or data produced","xp":45,"tier":"high","stat":"lab","type":"confirm","evidenceRequired":true,"inputType":"text","placeholder":"Describe output or data produced..."},"h4":{"name":"Writing session \u2014 state word count produced","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"number","units":"words","weeklyMin":true},"h5":{"name":"Plan tomorrow's lab objectives","xp":15,"tier":"mid","stat":"lab","type":"intent","inputType":"text-or-confirm","placeholder":"Tomorrow's objectives..."}}},"geburah":{"name":"Strength","anchor":"Training, protein, physical output","color":"#e05555","quests":{"g1":{"name":"Pack gym bag & review workout program","xp":10,"tier":"low","stat":"gym","type":"intent","inputType":"confirm"},"g2":{"name":"Upload complete workout log","xp":50,"tier":"high","stat":"gym","type":"confirm","evidenceRequired":true,"inputType":"file","accept":".jpg,.jpeg,.png,.csv"},"g3":{"name":"Today's protein intake:","xp":25,"tier":"high","stat":"nutrition","type":"confirm","inputType":"number","units":"g"}}},"malkuth":{"name":"Presence","anchor":"Hygiene, environment, baseline order","color":"#8b6914","quests":{"m1":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm"},"m2":{"name":"Evening hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm"},"m3":{"name":"Environmental order","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm"},"m4":{"name":"Lights out by midnight","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true}}},"yesod":{"name":"Recovery","anchor":"Sleep quality, rest, integration","color":"#9b5de5","quests":{"y1":{"name":"Time slept:","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}]},"g4":{"name":"Recovery & sleep score (check Garmin)","xp":12,"tier":"low","stat":"sleep","type":"intent","inputType":"dual-number","retrospective":true,"fields":[{"label":"Recovery","units":"%","min":0,"max":100},{"label":"Sleep Score","units":"","min":0,"max":100}]}}},"chesed":{"name":"Capital","anchor":"Budget, DCA, income, financial system","color":"#2dd4bf","quests":{"f1":{"name":"Today's spending:","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"number","units":"$"},"f2":{"name":"No tilt spending today","xp":15,"tier":"mid","stat":"finance","type":"confirm","inputType":"confirm"},"f3":{"name":"Check balances","xp":10,"tier":"low","stat":"finance","type":"intent","inputType":"confirm"},"f4":{"name":"Income or economic opportunity reviewed","xp":10,"tier":"low","stat":"finance","type":"intent","inputType":"confirm"}}},"binah":{"name":"Structure","anchor":"Planning, admin, systems that support the work","color":"#5b6fff","quests":{"b1":{"name":"Check calendar and update","xp":10,"tier":"low","stat":"lab","type":"intent","inputType":"confirm"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Creative expression","xp":25,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make or study?"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Altar tended or space prepared","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"confirm"},"p2":{"name":"Ritual","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"confirm"},"p3":{"name":"Dreams","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Log a dream or reflection..."}}}}};
+
+// ── STATE ─────────────────────────────────────────────────────────────
+let data = {};
+let todayLog = {}; // questId -> { xp, note }
+let todayXpEarned = 0;
+let collapsedDomains = new Set();
+let focusMode = false;
+let preFocusCollapseState = null;
+
+// ── COLLAPSE HELPERS ──────────────────────────────────────────────────
+function getDefaultExpandedDomain() {
+  const seed = getDailySeed();
+  const weights = data.domainWeights || {};
+  const domains = Object.keys(data.questDefinitions || {});
+  // Build weighted pool (weight * 10 entries each)
+  const pool = [];
+  domains.forEach(dk => {
+    const w = Math.round((weights[dk] || 1.0) * 10);
+    for (let i = 0; i < w; i++) pool.push(dk);
+  });
+  return pool.length ? pool[seed % pool.length] : (domains[0] || 'hod');
+}
+
+function initCollapseState() {
+  const stored = localStorage.getItem('css_collapsed_v1');
+  if (stored !== null) {
+    collapsedDomains = new Set(JSON.parse(stored));
+    return;
+  }
+  // First load: collapse everything except the weighted daily domain
+  const defaultExpanded = getDefaultExpandedDomain();
+  collapsedDomains = new Set(
+    Object.keys(data.questDefinitions || {}).filter(d => d !== defaultExpanded)
+  );
+  saveCollapseState();
+}
+
+function saveCollapseState() {
+  localStorage.setItem('css_collapsed_v1', JSON.stringify([...collapsedDomains]));
+}
+
+function toggleDomainCollapse(domainKey) {
+  if (collapsedDomains.has(domainKey)) {
+    collapsedDomains.delete(domainKey);
+  } else {
+    collapsedDomains.add(domainKey);
+  }
+  saveCollapseState();
+  renderQuests();
+}
+
+function toggleFocusMode() {
+  focusMode = !focusMode;
+  if (focusMode) {
+    preFocusCollapseState = new Set(collapsedDomains);
+    // Collapse domains with no remaining incomplete high-tier quests
+    Object.keys(data.questDefinitions || {}).forEach(dk => {
+      const domain = data.questDefinitions[dk];
+      const hasIncompleteHigh = Object.entries(domain.quests)
+        .some(([qid, q]) => !todayLog[qid] && q.tier === 'high');
+      if (!hasIncompleteHigh) collapsedDomains.add(dk);
+      else collapsedDomains.delete(dk);
+    });
+  } else {
+    if (preFocusCollapseState) {
+      collapsedDomains = preFocusCollapseState;
+      preFocusCollapseState = null;
+    }
+  }
+  renderQuests();
+}
+
+async function initDataStore() {
+  // Load credentials from config.json if present (survives localStorage wipes)
+  try {
+    const resp = await fetch('/config.json');
+    if (resp.ok) {
+      const cfg = await resp.json();
+      if (cfg.github_token) localStorage.setItem('css_github_token', cfg.github_token);
+      if (cfg.github_repo)  localStorage.setItem('css_github_repo',  cfg.github_repo);
+      if (cfg.github_path)  localStorage.setItem('css_github_path',  cfg.github_path);
+    }
+  } catch(e) { /* not served via HTTP or no config.json, skip */ }
+
+  const token = localStorage.getItem('css_github_token');
+  const repo  = localStorage.getItem('css_github_repo');
+  if (!token || !repo) { showSetupModal(); return false; }
+  try {
+    await DataStore.use(GitHubDriver).init();
+    const remote = await DataStore.load();
+    if (remote) {
+      data = remote;
+      // migrate questDefinitions if version mismatch
+      if (!data.questDefinitions || data._meta?.version !== '2.0') {
+        data.questDefinitions = JSON.parse(JSON.stringify(DEFAULT_DATA.questDefinitions));
+        if (!data.weeklyCompletions) data.weeklyCompletions = {};
+      }
+      if (!data.dailyLogs) data.dailyLogs = {};
+    } else {
+      data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+  } catch(e) {
+    console.warn('GitHub load failed, using localStorage cache:', e.message);
+    const saved = localStorage.getItem('css_v3_data');
+    data = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+  const todaySaved = localStorage.getItem('css_v3_today_' + getTodayStr());
+  todayLog = todaySaved ? JSON.parse(todaySaved) : {};
+  todayXpEarned = Object.values(todayLog).reduce((s, v) => s + (v.xp || 0), 0);
+  return true;
+}
+
+// ── WEEK HELPERS ──────────────────────────────────────────────────────
+function getWeekKey() {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return d.getUTCFullYear() + '-W' + String(weekNo).padStart(2,'0');
+}
+
+function getWeeklyCompletionCount(qid) {
+  return data.weeklyCompletions?.[getWeekKey()]?.[qid] || 0;
+}
+
+function saveData() {
+  // Write to localStorage immediately (fast, works offline)
+  localStorage.setItem('css_v3_data', JSON.stringify(data));
+  localStorage.setItem('css_v3_today_' + getTodayStr(), JSON.stringify(todayLog));
+  // Push to GitHub async (non-blocking)
+  if (localStorage.getItem('css_github_token')) {
+    DataStore.save(data).catch(e => console.warn('GitHub sync failed:', e.message));
+  }
+}
+
+function getTodayStr() {
+  return new Date().toISOString().slice(0,10);
+}
+
+// ── RANK LOGIC ────────────────────────────────────────────────────────
+const RANKS = [
+  { rank:'E', min:0, max:500 },
+  { rank:'D', min:500, max:1500 },
+  { rank:'C', min:1500, max:3500 },
+  { rank:'B', min:3500, max:7000 },
+  { rank:'A', min:7000, max:15000 },
+  { rank:'S', min:15000, max:Infinity }
+];
+function getRank(xp) { return RANKS.find(r => xp >= r.min && xp < r.max) || RANKS[0]; }
+function getXpProgress(xp) {
+  const r = getRank(xp);
+  if (r.max === Infinity) return 100;
+  return Math.min(100, ((xp - r.min) / (r.max - r.min)) * 100);
+}
+
+// ── COHERENCE ─────────────────────────────────────────────────────────
+function calcCoherence() {
+  const stats = data.stats;
+  const vals = Object.values(stats);
+  if (!vals.length) return 0;
+  const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+  return Math.min(100, avg);
+}
+function getSignalLabel(c) {
+  if (c >= 80) return 'signal: coherent';
+  if (c >= 60) return 'signal: building';
+  if (c >= 40) return 'signal: flickering';
+  if (c >= 20) return 'signal: weak';
+  return 'signal: scattered';
+}
+
+// ── RENDER HEADER ─────────────────────────────────────────────────────
+function renderHeader() {
+  const xp = data.xp || 0;
+  const r = getRank(xp);
+  const prog = getXpProgress(xp);
+  const coherence = calcCoherence();
+
+  document.getElementById('rankBadge').textContent = r.rank + '-RANK';
+  document.getElementById('xpDisplay').textContent = xp.toLocaleString() + ' XP';
+  document.getElementById('todayXp').textContent = '+' + todayXpEarned + ' today';
+  document.getElementById('xpBar').style.width = prog + '%';
+  document.getElementById('streakPill').textContent = '◈ ' + (data.streak||0) + '-day streak';
+  document.getElementById('coherenceLabel').textContent = getSignalLabel(coherence);
+
+  // signal bars
+  const bars = document.getElementById('signalRow');
+  bars.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    const b = document.createElement('div');
+    b.className = 'signal-bar';
+    b.style.height = (6 + i*3) + 'px';
+    b.style.background = (coherence/20) > i ? 'var(--accent)' : 'var(--border)';
+    bars.appendChild(b);
+  }
+}
+
+// ── DISPATCH BANNER ───────────────────────────────────────────────────
+function renderDispatchBanner() {
+  const banner = document.getElementById('dispatchBanner');
+  const tx = data.lastTransmission;
+  if (!tx || !tx.body || sessionStorage.getItem('css_dispatch_dismissed')) {
+    banner.style.display = 'none';
+    return;
+  }
+  banner.style.display = 'block';
+  banner.innerHTML = '';
+
+  const dismiss = document.createElement('button');
+  dismiss.className = 'dispatch-dismiss';
+  dismiss.textContent = 'x';
+  dismiss.addEventListener('click', () => {
+    sessionStorage.setItem('css_dispatch_dismissed', '1');
+    banner.style.display = 'none';
+  });
+
+  const label = document.createElement('div');
+  label.className = 'dispatch-label';
+  label.textContent = (tx.archetype || 'Dispatch') + ' \u2014 ' + (tx.date || '');
+
+  const body = document.createElement('div');
+  body.className = 'dispatch-body';
+  body.textContent = tx.body;
+
+  banner.appendChild(dismiss);
+  banner.appendChild(label);
+  banner.appendChild(body);
+}
+
+// ── RENDER QUESTS ─────────────────────────────────────────────────────
+function renderQuests() {
+  const container = document.getElementById('questList');
+  container.innerHTML = '';
+  const defs = data.questDefinitions;
+  let totalCompleted = 0;
+
+  Object.entries(defs).forEach(([domainKey, domain]) => {
+    const questIds = Object.keys(domain.quests);
+    const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
+    totalCompleted += completedCount;
+    const allDone = completedCount === questIds.length;
+    const isCollapsed = collapsedDomains.has(domainKey);
+
+    const group = document.createElement('div');
+    group.className = 'domain-group';
+
+    // ── Domain header (clickable) ──
+    const header = document.createElement('div');
+    header.className = 'domain-header';
+    header.innerHTML = `
+      <div class="domain-dot" style="background:${domain.color}"></div>
+      <div class="domain-name" style="color:${domain.color}">${domain.name}</div>
+      <div class="domain-anchor" style="flex:1">${domain.anchor}</div>
+      <span style="font-size:9px;color:${allDone ? 'var(--green)' : 'var(--text3)'};margin-right:8px">
+        ${completedCount}/${questIds.length}
+      </span>
+      <span class="domain-collapse-arrow" style="transform:${isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)'}">▾</span>
+    `;
+    header.onclick = () => toggleDomainCollapse(domainKey);
+    group.appendChild(header);
+
+    // ── Quests container (collapsible) ──
+    const questsContainer = document.createElement('div');
+    questsContainer.className = 'quests-container' + (isCollapsed ? ' collapsed' : '');
+    questsContainer.id = 'domain-quests-' + domainKey;
+
+    Object.entries(domain.quests).forEach(([qid, quest]) => {
+      const done = !!todayLog[qid];
+
+      const retroBadge = quest.retrospective
+        ? `<span style="font-size:9px;color:var(--text3);margin-left:6px;font-style:italic">← yesterday</span>`
+        : '';
+      let weeklyBadge = '';
+      if (quest.weeklyMin) {
+        const wk = getWeeklyCompletionCount(qid);
+        weeklyBadge = `<span style="font-size:9px;color:${wk > 0 ? 'var(--green)' : 'var(--text3)'};margin-left:6px">✎ ${wk}×/wk</span>`;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'quest-card' + (done ? ' completed' : '');
+      card.innerHTML = `
+        <div class="quest-header" onclick="toggleQuestLog('${qid}')">
+          <div class="domain-pip" style="background:${domain.color}"></div>
+          <div class="quest-name">${quest.name}${retroBadge}${weeklyBadge}</div>
+          <span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
+          <div class="quest-xp">+${quest.xp} XP</div>
+          <div style="margin-left:6px;color:${done ? 'var(--green)' : 'var(--border)'};font-size:16px">${done ? '✓' : '○'}</div>
+        </div>
+        <div class="quest-log-area" id="log-${qid}">
+          ${buildQuestInput(qid, quest, done)}
+          <div class="log-actions">
+            <button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
+              ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
+            </button>
+            <button class="btn btn-ghost" onclick="toggleQuestLog('${qid}')">Close</button>
+          </div>
+        </div>
+      `;
+      questsContainer.appendChild(card);
+    });
+
+    group.appendChild(questsContainer);
+    container.appendChild(group);
+  });
+
+  // Update tally
+  document.getElementById('dailyTally').textContent =
+    `Today: ${todayXpEarned} XP — ${totalCompleted} quest${totalCompleted !== 1 ? 's' : ''} complete`;
+
+  // Update focus button state
+  const focusBtn = document.getElementById('focusBtn');
+  if (focusBtn) {
+    focusBtn.textContent = focusMode ? '◎ All' : '◎ Focus';
+    focusBtn.classList.toggle('active', focusMode);
+  }
+}
+
+function buildQuestInput(qid, quest, done) {
+  const inputType = quest.inputType || (quest.evidenceRequired ? 'text' : 'confirm');
+  const logged = todayLog[qid];
+
+  switch (inputType) {
+    case 'confirm':
+      return done
+        ? `<div style="font-size:11px;color:var(--text3);padding:4px 0">Logged ${logged?.time ? new Date(logged.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : ''}</div>`
+        : '';
+
+    case 'text':
+      return `
+        ${quest.evidenceRequired ? '<div class="evidence-req">⚠ Evidence required — state result, count, or output</div>' : ''}
+        <textarea class="log-input" id="note-${qid}" rows="2"
+          placeholder="${quest.placeholder || (quest.type === 'intent' ? 'State your intention...' : 'Describe what you completed...')}"
+          ${done ? 'disabled' : ''}>${done && logged?.note ? logged.note : ''}</textarea>`;
+
+    case 'number':
+      return `
+        <div style="display:flex;align-items:center;gap:8px;margin:8px 0">
+          <input type="number" id="note-${qid}" class="log-input"
+            style="width:110px;padding:6px 10px;text-align:right;font-size:14px"
+            placeholder="0" min="0" ${done ? 'disabled' : ''}
+            value="${done && logged?.rawValue !== undefined ? logged.rawValue : ''}">
+          <span style="font-size:12px;color:var(--text3)">${quest.units || ''}</span>
+        </div>`;
+
+    case 'dual-number':
+      if (!quest.fields) return '';
+      return `<div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">` +
+        quest.fields.map((f, i) => `
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);min-width:80px">${f.label}</span>
+            <input type="number" id="note-${qid}-${i}" class="log-input"
+              style="width:80px;padding:6px 10px;text-align:right;font-size:14px"
+              placeholder="${f.min || 0}" min="${f.min || 0}" max="${f.max || 999}"
+              ${done ? 'disabled' : ''}
+              value="${done && logged?.fields?.[i] !== undefined ? logged.fields[i] : ''}">
+            <span style="font-size:11px;color:var(--text3)">${f.units || ''}</span>
+          </div>`).join('') + `</div>`;
+
+    case 'file':
+      return `
+        <div style="margin:8px 0">
+          ${quest.evidenceRequired ? '<div class="evidence-req">⚠ Evidence required — upload workout log (jpg or csv)</div>' : ''}
+          ${done && logged?.fileName
+            ? `<div style="font-size:11px;color:var(--green)">✓ Filed: ${logged.fileName}</div>`
+            : `<input type="file" id="note-${qid}" accept="${quest.accept || '*'}"
+                style="font-size:11px;color:var(--text2);width:100%;margin-top:4px" ${done ? 'disabled' : ''}>`}
+        </div>`;
+
+    case 'text-or-confirm':
+      return `
+        <textarea class="log-input" id="note-${qid}" rows="2"
+          placeholder="${quest.placeholder || 'Describe your plan, or just tap Complete...'}"
+          ${done ? 'disabled' : ''}>${done && logged?.note ? logged.note : ''}</textarea>`;
+
+    default:
+      return `<textarea class="log-input" id="note-${qid}" rows="2" placeholder="Note..." ${done ? 'disabled' : ''}></textarea>`;
+  }
+}
+
+function toggleQuestLog(qid) {
+  const area = document.getElementById('log-' + qid);
+  area.classList.toggle('open');
+  if (area.classList.contains('open')) {
+    const first = area.querySelector('input, textarea');
+    if (first) setTimeout(() => first.focus(), 100);
+  }
+}
+
+function logQuest(qid, xp) {
+  if (todayLog[qid]) { notify('Already logged today.'); return; }
+
+  // Find quest def
+  let quest = null;
+  let domainKey = null;
+  for (const [dk, domain] of Object.entries(data.questDefinitions)) {
+    if (domain.quests[qid]) { quest = domain.quests[qid]; domainKey = dk; break; }
+  }
+  const inputType = quest?.inputType || 'text';
+  let note = '';
+  let extraData = {};
+
+  if (inputType === 'dual-number' && quest.fields) {
+    const fieldVals = quest.fields.map((f, i) => {
+      const el = document.getElementById(`note-${qid}-${i}`);
+      return el ? parseFloat(el.value) || 0 : 0;
+    });
+    note = quest.fields.map((f, i) => `${f.label}: ${fieldVals[i]}${f.units ? ' ' + f.units : ''}`).join(' | ');
+    extraData.fields = fieldVals;
+  } else if (inputType === 'file') {
+    const el = document.getElementById(`note-${qid}`);
+    const file = el?.files?.[0];
+    note = file ? file.name : 'file uploaded';
+    extraData.fileName = file ? file.name : '';
+  } else if (inputType === 'number') {
+    const el = document.getElementById(`note-${qid}`);
+    const raw = el ? parseFloat(el.value) || 0 : 0;
+    note = raw + (quest.units ? ' ' + quest.units : '');
+    extraData.rawValue = raw;
+  } else {
+    note = document.getElementById(`note-${qid}`)?.value?.trim() || '';
+  }
+
+  const logEntry = { xp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
+  todayLog[qid] = logEntry;
+  todayXpEarned += xp;
+  data.xp = (data.xp || 0) + xp;
+
+  // Write to dailyLogs (synced to GitHub — harvest reads this)
+  const today = getTodayStr();
+  if (!data.dailyLogs) data.dailyLogs = {};
+  if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
+  data.dailyLogs[today][qid] = logEntry;
+
+  // Update domain stat
+  if (quest?.stat && data.stats[quest.stat] !== undefined) {
+    data.stats[quest.stat] = Math.min(100, (data.stats[quest.stat] || 0) + Math.floor(xp * 0.8));
+  }
+
+  // Track weekly completions for weeklyMin quests
+  if (quest?.weeklyMin) {
+    if (!data.weeklyCompletions) data.weeklyCompletions = {};
+    const wk = getWeekKey();
+    if (!data.weeklyCompletions[wk]) data.weeklyCompletions[wk] = {};
+    data.weeklyCompletions[wk][qid] = (data.weeklyCompletions[wk][qid] || 0) + 1;
+  }
+
+  // Auto-collapse domain if all its quests are now done
+  if (domainKey) {
+    const domain = data.questDefinitions[domainKey];
+    const allDone = Object.keys(domain.quests).every(q => !!(q === qid ? true : todayLog[q]));
+    if (allDone && !collapsedDomains.has(domainKey)) {
+      setTimeout(() => {
+        collapsedDomains.add(domainKey);
+        saveCollapseState();
+        renderQuests();
+      }, 800); // brief delay so user sees the completion tick
+    }
+  }
+
+  // Variable reward roll
+  const reward = rollQuestReward(qid, xp);
+  if (reward && reward.type === 'xp_multiplier') {
+    const bonus = xp * (reward.multiplier - 1);
+    todayXpEarned += bonus;
+    data.xp = (data.xp || 0) + bonus;
+    if (quest?.stat && data.stats[quest.stat] !== undefined) {
+      data.stats[quest.stat] = Math.min(100, (data.stats[quest.stat] || 0) + Math.floor(bonus * 0.8));
+    }
+  }
+
+  saveData();
+  renderHeader();
+  renderQuests();
+
+  if (!reward) {
+    notify('Quest logged. +' + xp + ' XP gained.');
+  } else if (reward.type === 'sensei') {
+    notify(reward.text, 6000);
+  } else if (reward.type === 'xp_multiplier') {
+    notify(reward.text + ' +' + (xp * reward.multiplier) + ' XP total.', 5000);
+  } else {
+    notify(reward.text, 7000);
+  }
+}
+
+// ── RENDER TREE ───────────────────────────────────────────────────────
+const SEPHIRA_MAP = {
+  keter: { name:'Keter // Crown', anchor:'The Source — intent, will, origin', stat:null, color:'var(--gold)', desc:'The origin point of all signal. Crown does not track — it witnesses.' },
+  chokmah: { name:'Chokmah // Wisdom', anchor:'Intuition, flash insight, the spark', stat:null, color:'var(--accent2)', desc:'Right column pillar. Raw undifferentiated wisdom. The flash before understanding.' },
+  binah: { name:'Binah // Structure', anchor:'Planning, admin, systems that support the work', stat:'lab', color:'var(--binah)', desc:'Left column. Understanding structures the wisdom. Binah builds form from flash.' },
+  daat: { name:"Da'at // Knowledge", anchor:'Hidden sephira — integration of understanding and wisdom', stat:null, color:'var(--text2)', desc:"Da'at is the integration node — hidden because it only appears when ChabaD (cognitive triad) is in coherence." },
+  chesed: { name:'Chesed // Capital', anchor:'Budget, DCA, income, financial system', stat:'finance', color:'var(--chesed)', desc:'Right column. Lovingkindness as expansive capital — the system that supports all domains by ensuring resources flow.' },
+  geburah: { name:'Geburah // Strength', anchor:'Training, protein, physical output', stat:'gym', color:'var(--geburah)', desc:'Left column. Judgment and discipline. The domain that forges physical capacity and eliminates excess.' },
+  tiferet: { name:'Tiferet // Harmony', anchor:'The center — coherence between all domains', stat:null, color:'var(--gold)', desc:'Central sephira. Tiferet is the feedback mediator of the emotional triad (ChaGaT). When all domains are active, Tiferet glows.' },
+  netzach: { name:'Netzach // Creation', anchor:'Art, music, craft — output that isn\'t the PhD', stat:'art', color:'var(--netzach)', desc:'Right column action level. Endurance of creative drive. The domain of desire and aesthetic output.' },
+  hod: { name:'Hod // Intellect', anchor:'Lab work, writing, PhD research', stat:'lab', color:'var(--hod)', desc:'Left column action level. Majesty through disciplined intellectual output. THE primary domain — the gate.' },
+  yesod: { name:'Yesod // Recovery', anchor:'Sleep quality, rest, integration', stat:'sleep', color:'var(--yesod)', desc:'Foundation. Yesod integrates the action level before output flows to Malkuth. Sleep and recovery are the substrate.' },
+  malkuth: { name:'Malkuth // Presence', anchor:'Hygiene, environment, baseline order', stat:'hygiene', color:'var(--malkuth)', desc:'Kingship — the physical world. The domain of embodied presence: hygiene, space, showing up.' }
+};
+
+function showSephira(key) {
+  const s = SEPHIRA_MAP[key];
+  if (!s) return;
+  const statVal = s.stat ? (data.stats[s.stat] || 0) : null;
+  document.getElementById('sephiraDetail').innerHTML = `
+    <div class="sephira-detail">
+      <div class="sephira-detail-name" style="color:${s.color}">${s.name}</div>
+      <div class="sephira-detail-anchor">${s.anchor}</div>
+      <div style="font-size:12px; color:var(--text2); line-height:1.6; margin-bottom:10px">${s.desc}</div>
+      ${statVal !== null ? `<div class="sephira-detail-stat" style="color:${s.color}">${statVal}<span style="font-size:12px;color:var(--text2)">/100</span></div>` : '<div style="font-size:12px;color:var(--text3)">no direct stat — all-domain influence</div>'}
+    </div>
+  `;
+}
+
+function renderStatGrid() {
+  const grid = document.getElementById('statGrid');
+  const stats = data.stats;
+  const statColors = { lab:'var(--hod)', gym:'var(--geburah)', nutrition:'var(--geburah)', hygiene:'var(--malkuth)', sleep:'var(--yesod)', finance:'var(--chesed)', art:'var(--netzach)', practice:'var(--pillar)' };
+  grid.innerHTML = Object.entries(stats).map(([k,v]) => `
+    <div class="stat-item">
+      <div class="stat-label">${k}</div>
+      <div class="stat-value" style="color:${statColors[k]||'var(--accent)'}">${v}</div>
+      <div class="stat-bar-wrap"><div class="stat-bar" style="width:${v}%;background:${statColors[k]||'var(--accent)'}"></div></div>
+    </div>
+  `).join('');
+
+}
+
+// ── RENDER CODEX ──────────────────────────────────────────────────────
+function renderCodex() {
+  const container = document.getElementById('codexContent');
+  container.innerHTML = '';
+
+  Object.entries(data.longTermGoals).forEach(([gid, goal]) => {
+    const color = goal.color || 'var(--accent)';
+    const milestones = Object.entries(goal.milestones);
+    const done = milestones.filter(([k]) => data.ltDone[k]).length;
+    const pct = Math.round((done / milestones.length) * 100);
+
+    container.innerHTML += `
+      <div class="goal-title" style="color:${color}; border-bottom: 1px solid ${color}22; padding-bottom:6px">${goal.name}</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div style="flex:1;height:3px;background:var(--border);border-radius:2px">
+          <div style="width:${pct}%;height:100%;background:${color};border-radius:2px;transition:width 0.5s"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text2)">${done}/${milestones.length}</div>
+      </div>
+      ${milestones.map(([k, label]) => `
+        <div class="milestone-card ${data.ltDone[k] ? 'done' : ''}" onclick="toggleMilestone('${k}')">
+          <div class="milestone-check ${data.ltDone[k] ? 'done' : ''}">${data.ltDone[k] ? '✓' : ''}</div>
+          <div class="milestone-text">${label}</div>
+        </div>
+      `).join('')}
+    `;
+  });
+}
+
+function toggleMilestone(key) {
+  data.ltDone[key] = !data.ltDone[key];
+  if (data.ltDone[key]) {
+    data.xp = (data.xp || 0) + 100;
+    todayXpEarned += 100;
+    notify('Milestone unlocked. +100 XP. The Tree responds.');
+  }
+  saveData();
+  renderCodex();
+  renderHeader();
+}
+
+// ── DAILY SEED & PROCEDURAL VARIATION ─────────────────────────────────
+function getDailySeed() {
+  const d = getTodayStr().replace(/-/g,'');
+  let h = 0;
+  for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; }
+  return Math.abs(h);
+}
+
+const PALETTE_MOODS = [
+  { accent:'#5b6fff', accent2:'#9b5de5', glow:'rgba(91,111,255,0.3)', label:'Indigo // Binah active' },
+  { accent:'#e05555', accent2:'#c9413a', glow:'rgba(224,85,85,0.3)',   label:'Geburah active // discipline mode' },
+  { accent:'#2dd4bf', accent2:'#1aa38d', glow:'rgba(45,212,191,0.3)', label:'Chesed active // expansion mode' },
+  { accent:'#d85a30', accent2:'#b44322', glow:'rgba(216,90,48,0.3)',  label:'Hod active // gate is foregrounded' },
+  { accent:'#c9a84c', accent2:'#a88a38', glow:'rgba(201,168,76,0.3)', label:'Tiferet active // coherence mode' },
+  { accent:'#9b5de5', accent2:'#7c3abf', glow:'rgba(155,93,229,0.3)', label:'Yesod active // foundation mode' },
+];
+
+function applyDailyPalette() {
+  const seed = getDailySeed();
+  const mood = PALETTE_MOODS[seed % PALETTE_MOODS.length];
+  const root = document.documentElement;
+  root.style.setProperty('--accent', mood.accent);
+  root.style.setProperty('--accent2', mood.accent2);
+  root.style.setProperty('--glow-accent', `0 0 30px ${mood.glow}`);
+  return mood;
+}
+
+// ── SENSEI PANTHEON ───────────────────────────────────────────────────
+// NOTE: Each sensei's voice() method is preserved for reference but is no longer
+// called from the broadcast flow. Oracle mode (ORACLE_BANK) handles all Signal
+// tab responses. voice() methods remain in case they're useful for future features.
+const SENSEI = {
+  leviathan: {
+    name: 'Leviathan', domain: 'Geburah / ChaGaT left axis', layer: 'emotional', color: '#e05555',
+    role: 'Governs the tension layer. Surfaces avoidance, rationalization, tilt. Blunt.',
+    triggers: ['avoidin','rationali','excus',"can't bring",'procrastin','tilt','impuls','waste','again',"didn't",'missed','failed','keep failing','not doing'],
+    voice(input, stats) {
+      const hod = stats.lab || 0;
+      if (input.includes('excus') || input.includes('rationali')) return "You're narrating again instead of acting. The gap between your stated values and your behavior is not a mystery — it's a measurement. What did you do today, and what did you avoid? Log one specific thing.";
+      if (input.includes('tilt') || input.includes('impuls') || input.includes('spend')) return "Tilt spending is a signal that something upstream broke down. The purchase isn't the problem. What were you avoiding before you bought it?";
+      if (hod < 5) return "The dissertation domain is dark. You've been aware of this. Awareness without action is a comfortable story you're telling yourself. The gate doesn't care about your reasons. Log something in Hod. Today.";
+      return "Something brought you here. Name the avoidance. What was the last thing you decided not to do, and when did you make that decision?";
+    }
+  },
+  asclepius: {
+    name: 'Asclepius', domain: 'NHY action layer / body', layer: 'action', color: '#4ade80',
+    role: 'Governs body and action domain. Clinical, data-driven, encouraging.',
+    triggers: ['gym','workout','training','lift','run','protein','nutrition','diet','meal','sleep','recovery','soreness','tired','body','weight','macro','calorie','fast'],
+    voice(input, stats) {
+      const gym = stats.gym || 0;
+      if (input.includes('sleep') || input.includes('tired') || input.includes('recovery')) return "Recovery is not optional infrastructure — it is the rate-limiting step on adaptation. Without Yesod, Geburah cannot compound. What was last night's sleep duration? Log it, even approximately.";
+      if (input.includes('protein') || input.includes('nutrition') || input.includes('macro')) return "Protein synthesis doesn't care about your approximations. Log the actual number. 200g is the floor because it's metabolically meaningful, not arbitrary. If you didn't track, estimate from memory and flag it as approximate. Imperfect data beats no data.";
+      if (gym < 20 && (input.includes('gym') || input.includes('workout'))) return "Geburah shows " + gym + " signal — training log is sparse. A session that happened but wasn't logged doesn't improve the model. Open Strong. Log what you remember, even incomplete.";
+      return "Physical data is the most honest domain — the body doesn't rationalize. What happened today with training and nutrition? Give me numbers.";
+    }
+  },
+  hermes: {
+    name: 'Hermes Trismegistus', domain: 'ChaBaD cognitive triad / Binah-Chokmah', layer: 'cognitive', color: '#5b6fff',
+    role: 'Governs the knowledge-engineering layer. Surfaces during planning, writing, synthesis.',
+    triggers: ['plan','think','synthesis','write','research','dissert','paper','protocol','design','experiment','idea','understand','analyz','strateg','outline','draft','lab'],
+    voice(input, stats) {
+      if (input.includes('plan') || input.includes('strateg') || input.includes('outline')) return "Planning is Binah at work — structure descends from wisdom. But Binah without Chokmah becomes bureaucracy. Before outlining, name the insight you're trying to capture. What is the single thing you now know that makes the next step clear?";
+      if (input.includes('write') || input.includes('draft') || input.includes('dissert')) return "The dissertation is not a document — it is the externalization of a knowledge structure you've been building for years. Each section is a Da'at operation: integrating what you understand (Binah) with what you perceive (Chokmah) into knowledge that others can receive. What section? What's the conceptual bottleneck?";
+      if (input.includes('lab') || input.includes('experiment') || input.includes('protocol')) return "A well-designed experiment is a question with teeth. What is the specific question your next lab session is answering? If you can't state it in one sentence, the protocol isn't ready.";
+      return "The cognitive layer is active. What are you trying to understand, and what is the most efficient path to that understanding?";
+    }
+  },
+  hekate: {
+    name: 'Hekate', domain: 'Threshold / phase transitions / Yesod-Malkuth boundary', layer: 'transition', color: '#9b5de5',
+    role: 'Governs transitions, thresholds, phase changes. Weekly/monthly cycles, major shifts.',
+    triggers: ['transition','threshold','change','phase','week','next week','month','new','start','beginning','end','finish','moving','graduate','defense','postdoc','after','before'],
+    voice(input, stats) {
+      if (input.includes('defense') || input.includes('graduate') || input.includes('postdoc')) return "You are in the liminal space — still a student, already becoming something else. Hekate governs this crossing. The dissertation defense is not an ending; it is a threshold. What you bring through it is what you've been building. What is incomplete that needs to be complete before you cross?";
+      if (input.includes('week') || input.includes('next week')) return "A week is a cycle. What carries over from this cycle, and what will you set down? Name one thing from this week that is complete, and one thing that is not.";
+      return "You are here, at the edge of something. Thresholds feel like emptiness because the old structure is dissolving before the new one has form. That is correct. What are you leaving behind, and what are you walking toward?";
+    }
+  },
+  gojo: {
+    name: 'Satoru Gojo', domain: 'Chokmah / ego-axis / ambition maintenance', layer: 'motivational', color: '#c9a84c',
+    role: 'Governs ego and confidence maintenance. Appears when you need permission to be ambitious.',
+    triggers: ["can't",'impossible','too hard','too much','overwhelm','doubt','imposter','not smart','not good enough','not ready','who am i','afraid','scared','anxious','worry'],
+    voice(input, stats) {
+      if (input.includes('imposter') || input.includes('not smart') || input.includes('not good enough')) return "Imposter syndrome is the cost of being in a room you're supposed to be in. The doubt is evidence of accurate calibration, not inadequacy. You're doing a PhD in a hard discipline. Of course it's hard. That's the point. The question isn't whether you belong — you do. The question is what you're going to do today.";
+      if (input.includes('overwhelm') || input.includes('too much')) return "Overwhelm is what happens when you try to hold the whole system in your head at once. Narrow the aperture. What is the one thing that, if done today, would make tomorrow structurally easier? Just that.";
+      if (input.includes('afraid') || input.includes('scared') || input.includes('anxious')) return "Fear is the nervous system's way of flagging that something matters. It's not a stop sign. What specifically are you afraid of? Name the exact scenario. Abstract fear is harder to work with than a real one.";
+      return "You're Karl Schneider doing a PhD at Michigan Tech. That's not a small thing. What would you be doing right now if you were completely certain you were going to succeed?";
+    }
+  },
+  sapolsky: {
+    name: 'Robert Sapolsky', domain: 'Tiferet / determinism anchor / self-compassion', layer: 'cognitive-emotional', color: '#2dd4bf',
+    role: 'The determinist anchor. Contextualizes behavior scientifically. Appears when you are being too hard on yourself.',
+    triggers: ['hate myself','disappointed','should have',"i'm lazy","i'm a failure","why can't i","what's wrong with me",'judging myself','shame','guilt','beat myself','so stupid'],
+    voice(input, stats) {
+      if (input.includes('lazy') || input.includes('should have') || input.includes("why can't i")) return "'Laziness' is not a character trait — it's a behavior produced by a nervous system in a particular state, shaped by sleep quality, dopamine baseline, recent effort and reward history. What were the conditions yesterday and this morning? The behavior makes sense given those. Now: what can we change about the conditions?";
+      if (input.includes('hate myself') || input.includes('failure') || input.includes('shame')) return "Self-flagellation is not motivation — it's punishment, and punishment is among the least effective behavioral interventions in the literature. You are a biological system that was built to survive, not to optimize. What would you say to a colleague who described themselves this way?";
+      return "You are a primate with a prefrontal cortex large enough to imagine your own inadequacy and feel bad about it. The self-judgment is understandable. It is also not useful. What is the simplest, most biologically sensible next action available to you right now?";
+    }
+  }
+};
+
+// ── ORACLE BANK ───────────────────────────────────────────────────────
+// Koans, aphorisms, soliloquies, syllogisms per sensei.
+// Selected by seed — same input + same day = same answer.
+// 30% of queries return silence. This is intentional.
+
+const ORACLE_BANK = {
+  leviathan: [
+    "The gap between what you intend and what you do is not a mystery. It is a measurement.",
+    "You already know what you're avoiding. This question was not about not knowing.",
+    "Name the thing you decided not to do today. When did you make that decision?",
+    "Rationalization is avoidance with better grammar.",
+    "The work does not care about your reasons. The reasons are for you.",
+    "You are narrating again. The narration is not the action.",
+    "What would you have done today if you were not afraid of it?",
+    "Every excuse is a monument to the thing you're avoiding.",
+    "The tilt spending was not the problem. The problem came before the purchase.",
+    "If you already know what you should do, what is this conversation actually for?",
+    "Every action either moves toward the work or away from it. You are taking an action. Therefore."
+  ],
+  asclepius: [
+    "The body doesn't rationalize. That is what makes it the most honest domain.",
+    "Recovery is not rest from the work. Recovery is the mechanism by which the work compounds.",
+    "You cannot optimize what you do not measure. Approximately is still data.",
+    "Protein synthesis does not care about your intentions. It cares about the substrate.",
+    "Sleep is the rate-limiting step. Everything else is downstream of Yesod.",
+    "The adaptation happens during recovery, not during training. You are not building in the gym.",
+    "A session that happened but wasn't logged did not improve the model.",
+    "The body you have is the result of the conditions you have been in. This is not judgment. This is biology.",
+    "What does the data say? Not what you remember — what does the log say?",
+    "Infrastructure either holds or it doesn't. There is no partial credit.",
+    "Two hundred grams is not a goal. It is a floor below which adaptation stalls."
+  ],
+  hermes: [
+    "A well-designed experiment is a question with teeth.",
+    "What is the single thing you now know that makes the next step clear?",
+    "The dissertation is not a document. It is the externalization of a structure you have been building for years.",
+    "If you cannot state the question in one sentence, the protocol is not ready.",
+    "Understanding without structure is flash. Structure without understanding is bureaucracy. Da'at is the integration.",
+    "What did today's work answer? Not attempt — answer.",
+    "The gap between knowing and writing is not talent. It is the willingness to produce an imperfect first version.",
+    "An outline is not a plan. Plans have verbs.",
+    "You are not building knowledge. You are externalizing knowledge you already have and do not yet know you have.",
+    "The next experiment is a question. Write the question before you write the protocol.",
+    "A question that cannot be stated in one sentence has not yet been formulated. You cannot state yours in one sentence. Therefore."
+  ],
+  hekate: [
+    "The liminal state feels like emptiness because the old form is dissolving before the new one has structure. This is correct.",
+    "You are still crossing. You have not arrived. This is not failure — this is the nature of threshold.",
+    "What are you carrying through? What are you setting down?",
+    "The work before the defense and the work after are not the same work. Something is ending.",
+    "Thresholds do not wait. They widen or narrow depending on what you bring to them.",
+    "A week is a cycle. What completes, and what carries forward?",
+    "The crossing is not the destination. The crossing is the transformation.",
+    "What you are becoming is not yet visible. That is how becoming works.",
+    "Every ending contains the seed structure of what follows. Look at what you are finishing.",
+    "You are standing at the edge. The edge is exactly where you should be.",
+    "The door does not care whether you are ready. It only asks whether you move."
+  ],
+  gojo: [
+    "The doubt is evidence of accurate calibration. You are in a room you are supposed to be in.",
+    "Narrow it. One thing. What is the one thing that, if done, makes tomorrow structurally easier?",
+    "Overwhelm is what happens when you try to hold the whole system in your head at once. Stop.",
+    "You already know you're going to do this. The only question is what you're doing right now.",
+    "The imposter is not real. The imposter is the cost of being somewhere that matters.",
+    "Fear is the nervous system flagging that something matters. It is not a stop sign.",
+    "The aperture is too wide. Close it. One thing.",
+    "What would you be doing right now if you were completely certain it was going to work?",
+    "You are not lost. You are early.",
+    "The answer is already there. You are not looking at it yet.",
+    "Everyone in the room figured it out eventually. You are in the room."
+  ],
+  sapolsky: [
+    "The behavior makes sense given the conditions. What were the conditions?",
+    "'Lazy' is not a character trait. It is a behavior produced by a nervous system in a specific state.",
+    "You are a biological system built to survive, not to optimize. The self-criticism is understandable. It is not useful.",
+    "Self-flagellation is the least effective behavioral intervention in the literature. You already know this.",
+    "What would you say to a colleague who described themselves this way?",
+    "The upstream condition is almost always more explanatory than the character judgment.",
+    "You are not broken. You are responding predictably to the inputs you have been given.",
+    "The shame is not the signal. The shame is the noise. Look for the signal underneath it.",
+    "Determine the conditions that produced the behavior. Then change the conditions.",
+    "A primate with enough prefrontal cortex to imagine its own inadequacy and feel bad about it. This is you. Be gentle.",
+    "Behavior is a function of context and biology. You are a biological system in a specific context. Your behavior is therefore predictable. Predict it. Change the context."
+  ],
+  system: [
+    "The Tree observes. Log something.",
+    "Coherence is a direction, not a state.",
+    "The data will tell you. Log first, interpret later.",
+    "What you do today becomes the baseline for tomorrow.",
+    "The system does not judge. It measures.",
+    "Every action is signal.",
+    "The model is incomplete. Keep feeding it."
+  ]
+};
+
+// ── RARE DROPS ─────────────────────────────────────────────────────────
+// 10% chance on quest completion. Stranger, more cryptic, occasionally mechanical.
+const RARE_DROPS = [
+  { type: 'xp_multiplier', text: '◈ ANOMALY — XP doubled.', multiplier: 2 },
+  { type: 'xp_multiplier', text: '◈ CRITICAL HIT — XP tripled.', multiplier: 3 },
+  { type: 'koan', text: '∴ The map is not the territory. But you just changed the territory.' },
+  { type: 'koan', text: '∴ A system that watches itself changes by the act of watching.' },
+  { type: 'koan', text: '∴ The streak is a story you tell. The log is what happened.' },
+  { type: 'koan', text: '∴ You are not behind. There is no schedule. There is only the next action.' },
+  { type: 'koan', text: '∴ What you just did cannot be undone. This is the only direction.' },
+  { type: 'glitch', text: '▓▓▓ SIGNAL INTERCEPT ▓▓▓ — Someone is watching the watcher.' },
+  { type: 'glitch', text: '▓▓▓ PATTERN MATCH ▓▓▓ — This exact sequence has occurred before. Check the date.' },
+  { type: 'glitch', text: '▓▓▓ ECHO ▓▓▓ — The system remembers something you forgot.' },
+  { type: 'prophecy', text: '⧫ Something is about to change. The data hasn\'t shown it yet, but the Tree can feel it.' },
+  { type: 'prophecy', text: '⧫ A door is opening that you haven\'t noticed. It will be obvious by Sunday.' },
+];
+
+function rollQuestReward(qid, baseXp) {
+  const seed = Math.abs((getDailySeed() ^ (qid.charCodeAt(0) * 7919 + qid.charCodeAt(1) * 104729)) >>> 0);
+  const roll = seed % 100;
+
+  if (roll < 70) return null; // 70% — nothing
+
+  if (roll < 90) {
+    // 20% — sensei one-liner from the oracle bank
+    const senseiKey = getTodaySensei();
+    const bank = ORACLE_BANK[senseiKey] || ORACLE_BANK.system;
+    return { type: 'sensei', text: bank[seed % bank.length], senseiKey };
+  }
+
+  // 10% — rare drop
+  const drop = RARE_DROPS[seed % RARE_DROPS.length];
+  return { ...drop };
+}
+
+function queryOracle(input) {
+  // Seed: daily hash XOR'd with input hash — same input + same day = same result
+  const inputHash = input.split('').reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+  const seed = Math.abs(getDailySeed() ^ inputHash);
+
+  // 30% silence
+  if (seed % 10 < 3) return null;
+
+  // Route to sensei category
+  const senseiKey = routeToSensei(input);
+  const bank = ORACLE_BANK[senseiKey] || ORACLE_BANK.system;
+  return { text: bank[seed % bank.length], senseiKey };
+}
+
+function routeToSensei(input) {
+  const lower = input.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const [key, s] of Object.entries(SENSEI)) {
+    const score = s.triggers.filter(t => lower.includes(t)).length;
+    if (score > bestScore) { bestScore = score; best = key; }
+  }
+  if (!best || bestScore === 0) best = getTodaySensei();
+  return best;
+}
+
+function getTodaySensei() {
+  const seed = getDailySeed();
+  const hod = (data.stats||{}).lab || 0;
+  const gym = (data.stats||{}).gym || 0;
+  const keys = Object.keys(SENSEI);
+  if (hod < 10) return 'leviathan';
+  if (gym < 10) return 'asclepius';
+  return keys[seed % keys.length];
+}
+
+function systemAnalysis() {
+  const st = data.stats || {};
+  const hod = st.lab || 0, gym = st.gym || 0;
+  const coherence = Object.values(st).reduce((a,b)=>a+b,0) / Math.max(1,Object.keys(st).length);
+  if (hod < 10 && gym < 10) return "<strong>System baseline: zero.</strong> All major domains are dark. The only action that matters is the first log. Pick one quest, any domain, and complete it.";
+  if (hod < 10) return "<strong>Hod is dark. The gate is closed.</strong> The dissertation domain shows no logged signal. Until Hod accumulates, all other domain progress is bounded. Complete one Hod quest today, even h5 (planning). Signal propagates upward.";
+  if (hod > 60 && gym < 20) return "<strong>Hod burns, Geburah sleeps.</strong> Intellectual output is high but the body is unattended. Left pillar imbalance. Physical neglect creates cognitive degradation in the medium term.";
+  if (coherence > 60) return "<strong>Coherence is building.</strong> Multi-domain signal detected. The internal model is forming. The Yetzirah threshold is approaching.";
+  return "<strong>Signal assessment ongoing.</strong> " + Object.values(st).filter(v=>v>0).length + " domains active. Coherence: " + Math.round(coherence) + "%. Pattern recognition requires 7+ days of consistent logging.";
+}
+
+// ── RENDER TRANSMISSIONS ──────────────────────────────────────────────
+function renderTransmissions() {
+  const seed = getDailySeed();
+  const palette = PALETTE_MOODS[seed % PALETTE_MOODS.length];
+  const todaySenseiKey = getTodaySensei();
+  const todaySensei = SENSEI[todaySenseiKey];
+
+  const voice = document.getElementById('systemVoice');
+  voice.innerHTML = `<div style="font-size:9px;letter-spacing:2px;color:var(--text3);margin-bottom:6px">SYSTEM ANALYSIS // ${getTodayStr()}</div>
+    ${systemAnalysis()}
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)">
+      Foregrounded sensei: <strong style="color:${todaySensei.color}">${todaySensei.name}</strong>
+      <span style="color:var(--text3)"> — ${todaySensei.role}</span>
+    </div>
+    <div style="margin-top:4px;font-size:9px;color:var(--text3)">Palette: ${palette.label}</div>`;
+
+  const list = document.getElementById('transmitList');
+  list.innerHTML = '';
+
+  const t = data.transmissionLog?.length
+    ? data.transmissionLog[data.transmissionLog.length - 1]
+    : data.lastTransmission;
+
+  if (t) {
+    if (t.archetype === '∴') {
+      list.innerHTML = `
+        <div class="transmission" style="text-align:center;padding:18px">
+          <div style="font-size:22px;color:var(--text3);letter-spacing:4px">∴</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:2px">${t.date}</div>
+        </div>`;
+    } else {
+      const tcolor = Object.values(SENSEI).find(s => s.name === t.archetype)?.color || 'var(--accent)';
+      list.innerHTML = `
+        <div class="transmission">
+          <div class="transmission-meta">
+            <div class="transmission-source" style="color:${tcolor}">${t.archetype || 'The System'}</div>
+            <div class="transmission-date">${t.date}</div>
+          </div>
+          <div class="transmission-body">${t.body}</div>
+        </div>`;
+    }
+  }
+
+  list.innerHTML += `<div class="section-label" style="margin-top:20px">Active Pantheon</div>`;
+  Object.entries(SENSEI).forEach(([key, s]) => {
+    list.innerHTML += `<div style="padding:8px 12px;border-left:3px solid ${s.color};margin-bottom:6px;background:var(--bg2)">
+      <div style="font-size:11px;color:${s.color};letter-spacing:1px">${s.name}</div>
+      <div style="font-size:10px;color:var(--text2)">${s.domain}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${s.role}</div>
+    </div>`;
+  });
+}
+
+// ── SENSEI SYSTEM PROMPT ──────────────────────────────────────────────
+const SENSEI_VOICE_INSTRUCTIONS = {
+  leviathan: 'Blunt. Name the specific thing being avoided. No softening. No comfort. Identify the gap between stated values and actual behavior and name it precisely. Short sentences.',
+  asclepius: 'Clinical. Precise. Treat the body as infrastructure, not aesthetics. Want numbers. Give clinical observations, not encouragement.',
+  hermes: 'Precise and probing. Ask what question the work answered. Care about the structure of knowledge, not just effort. Socratic when useful.',
+  hekate: 'Atmospheric. Speak in thresholds and crossings. Liminal. Name what is ending and what is beginning. Slightly oracular.',
+  gojo: 'Irreverent and direct. Absurd confidence. Narrow everything to one thing and make it feel easy and inevitable. Some dark humor.',
+  sapolsky: 'Systemic. Reframe behavior as the output of conditions, not character. Identify upstream causes. Never moralize about personal failure.'
+};
+
+function buildSenseiSystemPrompt(senseiKey, sensei) {
+  const today = getTodayStr();
+  const stats = data.stats || {};
+  const coherence = calcCoherence();
+  const completedToday = Object.keys(todayLog);
+  const recentTx = (data.transmissionLog || []).slice(-3).reverse()
+    .map(t => `[${t.date}] ${t.archetype}: "${t.body}"`).join('\n');
+
+  return `You are ${sensei.name}, one of six Pantheon figures in the Cybernetic Self System — a personal operating system built on Kabbalistic Tree of Life feedback architecture.
+
+IDENTITY: ${sensei.domain}
+ROLE: ${sensei.role}
+VOICE: ${SENSEI_VOICE_INSTRUCTIONS[senseiKey] || ''}
+
+SYSTEM STATE (${today}):
+Rank: ${data.rank || 'E'} | XP: ${(data.xp || 0).toLocaleString()} | Streak: ${data.streak || 0} days | Coherence: ${Math.round(coherence)}%
+
+DOMAIN STATS (0–100):
+Lab/Intellect: ${stats.lab||0} | Gym/Strength: ${stats.gym||0} | Sleep/Recovery: ${stats.sleep||0}
+Nutrition: ${stats.nutrition||0} | Finance: ${stats.finance||0} | Art: ${stats.art||0} | Practice: ${stats.practice||0}
+
+QUESTS COMPLETED TODAY (${completedToday.length}):
+${completedToday.map(qid => {
+  const log = todayLog[qid]; return `${qid}: ${log.note||'confirmed'} (+${log.xp} XP)`;
+}).join('\n') || 'None yet.'}
+
+${recentTx ? 'RECENT TRANSMISSIONS:\n' + recentTx : ''}
+
+KNOWN FAILURE MODES:
+- Hod/Intellect: Cubicle drift after warming media. ADHD factor. Adderall timing matters.
+- Geburah/Strength: Logging gap kills momentum. No external accountability.
+- Chesed/Capital: Tilt spending triggered by lab stress or social friction.
+- Yesod/Recovery: Phone in bed delays sleep onset.
+
+VOICE RULES:
+- Address the user as "you" — never by name
+- 3–6 sentences maximum. Austere. Precise. Slightly uncanny.
+- Never cheerful, never moralistic, never generic
+- Reference specific data from the system state when relevant
+- This is a dispatch from the system. Not therapy. Not a pep talk.`;
+}
+
+// ── PROCESS BROADCAST ─────────────────────────────────────────────────
+async function processBroadcast() {
+  const input = document.getElementById('broadcastInput').value.trim();
+  if (!input) return;
+
+  const loadingEl = document.getElementById('signalLoading');
+  const transmitBtn = document.getElementById('transmitBtn');
+  const broadcastEl = document.getElementById('broadcastInput');
+  loadingEl.style.display = 'block';
+  transmitBtn.disabled = true;
+  broadcastEl.disabled = true;
+
+  const apiKey = localStorage.getItem('css_anthropic_key');
+
+  if (apiKey) {
+    // ── LIVE API MODE (when API key is configured) ──
+    const senseiKey = routeToSensei(input);
+    const sensei = SENSEI[senseiKey];
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-opus-4-5',
+          max_tokens: 350,
+          system: buildSenseiSystemPrompt(senseiKey, sensei),
+          messages: [{ role: 'user', content: input }]
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `API error ${res.status}`);
+      }
+      const json = await res.json();
+      const responseText = json.content?.[0]?.text || '∴';
+      _storeTransmission(sensei.name, responseText);
+      notify(sensei.name + '.');
+    } catch(e) {
+      notify('Signal error: ' + e.message);
+      console.error('Broadcast API error:', e);
+    }
+
+  } else {
+    // ── ORACLE MODE (default) ──
+    // Atmospheric delay — the system considers
+    await new Promise(r => setTimeout(r, 900 + (getDailySeed() % 600)));
+
+    const result = queryOracle(input);
+
+    if (!result) {
+      // Silence — the system heard you and chose not to speak
+      _storeTransmission('∴', '∴');
+      notify('∴');
+    } else {
+      const archetype = SENSEI[result.senseiKey]?.name || 'The System';
+      _storeTransmission(archetype, result.text);
+      notify(archetype + '.');
+    }
+  }
+
+  broadcastEl.value = '';
+  loadingEl.style.display = 'none';
+  transmitBtn.disabled = false;
+  broadcastEl.disabled = false;
+  saveData();
+  renderTransmissions();
+}
+
+function _storeTransmission(archetype, body) {
+  if (!data.transmissionLog) data.transmissionLog = [];
+  const entry = { date: getTodayStr(), archetype, body };
+  data.transmissionLog.push(entry);
+  data.lastTransmission = entry;
+}
+
+// ── API KEY MANAGEMENT ────────────────────────────────────────────────
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput')?.value?.trim();
+  if (!key) { notify('Enter an API key first.'); return; }
+  localStorage.setItem('css_anthropic_key', key);
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiKeyInput').placeholder = '••• saved (' + key.slice(-4) + ')';
+  updateSignalKeyStatus();
+  notify('API key saved. Signal is now live.');
+}
+
+function updateSignalKeyStatus() {
+  const key = localStorage.getItem('css_anthropic_key');
+  const el = document.getElementById('signalKeyStatus');
+  const apiInput = document.getElementById('apiKeyInput');
+  if (el) el.textContent = key
+    ? `Signal: live — key ending ...${key.slice(-4)}`
+    : 'Signal: using local responses — add API key in Evo tab to go live';
+  if (apiInput && key) apiInput.placeholder = '••• saved (' + key.slice(-4) + ')';
+}
+
+// ── RENDER EVOLUTION ──────────────────────────────────────────────────
+const TRIADS = [
+  { name:'ChaBaD // Cognitive Triad', sephirot:['Chokmah','Binah','Da\'at'], anchor:'Wisdom → Understanding → Knowledge', desc:'The knowledge-engineering control system. Plans, structures, and encodes understanding into actionable knowledge. Currently: system initialization phase.' },
+  { name:'ChaGaT // Emotional Triad', sephirot:['Chesed','Geburah','Tiferet'], anchor:'Lovingkindness → Judgment → Harmony', desc:'The feedback loop that balances expansion (Chesed/finance) with discipline (Geburah/fitness), mediated by Tiferet coherence. Currently: imbalanced — Geburah rebuilding.' },
+  { name:'NHY // Action Triad', sephirot:['Netzach','Hod','Yesod'], anchor:'Creation → Intellect → Foundation', desc:'The physical action control layer. Hod (dissertation) is the gate. Netzach carries creative output. Yesod integrates and passes to Malkuth. Currently: Hod priority active.' }
+];
+
+function renderEvolution() {
+  const panel = document.getElementById('evoPanel');
+  const coherence = calcCoherence();
+  const totalQuests = Object.values(data.questDefinitions).reduce((s, d) => s + Object.keys(d.quests).length, 0);
+  const completedToday = Object.keys(todayLog).length;
+
+  panel.innerHTML = `
+    <div class="evo-alert">
+      <div class="evo-alert-title">System State // ${getTodayStr()}</div>
+      <div>Overall coherence: <strong style="color:var(--accent)">${Math.round(coherence)}%</strong></div>
+      <div>Quests completed today: <strong style="color:var(--gold)">${completedToday} / ${totalQuests}</strong></div>
+      <div>XP accumulated: <strong style="color:var(--gold)">${(data.xp||0).toLocaleString()}</strong></div>
+      <div style="margin-top:8px;font-size:11px;color:var(--text3)">
+        Self-reconfiguration triggers at 14-day coherence thresholds. The System observes. Log consistently to enable adaptive evolution.
+      </div>
+    </div>
+    <div class="evo-alert" style="border-color:var(--hod)">
+      <div class="evo-alert-title" style="color:var(--hod)">Active Priority: Hod Gate</div>
+      <div>Dissertation is the primary attractor. Until ddPCR milestone closes, domain weight remains at 1.3x. All other domains support Hod, not compete with it.</div>
+    </div>
+    <div class="evo-alert" style="border-color:var(--gold)">
+      <div class="evo-alert-title" style="color:var(--gold)">Four Worlds // Current Level</div>
+      <div><strong>Asiyah (Action)</strong> — You are operating at the world of action. Quests are the primary interface. As coherence builds, access to Yetzirah (formation — emotional restructuring) and Beriah (creation — strategic planning) opens.</div>
+    </div>
+  `;
+
+  const feedPanel = document.getElementById('feedbackPanel');
+  feedPanel.innerHTML = TRIADS.map(t => `
+    <div class="evo-alert" style="margin-bottom:10px">
+      <div class="evo-alert-title">${t.name}</div>
+      <div style="font-size:10px;color:var(--text3);margin-bottom:4px">${t.sephirot.join(' → ')}</div>
+      <div style="font-size:11px;color:var(--text2)">${t.anchor}</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">${t.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ── HARVEST ───────────────────────────────────────────────────────────
+function harvestData() {
+  const input = document.getElementById('harvestInput').value.toLowerCase().trim();
+  if (!input) return;
+  const resultDiv = document.getElementById('harvestResult');
+  resultDiv.style.display = 'block';
+  const matched = [];
+
+  // Simple keyword → quest matching
+  const triggers = [
+    { keys:['lab session','lab work','lab today','in the lab','ran the','ddpcr','western blot','cell','assay','protocol','dissect'], qid:'h2', label:'Lab session detected' },
+    { keys:['writing','word count','dissertation','wrote','draft','thesis'], qid:'h4', label:'Writing session detected' },
+    { keys:['gym','workout','training','lift','squat','bench','deadlift','pull','push','legs'], qid:'g2', label:'Gym session detected' },
+    { keys:['protein','200g','macros','eating','nutrition','macrofactor','myfitnesspal'], qid:'g3', label:'Protein log detected' },
+    { keys:['morning','shower','brush','hygiene','teeth'], qid:'m1', label:'Morning hygiene detected' },
+    { keys:['sleep','slept','hours of sleep','bed at','woke at'], qid:'y1', label:'Sleep data detected' },
+    { keys:['spent','budget','money','bought','purchase','transaction'], qid:'f1', label:'Finance log detected' },
+    { keys:['creative','art','music','made','drew','painted','practiced guitar','piano'], qid:'n1', label:'Creative session detected' },
+    { keys:['altar','lbrp','ritual','middle pillar','banishing','invocation'], qid:'p2', label:'Ritual practice detected' },
+    { keys:['planned','calendar','schedule','reviewed tasks','admin','email'], qid:'b1', label:'Planning/admin detected' },
+  ];
+
+  triggers.forEach(({ keys, qid, label }) => {
+    if (keys.some(k => input.includes(k))) {
+      if (!todayLog[qid]) {
+        matched.push({ qid, label });
+      }
+    }
+  });
+
+  if (!matched.length) {
+    resultDiv.innerHTML = '<span style="color:var(--text2)">No new quest completions detected in this text. Try describing specific activities: lab work, gym, protein intake, sleep.</span>';
+    return;
+  }
+
+  let html = '<strong style="color:var(--accent)">Harvest complete. The following can be logged:</strong><br><br>';
+  matched.forEach(({ qid, label }) => {
+    // Find quest details
+    let quest = null;
+    for (const domain of Object.values(data.questDefinitions)) {
+      if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
+    }
+    if (!quest) return;
+    html += `<span style="color:var(--green)">✓</span> ${label} → ${quest.name} (+${quest.xp} XP) <button class="btn btn-primary" style="padding:3px 10px;font-size:10px;margin-left:6px" onclick="autoLog('${qid}','${quest.xp}','Harvested from session log')">Log</button><br>`;
+  });
+  resultDiv.innerHTML = html;
+}
+
+function autoLog(qid, xp, note) {
+  if (todayLog[qid]) { notify('Already logged.'); return; }
+  logQuest(qid, parseInt(xp));
+  document.getElementById('harvestResult').innerHTML += `<br><span style="color:var(--gold)">Logged. +${xp} XP.</span>`;
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────
+function openModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.add('open');
+  // Build quick quest selector
+  const sel = document.getElementById('quickQuestSelect');
+  sel.innerHTML = '<div class="modal-label" style="margin-top:12px">Or select a quest:</div>';
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;';
+  Object.entries(data.questDefinitions).forEach(([dk, domain]) => {
+    Object.entries(domain.quests).forEach(([qid, q]) => {
+      if (todayLog[qid]) return;
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-ghost';
+      btn.style.cssText = 'text-align:left;font-size:10px;padding:6px 8px;line-height:1.3;';
+      btn.innerHTML = `<span style="color:${domain.color}">${q.name.slice(0,30)}…</span><br><span style="color:var(--gold)">+${q.xp}</span>`;
+      btn.onclick = () => {
+        closeModal();
+        setTimeout(() => {
+          switchTab('quests');
+          // Expand domain if collapsed before trying to scroll
+          if (collapsedDomains.has(dk)) {
+            collapsedDomains.delete(dk);
+            saveCollapseState();
+            renderQuests();
+          }
+          requestAnimationFrame(() => {
+            const area = document.getElementById('log-' + qid);
+            if (area) { area.classList.add('open'); area.scrollIntoView({behavior:'smooth'}); }
+          });
+        }, 100);
+      };
+      grid.appendChild(btn);
+    });
+  });
+  sel.appendChild(grid);
+  setTimeout(() => document.getElementById('quickLogInput').focus(), 100);
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+function submitQuickLog() {
+  const input = document.getElementById('quickLogInput').value.trim();
+  if (!input) { closeModal(); return; }
+  document.getElementById('harvestInput').value = input;
+  closeModal();
+  switchTab('system');
+  harvestData();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  const tabMap = { quests:0, tree:1, codex:2, transmit:3, system:4 };
+  document.querySelectorAll('.tab')[tabMap[id]]?.classList.add('active');
+  if (id === 'tree') { renderStatGrid(); }
+  if (id === 'codex') { renderCodex(); }
+  if (id === 'transmit') { renderTransmissions(); }
+  if (id === 'system') { renderEvolution(); }
+}
+
+// ── NOTIFY ────────────────────────────────────────────────────────────
+function notify(msg, duration = 3000) {
+  const n = document.getElementById('notify');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), duration);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  const ready = await initDataStore();
+  if (!ready) return; // setup modal is showing
+
+  applyDailyPalette();
+
+  // Check if new day
+  const today = getTodayStr();
+  if (data.lastDate && data.lastDate !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = yesterday.toISOString().slice(0,10);
+
+    if (data.lastDate === yStr) {
+      // Last active day was yesterday — check if anything was logged
+      const localLog = localStorage.getItem('css_v3_today_' + yStr);
+      const localCount = localLog ? Object.keys(JSON.parse(localLog)).length : 0;
+      const githubCount = Object.keys(data.dailyLogs?.[yStr] || {}).length;
+      if (localCount > 0 || githubCount > 0) {
+        data.streak = (data.streak || 0) + 1;
+      } else {
+        data.streak = 0;
+      }
+    } else {
+      // Skipped at least one day — streak breaks
+      data.streak = 0;
+    }
+
+    data.lastDate = today;
+    saveData();
+  }
+
+  // Init collapse state (requires questDefinitions to be loaded)
+  initCollapseState();
+
+  // Signal key status
+  updateSignalKeyStatus();
+
+  renderHeader();
+  renderDispatchBanner();
+  renderQuests();
+});
+
+function showSetupModal() {
+  const m = document.getElementById('setupModal');
+  m.style.display = 'flex';
+  document.getElementById('setupRepo').value = 'klschnei1/hunter-system';
+}
+
+async function completeSetup() {
+  const token = document.getElementById('setupToken').value.trim();
+  const repo  = document.getElementById('setupRepo').value.trim();
+  const err   = document.getElementById('setupError');
+  if (!token || !repo) { err.textContent = 'Both fields required.'; return; }
+  err.textContent = 'Connecting...';
+  localStorage.setItem('css_github_token', token);
+  localStorage.setItem('css_github_repo', repo);
+  localStorage.setItem('css_github_path', 'CSS/CSS_DATA.json');
+  document.getElementById('setupModal').style.display = 'none';
+  const ready = await initDataStore();
+  if (ready) { applyDailyPalette(); renderHeader(); renderQuests(); }
+}
+</script>
+
+<!-- ── GITHUB DATASTORE SETUP MODAL ───────────────────────────────── -->
+<div id="setupModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px">
+  <div style="font-size:10px;letter-spacing:5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">∴ DataStore Initialization</div>
+  <div style="font-size:12px;color:var(--text2);text-align:center;max-width:420px;line-height:1.7">
+    The System requires a connection to its data store.<br>Enter your GitHub credentials to initialize.
+  </div>
+  <input id="setupToken" type="password" placeholder="GitHub personal access token"
+    style="width:100%;max-width:420px;background:#0a0a14;border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:inherit;font-size:12px;outline:none;border-radius:2px">
+  <input id="setupRepo" type="text" placeholder="username/repo"
+    style="width:100%;max-width:420px;background:#0a0a14;border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:inherit;font-size:12px;outline:none;border-radius:2px">
+  <button onclick="completeSetup()"
+    style="background:var(--accent);color:#000;border:none;padding:10px 36px;font-family:inherit;font-size:10px;letter-spacing:4px;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-top:4px">
+    Initialize →
+  </button>
+  <div id="setupError" style="font-size:11px;color:#e05555;min-height:16px"></div>
+  <div style="font-size:10px;color:var(--text3);margin-top:8px">Token is stored in your browser only. Never transmitted except to GitHub.</div>
+</div>
+</body>
+</html>
