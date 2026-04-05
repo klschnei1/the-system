@@ -2239,6 +2239,20 @@ async function completeSetup() {
 }
 </script>
 
+<!-- ── COMMUNION MODAL ──────────────────────────────────────────── -->
+<div class="communion-overlay" id="communionOverlay">
+  <div class="communion-header">
+    <span>∴ Weekly Communion</span>
+    <button onclick="closeCommunion()" style="background:none;border:none;color:var(--text3);font-family:inherit;font-size:14px;cursor:pointer">✕</button>
+  </div>
+  <div class="communion-thread" id="communionThread"></div>
+  <div class="communion-typing" id="communionTyping"></div>
+  <div class="communion-input-row" id="communionInputRow">
+    <textarea id="communionInput" rows="2" placeholder="Respond..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCommunionReply()}"></textarea>
+    <button id="communionSendBtn" onclick="sendCommunionReply()">Transmit</button>
+  </div>
+</div>
+
 <!-- ── GITHUB DATASTORE SETUP MODAL ───────────────────────────────── -->
 <div id="setupModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px">
   <div style="font-size:10px;letter-spacing:5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">∴ DataStore Initialization</div>
