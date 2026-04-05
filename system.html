@@ -1031,9 +1031,10 @@ async function initDataStore() {
     const resp = await fetch('/config.json');
     if (resp.ok) {
       const cfg = await resp.json();
-      if (cfg.github_token) localStorage.setItem('css_github_token', cfg.github_token);
-      if (cfg.github_repo)  localStorage.setItem('css_github_repo',  cfg.github_repo);
-      if (cfg.github_path)  localStorage.setItem('css_github_path',  cfg.github_path);
+      if (cfg.github_token)   localStorage.setItem('css_github_token', cfg.github_token);
+      if (cfg.github_repo)    localStorage.setItem('css_github_repo',  cfg.github_repo);
+      if (cfg.github_path)    localStorage.setItem('css_github_path',  cfg.github_path);
+      if (cfg.anthropic_key)  localStorage.setItem('css_anthropic_key', cfg.anthropic_key);
     }
   } catch(e) { /* not served via HTTP or no config.json, skip */ }
 
