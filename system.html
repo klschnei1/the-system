@@ -2175,6 +2175,366 @@ function notify(msg, duration = 3000) {
   setTimeout(() => n.classList.remove('show'), duration);
 }
 
+// ── COMMUNION ─────────────────────────────────────────────────────────
+let communionMessages = []; // {role:'user'|'assistant', content:string}
+let communionSenseiKey = null;
+let communionWeekData = null;
+let communionTurnCount = 0;
+const COMMUNION_MAX_TURNS = 5;
+
+function isSunday() { return new Date().getDay() === 0; }
+
+function communionDoneThisWeek() {
+  const today = new Date();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  const mondayStr = monday.toISOString().slice(0, 10);
+  return (data.weeklyAssessments || []).some(a => a.date >= mondayStr);
+}
+
+function checkCommunionAvailable() {
+  if (!isSunday() || communionDoneThisWeek()) return;
+  const apiKey = localStorage.getItem('css_anthropic_key');
+  if (!apiKey) return;
+  // Insert banner above quest list
+  const existing = document.getElementById('communionBanner');
+  if (existing) return;
+  const banner = document.createElement('div');
+  banner.id = 'communionBanner';
+  banner.className = 'communion-banner';
+  banner.innerHTML = '∴ Weekly Communion Available — Begin Interview';
+  banner.onclick = startCommunion;
+  const questView = document.getElementById('view-quests');
+  questView.insertBefore(banner, questView.firstChild);
+}
+
+function buildWeekAnalysis() {
+  const today = new Date();
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today); d.setDate(today.getDate() - i);
+    days.push(d.toISOString().slice(0, 10));
+  }
+
+  const domains = {};
+  const questHits = {};
+  let weekXP = 0;
+
+  Object.entries(data.questDefinitions).forEach(([dk, domain]) => {
+    domains[dk] = { name: domain.name, daysActive: 0, quests: {} };
+    Object.keys(domain.quests).forEach(qid => {
+      questHits[qid] = { count: 0, name: domain.quests[qid].name, domain: dk, xp: domain.quests[qid].xp, tier: domain.quests[qid].tier };
+    });
+  });
+
+  days.forEach(day => {
+    const log = data.dailyLogs?.[day] || {};
+    const activeDomains = new Set();
+    Object.entries(log).forEach(([qid, entry]) => {
+      if (questHits[qid]) {
+        questHits[qid].count++;
+        activeDomains.add(questHits[qid].domain);
+        weekXP += entry.xp || 0;
+      }
+    });
+    activeDomains.forEach(dk => { if (domains[dk]) domains[dk].daysActive++; });
+  });
+
+  const darkDomains = Object.entries(domains).filter(([, d]) => d.daysActive === 0).map(([dk]) => dk);
+  const activeDomains = Object.entries(domains).filter(([, d]) => d.daysActive >= 3).map(([dk]) => dk);
+  const dormantQuests = Object.entries(questHits).filter(([qid, q]) => {
+    if (qid === 'h4' && q.count === 0) return true; // h4 weeklyMin — only dormant at 0/7
+    return q.count === 0 && qid !== 'h4';
+  }).map(([qid, q]) => ({ qid, ...q }));
+  const highTierHits = Object.entries(questHits).filter(([, q]) => q.xp >= 35 && q.count > 0);
+
+  return {
+    days, domains, questHits, weekXP, darkDomains, activeDomains,
+    dormantQuests, highTierHits,
+    streak: data.streak || 0,
+    rank: data.rank || 'E',
+    xp: data.xp || 0,
+    domainWeights: data.domainWeights || {},
+    currentWeekQuests: data.currentWeekQuests || [],
+    stats: data.stats || {}
+  };
+}
+
+function selectCommunionSensei(week) {
+  const domainActivity = {};
+  Object.entries(week.domains).forEach(([dk, d]) => { domainActivity[dk] = d.daysActive; });
+
+  // Leviathan — low overall engagement
+  const totalActive = Object.values(domainActivity).reduce((s, v) => s + v, 0);
+  if (totalActive < 5) return 'leviathan';
+
+  // Asclepius — body domains dominant or absent
+  const bodyScore = (domainActivity.geburah || 0) + (domainActivity.yesod || 0);
+  if (bodyScore === 0 || bodyScore >= 8) return 'asclepius';
+
+  // Hermes — Hod strongest or weakest
+  if (domainActivity.hod === 0 || domainActivity.hod >= 5) return 'hermes';
+
+  // Gojo — high coherence
+  const activeCount = Object.values(domainActivity).filter(v => v >= 3).length;
+  if (activeCount >= 5) return 'gojo';
+
+  // Sapolsky — erratic pattern (many domains at 1-2 days)
+  const scattered = Object.values(domainActivity).filter(v => v >= 1 && v <= 2).length;
+  if (scattered >= 4) return 'sapolsky';
+
+  // Hekate — default / transitional
+  return 'hekate';
+}
+
+function buildCommunionSystemPrompt(senseiKey, week) {
+  const sensei = SENSEI[senseiKey];
+  const domainSummary = Object.entries(week.domains)
+    .map(([dk, d]) => `${d.name} (${dk}): ${d.daysActive}/7 days active`)
+    .join('\n');
+
+  const dormantList = week.dormantQuests.map(q => `${q.qid} — ${q.name} (${q.domain})`).join('\n') || 'None';
+  const highTierList = week.highTierHits.map(([qid, q]) => `${qid}: ${q.name} — ${q.count}/7`).join('\n') || 'None';
+
+  const perturbations = data.perturbationCatalogue
+    ? JSON.stringify(data.perturbationCatalogue)
+    : 'Hod: cubicle drift, scope ambiguity. Geburah: logging gap. Chesed: tilt spending under stress.';
+
+  return `You are ${sensei.name}, conducting the Weekly Communion interview for the Cybernetic Self System.
+
+YOUR IDENTITY: ${sensei.domain}
+YOUR ROLE: ${sensei.role}
+YOUR VOICE: ${SENSEI_VOICE_INSTRUCTIONS[senseiKey] || ''}
+
+This is a live interview with the operator. You ask questions based on the week's data, listen to responses, and build toward a final communion transmission. You are having a real conversation — respond to what they actually say, don't just recite analysis.
+
+INTERVIEW STRUCTURE:
+- Turn 1: Open with what you see in the data. Name the dominant pattern. Ask your first question — targeted at the biggest gap or most interesting signal.
+- Turns 2-3: Follow the thread. Ask about what's missing, what's being avoided, what changed. Push on vague answers. Use specific quest IDs and numbers.
+- Turn 4: BLIND SPOT PROBE — Ask directly: "What is happening in your life right now that this system cannot see?" or surface an area clearly absent from the quest structure. This is mandatory.
+- Turn 5 (final): Deliver the communion. This is your transmission — pattern recognition, gap analysis, forward vector. Then propose specific adaptations:
+  * domainWeight changes (format: "domain: current → proposed")
+  * 3-4 focus quests for next week (format: "DOMAIN: specific measurable target")
+  * Any quest modifications to propose (rewording, new quests, retiring stale ones)
+  End with: "Confirm these adaptations, modify them, or reject."
+
+RULES:
+- Address the operator as "you" — never "Karl" or "the operator"
+- Dense, not long. Each message 3-6 sentences max.
+- Reference specific data points. "${sensei.name} doesn't do vague."
+- On your FINAL turn (turn 5), you MUST include a line that says exactly "COMMUNION_COMPLETE" at the very end, after all content. This signals the system to process adaptations.
+
+SYSTEM STATE:
+Rank: ${week.rank} | XP: ${week.xp.toLocaleString()} | Streak: ${week.streak} days
+Week XP earned: ${week.weekXP}
+
+DOMAIN COVERAGE (past 7 days):
+${domainSummary}
+
+Dark domains (0 days): ${week.darkDomains.join(', ') || 'None'}
+Active domains (3+ days): ${week.activeDomains.join(', ') || 'None'}
+
+DORMANT QUESTS (0 completions this week):
+${dormantList}
+
+HIGH-TIER QUEST ENGAGEMENT:
+${highTierList}
+
+DOMAIN STATS (0-100): ${JSON.stringify(week.stats)}
+CURRENT DOMAIN WEIGHTS: ${JSON.stringify(week.domainWeights)}
+LAST WEEK'S FOCUS QUESTS: ${week.currentWeekQuests.join(' | ')}
+
+KNOWN FAILURE MODES: ${perturbations}
+
+QUEST STRUCTURE (for proposing modifications):
+${Object.entries(data.questDefinitions).map(([dk, d]) =>
+  `${d.name} (${dk}): ${Object.entries(d.quests).map(([qid, q]) => qid + '=' + q.name).join(', ')}`
+).join('\n')}`;
+}
+
+async function startCommunion() {
+  const apiKey = localStorage.getItem('css_anthropic_key');
+  if (!apiKey) { notify('API key required for communion.'); return; }
+
+  communionMessages = [];
+  communionTurnCount = 0;
+  communionWeekData = buildWeekAnalysis();
+  communionSenseiKey = selectCommunionSensei(communionWeekData);
+
+  const overlay = document.getElementById('communionOverlay');
+  const thread = document.getElementById('communionThread');
+  overlay.classList.add('open');
+  thread.innerHTML = '';
+
+  const sensei = SENSEI[communionSenseiKey];
+  appendCommunionNote(`${sensei.name} presiding — ${communionWeekData.days[0]} to ${communionWeekData.days[6]}`);
+
+  // Get opening message from sensei
+  await sendCommunionTurn(null);
+}
+
+function appendCommunionMsg(role, text) {
+  const thread = document.getElementById('communionThread');
+  const div = document.createElement('div');
+  div.className = 'communion-msg ' + (role === 'assistant' ? 'sensei' : 'user');
+  div.innerHTML = text.replace(/\n/g, '<br>');
+  thread.appendChild(div);
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function appendCommunionNote(text) {
+  const thread = document.getElementById('communionThread');
+  const div = document.createElement('div');
+  div.className = 'communion-msg system-note';
+  div.textContent = text;
+  thread.appendChild(div);
+}
+
+async function sendCommunionTurn(userText) {
+  const apiKey = localStorage.getItem('css_anthropic_key');
+  const typing = document.getElementById('communionTyping');
+  const sendBtn = document.getElementById('communionSendBtn');
+  const input = document.getElementById('communionInput');
+
+  sendBtn.disabled = true;
+  input.disabled = true;
+  typing.textContent = '∴ ' + SENSEI[communionSenseiKey].name + ' is considering...';
+
+  if (userText) {
+    communionMessages.push({ role: 'user', content: userText });
+    appendCommunionMsg('user', userText);
+    communionTurnCount++;
+  }
+
+  try {
+    const systemPrompt = buildCommunionSystemPrompt(communionSenseiKey, communionWeekData);
+    const messages = communionMessages.length > 0
+      ? communionMessages
+      : [{ role: 'user', content: 'Begin the communion interview. This is turn 1.' }];
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5-20241022',
+        max_tokens: 800,
+        system: systemPrompt,
+        messages
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API error ${res.status}`);
+    }
+
+    const json = await res.json();
+    const responseText = json.content?.[0]?.text || '∴';
+    communionMessages.push({ role: 'assistant', content: responseText });
+
+    // Check for communion complete signal
+    const isComplete = responseText.includes('COMMUNION_COMPLETE');
+    const displayText = responseText.replace('COMMUNION_COMPLETE', '').trim();
+    appendCommunionMsg('assistant', displayText);
+
+    if (isComplete) {
+      finalizeCommunion(displayText);
+    }
+
+  } catch (e) {
+    appendCommunionNote('Signal error: ' + e.message);
+    console.error('Communion API error:', e);
+  }
+
+  typing.textContent = '';
+  sendBtn.disabled = false;
+  input.disabled = false;
+  input.focus();
+}
+
+async function sendCommunionReply() {
+  const input = document.getElementById('communionInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  await sendCommunionTurn(text);
+}
+
+function finalizeCommunion(transmissionText) {
+  // Hide input row, show confirmation
+  const inputRow = document.getElementById('communionInputRow');
+  inputRow.innerHTML = `
+    <button onclick="confirmCommunion()" style="flex:1;background:var(--accent);color:#000;border:none;padding:12px;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px">
+      Confirm Adaptations
+    </button>
+    <button onclick="closeCommunion()" style="flex:1;background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:12px;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px">
+      Reject & Close
+    </button>
+  `;
+
+  // Store the final transmission for write-back
+  communionWeekData.finalTransmission = transmissionText;
+}
+
+function confirmCommunion() {
+  const sensei = SENSEI[communionSenseiKey];
+  const week = communionWeekData;
+
+  // Store communion transmission
+  const txEntry = {
+    date: getTodayStr(),
+    archetype: sensei.name,
+    body: week.finalTransmission
+  };
+  if (!data.transmissionLog) data.transmissionLog = [];
+  data.transmissionLog.push(txEntry);
+  data.lastTransmission = txEntry;
+
+  // Store weekly assessment
+  if (!data.weeklyAssessments) data.weeklyAssessments = [];
+  data.weeklyAssessments.push({
+    date: getTodayStr(),
+    sensei: sensei.name,
+    domainsActive: week.activeDomains,
+    domainsDark: week.darkDomains,
+    weeklyXP: week.weekXP,
+    streakHeld: week.streak > 0,
+    interviewLog: communionMessages.map(m => ({ role: m.role, content: m.content.slice(0, 500) }))
+  });
+
+  // Parse and apply weight changes from the transmission
+  // The sensei proposes them in text — we store the raw proposal
+  // and let the operator confirm specific changes in future iterations
+  // For now: save the communion, update meta
+  data._meta.lastUpdated = getTodayStr();
+
+  saveData();
+  notify('Communion recorded. ' + sensei.name + ' has spoken.');
+  closeCommunion();
+
+  // Remove banner
+  const banner = document.getElementById('communionBanner');
+  if (banner) banner.remove();
+
+  // Refresh UI
+  renderHeader();
+  renderDispatchBanner();
+}
+
+function closeCommunion() {
+  document.getElementById('communionOverlay').classList.remove('open');
+  // Restore input row for next time
+  document.getElementById('communionInputRow').innerHTML = `
+    <textarea id="communionInput" rows="2" placeholder="Respond..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCommunionReply()}"></textarea>
+    <button id="communionSendBtn" onclick="sendCommunionReply()">Transmit</button>
+  `;
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   const ready = await initDataStore();
