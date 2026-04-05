@@ -2186,11 +2186,13 @@ const COMMUNION_MAX_TURNS = 5;
 function isSunday() { return new Date().getDay() === 0; }
 
 function communionDoneThisWeek() {
+  // Only count assessments that have an interviewLog (live communion),
+  // not automated/scheduled assessments from earlier in the week
   const today = new Date();
   const monday = new Date(today);
   monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
   const mondayStr = monday.toISOString().slice(0, 10);
-  return (data.weeklyAssessments || []).some(a => a.date >= mondayStr);
+  return (data.weeklyAssessments || []).some(a => a.date >= mondayStr && a.interviewLog);
 }
 
 function checkCommunionAvailable() {
