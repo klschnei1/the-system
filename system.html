@@ -518,6 +518,232 @@
   [data-theme="surveillance"] .domain-dot {
     box-shadow: 0 0 6px currentColor;
   }
+
+  /* ── THE LABORATORY THEME ── */
+  [data-theme="laboratory"] {
+    --glow: 0 0 15px rgba(201,168,76,0.1);
+  }
+  [data-theme="laboratory"] .header {
+    background: linear-gradient(180deg, #1a1610 0%, #211d15 100%);
+    border-bottom: 3px double #4a3f2a;
+  }
+  [data-theme="laboratory"] .system-title {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    text-shadow: 0 0 6px rgba(201,168,76,0.3);
+    animation: candleflicker 4s ease-in-out infinite;
+  }
+  [data-theme="laboratory"] .rank-badge {
+    background: #2a2519;
+    border: 3px double #c9a84c;
+  }
+  [data-theme="laboratory"] .xp-bar {
+    background: linear-gradient(90deg, #a08030, #c9a84c);
+  }
+  [data-theme="laboratory"] .tab.active {
+    color: #c9a84c;
+    border-bottom-color: #c9a84c;
+  }
+  [data-theme="laboratory"] .quest-card {
+    border: 3px double #4a3f2a;
+    background: rgba(42,37,25,0.6);
+  }
+  [data-theme="laboratory"] .quest-card:hover {
+    border-color: #c9a84c;
+    box-shadow: 0 0 12px rgba(201,168,76,0.15);
+  }
+  [data-theme="laboratory"] .btn-primary {
+    background: #c9a84c;
+    color: #1a1610;
+    border: 1px solid #a08030;
+    box-shadow: none;
+  }
+  [data-theme="laboratory"] .domain-name {
+    font-style: italic;
+    font-family: 'Georgia', 'Times New Roman', serif;
+  }
+  [data-theme="laboratory"] .streak-pill {
+    border: 3px double #4a3f2a;
+    color: #c9a84c;
+  }
+  [data-theme="laboratory"] .section-label {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    border-bottom-style: double;
+    border-bottom-width: 3px;
+  }
+
+  /* ── VISCERA THEME ── */
+  [data-theme="viscera"] {
+    --glow: 0 0 20px rgba(45,212,191,0.1);
+  }
+  [data-theme="viscera"] .header {
+    background: linear-gradient(180deg, #050e0e 0%, #0a1414 100%);
+    border-bottom-color: #0f3333;
+  }
+  [data-theme="viscera"] .system-title {
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(45,212,191,0.4);
+  }
+  [data-theme="viscera"] .rank-badge {
+    background: #0a1414;
+    border: 1px solid #2dd4bf;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(45,212,191,0.2);
+  }
+  [data-theme="viscera"] .xp-bar {
+    background: #2dd4bf;
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(45,212,191,0.4);
+  }
+  [data-theme="viscera"] .xp-bar-wrap {
+    border-radius: 20px;
+  }
+  [data-theme="viscera"] .tab.active {
+    color: #2dd4bf;
+    border-bottom-color: #2dd4bf;
+  }
+  [data-theme="viscera"] .quest-card {
+    border-color: #0f3333;
+    border-radius: 20px;
+  }
+  [data-theme="viscera"] .quest-card:hover {
+    border-color: #2dd4bf;
+    box-shadow: 0 0 15px rgba(45,212,191,0.12);
+  }
+  [data-theme="viscera"] .btn-primary {
+    background: #2dd4bf;
+    color: #050e0e;
+    border-radius: 20px;
+    box-shadow: none;
+  }
+  [data-theme="viscera"] .streak-pill {
+    border-color: #0f3333;
+    border-radius: 20px;
+    color: #2dd4bf;
+  }
+  [data-theme="viscera"] .domain-header {
+    animation: cellpulse 4s ease-in-out infinite;
+  }
+
+  /* ── DEAD SIGNAL THEME ── */
+  [data-theme="dead_signal"] {
+    --glow: 0 0 20px rgba(255,110,199,0.15);
+  }
+  [data-theme="dead_signal"] .header {
+    background: linear-gradient(180deg, #0a0012 0%, #180025 100%);
+    border-bottom-color: #3a0060;
+  }
+  [data-theme="dead_signal"] .system-title {
+    animation: chromatic 2s ease-in-out infinite, vhsdrift 0.5s linear infinite;
+    text-shadow: -1px 0 #ff0066, 1px 0 #00ffff;
+  }
+  [data-theme="dead_signal"] .rank-badge {
+    background: #180025;
+    border: 1px dashed #ff6ec7;
+    box-shadow: 0 0 10px rgba(255,110,199,0.2);
+  }
+  [data-theme="dead_signal"] .xp-bar {
+    background: linear-gradient(90deg, #ff6ec7, #c050ff, #00ffff);
+    box-shadow: 0 0 8px rgba(255,110,199,0.4);
+  }
+  [data-theme="dead_signal"] .tab.active {
+    color: #ff6ec7;
+    border-bottom-color: #ff6ec7;
+  }
+  [data-theme="dead_signal"] .quest-card {
+    border: 1px dashed #3a0060;
+  }
+  [data-theme="dead_signal"] .quest-card:hover {
+    border-color: #ff6ec7;
+    box-shadow: 0 0 15px rgba(255,110,199,0.15);
+  }
+  [data-theme="dead_signal"] .btn-primary {
+    background: #ff6ec7;
+    color: #0a0012;
+    box-shadow: none;
+  }
+  [data-theme="dead_signal"] .btn-primary:hover {
+    box-shadow: 0 0 15px rgba(255,110,199,0.4);
+  }
+  [data-theme="dead_signal"] .streak-pill {
+    border: 1px dashed #3a0060;
+    color: #ff6ec7;
+  }
+  [data-theme="dead_signal"] .system-voice {
+    background: linear-gradient(135deg, #0a0012, #180025);
+    border: 1px dashed #3a0060;
+  }
+  [data-theme="dead_signal"] .domain-sigil {
+    filter: blur(0.5px);
+    opacity: 0.5;
+  }
+
+  /* ── BLACK IRON PRISON THEME ── */
+  [data-theme="black_iron"] {
+    --glow: 0 0 15px rgba(139,0,0,0.15);
+  }
+  [data-theme="black_iron"] .header {
+    background: linear-gradient(180deg, #0a0505 0%, #120808 100%);
+    border-bottom: 2px solid #3a1515;
+  }
+  [data-theme="black_iron"] .system-title {
+    text-shadow: 0 0 4px rgba(139,0,0,0.5);
+  }
+  [data-theme="black_iron"] .rank-badge {
+    background: #1a0c0c;
+    border: 2px solid #8b0000;
+  }
+  [data-theme="black_iron"] .xp-bar {
+    background: #8b0000;
+  }
+  [data-theme="black_iron"] .tab.active {
+    color: #8b0000;
+    border-bottom: 2px solid #8b0000;
+  }
+  [data-theme="black_iron"] .quest-card {
+    border: 2px solid #3a1515;
+    transition: none;
+  }
+  [data-theme="black_iron"] .quest-card:hover {
+    border-color: #8b0000;
+    box-shadow: none;
+  }
+  [data-theme="black_iron"] .btn-primary {
+    background: #8b0000;
+    color: #c8a0a0;
+    box-shadow: none;
+    transition: none;
+  }
+  [data-theme="black_iron"] .btn-primary:hover {
+    background: #aa0000;
+    box-shadow: none;
+  }
+  [data-theme="black_iron"] .fab {
+    background: #8b0000;
+    box-shadow: none;
+    transition: none;
+  }
+  [data-theme="black_iron"] .streak-pill {
+    border: 2px solid #3a1515;
+    color: #8b0000;
+  }
+  [data-theme="black_iron"] .system-voice {
+    background: #0a0505;
+    border: 2px solid #3a1515;
+  }
+  [data-theme="black_iron"] .domain-sigil {
+    opacity: 0.7;
+  }
+  [data-theme="black_iron"] * {
+    transition: none !important;
+    animation-duration: 0s !important;
+  }
+  [data-theme="black_iron"] .system-title,
+  [data-theme="black_iron"] .quest-card {
+    animation: ironpulse 4s ease-in-out infinite !important;
+  }
 </style>
 </head>
 <body>
