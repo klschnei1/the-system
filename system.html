@@ -1548,15 +1548,180 @@ const PALETTE_MOODS = [
   { accent:'#9b5de5', accent2:'#7c3abf', glow:'rgba(155,93,229,0.3)', label:'Yesod active // foundation mode' },
 ];
 
-function applyDailyPalette() {
+// ── THEME ENGINE ─────────────────────────────────────────────────────
+const THEME_BANK = [
+  {
+    id: 'protocol',
+    name: 'PROTOCOL STANDARD',
+    description: 'Default configuration. Sacred geometry. Clean.',
+    palette: {
+      '--bg': '#07070f', '--bg2': '#0d0d1a', '--bg3': '#111128',
+      '--border': '#1e1e3a', '--text': '#d8d8f0', '--text2': '#7878aa', '--text3': '#4444aa',
+      '--gold': '#c9a84c', '--teal': '#2dd4bf', '--red': '#e05555', '--green': '#4ade80',
+    },
+    font: { family: "'Courier New', monospace", titleTransform: 'uppercase', letterSpacing: '4px' },
+    container: { borderStyle: 'solid', borderWidth: '1px', borderRadius: '4px' },
+    background: { overlay: null, bodyFilter: null },
+    animation: { pulseSpeed: '1.5s', transitionSpeed: '0.2s', injectedKeyframes: null },
+    sigil: { style: 'geometric' },
+    mutations: { tabLabels: null, tabOrder: null, hideAnchors: false, hideTiers: false, hideDailyXp: false, headerGlitch: false }
+  },
+  {
+    id: 'surveillance',
+    name: 'SURVEILLANCE STATE',
+    description: 'Terminal green. Scanlines. You are being watched.',
+    palette: {
+      '--bg': '#000000', '--bg2': '#0a0a0a', '--bg3': '#0f0f0f',
+      '--border': '#003300', '--text': '#00ff41', '--text2': '#00aa2a', '--text3': '#005500',
+      '--gold': '#00ff41', '--teal': '#00ff41', '--red': '#ff0000', '--green': '#00ff41',
+      '--accent': '#00ff41', '--accent2': '#00cc33',
+      '--glow-accent': '0 0 30px rgba(0,255,65,0.3)',
+      '--hod': '#00ff41', '--geburah': '#ff0000', '--chesed': '#00ff41',
+      '--malkuth': '#00aa2a', '--yesod': '#00cc33', '--binah': '#00ff41',
+      '--netzach': '#00ff41', '--pillar': '#00ff41',
+    },
+    font: { family: "'Courier New', monospace", titleTransform: 'uppercase', letterSpacing: '6px' },
+    container: { borderStyle: 'solid', borderWidth: '1px', borderRadius: '0px' },
+    background: {
+      overlay: 'scanlines',
+      bodyFilter: null
+    },
+    animation: {
+      pulseSpeed: '0.8s',
+      transitionSpeed: '0.1s',
+      injectedKeyframes: `
+        @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
+        @keyframes glitch { 0%,100% { transform: translate(0); } 20% { transform: translate(-2px,1px); } 40% { transform: translate(2px,-1px); } 60% { transform: translate(-1px,2px); } 80% { transform: translate(1px,-2px); } }
+        @keyframes flicker { 0%,100% { opacity:1; } 92% { opacity:1; } 93% { opacity:0.8; } 94% { opacity:1; } 97% { opacity:0.9; } 98% { opacity:1; } }
+      `
+    },
+    sigil: { style: 'circuit' },
+    mutations: {
+      tabLabels: { quests:'SUBJECTS', tree:'NETWORK', codex:'DOSSIER', transmit:'INTERCEPT', system:'CONTROL' },
+      tabOrder: null,
+      hideAnchors: true,
+      hideTiers: false,
+      hideDailyXp: false,
+      headerGlitch: true
+    }
+  }
+];
+
+function applyDailyTheme() {
   const seed = getDailySeed();
-  const mood = PALETTE_MOODS[seed % PALETTE_MOODS.length];
+  const theme = THEME_BANK[seed % THEME_BANK.length];
   const root = document.documentElement;
+
+  // Apply palette mood (preserve PALETTE_MOODS rotation within theme)
+  const mood = PALETTE_MOODS[seed % PALETTE_MOODS.length];
   root.style.setProperty('--accent', mood.accent);
   root.style.setProperty('--accent2', mood.accent2);
   root.style.setProperty('--glow-accent', `0 0 30px ${mood.glow}`);
+
+  // Apply theme palette (overrides mood for themes with explicit accent)
+  Object.entries(theme.palette).forEach(([prop, val]) => {
+    root.style.setProperty(prop, val);
+  });
+
+  // Typography
+  root.style.setProperty('--font-family', theme.font.family);
+  root.style.setProperty('--title-transform', theme.font.titleTransform);
+  root.style.setProperty('--letter-spacing', theme.font.letterSpacing);
+
+  // Container
+  root.style.setProperty('--border-style', theme.container.borderStyle);
+  root.style.setProperty('--border-width', theme.container.borderWidth);
+  root.style.setProperty('--border-radius', theme.container.borderRadius);
+
+  // Body dataset for CSS selectors
+  document.body.dataset.theme = theme.id;
+
+  // Store for other functions
+  window._currentTheme = theme;
+
+  // Helpers
+  applyThemeBackground(theme);
+  applyThemeAnimations(theme);
+  applyThemeMutations(theme);
+
   return mood;
 }
+
+function applyThemeBackground(theme) {
+  // Remove existing overlay
+  const existing = document.getElementById('theme-overlay');
+  if (existing) existing.remove();
+
+  if (theme.background.overlay === 'scanlines') {
+    const overlay = document.createElement('div');
+    overlay.id = 'theme-overlay';
+    overlay.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,65,0.03) 2px,
+        rgba(0,255,65,0.03) 4px
+      );
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  if (theme.background.bodyFilter) {
+    document.body.style.filter = theme.background.bodyFilter;
+  } else {
+    document.body.style.filter = '';
+  }
+}
+
+function applyThemeAnimations(theme) {
+  // Remove existing injected styles
+  const existing = document.getElementById('theme-keyframes');
+  if (existing) existing.remove();
+
+  if (theme.animation.injectedKeyframes) {
+    const style = document.createElement('style');
+    style.id = 'theme-keyframes';
+    style.textContent = theme.animation.injectedKeyframes;
+    document.head.appendChild(style);
+  }
+}
+
+function applyThemeMutations(theme) {
+  const m = theme.mutations;
+
+  // Tab relabeling
+  const tabs = document.querySelectorAll('.tab');
+  const defaultLabels = ['Quests','Tree','Codex','Signal','Evo'];
+  if (m.tabLabels) {
+    const keys = ['quests','tree','codex','transmit','system'];
+    tabs.forEach((tab, i) => {
+      tab.textContent = m.tabLabels[keys[i]] || defaultLabels[i];
+    });
+  } else {
+    tabs.forEach((tab, i) => { tab.textContent = defaultLabels[i]; });
+  }
+
+  // Hide domain anchors
+  document.body.classList.toggle('hide-anchors', !!m.hideAnchors);
+
+  // Hide tier labels
+  document.body.classList.toggle('hide-tiers', !!m.hideTiers);
+
+  // Hide daily XP tally
+  document.body.classList.toggle('hide-daily-xp', !!m.hideDailyXp);
+
+  // Header glitch
+  const header = document.querySelector('.system-title');
+  if (header) {
+    header.classList.toggle('glitch-text', !!m.headerGlitch);
+  }
+}
+
+// Legacy alias
+function applyDailyPalette() { return applyDailyTheme(); }
 
 // ── SENSEI PANTHEON ───────────────────────────────────────────────────
 // NOTE: Each sensei's voice() method is preserved for reference but is no longer
