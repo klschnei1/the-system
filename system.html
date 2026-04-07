@@ -3265,7 +3265,13 @@ DOMAIN STATS (0-100): ${JSON.stringify(week.stats)}
 CURRENT DOMAIN WEIGHTS: ${JSON.stringify(week.domainWeights)}
 LAST WEEK'S FOCUS QUESTS: ${week.currentWeekQuests.join(' | ')}
 
-KNOWN FAILURE MODES: ${perturbations}
+KNOWN FAILURE MODES (perturbation catalogue): ${perturbations}
+
+DAILY MISS DETECTION (past 7 days — computed client-side):
+${missData}
+
+PRIOR COMMUNION HISTORY (last 3 weeks):
+${weeklyAssessmentHistory}
 
 QUEST STRUCTURE (for proposing modifications):
 ${Object.entries(data.questDefinitions).map(([dk, d]) =>
