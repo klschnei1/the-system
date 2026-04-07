@@ -1684,6 +1684,149 @@ const THEME_BANK = [
       hideDailyXp: false,
       headerGlitch: true
     }
+  },
+  {
+    id: 'laboratory',
+    name: 'THE LABORATORY',
+    description: 'Alchemical. Parchment tones. Double borders. Planetary symbols.',
+    palette: {
+      '--bg': '#1a1610', '--bg2': '#211d15', '--bg3': '#2a2519',
+      '--border': '#4a3f2a', '--text': '#d4c9a8', '--text2': '#9e8e6a', '--text3': '#6b5d3f',
+      '--gold': '#c9a84c', '--teal': '#8faa6e', '--red': '#a0522d', '--green': '#8faa6e',
+      '--accent': '#c9a84c', '--accent2': '#a08030',
+      '--glow-accent': '0 0 20px rgba(201,168,76,0.25)',
+      '--hod': '#c9a84c', '--geburah': '#a0522d', '--chesed': '#8faa6e',
+      '--malkuth': '#6b5d3f', '--yesod': '#7b68ae', '--binah': '#5a7a9a',
+      '--netzach': '#c9a84c', '--pillar': '#d4c9a8',
+    },
+    font: { family: "'Georgia', 'Times New Roman', serif", titleTransform: 'uppercase', letterSpacing: '3px' },
+    container: { borderStyle: 'double', borderWidth: '3px', borderRadius: '2px' },
+    background: { overlay: 'noise', bodyFilter: 'sepia(0.08)' },
+    animation: {
+      pulseSpeed: '2.5s',
+      transitionSpeed: '0.4s',
+      injectedKeyframes: `
+        @keyframes candleflicker { 0%,100% { opacity:1; } 50% { opacity:0.92; } 75% { opacity:0.97; } }
+      `
+    },
+    sigil: { style: 'alchemical' },
+    mutations: {
+      tabLabels: { quests:'OPUS', tree:'ARBOR', codex:'GRIMOIRE', transmit:'ORACLE', system:'ATHANOR' },
+      tabOrder: null,
+      hideAnchors: false,
+      hideTiers: false,
+      hideDailyXp: false,
+      hideDomainNames: false,
+      headerGlitch: false
+    }
+  },
+  {
+    id: 'viscera',
+    name: 'VISCERA',
+    description: 'Biological. Bioluminescent teal. Breathing. Sigils only.',
+    palette: {
+      '--bg': '#050e0e', '--bg2': '#0a1414', '--bg3': '#0f1a1a',
+      '--border': '#0f3333', '--text': '#a0d4d4', '--text2': '#5a9e9e', '--text3': '#2a6666',
+      '--gold': '#2dd4bf', '--teal': '#2dd4bf', '--red': '#ff6b6b', '--green': '#4ade80',
+      '--accent': '#2dd4bf', '--accent2': '#0fa89a',
+      '--glow-accent': '0 0 30px rgba(45,212,191,0.2)',
+      '--hod': '#2dd4bf', '--geburah': '#ff6b6b', '--chesed': '#4ade80',
+      '--malkuth': '#5a9e9e', '--yesod': '#a78bfa', '--binah': '#60a5fa',
+      '--netzach': '#f0abfc', '--pillar': '#2dd4bf',
+    },
+    font: { family: "'Courier New', monospace", titleTransform: 'lowercase', letterSpacing: '2px' },
+    container: { borderStyle: 'solid', borderWidth: '1px', borderRadius: '20px' },
+    background: { overlay: 'breathing', bodyFilter: null },
+    animation: {
+      pulseSpeed: '3s',
+      transitionSpeed: '0.5s',
+      injectedKeyframes: `
+        @keyframes breathe { 0%,100% { opacity:0.03; } 50% { opacity:0.08; } }
+        @keyframes cellpulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.02); } }
+      `
+    },
+    sigil: { style: 'geometric' },
+    mutations: {
+      tabLabels: null,
+      tabOrder: ['tree','quests','codex','transmit','system'],
+      hideAnchors: false,
+      hideTiers: false,
+      hideDailyXp: false,
+      hideDomainNames: true,
+      headerGlitch: false
+    }
+  },
+  {
+    id: 'dead_signal',
+    name: 'DEAD SIGNAL',
+    description: 'Vaporwave. Hot pink/purple. Dashed borders. VHS drift.',
+    palette: {
+      '--bg': '#0a0012', '--bg2': '#100018', '--bg3': '#180025',
+      '--border': '#3a0060', '--text': '#e0c0ff', '--text2': '#a060d0', '--text3': '#6030a0',
+      '--gold': '#ff6ec7', '--teal': '#00ffff', '--red': '#ff0066', '--green': '#00ff99',
+      '--accent': '#ff6ec7', '--accent2': '#c050ff',
+      '--glow-accent': '0 0 30px rgba(255,110,199,0.3)',
+      '--hod': '#ff6ec7', '--geburah': '#ff0066', '--chesed': '#00ffff',
+      '--malkuth': '#a060d0', '--yesod': '#c050ff', '--binah': '#00ffff',
+      '--netzach': '#ff6ec7', '--pillar': '#ffff00',
+    },
+    font: { family: "'Courier New', monospace", titleTransform: 'uppercase', letterSpacing: '5px' },
+    container: { borderStyle: 'dashed', borderWidth: '1px', borderRadius: '0px' },
+    background: { overlay: 'vhs', bodyFilter: null },
+    animation: {
+      pulseSpeed: '1s',
+      transitionSpeed: '0.15s',
+      injectedKeyframes: `
+        @keyframes vhsdrift { 0% { transform:translateX(0); } 25% { transform:translateX(-1px); } 50% { transform:translateX(1px); } 75% { transform:translateX(-0.5px); } 100% { transform:translateX(0); } }
+        @keyframes chromatic { 0%,100% { text-shadow: -1px 0 #ff0066, 1px 0 #00ffff; } 50% { text-shadow: -2px 0 #ff0066, 2px 0 #00ffff; } }
+        @keyframes staticnoise { 0% { opacity:0.03; } 50% { opacity:0.06; } 100% { opacity:0.03; } }
+      `
+    },
+    sigil: { style: 'geometric' },
+    mutations: {
+      tabLabels: { quests:'RITUALS', tree:'MEMORY', codex:'ARCHIVE', transmit:'CHANNEL', system:'VOID' },
+      tabOrder: null,
+      hideAnchors: false,
+      hideTiers: false,
+      hideDailyXp: true,
+      hideDomainNames: false,
+      headerGlitch: false
+    }
+  },
+  {
+    id: 'black_iron',
+    name: 'BLACK IRON PRISON',
+    description: 'Gnostic. Blood red on iron dark. Heavy borders. No mercy.',
+    palette: {
+      '--bg': '#0a0505', '--bg2': '#120808', '--bg3': '#1a0c0c',
+      '--border': '#3a1515', '--text': '#c8a0a0', '--text2': '#8a5555', '--text3': '#5a2a2a',
+      '--gold': '#8b0000', '--teal': '#c8a0a0', '--red': '#ff0000', '--green': '#8b0000',
+      '--accent': '#8b0000', '--accent2': '#660000',
+      '--glow-accent': '0 0 20px rgba(139,0,0,0.3)',
+      '--hod': '#c8a0a0', '--geburah': '#ff0000', '--chesed': '#8b0000',
+      '--malkuth': '#5a2a2a', '--yesod': '#8a5555', '--binah': '#660000',
+      '--netzach': '#8b0000', '--pillar': '#c8a0a0',
+    },
+    font: { family: "'Courier New', monospace", titleTransform: 'uppercase', letterSpacing: '6px' },
+    container: { borderStyle: 'solid', borderWidth: '2px', borderRadius: '0px' },
+    background: { overlay: 'noise', bodyFilter: null },
+    animation: {
+      pulseSpeed: '0s',
+      transitionSpeed: '0s',
+      injectedKeyframes: `
+        @keyframes ironpulse { 0%,100% { border-color: #3a1515; } 50% { border-color: #5a2020; } }
+      `
+    },
+    sigil: { style: 'geometric' },
+    mutations: {
+      tabLabels: { quests:'LABOR', tree:'SCHEMA', codex:'ARCHIVE', transmit:'PETITION', system:'ARCHON' },
+      tabOrder: ['system','quests','tree','codex','transmit'],
+      hideAnchors: false,
+      hideTiers: true,
+      hideDailyXp: false,
+      hideDomainNames: false,
+      headerGlitch: false
+    }
   }
 ];
 
