@@ -1535,7 +1535,14 @@ function renderQuests() {
     questsContainer.className = 'quests-container' + (isCollapsed ? ' collapsed' : '');
     questsContainer.id = 'domain-quests-' + domainKey;
 
-    Object.entries(domain.quests).forEach(([qid, quest]) => {
+    // Sort quests: retrospective ones float to top before 10 AM
+    let questEntries = Object.entries(domain.quests);
+    const hour = new Date().getHours();
+    if (hour < 10) {
+      questEntries.sort((a, b) => (b[1].retrospective ? 1 : 0) - (a[1].retrospective ? 1 : 0));
+    }
+
+    questEntries.forEach(([qid, quest]) => {
       const done = !!todayLog[qid];
 
       const retroBadge = quest.retrospective
