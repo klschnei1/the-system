@@ -2645,8 +2645,8 @@ function queryOracle(input) {
   const inputHash = input.split('').reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
   const seed = Math.abs(getDailySeed() ^ inputHash);
 
-  // 30% silence
-  if (seed % 10 < 3) return null;
+  // 60% silence
+  if (seed % 10 < 6) return null;
 
   // Route to sensei category
   const senseiKey = routeToSensei(input);
