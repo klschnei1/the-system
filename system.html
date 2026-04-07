@@ -3458,6 +3458,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       data.streak = 0;
     }
 
+    // ── Miss detection: which quests were missed yesterday? ──
+    const yLog = data.dailyLogs?.[yStr] || {};
+    const missed = [];
+    const domainMisses = {};
+    Object.entries(data.questDefinitions || {}).forEach(([domKey, dom]) => {
+      let domainTotal = 0, domainDone = 0;
+      Object.entries(dom.quests || {}).forEach(([qid, q]) => {
+        if (q.weeklyMin) return; // h4 — evaluated weekly, not daily
+        domainTotal++;
+        if (yLog[qid]) { domainDone++; }
+        else { missed.push({ qid, domain: domKey, name: q.name, tier: q.tier }); }
+      });
+      if (domainTotal > 0 && domainDone === 0) {
+        domainMisses[domKey] = { total: domainTotal, name: dom.name };
+      }
+    });
+
+    // Store for UI/harvest consumption
+    if (!data.missDetection) data.missDetection = {};
+    data.missDetection[yStr] = {
+      missedQuests: missed,
+      domainGaps: domainMisses,
+      streakHeld: (data.streak || 0) > 0,
+      totalMissed: missed.length
+    };
+
     data.lastDate = today;
     saveData();
   }
