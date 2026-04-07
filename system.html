@@ -2155,16 +2155,45 @@ function applyThemeAnimations(theme) {
 function applyThemeMutations(theme) {
   const m = theme.mutations;
 
-  // Tab relabeling
-  const tabs = document.querySelectorAll('.tab');
+  const defaultKeys = ['quests','tree','codex','transmit','system'];
   const defaultLabels = ['Quests','Tree','Codex','Signal','Evo'];
-  if (m.tabLabels) {
-    const keys = ['quests','tree','codex','transmit','system'];
-    tabs.forEach((tab, i) => {
-      tab.textContent = m.tabLabels[keys[i]] || defaultLabels[i];
+  const tabsContainer = document.querySelector('.tabs');
+  const tabs = Array.from(tabsContainer.querySelectorAll('.tab'));
+
+  // Tab reordering — rearrange DOM nodes to match tabOrder
+  if (m.tabOrder) {
+    const tabsByKey = {};
+    defaultKeys.forEach((key, i) => { tabsByKey[key] = tabs[i]; });
+    m.tabOrder.forEach(key => {
+      if (tabsByKey[key]) tabsContainer.appendChild(tabsByKey[key]);
     });
   } else {
-    tabs.forEach((tab, i) => { tab.textContent = defaultLabels[i]; });
+    // Restore default order
+    defaultKeys.forEach((_, i) => { tabsContainer.appendChild(tabs[i]); });
+  }
+
+  // Tab relabeling (after reorder so labels match keys, not positions)
+  const allTabs = tabsContainer.querySelectorAll('.tab');
+  if (m.tabLabels) {
+    // Map onclick to key
+    allTabs.forEach(tab => {
+      const onclick = tab.getAttribute('onclick') || '';
+      const match = onclick.match(/switchTab\('(\w+)'\)/);
+      if (match) {
+        const key = match[1];
+        const defaultIdx = defaultKeys.indexOf(key);
+        tab.textContent = m.tabLabels[key] || defaultLabels[defaultIdx] || tab.textContent;
+      }
+    });
+  } else {
+    allTabs.forEach(tab => {
+      const onclick = tab.getAttribute('onclick') || '';
+      const match = onclick.match(/switchTab\('(\w+)'\)/);
+      if (match) {
+        const idx = defaultKeys.indexOf(match[1]);
+        if (idx >= 0) tab.textContent = defaultLabels[idx];
+      }
+    });
   }
 
   // Hide domain anchors
@@ -2175,6 +2204,9 @@ function applyThemeMutations(theme) {
 
   // Hide daily XP tally
   document.body.classList.toggle('hide-daily-xp', !!m.hideDailyXp);
+
+  // Hide domain names (sigils only)
+  document.body.classList.toggle('hide-domain-names', !!m.hideDomainNames);
 
   // Header glitch
   const header = document.querySelector('.system-title');
