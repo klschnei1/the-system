@@ -441,6 +441,74 @@
     letter-spacing:2px; text-transform:uppercase;
   }
   .communion-banner:hover { background:var(--bg3); }
+
+  /* ── THEME MUTATIONS ── */
+  .hide-anchors .domain-anchor { display: none !important; }
+  .hide-tiers .quest-tier { display: none !important; }
+  .hide-daily-xp .daily-xp-tally { display: none !important; }
+
+  .glitch-text {
+    animation: glitch 0.3s ease-in-out infinite alternate,
+               flicker 4s linear infinite;
+  }
+
+  /* ── SURVEILLANCE STATE THEME ── */
+  [data-theme="surveillance"] {
+    --glow: 0 0 20px rgba(0,255,65,0.1);
+  }
+  [data-theme="surveillance"] .header {
+    background: linear-gradient(180deg, #000000 0%, #000000 100%);
+    border-bottom-color: #003300;
+  }
+  [data-theme="surveillance"] .system-title {
+    text-shadow: 0 0 8px rgba(0,255,65,0.5);
+  }
+  [data-theme="surveillance"] .rank-badge {
+    background: #003300;
+    border: 1px solid #00ff41;
+    box-shadow: 0 0 10px rgba(0,255,65,0.3);
+  }
+  [data-theme="surveillance"] .xp-bar {
+    background: #00ff41;
+    box-shadow: 0 0 8px rgba(0,255,65,0.5);
+  }
+  [data-theme="surveillance"] .tab.active {
+    color: #00ff41;
+    border-bottom-color: #00ff41;
+  }
+  [data-theme="surveillance"] .quest-card {
+    border-color: #003300;
+  }
+  [data-theme="surveillance"] .quest-card:hover {
+    border-color: #00ff41;
+    box-shadow: 0 0 15px rgba(0,255,65,0.15);
+  }
+  [data-theme="surveillance"] .btn-primary {
+    background: #00ff41;
+    color: #000;
+    box-shadow: none;
+  }
+  [data-theme="surveillance"] .btn-primary:hover {
+    box-shadow: 0 0 15px rgba(0,255,65,0.4);
+  }
+  [data-theme="surveillance"] .fab {
+    background: #00ff41;
+    box-shadow: 0 0 20px rgba(0,255,65,0.3);
+  }
+  [data-theme="surveillance"] .transmission::before {
+    background: #00ff41;
+  }
+  [data-theme="surveillance"] .streak-pill {
+    border-color: #003300;
+    color: #00ff41;
+  }
+  [data-theme="surveillance"] .system-voice {
+    background: linear-gradient(135deg, #000000, #0a0a0a);
+    border-color: #003300;
+  }
+  [data-theme="surveillance"] .domain-dot {
+    box-shadow: 0 0 6px currentColor;
+  }
 </style>
 </head>
 <body>
