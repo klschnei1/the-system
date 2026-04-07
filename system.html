@@ -442,6 +442,15 @@
   }
   .communion-banner:hover { background:var(--bg3); }
 
+  /* ── SIGILS ── */
+  .domain-sigil {
+    width: 28px; height: 28px; flex-shrink: 0;
+    opacity: 0.75; transition: opacity 0.3s;
+  }
+  .domain-sigil svg { width: 100%; height: 100%; }
+  .domain-header:hover .domain-sigil { opacity: 1; }
+  #watermark-sigil { transition: opacity 1s ease-in; }
+
   /* ── THEME MUTATIONS ── */
   .hide-anchors .domain-anchor { display: none !important; }
   .hide-tiers .quest-tier { display: none !important; }
