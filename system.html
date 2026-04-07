@@ -1279,8 +1279,11 @@ function renderQuests() {
     // ── Domain header (clickable) ──
     const header = document.createElement('div');
     header.className = 'domain-header';
+    const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
+    const sigilSeed = getDailySeed() ^ (domainKey.charCodeAt(0) * 7919);
+    const sigilSvg = SigilEngine.generate(domainKey, sigilSeed, sigilStyle);
     header.innerHTML = `
-      <div class="domain-dot" style="background:${domain.color}"></div>
+      <div class="domain-sigil">${sigilSvg}</div>
       <div class="domain-name" style="color:${domain.color}">${domain.name}</div>
       <div class="domain-anchor" style="flex:1">${domain.anchor}</div>
       <span style="font-size:9px;color:${allDone ? 'var(--green)' : 'var(--text3)'};margin-right:8px">
