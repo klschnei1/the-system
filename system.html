@@ -1801,6 +1801,16 @@ function applyThemeMutations(theme) {
   }
 }
 
+function applyWatermarkSigil(seed) {
+  const existing = document.getElementById('watermark-sigil');
+  if (existing) existing.remove();
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'watermark-sigil';
+  wrapper.innerHTML = SigilEngine.watermark(seed);
+  document.body.appendChild(wrapper);
+}
+
 // Legacy alias
 function applyDailyPalette() { return applyDailyTheme(); }
 
