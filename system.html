@@ -2084,6 +2084,36 @@ const THEME_BANK = [
     }
   }
 ];
+// ── THEME TEMPLATE ──────────────────────────────────────────────────
+// Copy this object into THEME_BANK to create a new theme.
+// All fields required. Add matching [data-theme="your_id"] CSS rules
+// and @keyframes if your animation.injectedKeyframes references them.
+//
+// {
+//   id: 'your_id',           // lowercase, underscores OK, used in data-theme attr
+//   name: 'DISPLAY NAME',    // shown nowhere yet, but identifies the theme
+//   description: 'One-line vibe description',
+//   palette: {
+//     '--bg': '#07070f', '--bg2': '#0d0d1a', '--bg3': '#111128',
+//     '--border': '#1e1e3a', '--accent': '#5b6fff', '--accent2': '#9b5de5',
+//     '--gold': '#c9a84c', '--teal': '#2dd4bf', '--red': '#e05555',
+//     '--green': '#4ade80', '--text': '#d8d8f0', '--text2': '#7878aa', '--text3': '#4444aa'
+//   },
+//   font: { family: "'Courier New', monospace", titleTransform: 'uppercase', letterSpacing: '4px' },
+//   container: { borderStyle: 'solid', borderWidth: '1px', borderRadius: '4px' },
+//   background: { overlay: 'none', bodyFilter: 'none' },  // overlay: 'scanlines'|'noise'|'breathing'|'vhs'|'none'
+//   animation: { pulseSpeed: '2s', transitionSpeed: '0.3s', injectedKeyframes: '' },
+//   sigil: { style: 'geometric' },  // 'geometric'|'alchemical'|'circuit' (or future: organic, runic, genomic)
+//   mutations: {
+//     tabLabels: null,        // or { quests:'LABEL', tree:'LABEL', codex:'LABEL', transmit:'LABEL', system:'LABEL' }
+//     tabOrder: null,         // or ['quests','tree','codex','transmit','system'] — DOM reorder
+//     hideAnchors: false,     // hide domain anchor text
+//     hideTiers: false,       // hide tier badges
+//     hideDailyXp: false,     // hide daily XP tally
+//     hideDomainNames: false, // hide domain names (sigils only)
+//     headerGlitch: false     // glitch animation on header text
+//   }
+// }
 
 function applyDailyTheme() {
   const seed = getDailySeed();
