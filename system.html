@@ -3521,6 +3521,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const ready = await initDataStore();
   if (!ready) return; // setup modal is showing
 
+  await loadSigilManifest();
   applyDailyTheme();
 
   // Check if new day
