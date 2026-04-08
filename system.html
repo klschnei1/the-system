@@ -2298,8 +2298,13 @@ const SigilEngine = {
     };
   },
 
-  // Generate a sigil SVG string for a domain
+  // Generate a sigil SVG string for a domain (user art takes priority)
   generate(domainKey, seed, style) {
+    const userArt = _sigilManifest[domainKey];
+    if (userArt && userArt.length > 0) {
+      // Pick variant deterministically by seed
+      return userArt[seed % userArt.length];
+    }
     const gen = this.generators[style] || this.generators.geometric;
     return gen.call(this, domainKey, seed);
   },
