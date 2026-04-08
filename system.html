@@ -3616,7 +3616,7 @@ async function completeSetup() {
   localStorage.setItem('css_github_path', 'CSS/CSS_DATA.json');
   document.getElementById('setupModal').style.display = 'none';
   const ready = await initDataStore();
-  if (ready) { applyDailyTheme(); renderHeader(); renderQuests(); }
+  if (ready) { await loadSigilManifest(); applyDailyTheme(); renderHeader(); renderQuests(); }
 }
 </script>
 
