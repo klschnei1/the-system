@@ -1744,6 +1744,18 @@ function logQuest(qid, xp) {
     }
   }
 
+  // Sigil flash on quest completion
+  if (domainKey) {
+    const domGroup = document.querySelector(`#domain-quests-${domainKey}`)?.parentElement;
+    const sigil = domGroup?.querySelector('.domain-sigil');
+    if (sigil) {
+      sigil.classList.remove('sigil-flash');
+      void sigil.offsetWidth; // force reflow to restart animation
+      sigil.classList.add('sigil-flash');
+      sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
+    }
+  }
+
   // Variable reward roll
   const reward = rollQuestReward(qid, xp);
   if (reward && reward.type === 'xp_multiplier') {
