@@ -2246,6 +2246,46 @@ function applyWatermarkSigil(seed) {
 function applyDailyPalette() { return applyDailyTheme(); }
 
 // ── SIGIL ENGINE ─────────────────────────────────────────────────────
+// ── SIGIL MANIFEST — user art priority over procedural ─────────────
+// Stores loaded user SVGs keyed by domain: { hod: ['<svg>...'], geburah: ['<svg>...', '<svg>...'] }
+const _sigilManifest = {};
+
+async function loadSigilManifest() {
+  const domains = ['hod','geburah','malkuth','yesod','chesed','binah','netzach','pillar'];
+  const basePath = 'sigils/';
+
+  for (const domain of domains) {
+    // Try primary: {domain}.svg
+    try {
+      const resp = await fetch(basePath + domain + '.svg');
+      if (resp.ok) {
+        const svg = await resp.text();
+        if (svg.trim().startsWith('<svg') || svg.trim().startsWith('<?xml')) {
+          if (!_sigilManifest[domain]) _sigilManifest[domain] = [];
+          _sigilManifest[domain].push(svg);
+        }
+      }
+    } catch(e) { /* not found, skip */ }
+
+    // Try variants: {domain}-2.svg through {domain}-9.svg
+    for (let v = 2; v <= 9; v++) {
+      try {
+        const resp = await fetch(basePath + domain + '-' + v + '.svg');
+        if (resp.ok) {
+          const svg = await resp.text();
+          if (svg.trim().startsWith('<svg') || svg.trim().startsWith('<?xml')) {
+            if (!_sigilManifest[domain]) _sigilManifest[domain] = [];
+            _sigilManifest[domain].push(svg);
+          }
+        } else { break; } // stop checking higher numbers if one is missing
+      } catch(e) { break; }
+    }
+  }
+
+  const loaded = Object.keys(_sigilManifest).length;
+  if (loaded > 0) console.log(`[CSS] Sigil manifest: ${loaded} domain(s) with user art`);
+}
+
 const SigilEngine = {
   // Seeded PRNG (mulberry32)
   _rng(seed) {
