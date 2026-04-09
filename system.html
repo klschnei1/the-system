@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="The System">
+<meta name="apple-mobile-web-app-title" content="Cybernetica">
 <meta name="theme-color" content="#07070f">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>THE SYSTEM // CSS v3</title>
+<title>CYBERNETICA // v3</title>
 <style>
   :root {
     --bg: #07070f;
@@ -924,7 +924,7 @@
   <div class="system-voice" id="systemVoice"></div>
   <div id="transmitList"></div>
   <div style="margin-top:16px">
-    <div class="section-label">Broadcast to The System</div>
+    <div class="section-label">Broadcast to Cybernetica</div>
     <textarea class="log-input" id="broadcastInput" rows="4" placeholder="Report your status, ask for assessment, or declare intent..."></textarea>
     <div style="margin-top:8px; display:flex; align-items:center; gap:10px">
       <button class="btn btn-primary" id="transmitBtn" onclick="processBroadcast()">Transmit</button>
@@ -942,7 +942,7 @@
   <div id="feedbackPanel"></div>
   <div style="margin-top:16px" class="section-label">Harvest from Claude Conversation</div>
   <div style="font-size:11px; color:var(--text2); margin-bottom:8px; line-height:1.6">
-    Paste a summary of a Claude conversation or describe what you accomplished. The System will extract quest completions and log them.
+    Paste a summary of a Claude conversation or describe what you accomplished. Cybernetica will extract quest completions and log them.
   </div>
   <textarea class="log-input" id="harvestInput" rows="5" placeholder="e.g. 'Had a 2-hour lab session today, ran ddPCR protocol on samples 3-7. Hit protein at 215g. Didn't get to gym.'"></textarea>
   <div style="margin-top:8px">
@@ -1411,7 +1411,15 @@ function saveData() {
 }
 
 function getTodayStr() {
-  return new Date().toISOString().slice(0,10);
+  const now = new Date();
+  // Day boundary is 3:30 AM local time, not midnight
+  // Before 3:30 AM, we're still in "yesterday's" day
+  if (now.getHours() < 3 || (now.getHours() === 3 && now.getMinutes() < 30)) {
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toLocaleDateString('en-CA'); // YYYY-MM-DD
+  }
+  return now.toLocaleDateString('en-CA'); // YYYY-MM-DD
 }
 
 // ── RANK LOGIC ────────────────────────────────────────────────────────
@@ -2824,7 +2832,7 @@ function renderTransmissions() {
       list.innerHTML = `
         <div class="transmission">
           <div class="transmission-meta">
-            <div class="transmission-source" style="color:${tcolor}">${t.archetype || 'The System'}</div>
+            <div class="transmission-source" style="color:${tcolor}">${t.archetype || 'Cybernetica'}</div>
             <div class="transmission-date">${t.date}</div>
           </div>
           <div class="transmission-body">${t.body}</div>
@@ -2953,7 +2961,7 @@ async function processBroadcast() {
       _storeTransmission('∴', '∴');
       notify('∴');
     } else {
-      const archetype = SENSEI[result.senseiKey]?.name || 'The System';
+      const archetype = SENSEI[result.senseiKey]?.name || 'Cybernetica';
       _storeTransmission(archetype, result.text);
       notify(archetype + '.');
     }
@@ -3015,7 +3023,7 @@ function renderEvolution() {
       <div>Quests completed today: <strong style="color:var(--gold)">${completedToday} / ${totalQuests}</strong></div>
       <div>XP accumulated: <strong style="color:var(--gold)">${(data.xp||0).toLocaleString()}</strong></div>
       <div style="margin-top:8px;font-size:11px;color:var(--text3)">
-        Self-reconfiguration triggers at 14-day coherence thresholds. The System observes. Log consistently to enable adaptive evolution.
+        Self-reconfiguration triggers at 14-day coherence thresholds. Cybernetica observes. Log consistently to enable adaptive evolution.
       </div>
     </div>
     <div class="evo-alert" style="border-color:var(--hod)">
@@ -3668,7 +3676,7 @@ async function completeSetup() {
 <div id="setupModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px">
   <div style="font-size:10px;letter-spacing:5px;color:var(--accent);text-transform:uppercase;margin-bottom:8px">∴ DataStore Initialization</div>
   <div style="font-size:12px;color:var(--text2);text-align:center;max-width:420px;line-height:1.7">
-    The System requires a connection to its data store.<br>Enter your GitHub credentials to initialize.
+    Cybernetica requires a connection to its data store.<br>Enter your GitHub credentials to initialize.
   </div>
   <input id="setupToken" type="password" placeholder="GitHub personal access token"
     style="width:100%;max-width:420px;background:#0a0a14;border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:inherit;font-size:12px;outline:none;border-radius:2px">
