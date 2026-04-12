@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybernetica</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  body { background: #07070f; margin: 0; }
+</style>
+</head>
+<body>
+<script>
+  // Daily seed — same skin all day, different tomorrow
+  const now = new Date();
+  const today = (now.getHours() < 3 || (now.getHours() === 3 && now.getMinutes() < 30))
+    ? new Date(now - 86400000).toLocaleDateString('en-CA')
+    : now.toLocaleDateString('en-CA');
+  const seed = [...today].reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+
+  const skins = [
+    'system.html',
+    // 'rpg.html',
+  ];
+
+  window.location.replace(skins[Math.abs(seed) % skins.length]);
+</script>
+</body>
+</html>
