@@ -1465,6 +1465,16 @@ function renderDispatchBanner() {
   banner.appendChild(body);
 }
 
+// ── FOCUS QUESTS (communion adaptation output) ───────────────────────
+function renderFocusQuests() {
+  const el = document.getElementById('focusQuests');
+  const quests = data.currentWeekQuests;
+  if (!quests || !quests.length) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = '<div class="focus-quests-label">Focus // This Week</div>' +
+    '<ul>' + quests.map(q => '<li>' + q + '</li>').join('') + '</ul>';
+}
+
 // ── RENDER QUESTS ─────────────────────────────────────────────────────
 function renderQuests() {
   const container = document.getElementById('questList');
