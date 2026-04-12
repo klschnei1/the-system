@@ -1186,70 +1186,8 @@ const GitHubDriver = {
 };
 
 
-// ── PHASE 2: FILESYSTEM DRIVER (Electron — stub) ────────────────────────
-// When system.html is packaged as an Electron app, swap this driver in.
-// Electron exposes `window.electronAPI` via preload script.
-// No changes needed anywhere else in the codebase.
-
-const FileSystemDriver = {
-  _path: null,
-  _cache: null,
-
-  async init() {
-    // Electron preload exposes the file path from app config
-    this._path = window.electronAPI?.dataPath || './CSS_DATA.json';
-    console.log('FileSystemDriver: initialized. Path:', this._path);
-  },
-
-  async load() {
-    // window.electronAPI.readFile() exposed via Electron's contextBridge
-    const raw = await window.electronAPI.readFile(this._path);
-    this._cache = JSON.parse(raw);
-    return this._cache;
-  },
-
-  async save(data) {
-    this._cache = data;
-    await window.electronAPI.writeFile(this._path, JSON.stringify(data, null, 2));
-  },
-
-  status() {
-    return { driver: 'FileSystem (Electron)', path: this._path };
-  }
-};
-
-
-// ── PHASE 3: CRDT DRIVER (Automerge — stub) ─────────────────────────────
-// When multi-device sync and conflict-free editing is needed.
-// Automerge documents are CRDTs — any two versions can be merged without conflict.
-// Sync happens via a relay (could be GitHub, a local relay server, or P2P).
-// The document's change history IS the evolution log.
-
-const AutomergeDriver = {
-  _doc: null,
-  _repo: null, // Automerge.Repo instance
-
-  async init() {
-    // import * as Automerge from '@automerge/automerge'
-    // this._repo = new Automerge.Repo({ ... sync config ... })
-    // this._doc = await this._repo.find(docId)
-    console.log('AutomergeDriver: stub — implement when ready for Phase 3.');
-  },
-
-  async load() {
-    // return Automerge.toJS(this._doc)
-    return null;
-  },
-
-  async save(data) {
-    // this._doc = Automerge.change(this._doc, doc => { Object.assign(doc, data) })
-    // sync happens automatically via Repo
-  },
-
-  status() {
-    return { driver: 'Automerge (CRDT)', ready: false, note: 'Phase 3 — not yet implemented' };
-  }
-};
+// Phase 2 (FileSystemDriver) and Phase 3 (AutomergeDriver) stubs removed.
+// Rebuild from scratch when those phases are actually needed.
 
 
 // ── SETUP HELPER ────────────────────────────────────────────────────────
