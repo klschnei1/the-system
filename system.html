@@ -1391,11 +1391,30 @@ function getXpProgress(xp) {
 
 // ── COHERENCE ─────────────────────────────────────────────────────────
 function calcCoherence() {
-  const stats = data.stats;
-  const vals = Object.values(stats);
-  if (!vals.length) return 0;
-  const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
-  return Math.min(100, avg);
+  // Rolling 7-day window: per-domain signal = days active / 7
+  const domains = Object.keys(data.questDefinitions || {});
+  if (!domains.length) return 0;
+  const logs = data.dailyLogs || {};
+  const today = getTodayStr();
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    days.push(d.toLocaleDateString('en-CA'));
+  }
+  // Include today's in-memory log (not yet in dailyLogs until save)
+  const todayStr = days[0];
+  let domainSignals = 0;
+  domains.forEach(dk => {
+    const qids = Object.keys((data.questDefinitions[dk] || {}).quests || {});
+    let daysActive = 0;
+    days.forEach(day => {
+      const dayLog = day === todayStr ? { ...logs[day], ...todayLog } : (logs[day] || {});
+      if (qids.some(qid => dayLog[qid])) daysActive++;
+    });
+    domainSignals += (daysActive / 7) * 100;
+  });
+  return Math.min(100, domainSignals / domains.length);
 }
 function getSignalLabel(c) {
   if (c >= 80) return 'signal: coherent';
