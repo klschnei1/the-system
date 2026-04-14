@@ -2920,10 +2920,8 @@ function closeModal() { document.getElementById('modalOverlay').classList.remove
 function submitQuickLog() {
   const input = document.getElementById('quickLogInput').value.trim();
   if (!input) { closeModal(); return; }
-  document.getElementById('harvestInput').value = input;
+  // Quick log now just closes modal — quest logging happens via quest cards
   closeModal();
-  switchTab('system');
-  harvestData();
 }
 
 // ── TABS ──────────────────────────────────────────────────────────────
