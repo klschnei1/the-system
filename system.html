@@ -1706,18 +1706,6 @@ function logQuest(qid, xp) {
   if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
   data.dailyLogs[today][qid] = logEntry;
 
-  // Update domain stat
-  if (quest?.stat && data.stats[quest.stat] !== undefined) {
-    data.stats[quest.stat] = Math.min(100, (data.stats[quest.stat] || 0) + Math.floor(xp * 0.8));
-  }
-
-  // Track weekly completions for weeklyMin quests
-  if (quest?.weeklyMin) {
-    if (!data.weeklyCompletions) data.weeklyCompletions = {};
-    const wk = getWeekKey();
-    if (!data.weeklyCompletions[wk]) data.weeklyCompletions[wk] = {};
-    data.weeklyCompletions[wk][qid] = (data.weeklyCompletions[wk][qid] || 0) + 1;
-  }
 
   // Auto-collapse domain if all its quests are now done
   if (domainKey) {
