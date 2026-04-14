@@ -3160,16 +3160,10 @@ function openModal() {
       btn.onclick = () => {
         closeModal();
         setTimeout(() => {
-          switchTab('quests');
-          // Expand domain if collapsed before trying to scroll
-          if (collapsedDomains.has(dk)) {
-            collapsedDomains.delete(dk);
-            saveCollapseState();
-            renderQuests();
-          }
+          openDomainPage(dk, 'quests');
           requestAnimationFrame(() => {
             const area = document.getElementById('log-' + qid);
-            if (area) { area.classList.add('open'); area.scrollIntoView({behavior:'smooth'}); }
+            if (area) area.scrollIntoView({behavior:'smooth'});
           });
         }, 100);
       };
