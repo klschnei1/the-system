@@ -1932,14 +1932,18 @@ const SEPHIRA_MAP = {
 function showSephira(key) {
   const s = SEPHIRA_MAP[key];
   if (!s) return;
-  const scores = calcDomainScores();
-  const domainScore = s.domain ? scores[s.domain] : null;
+  // Domain-linked sephirot open the domain page
+  if (s.domain) {
+    openDomainPage(s.domain, 'tree');
+    return;
+  }
+  // Meta sephirot show detail panel
   document.getElementById('sephiraDetail').innerHTML = `
     <div class="sephira-detail">
       <div class="sephira-detail-name" style="color:${s.color}">${s.name}</div>
       <div class="sephira-detail-anchor">${s.anchor}</div>
       <div style="font-size:12px; color:var(--text2); line-height:1.6; margin-bottom:10px">${s.desc}</div>
-      ${domainScore ? `<div class="sephira-detail-stat" style="color:${s.color}">${domainScore.pct}%<span style="font-size:12px;color:var(--text2)"> — ${domainScore.daysActive}/7 days active</span></div>` : '<div style="font-size:12px;color:var(--text3)">no direct stat — all-domain influence</div>'}
+      <div style="font-size:12px;color:var(--text3)">no direct stat — all-domain influence</div>
     </div>
   `;
 }
