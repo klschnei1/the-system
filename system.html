@@ -1749,18 +1749,19 @@ function renderTree() {
       intensity = calcCoherence() / 100;
     }
 
-    // Heat map: stroke width 1.5→4, glow filter, fill opacity
+    // Heat map: stroke width scales 1.5→4, glow via drop-shadow
     const sw = 1.5 + intensity * 2.5;
     const glowRadius = Math.round(intensity * 15);
-    const fillAlpha = (0.02 + intensity * 0.15).toFixed(2);
-    const strokeColor = circle.getAttribute('stroke');
+    const strokeColor = getComputedStyle(circle).stroke;
     circle.setAttribute('stroke-width', sw);
     circle.style.filter = intensity > 0 ? `drop-shadow(0 0 ${glowRadius}px ${strokeColor})` : 'none';
-    circle.setAttribute('fill', intensity > 0 ? strokeColor.replace(')', `,${fillAlpha})`).replace('var(', 'rgba(') : '#0a0a1f');
-    // For CSS vars we need a different approach — use a translucent overlay
-    if (strokeColor.startsWith('var(')) {
-      circle.style.fillOpacity = fillAlpha;
+    // Fill the circle with its stroke color at low opacity for heat effect
+    if (intensity > 0) {
+      circle.setAttribute('fill', strokeColor);
+      circle.setAttribute('fill-opacity', (0.05 + intensity * 0.2).toFixed(2));
+    } else {
       circle.setAttribute('fill', '#0a0a1f');
+      circle.setAttribute('fill-opacity', '1');
     }
   });
 
