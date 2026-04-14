@@ -2929,12 +2929,13 @@ function switchTab(id) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
-  const tabMap = { quests:0, tree:1, codex:2, transmit:3, system:4 };
-  document.querySelectorAll('.tab')[tabMap[id]]?.classList.add('active');
-  if (id === 'tree') { renderStatGrid(); }
-  if (id === 'codex') { renderCodex(); }
+  // Match tab highlight by onclick content, not position (survives theme reordering)
+  document.querySelectorAll('.tab').forEach(t => {
+    const match = (t.getAttribute('onclick') || '').match(/switchTab\('(\w+)'\)/);
+    if (match && match[1] === id) t.classList.add('active');
+  });
+  if (id === 'tree') { renderTree(); }
   if (id === 'transmit') { renderTransmissions(); }
-  if (id === 'system') { renderEvolution(); }
 }
 
 // ── NOTIFY ────────────────────────────────────────────────────────────
