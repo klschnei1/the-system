@@ -1761,47 +1761,6 @@ function renderStatGrid() {
 
 }
 
-// ── RENDER CODEX ──────────────────────────────────────────────────────
-function renderCodex() {
-  const container = document.getElementById('codexContent');
-  container.innerHTML = '';
-
-  Object.entries(data.longTermGoals).forEach(([gid, goal]) => {
-    const color = goal.color || 'var(--accent)';
-    const milestones = Object.entries(goal.milestones);
-    const done = milestones.filter(([k]) => data.ltDone[k]).length;
-    const pct = Math.round((done / milestones.length) * 100);
-
-    container.innerHTML += `
-      <div class="goal-title" style="color:${color}; border-bottom: 1px solid ${color}22; padding-bottom:6px">${goal.name}</div>
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-        <div style="flex:1;height:3px;background:var(--border);border-radius:2px">
-          <div style="width:${pct}%;height:100%;background:${color};border-radius:2px;transition:width 0.5s"></div>
-        </div>
-        <div style="font-size:10px;color:var(--text2)">${done}/${milestones.length}</div>
-      </div>
-      ${milestones.map(([k, label]) => `
-        <div class="milestone-card ${data.ltDone[k] ? 'done' : ''}" onclick="toggleMilestone('${k}')">
-          <div class="milestone-check ${data.ltDone[k] ? 'done' : ''}">${data.ltDone[k] ? '✓' : ''}</div>
-          <div class="milestone-text">${label}</div>
-        </div>
-      `).join('')}
-    `;
-  });
-}
-
-function toggleMilestone(key) {
-  data.ltDone[key] = !data.ltDone[key];
-  if (data.ltDone[key]) {
-    data.xp = (data.xp || 0) + 100;
-    todayXpEarned += 100;
-    notify('Milestone unlocked. +100 XP. The Tree responds.');
-  }
-  saveData();
-  renderCodex();
-  renderHeader();
-}
-
 // ── DAILY SEED & PROCEDURAL VARIATION ─────────────────────────────────
 function getDailySeed() {
   const d = getTodayStr().replace(/-/g,'');
