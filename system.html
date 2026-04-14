@@ -2776,11 +2776,15 @@ const SENSEI_VOICE_INSTRUCTIONS = {
 
 function buildSenseiSystemPrompt(senseiKey, sensei) {
   const today = getTodayStr();
-  const stats = data.stats || {};
+  const scores = calcDomainScores();
   const coherence = calcCoherence();
   const completedToday = Object.keys(todayLog);
   const recentTx = (data.transmissionLog || []).slice(-3).reverse()
     .map(t => `[${t.date}] ${t.archetype}: "${t.body}"`).join('\n');
+
+  const domainStatsStr = Object.entries(scores)
+    .map(([dk, s]) => `${dk}: ${s.daysActive}/7 days (${s.pct}%)`)
+    .join(' | ');
 
   return `You are ${sensei.name}, one of six Pantheon figures in the Cybernetic Self System — a personal operating system built on Kabbalistic Tree of Life feedback architecture.
 
@@ -2791,9 +2795,8 @@ VOICE: ${SENSEI_VOICE_INSTRUCTIONS[senseiKey] || ''}
 SYSTEM STATE (${today}):
 Rank: ${data.rank || 'E'} | XP: ${(data.xp || 0).toLocaleString()} | Streak: ${data.streak || 0} days | Coherence: ${Math.round(coherence)}%
 
-DOMAIN STATS (0–100):
-Lab/Intellect: ${stats.lab||0} | Gym/Strength: ${stats.gym||0} | Sleep/Recovery: ${stats.sleep||0}
-Nutrition: ${stats.nutrition||0} | Finance: ${stats.finance||0} | Art: ${stats.art||0} | Practice: ${stats.practice||0}
+DOMAIN SIGNAL (7-day rolling — days active / 7):
+${domainStatsStr}
 
 QUESTS COMPLETED TODAY (${completedToday.length}):
 ${completedToday.map(qid => {
