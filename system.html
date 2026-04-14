@@ -3539,8 +3539,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Check if new day
   const today = getTodayStr();
   if (data.lastDate && data.lastDate !== today) {
-    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-    const yStr = yesterday.toISOString().slice(0,10);
+    // Derive yesterday using the same 3:30 AM boundary as getTodayStr()
+    const todayDate = new Date(today + 'T12:00:00');
+    todayDate.setDate(todayDate.getDate() - 1);
+    const yStr = todayDate.toLocaleDateString('en-CA');
 
     if (data.lastDate === yStr) {
       // Last active day was yesterday — check if anything was logged
