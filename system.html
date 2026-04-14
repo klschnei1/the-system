@@ -1703,45 +1703,86 @@ function logQuest(qid, xp) {
 
 // ── RENDER TREE ───────────────────────────────────────────────────────
 const SEPHIRA_MAP = {
-  keter: { name:'Keter // Crown', anchor:'The Source — intent, will, origin', stat:null, color:'var(--gold)', desc:'The origin point of all signal. Crown does not track — it witnesses.' },
-  chokmah: { name:'Chokmah // Wisdom', anchor:'Intuition, flash insight, the spark', stat:null, color:'var(--accent2)', desc:'Right column pillar. Raw undifferentiated wisdom. The flash before understanding.' },
-  binah: { name:'Binah // Structure', anchor:'Planning, admin, systems that support the work', stat:'lab', color:'var(--binah)', desc:'Left column. Understanding structures the wisdom. Binah builds form from flash.' },
-  daat: { name:"Da'at // Knowledge", anchor:'Hidden sephira — integration of understanding and wisdom', stat:null, color:'var(--text2)', desc:"Da'at is the integration node — hidden because it only appears when ChabaD (cognitive triad) is in coherence." },
-  chesed: { name:'Chesed // Capital', anchor:'Budget, DCA, income, financial system', stat:'finance', color:'var(--chesed)', desc:'Right column. Lovingkindness as expansive capital — the system that supports all domains by ensuring resources flow.' },
-  geburah: { name:'Geburah // Strength', anchor:'Training, protein, physical output', stat:'gym', color:'var(--geburah)', desc:'Left column. Judgment and discipline. The domain that forges physical capacity and eliminates excess.' },
-  tiferet: { name:'Tiferet // Harmony', anchor:'The center — coherence between all domains', stat:null, color:'var(--gold)', desc:'Central sephira. Tiferet is the feedback mediator of the emotional triad (ChaGaT). When all domains are active, Tiferet glows.' },
-  netzach: { name:'Netzach // Creation', anchor:'Art, music, craft — output that isn\'t the PhD', stat:'art', color:'var(--netzach)', desc:'Right column action level. Endurance of creative drive. The domain of desire and aesthetic output.' },
-  hod: { name:'Hod // Intellect', anchor:'Lab work, writing, PhD research', stat:'lab', color:'var(--hod)', desc:'Left column action level. Majesty through disciplined intellectual output. THE primary domain — the gate.' },
-  yesod: { name:'Yesod // Recovery', anchor:'Sleep quality, rest, integration', stat:'sleep', color:'var(--yesod)', desc:'Foundation. Yesod integrates the action level before output flows to Malkuth. Sleep and recovery are the substrate.' },
-  malkuth: { name:'Malkuth // Presence', anchor:'Hygiene, environment, baseline order', stat:'hygiene', color:'var(--malkuth)', desc:'Kingship — the physical world. The domain of embodied presence: hygiene, space, showing up.' }
+  keter: { name:'Keter // Crown', anchor:'The Source — intent, will, origin', domain:null, color:'var(--gold)', desc:'The origin point of all signal. Crown does not track — it witnesses.' },
+  chokmah: { name:'Chokmah // Wisdom', anchor:'Intuition, flash insight, the spark', domain:null, color:'var(--accent2)', desc:'Right column pillar. Raw undifferentiated wisdom. The flash before understanding.' },
+  binah: { name:'Binah // Structure', anchor:'Planning, admin, systems that support the work', domain:'binah', color:'var(--binah)', desc:'Left column. Understanding structures the wisdom. Binah builds form from flash.' },
+  daat: { name:"Da'at // Knowledge", anchor:'Hidden sephira — integration of understanding and wisdom', domain:null, color:'var(--text2)', desc:"Da'at is the integration node — hidden because it only appears when ChabaD (cognitive triad) is in coherence." },
+  chesed: { name:'Chesed // Capital', anchor:'Budget, DCA, income, financial system', domain:'chesed', color:'var(--chesed)', desc:'Right column. Lovingkindness as expansive capital — the system that supports all domains by ensuring resources flow.' },
+  geburah: { name:'Geburah // Strength', anchor:'Training, protein, physical output', domain:'geburah', color:'var(--geburah)', desc:'Left column. Judgment and discipline. The domain that forges physical capacity and eliminates excess.' },
+  tiferet: { name:'Tiferet // Harmony', anchor:'The center — coherence between all domains', domain:null, color:'var(--gold)', desc:'Central sephira. Tiferet is the feedback mediator of the emotional triad (ChaGaT). When all domains are active, Tiferet glows.' },
+  netzach: { name:'Netzach // Creation', anchor:'Art, music, craft — output that isn\'t the PhD', domain:'netzach', color:'var(--netzach)', desc:'Right column action level. Endurance of creative drive. The domain of desire and aesthetic output.' },
+  hod: { name:'Hod // Intellect', anchor:'Lab work, writing, PhD research', domain:'hod', color:'var(--hod)', desc:'Left column action level. Majesty through disciplined intellectual output. THE primary domain — the gate.' },
+  yesod: { name:'Yesod // Recovery', anchor:'Sleep quality, rest, integration', domain:'yesod', color:'var(--yesod)', desc:'Foundation. Yesod integrates the action level before output flows to Malkuth. Sleep and recovery are the substrate.' },
+  malkuth: { name:'Malkuth // Presence', anchor:'Hygiene, environment, baseline order', domain:'malkuth', color:'var(--malkuth)', desc:'Kingship — the physical world. The domain of embodied presence: hygiene, space, showing up.' }
 };
 
 function showSephira(key) {
   const s = SEPHIRA_MAP[key];
   if (!s) return;
-  const statVal = s.stat ? (data.stats[s.stat] || 0) : null;
+  const scores = calcDomainScores();
+  const domainScore = s.domain ? scores[s.domain] : null;
   document.getElementById('sephiraDetail').innerHTML = `
     <div class="sephira-detail">
       <div class="sephira-detail-name" style="color:${s.color}">${s.name}</div>
       <div class="sephira-detail-anchor">${s.anchor}</div>
       <div style="font-size:12px; color:var(--text2); line-height:1.6; margin-bottom:10px">${s.desc}</div>
-      ${statVal !== null ? `<div class="sephira-detail-stat" style="color:${s.color}">${statVal}<span style="font-size:12px;color:var(--text2)">/100</span></div>` : '<div style="font-size:12px;color:var(--text3)">no direct stat — all-domain influence</div>'}
+      ${domainScore ? `<div class="sephira-detail-stat" style="color:${s.color}">${domainScore.pct}%<span style="font-size:12px;color:var(--text2)"> — ${domainScore.daysActive}/7 days active</span></div>` : '<div style="font-size:12px;color:var(--text3)">no direct stat — all-domain influence</div>'}
     </div>
   `;
 }
 
-function renderStatGrid() {
-  const grid = document.getElementById('statGrid');
-  const stats = data.stats;
-  const statColors = { lab:'var(--hod)', gym:'var(--geburah)', nutrition:'var(--geburah)', hygiene:'var(--malkuth)', sleep:'var(--yesod)', finance:'var(--chesed)', art:'var(--netzach)', practice:'var(--pillar)' };
-  grid.innerHTML = Object.entries(stats).map(([k,v]) => `
-    <div class="stat-item">
-      <div class="stat-label">${k}</div>
-      <div class="stat-value" style="color:${statColors[k]||'var(--accent)'}">${v}</div>
-      <div class="stat-bar-wrap"><div class="stat-bar" style="width:${v}%;background:${statColors[k]||'var(--accent)'}"></div></div>
-    </div>
-  `).join('');
+function renderTree() {
+  const scores = calcDomainScores();
 
+  // Update SVG node intensity based on domain scores
+  Object.entries(SEPHIRA_MAP).forEach(([key, sephira]) => {
+    const node = document.getElementById('node-' + key);
+    if (!node) return;
+    const circle = node.querySelector('.sephira-circle');
+    if (!circle) return;
+
+    let intensity = 0;
+    if (sephira.domain && scores[sephira.domain]) {
+      intensity = scores[sephira.domain].pct / 100;
+    } else if (!sephira.domain && key === 'tiferet') {
+      // Tiferet glows based on overall coherence
+      intensity = calcCoherence() / 100;
+    }
+
+    // Heat map: stroke width 1.5→4, glow filter, fill opacity
+    const sw = 1.5 + intensity * 2.5;
+    const glowRadius = Math.round(intensity * 15);
+    const fillAlpha = (0.02 + intensity * 0.15).toFixed(2);
+    const strokeColor = circle.getAttribute('stroke');
+    circle.setAttribute('stroke-width', sw);
+    circle.style.filter = intensity > 0 ? `drop-shadow(0 0 ${glowRadius}px ${strokeColor})` : 'none';
+    circle.setAttribute('fill', intensity > 0 ? strokeColor.replace(')', `,${fillAlpha})`).replace('var(', 'rgba(') : '#0a0a1f');
+    // For CSS vars we need a different approach — use a translucent overlay
+    if (strokeColor.startsWith('var(')) {
+      circle.style.fillOpacity = fillAlpha;
+      circle.setAttribute('fill', '#0a0a1f');
+    }
+  });
+
+  // Render domain scores grid below tree
+  const grid = document.getElementById('domainScores');
+  const domainColors = {
+    hod:'var(--hod)', geburah:'var(--geburah)', malkuth:'var(--malkuth)',
+    yesod:'var(--yesod)', chesed:'var(--chesed)', binah:'var(--binah)',
+    netzach:'var(--netzach)', pillar:'var(--pillar)'
+  };
+  grid.innerHTML = Object.entries(scores).map(([dk, s]) => {
+    const def = data.questDefinitions[dk];
+    const name = def ? def.name : dk;
+    const color = domainColors[dk] || 'var(--accent)';
+    return `
+      <div class="domain-score-item">
+        <div class="domain-score-label">${name}</div>
+        <div class="domain-score-value" style="color:${color}">${s.daysActive}/7</div>
+        <div class="domain-score-bar"><div class="domain-score-fill" style="width:${s.pct}%;background:${color}"></div></div>
+      </div>
+    `;
+  }).join('');
 }
 
 // ── DAILY SEED & PROCEDURAL VARIATION ─────────────────────────────────
