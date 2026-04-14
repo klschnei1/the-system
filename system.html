@@ -3127,6 +3127,18 @@ function updateSignalKeyStatus() {
 }
 
 // ── MODAL ─────────────────────────────────────────────────────────────
+function fabAction() {
+  if (currentDomain) {
+    // On a domain page: scroll to and focus first unfilled input
+    const quests = document.getElementById('domainQuestCards');
+    if (quests) {
+      const firstInput = quests.querySelector('input:not([disabled]), textarea:not([disabled])');
+      if (firstInput) { firstInput.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => firstInput.focus(), 300); return; }
+    }
+  }
+  openModal();
+}
+
 function openModal() {
   const overlay = document.getElementById('modalOverlay');
   overlay.classList.add('open');
