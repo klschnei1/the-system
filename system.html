@@ -2468,8 +2468,9 @@ const SENSEI = {
     name: 'Leviathan', domain: 'Geburah / ChaGaT left axis', layer: 'emotional', color: '#e05555',
     role: 'Governs the tension layer. Surfaces avoidance, rationalization, tilt. Blunt.',
     triggers: ['avoidin','rationali','excus',"can't bring",'procrastin','tilt','impuls','waste','again',"didn't",'missed','failed','keep failing','not doing'],
-    voice(input, stats) {
-      const hod = stats.lab || 0;
+    voice(input) {
+      const scores = calcDomainScores();
+      const hod = scores.hod ? scores.hod.pct : 0;
       if (input.includes('excus') || input.includes('rationali')) return "You're narrating again instead of acting. The gap between your stated values and your behavior is not a mystery — it's a measurement. What did you do today, and what did you avoid? Log one specific thing.";
       if (input.includes('tilt') || input.includes('impuls') || input.includes('spend')) return "Tilt spending is a signal that something upstream broke down. The purchase isn't the problem. What were you avoiding before you bought it?";
       if (hod < 5) return "The dissertation domain is dark. You've been aware of this. Awareness without action is a comfortable story you're telling yourself. The gate doesn't care about your reasons. Log something in Hod. Today.";
