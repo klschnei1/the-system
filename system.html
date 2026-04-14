@@ -1318,11 +1318,9 @@ async function initDataStore() {
     const remote = await DataStore.load();
     if (remote) {
       data = remote;
-      // migrate questDefinitions if version mismatch
-      if (!data.questDefinitions || data._meta?.version !== '2.0') {
-        data.questDefinitions = JSON.parse(JSON.stringify(DEFAULT_DATA.questDefinitions));
-        if (!data.weeklyCompletions) data.weeklyCompletions = {};
-      }
+      // Always use current quest definitions from code — schema lives here, not in data
+      data.questDefinitions = JSON.parse(JSON.stringify(DEFAULT_DATA.questDefinitions));
+      if (!data.weeklyCompletions) data.weeklyCompletions = {};
       if (!data.dailyLogs) data.dailyLogs = {};
     } else {
       data = JSON.parse(JSON.stringify(DEFAULT_DATA));
