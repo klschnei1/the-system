@@ -3017,15 +3017,15 @@ function harvestData() {
 
   // Simple keyword → quest matching
   const triggers = [
-    { keys:['lab session','lab work','lab today','in the lab','ran the','ddpcr','western blot','cell','assay','protocol','dissect'], qid:'h2', label:'Lab session detected' },
-    { keys:['writing','word count','dissertation','wrote','draft','thesis'], qid:'h4', label:'Writing session detected' },
-    { keys:['gym','workout','training','lift','squat','bench','deadlift','pull','push','legs'], qid:'g2', label:'Gym session detected' },
-    { keys:['protein','200g','macros','eating','nutrition','macrofactor','myfitnesspal'], qid:'g3', label:'Protein log detected' },
+    { keys:['lab session','lab work','lab today','in the lab','ran the','ddpcr','western blot','cell','assay','protocol','dissect'], qid:'h1', label:'Lab session detected' },
+    { keys:['writing','word count','dissertation','wrote','draft','thesis'], qid:'h2', label:'Writing session detected' },
+    { keys:['gym','workout','training','lift','squat','bench','deadlift','pull','push','legs'], qid:'g1', label:'Workout detected' },
+    { keys:['protein','200g','macros','eating','nutrition','macrofactor','myfitnesspal'], qid:'g2', label:'Protein log detected' },
     { keys:['morning','shower','brush','hygiene','teeth'], qid:'m1', label:'Morning hygiene detected' },
     { keys:['sleep','slept','hours of sleep','bed at','woke at'], qid:'y1', label:'Sleep data detected' },
     { keys:['spent','budget','money','bought','purchase','transaction'], qid:'f1', label:'Finance log detected' },
     { keys:['creative','art','music','made','drew','painted','practiced guitar','piano'], qid:'n1', label:'Creative session detected' },
-    { keys:['altar','lbrp','ritual','middle pillar','banishing','invocation'], qid:'p2', label:'Ritual practice detected' },
+    { keys:['altar','lbrp','ritual','middle pillar','banishing','invocation','meditation','practice'], qid:'p1', label:'Practice detected' },
     { keys:['planned','calendar','schedule','reviewed tasks','admin','email'], qid:'b1', label:'Planning/admin detected' },
   ];
 
