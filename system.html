@@ -941,35 +941,6 @@
   </div>
 </div>
 
-<!-- VIEW: EVOLUTION -->
-<div class="view" id="view-system">
-  <div class="section-label">System Evolution // Adaptive State</div>
-  <div id="evoPanel"></div>
-  <div style="margin-top:16px" class="section-label">Feedback Triads // Control Architecture</div>
-  <div id="feedbackPanel"></div>
-  <div style="margin-top:16px" class="section-label">Harvest from Claude Conversation</div>
-  <div style="font-size:11px; color:var(--text2); margin-bottom:8px; line-height:1.6">
-    Paste a summary of a Claude conversation or describe what you accomplished. Cybernetica will extract quest completions and log them.
-  </div>
-  <textarea class="log-input" id="harvestInput" rows="5" placeholder="e.g. 'Had a 2-hour lab session today, ran ddPCR protocol on samples 3-7. Hit protein at 215g. Didn't get to gym.'"></textarea>
-  <div style="margin-top:8px">
-    <button class="btn btn-primary" onclick="harvestData()">Harvest</button>
-  </div>
-  <div id="harvestResult" style="margin-top:12px; font-size:12px; color:var(--green); line-height:1.8; display:none;"></div>
-
-  <div style="margin-top:24px" class="section-label">Signal Configuration</div>
-  <div style="font-size:11px;color:var(--text2);margin-bottom:8px;line-height:1.6">
-    Anthropic API key for live sensei responses in the Signal tab. Stored in browser only.
-  </div>
-  <div style="display:flex;gap:8px;margin-bottom:4px">
-    <input type="password" id="apiKeyInput"
-      style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:12px;padding:6px 10px;border-radius:3px;outline:none"
-      placeholder="sk-ant-...">
-    <button class="btn btn-ghost" onclick="saveApiKey()">Save</button>
-  </div>
-  <div style="font-size:10px;color:var(--text3)">Never transmitted except to api.anthropic.com during broadcasts.</div>
-</div>
-
 <!-- FAB: Quick Log -->
 <button class="fab" onclick="openModal()" title="Quick Log">＋</button>
 
