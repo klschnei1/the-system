@@ -3560,7 +3560,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     Object.entries(data.questDefinitions || {}).forEach(([domKey, dom]) => {
       let domainTotal = 0, domainDone = 0;
       Object.entries(dom.quests || {}).forEach(([qid, q]) => {
-        if (q.weeklyMin) return; // h4 — evaluated weekly, not daily
         domainTotal++;
         if (yLog[qid]) { domainDone++; }
         else { missed.push({ qid, domain: domKey, name: q.name, tier: q.tier }); }
