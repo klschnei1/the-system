@@ -1497,22 +1497,31 @@ function renderQuests() {
         weeklyBadge = `<span style="font-size:9px;color:${wk > 0 ? 'var(--green)' : 'var(--text3)'};margin-left:6px">✎ ${wk}×/wk</span>`;
       }
 
+      const isAccum = quest.inputType === 'accumulator';
+      const accumTotals = isAccum && done ? todayLog[qid]?.totals || {} : {};
+      const accumSummary = isAccum && done
+        ? quest.accumFields.map(f => `${accumTotals[f.key] || 0} ${f.units}`).join(' · ')
+        : '';
+
       const card = document.createElement('div');
-      card.className = 'quest-card' + (done ? ' completed' : '');
+      card.className = 'quest-card' + (done && !isAccum ? ' completed' : '');
       card.innerHTML = `
         <div class="quest-header" onclick="toggleQuestLog('${qid}')">
           <div class="domain-pip" style="background:${domain.color}"></div>
           <div class="quest-name">${quest.name}${retroBadge}${weeklyBadge}</div>
-          <span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
-          <div class="quest-xp">+${quest.xp} XP</div>
-          <div style="margin-left:6px;color:${done ? 'var(--green)' : 'var(--border)'};font-size:16px">${done ? '✓' : '○'}</div>
+          ${isAccum && accumSummary
+            ? `<div style="font-size:11px;color:var(--accent);margin-left:auto;margin-right:8px;letter-spacing:0.5px">${accumSummary}</div>`
+            : `<span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
+               <div class="quest-xp">+${quest.xp} XP</div>`
+          }
+          <div style="margin-left:${isAccum && accumSummary ? '0' : '6px'};color:${done ? 'var(--green)' : 'var(--border)'};font-size:16px">${done ? '✓' : '○'}</div>
         </div>
         <div class="quest-log-area" id="log-${qid}">
           ${buildQuestInput(qid, quest, done)}
           <div class="log-actions">
-            ${quest.inputType === 'accumulator'
+            ${isAccum
               ? `<button class="btn btn-primary" onclick="logAccumulator('${qid}', ${quest.xp})">
-                  ${done ? '+ Add Entry' : 'Log +' + quest.xp + ' XP'}
+                  ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
                 </button>`
               : `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
                   ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
