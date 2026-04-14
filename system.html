@@ -1738,9 +1738,6 @@ function logQuest(qid, xp) {
     const bonus = xp * (reward.multiplier - 1);
     todayXpEarned += bonus;
     data.xp = (data.xp || 0) + bonus;
-    if (quest?.stat && data.stats[quest.stat] !== undefined) {
-      data.stats[quest.stat] = Math.min(100, (data.stats[quest.stat] || 0) + Math.floor(bonus * 0.8));
-    }
   }
 
   saveData();
