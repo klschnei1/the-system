@@ -2481,8 +2481,9 @@ const SENSEI = {
     name: 'Asclepius', domain: 'NHY action layer / body', layer: 'action', color: '#4ade80',
     role: 'Governs body and action domain. Clinical, data-driven, encouraging.',
     triggers: ['gym','workout','training','lift','run','protein','nutrition','diet','meal','sleep','recovery','soreness','tired','body','weight','macro','calorie','fast'],
-    voice(input, stats) {
-      const gym = stats.gym || 0;
+    voice(input) {
+      const scores = calcDomainScores();
+      const gym = scores.geburah ? scores.geburah.pct : 0;
       if (input.includes('sleep') || input.includes('tired') || input.includes('recovery')) return "Recovery is not optional infrastructure — it is the rate-limiting step on adaptation. Without Yesod, Geburah cannot compound. What was last night's sleep duration? Log it, even approximately.";
       if (input.includes('protein') || input.includes('nutrition') || input.includes('macro')) return "Protein synthesis doesn't care about your approximations. Log the actual number. 200g is the floor because it's metabolically meaningful, not arbitrary. If you didn't track, estimate from memory and flag it as approximate. Imperfect data beats no data.";
       if (gym < 20 && (input.includes('gym') || input.includes('workout'))) return "Geburah shows " + gym + " signal — training log is sparse. A session that happened but wasn't logged doesn't improve the model. Open Strong. Log what you remember, even incomplete.";
