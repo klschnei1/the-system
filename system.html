@@ -3201,10 +3201,7 @@ function buildWeekAnalysis() {
 
   const darkDomains = Object.entries(domains).filter(([, d]) => d.daysActive === 0).map(([dk]) => dk);
   const activeDomains = Object.entries(domains).filter(([, d]) => d.daysActive >= 3).map(([dk]) => dk);
-  const dormantQuests = Object.entries(questHits).filter(([qid, q]) => {
-    if (qid === 'h4' && q.count === 0) return true; // h4 weeklyMin — only dormant at 0/7
-    return q.count === 0 && qid !== 'h4';
-  }).map(([qid, q]) => ({ qid, ...q }));
+  const dormantQuests = Object.entries(questHits).filter(([, q]) => q.count === 0).map(([qid, q]) => ({ qid, ...q }));
   const highTierHits = Object.entries(questHits).filter(([, q]) => q.xp >= 35 && q.count > 0);
 
   return {
