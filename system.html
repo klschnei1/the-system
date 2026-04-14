@@ -204,6 +204,53 @@
   .domain-score-bar { margin-top: 4px; height: 2px; background: var(--border); border-radius: 1px; }
   .domain-score-fill { height: 100%; border-radius: 1px; transition: width 0.5s; }
 
+  /* ── DOMAIN OVERVIEW CARDS ── */
+  .domain-card {
+    background: var(--bg2); border: var(--border-width) var(--border-style) var(--border);
+    border-radius: var(--border-radius); padding: 12px 14px;
+    margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .domain-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .domain-card-name { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+  .domain-card-anchor { font-size: 10px; color: var(--text2); margin-top: 2px; }
+  .domain-card-status {
+    margin-left: auto; font-size: 11px; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .domain-card-metric { font-size: 10px; color: var(--text2); margin-top: 3px; }
+
+  /* ── DOMAIN PAGE ── */
+  .domain-page-back {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text2); cursor: pointer; display: inline-flex;
+    align-items: center; gap: 6px; margin-bottom: 16px; transition: color 0.2s;
+  }
+  .domain-page-back:hover { color: var(--text); }
+  .domain-page-identity {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .domain-page-sigil { width: 48px; height: 48px; opacity: 0.85; }
+  .domain-page-sigil svg { width: 100%; height: 100%; }
+  .domain-page-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+  .domain-page-anchor { font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .domain-page-score {
+    font-size: 10px; color: var(--text3); margin-top: 4px;
+    letter-spacing: 1px;
+  }
+  .domain-widget {
+    background: var(--bg2); border: var(--border-width) var(--border-style) var(--border);
+    border-radius: var(--border-radius); padding: 14px;
+    margin-bottom: 16px;
+  }
+  .domain-page-quests { margin-top: 8px; }
+  .domain-page-quests .quest-card { }
+  .domain-page-quests .quest-log-area { display: block; }
+  .domain-page-quests .quest-card.completed { opacity: 0.7; }
+  .domain-page-quests .quest-card.completed .quest-name { text-decoration: none; }
+
   /* ── SEPHIRA DETAIL ── */
   .sephira-detail {
     background: var(--bg2); border: var(--border-width) var(--border-style) var(--accent);
