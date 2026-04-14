@@ -1329,11 +1329,12 @@ function getXpProgress(xp) {
   return Math.min(100, ((xp - r.min) / (r.max - r.min)) * 100);
 }
 
-// ── COHERENCE ─────────────────────────────────────────────────────────
-function calcCoherence() {
-  // Rolling 7-day window: per-domain signal = days active / 7
+// ── DOMAIN SCORES & COHERENCE ─────────────────────────────────────────
+function calcDomainScores() {
+  // Rolling 7-day window: per-domain score = (days active / 7) * 100
   const domains = Object.keys(data.questDefinitions || {});
-  if (!domains.length) return 0;
+  const scores = {};
+  if (!domains.length) return scores;
   const logs = data.dailyLogs || {};
   const today = getTodayStr();
   const days = [];
@@ -1342,9 +1343,7 @@ function calcCoherence() {
     d.setDate(d.getDate() - i);
     days.push(d.toLocaleDateString('en-CA'));
   }
-  // Include today's in-memory log (not yet in dailyLogs until save)
   const todayStr = days[0];
-  let domainSignals = 0;
   domains.forEach(dk => {
     const qids = Object.keys((data.questDefinitions[dk] || {}).quests || {});
     let daysActive = 0;
@@ -1352,9 +1351,16 @@ function calcCoherence() {
       const dayLog = day === todayStr ? { ...logs[day], ...todayLog } : (logs[day] || {});
       if (qids.some(qid => dayLog[qid])) daysActive++;
     });
-    domainSignals += (daysActive / 7) * 100;
+    scores[dk] = { pct: Math.round((daysActive / 7) * 100), daysActive };
   });
-  return Math.min(100, domainSignals / domains.length);
+  return scores;
+}
+
+function calcCoherence() {
+  const scores = calcDomainScores();
+  const vals = Object.values(scores).map(s => s.pct);
+  if (!vals.length) return 0;
+  return Math.min(100, vals.reduce((a, b) => a + b, 0) / vals.length);
 }
 function getSignalLabel(c) {
   if (c >= 80) return 'signal: coherent';
