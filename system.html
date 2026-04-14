@@ -3057,7 +3057,7 @@ function buildWeekAnalysis() {
     xp: data.xp || 0,
     domainWeights: data.domainWeights || {},
     currentWeekQuests: data.currentWeekQuests || [],
-    stats: data.stats || {}
+    domainScores: calcDomainScores()
   };
 }
 
