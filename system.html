@@ -2689,23 +2689,26 @@ function routeToSensei(input) {
 
 function getTodaySensei() {
   const seed = getDailySeed();
-  const hod = (data.stats||{}).lab || 0;
-  const gym = (data.stats||{}).gym || 0;
+  const scores = calcDomainScores();
+  const hod = scores.hod ? scores.hod.pct : 0;
+  const geb = scores.geburah ? scores.geburah.pct : 0;
   const keys = Object.keys(SENSEI);
-  if (hod < 10) return 'leviathan';
-  if (gym < 10) return 'asclepius';
+  if (hod < 15) return 'leviathan';
+  if (geb < 15) return 'asclepius';
   return keys[seed % keys.length];
 }
 
 function systemAnalysis() {
-  const st = data.stats || {};
-  const hod = st.lab || 0, gym = st.gym || 0;
-  const coherence = Object.values(st).reduce((a,b)=>a+b,0) / Math.max(1,Object.keys(st).length);
-  if (hod < 10 && gym < 10) return "<strong>System baseline: zero.</strong> All major domains are dark. The only action that matters is the first log. Pick one quest, any domain, and complete it.";
-  if (hod < 10) return "<strong>Hod is dark. The gate is closed.</strong> The dissertation domain shows no logged signal. Until Hod accumulates, all other domain progress is bounded. Complete one Hod quest today. Signal propagates upward.";
-  if (hod > 60 && gym < 20) return "<strong>Hod burns, Geburah sleeps.</strong> Intellectual output is high but the body is unattended. Left pillar imbalance. Physical neglect creates cognitive degradation in the medium term.";
+  const scores = calcDomainScores();
+  const hod = scores.hod ? scores.hod.pct : 0;
+  const geb = scores.geburah ? scores.geburah.pct : 0;
+  const coherence = calcCoherence();
+  const activeCount = Object.values(scores).filter(s => s.pct > 0).length;
+  if (hod === 0 && geb === 0) return "<strong>System baseline: zero.</strong> All major domains are dark. The only action that matters is the first log. Pick one quest, any domain, and complete it.";
+  if (hod === 0) return "<strong>Hod is dark. The gate is closed.</strong> The dissertation domain shows no logged signal in 7 days. Until Hod accumulates, all other domain progress is bounded. Complete one Hod quest today.";
+  if (hod > 60 && geb < 20) return "<strong>Hod burns, Geburah sleeps.</strong> Intellectual output is high but the body is unattended. Left pillar imbalance. Physical neglect creates cognitive degradation in the medium term.";
   if (coherence > 60) return "<strong>Coherence is building.</strong> Multi-domain signal detected. The internal model is forming. The Yetzirah threshold is approaching.";
-  return "<strong>Signal assessment ongoing.</strong> " + Object.values(st).filter(v=>v>0).length + " domains active. Coherence: " + Math.round(coherence) + "%. Pattern recognition requires 7+ days of consistent logging.";
+  return "<strong>Signal assessment ongoing.</strong> " + activeCount + " domains active. Coherence: " + Math.round(coherence) + "%. Pattern recognition requires 7+ days of consistent logging.";
 }
 
 // ── RENDER TRANSMISSIONS ──────────────────────────────────────────────
