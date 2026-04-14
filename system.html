@@ -1492,11 +1492,55 @@ function renderFocusQuests() {
     '<ul>' + quests.map(q => '<li>' + q + '</li>').join('') + '</ul>';
 }
 
-// ── RENDER QUESTS ─────────────────────────────────────────────────────
-function renderQuests() {
+// ── QUEST CARD BUILDER (shared by overview and domain page) ──────────
+function buildQuestCard(qid, quest, domain, options = {}) {
+  const done = !!todayLog[qid];
+  const isAccum = quest.inputType === 'accumulator';
+  const accumTotals = isAccum && done ? todayLog[qid]?.totals || {} : {};
+  const accumSummary = isAccum && done
+    ? quest.accumFields.map(f => `${accumTotals[f.key] || 0} ${f.units}`).join(' · ')
+    : '';
+
+  const retroBadge = quest.retrospective
+    ? `<span style="font-size:9px;color:var(--text3);margin-left:6px;font-style:italic">← yesterday</span>`
+    : '';
+
+  const card = document.createElement('div');
+  card.className = 'quest-card' + (done && !isAccum ? ' completed' : '');
+  card.innerHTML = `
+    <div class="quest-header" onclick="toggleQuestLog('${qid}')">
+      <div class="domain-pip" style="background:${domain.color}"></div>
+      <div class="quest-name">${quest.name}${retroBadge}</div>
+      ${isAccum && accumSummary
+        ? `<div style="font-size:11px;color:var(--accent);margin-left:auto;margin-right:8px;letter-spacing:0.5px">${accumSummary}</div>`
+        : `<span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
+           <div class="quest-xp">+${quest.xp} XP</div>`
+      }
+      <div style="margin-left:${isAccum && accumSummary ? '0' : '6px'};color:${done ? 'var(--green)' : 'var(--border)'};font-size:16px">${done ? '✓' : '○'}</div>
+    </div>
+    <div class="quest-log-area" id="log-${qid}">
+      ${buildQuestInput(qid, quest, done)}
+      <div class="log-actions">
+        ${isAccum
+          ? `<button class="btn btn-primary" onclick="logAccumulator('${qid}', ${quest.xp})">
+              ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
+            </button>`
+          : `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
+              ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
+            </button>`
+        }
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// ── RENDER QUESTS OVERVIEW ───────────────────────────────────────────
+function renderQuestsOverview() {
   const container = document.getElementById('questList');
   container.innerHTML = '';
   const defs = data.questDefinitions;
+  const scores = calcDomainScores();
   let totalCompleted = 0;
 
   Object.entries(defs).forEach(([domainKey, domain]) => {
@@ -1504,105 +1548,130 @@ function renderQuests() {
     const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
     totalCompleted += completedCount;
     const allDone = completedCount === questIds.length;
-    const isCollapsed = collapsedDomains.has(domainKey);
 
-    const group = document.createElement('div');
-    group.className = 'domain-group';
-
-    // ── Domain header (clickable) ──
-    const header = document.createElement('div');
-    header.className = 'domain-header';
     const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
     const sigilSeed = getDailySeed() ^ (domainKey.charCodeAt(0) * 7919);
     const sigilSvg = SigilEngine.generate(domainKey, sigilSeed, sigilStyle);
-    header.innerHTML = `
-      <div class="domain-sigil">${sigilSvg}</div>
-      <div class="domain-name" style="color:${domain.color}">${domain.name}</div>
-      <div class="domain-anchor" style="flex:1">${domain.anchor}</div>
-      <span style="font-size:9px;color:${allDone ? 'var(--green)' : 'var(--text3)'};margin-right:8px">
-        ${completedCount}/${questIds.length}
-      </span>
-      <span class="domain-collapse-arrow" style="transform:${isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)'}">▾</span>
-    `;
-    header.onclick = () => toggleDomainCollapse(domainKey);
-    group.appendChild(header);
 
-    // ── Quests container (collapsible) ──
-    const questsContainer = document.createElement('div');
-    questsContainer.className = 'quests-container' + (isCollapsed ? ' collapsed' : '');
-    questsContainer.id = 'domain-quests-' + domainKey;
-
-    // Sort quests: retrospective ones float to top before 10 AM
-    let questEntries = Object.entries(domain.quests);
-    const hour = new Date().getHours();
-    if (hour < 10) {
-      questEntries.sort((a, b) => (b[1].retrospective ? 1 : 0) - (a[1].retrospective ? 1 : 0));
-    }
-
-    questEntries.forEach(([qid, quest]) => {
-      const done = !!todayLog[qid];
-
-      const retroBadge = quest.retrospective
-        ? `<span style="font-size:9px;color:var(--text3);margin-left:6px;font-style:italic">← yesterday</span>`
-        : '';
-      let weeklyBadge = '';
-      if (quest.weeklyMin) {
-        const wk = getWeeklyCompletionCount(qid);
-        weeklyBadge = `<span style="font-size:9px;color:${wk > 0 ? 'var(--green)' : 'var(--text3)'};margin-left:6px">✎ ${wk}×/wk</span>`;
+    // Accumulator summary for domains that have one
+    let metricHtml = '';
+    Object.entries(domain.quests).forEach(([qid, q]) => {
+      if (q.inputType === 'accumulator' && todayLog[qid]?.totals) {
+        const t = todayLog[qid].totals;
+        metricHtml = `<div class="domain-card-metric">${q.accumFields.map(f => `${t[f.key] || 0} ${f.units}`).join(' · ')}</div>`;
       }
-
-      const isAccum = quest.inputType === 'accumulator';
-      const accumTotals = isAccum && done ? todayLog[qid]?.totals || {} : {};
-      const accumSummary = isAccum && done
-        ? quest.accumFields.map(f => `${accumTotals[f.key] || 0} ${f.units}`).join(' · ')
-        : '';
-
-      const card = document.createElement('div');
-      card.className = 'quest-card' + (done && !isAccum ? ' completed' : '');
-      card.innerHTML = `
-        <div class="quest-header" onclick="toggleQuestLog('${qid}')">
-          <div class="domain-pip" style="background:${domain.color}"></div>
-          <div class="quest-name">${quest.name}${retroBadge}${weeklyBadge}</div>
-          ${isAccum && accumSummary
-            ? `<div style="font-size:11px;color:var(--accent);margin-left:auto;margin-right:8px;letter-spacing:0.5px">${accumSummary}</div>`
-            : `<span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
-               <div class="quest-xp">+${quest.xp} XP</div>`
-          }
-          <div style="margin-left:${isAccum && accumSummary ? '0' : '6px'};color:${done ? 'var(--green)' : 'var(--border)'};font-size:16px">${done ? '✓' : '○'}</div>
-        </div>
-        <div class="quest-log-area" id="log-${qid}">
-          ${buildQuestInput(qid, quest, done)}
-          <div class="log-actions">
-            ${isAccum
-              ? `<button class="btn btn-primary" onclick="logAccumulator('${qid}', ${quest.xp})">
-                  ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
-                </button>`
-              : `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
-                  ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
-                </button>`
-            }
-            <button class="btn btn-ghost" onclick="toggleQuestLog('${qid}')">Close</button>
-          </div>
-        </div>
-      `;
-      questsContainer.appendChild(card);
     });
 
-    group.appendChild(questsContainer);
-    container.appendChild(group);
+    const card = document.createElement('div');
+    card.className = 'domain-card';
+    card.style.borderLeftColor = domain.color;
+    card.style.borderLeftWidth = '3px';
+    card.innerHTML = `
+      <div class="domain-sigil">${sigilSvg}</div>
+      <div style="flex:1;min-width:0">
+        <div class="domain-card-name" style="color:${domain.color}">${domain.name}</div>
+        <div class="domain-card-anchor">${domain.anchor}</div>
+        ${metricHtml}
+      </div>
+      <div class="domain-card-status">
+        <span style="font-size:10px;color:${allDone ? 'var(--green)' : completedCount > 0 ? 'var(--accent)' : 'var(--text3)'}">${completedCount}/${questIds.length}</span>
+        <span style="color:${allDone ? 'var(--green)' : 'var(--text3)'};font-size:14px">${allDone ? '✓' : '›'}</span>
+      </div>
+    `;
+    card.onclick = () => openDomainPage(domainKey, 'quests');
+    container.appendChild(card);
   });
 
-  // Update tally
   document.getElementById('dailyTally').textContent =
     `Today: ${todayXpEarned} XP — ${totalCompleted} quest${totalCompleted !== 1 ? 's' : ''} complete`;
-
-  // Update focus button state
-  const focusBtn = document.getElementById('focusBtn');
-  if (focusBtn) {
-    focusBtn.textContent = focusMode ? '◎ All' : '◎ Focus';
-    focusBtn.classList.toggle('active', focusMode);
-  }
 }
+
+// Keep old name as alias for any callers
+function renderQuests() { renderQuestsOverview(); }
+
+// ── RENDER DOMAIN PAGE ───────────────────────────────────────────────
+function renderDomainPage(domainKey) {
+  const domain = data.questDefinitions[domainKey];
+  if (!domain) return;
+  const page = document.getElementById('domainPage');
+  const scores = calcDomainScores();
+  const score = scores[domainKey] || { pct: 0, daysActive: 0 };
+
+  const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
+  const sigilSeed = getDailySeed() ^ (domainKey.charCodeAt(0) * 7919);
+  const sigilSvg = SigilEngine.generate(domainKey, sigilSeed, sigilStyle);
+
+  const questIds = Object.keys(domain.quests);
+  const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
+
+  page.innerHTML = `
+    <div class="domain-page-back" onclick="switchTab('${domainPageSource}')">← back</div>
+    <div class="domain-page-identity">
+      <div class="domain-page-sigil">${sigilSvg}</div>
+      <div>
+        <div class="domain-page-title" style="color:${domain.color}">${domain.name}</div>
+        <div class="domain-page-anchor">${domain.anchor}</div>
+        <div class="domain-page-score">${score.daysActive}/7 days active · ${completedCount}/${questIds.length} today</div>
+      </div>
+    </div>
+    <div id="domainWidget"></div>
+    <div class="domain-page-quests" id="domainQuestCards"></div>
+  `;
+
+  // Render domain-specific widget
+  const widgetEl = document.getElementById('domainWidget');
+  if (DOMAIN_WIDGETS[domainKey]) {
+    DOMAIN_WIDGETS[domainKey](widgetEl, domainKey, domain);
+  }
+
+  // Render quest cards (auto-expanded on domain pages)
+  const cardsEl = document.getElementById('domainQuestCards');
+  let questEntries = Object.entries(domain.quests);
+  const hour = new Date().getHours();
+  if (hour < 10) {
+    questEntries.sort((a, b) => (b[1].retrospective ? 1 : 0) - (a[1].retrospective ? 1 : 0));
+  }
+  questEntries.forEach(([qid, quest]) => {
+    const card = buildQuestCard(qid, quest, domain);
+    cardsEl.appendChild(card);
+  });
+}
+
+// ── DOMAIN WIDGETS ───────────────────────────────────────────────────
+const DOMAIN_WIDGETS = {
+  geburah: function(el, dk, domain) {
+    const g2log = todayLog['g2'];
+    const entries = g2log?.entries || [];
+    const totals = g2log?.totals || { calories: 0, protein: 0 };
+    const entryCount = entries.length;
+
+    el.innerHTML = `
+      <div class="domain-widget" style="border-color:${domain.color}">
+        <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${entryCount > 0 ? '12px' : '0'}">
+          <div>
+            <div style="font-size:28px;font-weight:bold;color:var(--text)">${totals.calories || 0}</div>
+            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">kcal</div>
+          </div>
+          <div style="width:1px;background:var(--border)"></div>
+          <div>
+            <div style="font-size:28px;font-weight:bold;color:var(--text)">${totals.protein || 0}</div>
+            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">g protein</div>
+          </div>
+        </div>
+        ${entryCount > 0 ? `
+          <div style="border-top:1px solid var(--border);padding-top:8px">
+            ${entries.map(e => `
+              <div style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
+                <span>${new Date(e.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}${e.note ? ' — ' + e.note : ''}</span>
+                <span style="color:var(--text2)">${e.calories || 0} kcal · ${e.protein || 0}g</span>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+};
 
 function buildQuestInput(qid, quest, done) {
   const inputType = quest.inputType || (quest.evidenceRequired ? 'text' : 'confirm');
