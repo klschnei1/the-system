@@ -1225,6 +1225,8 @@ let todayXpEarned = 0;
 let collapsedDomains = new Set();
 let focusMode = false;
 let preFocusCollapseState = null;
+let currentDomain = null;
+let domainPageSource = 'quests';
 
 // ── COLLAPSE HELPERS ──────────────────────────────────────────────────
 function getDefaultExpandedDomain() {
