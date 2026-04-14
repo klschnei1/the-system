@@ -1648,6 +1648,62 @@ function toggleQuestLog(qid) {
   }
 }
 
+function logAccumulator(qid, xp) {
+  // Find quest def
+  let quest = null, domainKey = null;
+  for (const [dk, domain] of Object.entries(data.questDefinitions)) {
+    if (domain.quests[qid]) { quest = domain.quests[qid]; domainKey = dk; break; }
+  }
+  if (!quest || !quest.accumFields) return;
+
+  // Read field values
+  const entry = { time: new Date().toISOString() };
+  let anyValue = false;
+  quest.accumFields.forEach(f => {
+    const el = document.getElementById(`accum-${qid}-${f.key}`);
+    entry[f.key] = el ? parseFloat(el.value) || 0 : 0;
+    if (entry[f.key] > 0) anyValue = true;
+  });
+  if (!anyValue) { notify('Enter at least one value.'); return; }
+
+  const noteEl = document.getElementById(`accum-${qid}-note`);
+  entry.note = noteEl?.value?.trim() || '';
+
+  // First entry awards XP; subsequent entries just add data
+  const isFirst = !todayLog[qid];
+  if (isFirst) {
+    todayLog[qid] = { xp, entries: [], time: entry.time, source: 'manual' };
+    todayXpEarned += xp;
+    data.xp = (data.xp || 0) + xp;
+  }
+  todayLog[qid].entries.push(entry);
+
+  // Compute totals
+  const totals = {};
+  quest.accumFields.forEach(f => {
+    totals[f.key] = todayLog[qid].entries.reduce((sum, e) => sum + (e[f.key] || 0), 0);
+  });
+  todayLog[qid].totals = totals;
+  todayLog[qid].note = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' | ');
+
+  // Write to dailyLogs
+  const today = getTodayStr();
+  if (!data.dailyLogs) data.dailyLogs = {};
+  if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
+  data.dailyLogs[today][qid] = todayLog[qid];
+
+  saveData();
+  renderHeader();
+  renderQuests();
+
+  if (isFirst) {
+    notify(`Nutrition logged. +${xp} XP. Keep adding entries throughout the day.`);
+  } else {
+    const summary = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' · ');
+    notify(`Updated: ${summary}`);
+  }
+}
+
 function logQuest(qid, xp) {
   if (todayLog[qid]) { notify('Already logged today.'); return; }
 
