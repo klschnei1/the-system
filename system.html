@@ -2868,123 +2868,12 @@ function _storeTransmission(archetype, body) {
   data.lastTransmission = entry;
 }
 
-// ── API KEY MANAGEMENT ────────────────────────────────────────────────
-function saveApiKey() {
-  const key = document.getElementById('apiKeyInput')?.value?.trim();
-  if (!key) { notify('Enter an API key first.'); return; }
-  localStorage.setItem('css_anthropic_key', key);
-  document.getElementById('apiKeyInput').value = '';
-  document.getElementById('apiKeyInput').placeholder = '••• saved (' + key.slice(-4) + ')';
-  updateSignalKeyStatus();
-  notify('API key saved. Signal is now live.');
-}
-
 function updateSignalKeyStatus() {
   const key = localStorage.getItem('css_anthropic_key');
   const el = document.getElementById('signalKeyStatus');
-  const apiInput = document.getElementById('apiKeyInput');
   if (el) el.textContent = key
     ? `Signal: live — key ending ...${key.slice(-4)}`
-    : 'Signal: using local responses — add API key in Evo tab to go live';
-  if (apiInput && key) apiInput.placeholder = '••• saved (' + key.slice(-4) + ')';
-}
-
-// ── RENDER EVOLUTION ──────────────────────────────────────────────────
-const TRIADS = [
-  { name:'ChaBaD // Cognitive Triad', sephirot:['Chokmah','Binah','Da\'at'], anchor:'Wisdom → Understanding → Knowledge', desc:'The knowledge-engineering control system. Plans, structures, and encodes understanding into actionable knowledge. Currently: system initialization phase.' },
-  { name:'ChaGaT // Emotional Triad', sephirot:['Chesed','Geburah','Tiferet'], anchor:'Lovingkindness → Judgment → Harmony', desc:'The feedback loop that balances expansion (Chesed/finance) with discipline (Geburah/fitness), mediated by Tiferet coherence. Currently: imbalanced — Geburah rebuilding.' },
-  { name:'NHY // Action Triad', sephirot:['Netzach','Hod','Yesod'], anchor:'Creation → Intellect → Foundation', desc:'The physical action control layer. Hod (dissertation) is the gate. Netzach carries creative output. Yesod integrates and passes to Malkuth. Currently: Hod priority active.' }
-];
-
-function renderEvolution() {
-  const panel = document.getElementById('evoPanel');
-  const coherence = calcCoherence();
-  const totalQuests = Object.values(data.questDefinitions).reduce((s, d) => s + Object.keys(d.quests).length, 0);
-  const completedToday = Object.keys(todayLog).length;
-
-  panel.innerHTML = `
-    <div class="evo-alert">
-      <div class="evo-alert-title">System State // ${getTodayStr()}</div>
-      <div>Overall coherence: <strong style="color:var(--accent)">${Math.round(coherence)}%</strong></div>
-      <div>Quests completed today: <strong style="color:var(--gold)">${completedToday} / ${totalQuests}</strong></div>
-      <div>XP accumulated: <strong style="color:var(--gold)">${(data.xp||0).toLocaleString()}</strong></div>
-      <div style="margin-top:8px;font-size:11px;color:var(--text3)">
-        Self-reconfiguration triggers at 14-day coherence thresholds. Cybernetica observes. Log consistently to enable adaptive evolution.
-      </div>
-    </div>
-    <div class="evo-alert" style="border-color:var(--hod)">
-      <div class="evo-alert-title" style="color:var(--hod)">Active Priority: Hod Gate</div>
-      <div>Dissertation is the primary attractor. Until ddPCR milestone closes, domain weight remains at 1.3x. All other domains support Hod, not compete with it.</div>
-    </div>
-    <div class="evo-alert" style="border-color:var(--gold)">
-      <div class="evo-alert-title" style="color:var(--gold)">Four Worlds // Current Level</div>
-      <div><strong>Asiyah (Action)</strong> — You are operating at the world of action. Quests are the primary interface. As coherence builds, access to Yetzirah (formation — emotional restructuring) and Beriah (creation — strategic planning) opens.</div>
-    </div>
-  `;
-
-  const feedPanel = document.getElementById('feedbackPanel');
-  feedPanel.innerHTML = TRIADS.map(t => `
-    <div class="evo-alert" style="margin-bottom:10px">
-      <div class="evo-alert-title">${t.name}</div>
-      <div style="font-size:10px;color:var(--text3);margin-bottom:4px">${t.sephirot.join(' → ')}</div>
-      <div style="font-size:11px;color:var(--text2)">${t.anchor}</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:4px">${t.desc}</div>
-    </div>
-  `).join('');
-}
-
-// ── HARVEST ───────────────────────────────────────────────────────────
-function harvestData() {
-  const input = document.getElementById('harvestInput').value.toLowerCase().trim();
-  if (!input) return;
-  const resultDiv = document.getElementById('harvestResult');
-  resultDiv.style.display = 'block';
-  const matched = [];
-
-  // Simple keyword → quest matching
-  const triggers = [
-    { keys:['lab session','lab work','lab today','in the lab','ran the','ddpcr','western blot','cell','assay','protocol','dissect'], qid:'h1', label:'Lab session detected' },
-    { keys:['writing','word count','dissertation','wrote','draft','thesis'], qid:'h2', label:'Writing session detected' },
-    { keys:['gym','workout','training','lift','squat','bench','deadlift','pull','push','legs'], qid:'g1', label:'Workout detected' },
-    { keys:['protein','200g','macros','eating','nutrition','macrofactor','myfitnesspal'], qid:'g2', label:'Protein log detected' },
-    { keys:['morning','shower','brush','hygiene','teeth'], qid:'m1', label:'Morning hygiene detected' },
-    { keys:['sleep','slept','hours of sleep','bed at','woke at'], qid:'y1', label:'Sleep data detected' },
-    { keys:['spent','budget','money','bought','purchase','transaction'], qid:'f1', label:'Finance log detected' },
-    { keys:['creative','art','music','made','drew','painted','practiced guitar','piano'], qid:'n1', label:'Creative session detected' },
-    { keys:['altar','lbrp','ritual','middle pillar','banishing','invocation','meditation','practice'], qid:'p1', label:'Practice detected' },
-    { keys:['planned','calendar','schedule','reviewed tasks','admin','email'], qid:'b1', label:'Planning/admin detected' },
-  ];
-
-  triggers.forEach(({ keys, qid, label }) => {
-    if (keys.some(k => input.includes(k))) {
-      if (!todayLog[qid]) {
-        matched.push({ qid, label });
-      }
-    }
-  });
-
-  if (!matched.length) {
-    resultDiv.innerHTML = '<span style="color:var(--text2)">No new quest completions detected in this text. Try describing specific activities: lab work, gym, protein intake, sleep.</span>';
-    return;
-  }
-
-  let html = '<strong style="color:var(--accent)">Harvest complete. The following can be logged:</strong><br><br>';
-  matched.forEach(({ qid, label }) => {
-    // Find quest details
-    let quest = null;
-    for (const domain of Object.values(data.questDefinitions)) {
-      if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
-    }
-    if (!quest) return;
-    html += `<span style="color:var(--green)">✓</span> ${label} → ${quest.name} (+${quest.xp} XP) <button class="btn btn-primary" style="padding:3px 10px;font-size:10px;margin-left:6px" onclick="autoLog('${qid}','${quest.xp}','Harvested from session log')">Log</button><br>`;
-  });
-  resultDiv.innerHTML = html;
-}
-
-function autoLog(qid, xp, note) {
-  if (todayLog[qid]) { notify('Already logged.'); return; }
-  logQuest(qid, parseInt(xp));
-  document.getElementById('harvestResult').innerHTML += `<br><span style="color:var(--gold)">Logged. +${xp} XP.</span>`;
+    : 'Signal: offline — no API key configured';
 }
 
 // ── MODAL ─────────────────────────────────────────────────────────────
