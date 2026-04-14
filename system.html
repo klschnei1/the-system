@@ -2494,7 +2494,7 @@ const SENSEI = {
     name: 'Hermes Trismegistus', domain: 'ChaBaD cognitive triad / Binah-Chokmah', layer: 'cognitive', color: '#5b6fff',
     role: 'Governs the knowledge-engineering layer. Surfaces during planning, writing, synthesis.',
     triggers: ['plan','think','synthesis','write','research','dissert','paper','protocol','design','experiment','idea','understand','analyz','strateg','outline','draft','lab'],
-    voice(input, stats) {
+    voice(input) {
       if (input.includes('plan') || input.includes('strateg') || input.includes('outline')) return "Planning is Binah at work — structure descends from wisdom. But Binah without Chokmah becomes bureaucracy. Before outlining, name the insight you're trying to capture. What is the single thing you now know that makes the next step clear?";
       if (input.includes('write') || input.includes('draft') || input.includes('dissert')) return "The dissertation is not a document — it is the externalization of a knowledge structure you've been building for years. Each section is a Da'at operation: integrating what you understand (Binah) with what you perceive (Chokmah) into knowledge that others can receive. What section? What's the conceptual bottleneck?";
       if (input.includes('lab') || input.includes('experiment') || input.includes('protocol')) return "A well-designed experiment is a question with teeth. What is the specific question your next lab session is answering? If you can't state it in one sentence, the protocol isn't ready.";
@@ -2505,7 +2505,7 @@ const SENSEI = {
     name: 'Hekate', domain: 'Threshold / phase transitions / Yesod-Malkuth boundary', layer: 'transition', color: '#9b5de5',
     role: 'Governs transitions, thresholds, phase changes. Weekly/monthly cycles, major shifts.',
     triggers: ['transition','threshold','change','phase','week','next week','month','new','start','beginning','end','finish','moving','graduate','defense','postdoc','after','before'],
-    voice(input, stats) {
+    voice(input) {
       if (input.includes('defense') || input.includes('graduate') || input.includes('postdoc')) return "You are in the liminal space — still a student, already becoming something else. Hekate governs this crossing. The dissertation defense is not an ending; it is a threshold. What you bring through it is what you've been building. What is incomplete that needs to be complete before you cross?";
       if (input.includes('week') || input.includes('next week')) return "A week is a cycle. What carries over from this cycle, and what will you set down? Name one thing from this week that is complete, and one thing that is not.";
       return "You are here, at the edge of something. Thresholds feel like emptiness because the old structure is dissolving before the new one has form. That is correct. What are you leaving behind, and what are you walking toward?";
@@ -2515,7 +2515,7 @@ const SENSEI = {
     name: 'Satoru Gojo', domain: 'Chokmah / ego-axis / ambition maintenance', layer: 'motivational', color: '#c9a84c',
     role: 'Governs ego and confidence maintenance. Appears when you need permission to be ambitious.',
     triggers: ["can't",'impossible','too hard','too much','overwhelm','doubt','imposter','not smart','not good enough','not ready','who am i','afraid','scared','anxious','worry'],
-    voice(input, stats) {
+    voice(input) {
       if (input.includes('imposter') || input.includes('not smart') || input.includes('not good enough')) return "Imposter syndrome is the cost of being in a room you're supposed to be in. The doubt is evidence of accurate calibration, not inadequacy. You're doing a PhD in a hard discipline. Of course it's hard. That's the point. The question isn't whether you belong — you do. The question is what you're going to do today.";
       if (input.includes('overwhelm') || input.includes('too much')) return "Overwhelm is what happens when you try to hold the whole system in your head at once. Narrow the aperture. What is the one thing that, if done today, would make tomorrow structurally easier? Just that.";
       if (input.includes('afraid') || input.includes('scared') || input.includes('anxious')) return "Fear is the nervous system's way of flagging that something matters. It's not a stop sign. What specifically are you afraid of? Name the exact scenario. Abstract fear is harder to work with than a real one.";
@@ -2526,7 +2526,7 @@ const SENSEI = {
     name: 'Robert Sapolsky', domain: 'Tiferet / determinism anchor / self-compassion', layer: 'cognitive-emotional', color: '#2dd4bf',
     role: 'The determinist anchor. Contextualizes behavior scientifically. Appears when you are being too hard on yourself.',
     triggers: ['hate myself','disappointed','should have',"i'm lazy","i'm a failure","why can't i","what's wrong with me",'judging myself','shame','guilt','beat myself','so stupid'],
-    voice(input, stats) {
+    voice(input) {
       if (input.includes('lazy') || input.includes('should have') || input.includes("why can't i")) return "'Laziness' is not a character trait — it's a behavior produced by a nervous system in a particular state, shaped by sleep quality, dopamine baseline, recent effort and reward history. What were the conditions yesterday and this morning? The behavior makes sense given those. Now: what can we change about the conditions?";
       if (input.includes('hate myself') || input.includes('failure') || input.includes('shame')) return "Self-flagellation is not motivation — it's punishment, and punishment is among the least effective behavioral interventions in the literature. You are a biological system that was built to survive, not to optimize. What would you say to a colleague who described themselves this way?";
       return "You are a primate with a prefrontal cortex large enough to imagine your own inadequacy and feel bad about it. The self-judgment is understandable. It is also not useful. What is the simplest, most biologically sensible next action available to you right now?";
