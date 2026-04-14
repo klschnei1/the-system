@@ -1593,29 +1593,8 @@ function buildQuestInput(qid, quest, done) {
 
     case 'accumulator': {
       const fields = quest.accumFields || [];
-      const logged = todayLog[qid];
-      const entries = logged?.entries || [];
-      const totals = {};
-      fields.forEach(f => {
-        totals[f.key] = entries.reduce((sum, e) => sum + (e[f.key] || 0), 0);
-      });
-      const totalStr = fields.map(f => `${totals[f.key]} ${f.units}`).join(' · ');
       return `
         <div style="margin:8px 0">
-          ${entries.length > 0 ? `
-            <div style="font-size:11px;color:var(--accent);margin-bottom:8px;letter-spacing:1px">
-              RUNNING TOTAL: ${totalStr}
-            </div>
-            <div style="margin-bottom:8px;max-height:120px;overflow-y:auto">
-              ${entries.map((e, i) => `
-                <div style="font-size:10px;color:var(--text3);padding:2px 0;border-bottom:1px solid var(--border)">
-                  ${new Date(e.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} —
-                  ${fields.map(f => `${e[f.key] || 0} ${f.units}`).join(', ')}
-                  ${e.note ? ` — ${e.note}` : ''}
-                </div>
-              `).join('')}
-            </div>
-          ` : ''}
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             ${fields.map(f => `
               <div style="display:flex;align-items:center;gap:4px">
@@ -1626,9 +1605,9 @@ function buildQuestInput(qid, quest, done) {
               </div>
             `).join('')}
           </div>
-          <textarea class="log-input" id="accum-${qid}-note" rows="1"
-            style="margin-top:6px;font-size:11px"
-            placeholder="What did you eat? (optional)"></textarea>
+          <input type="text" class="log-input" id="accum-${qid}-note"
+            style="margin-top:6px;font-size:11px;width:100%;padding:6px 8px"
+            placeholder="What did you eat? (optional)">
         </div>`;
     }
 
