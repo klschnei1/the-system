@@ -1586,8 +1586,11 @@ function renderQuestsOverview() {
     `Today: ${todayXpEarned} XP — ${totalCompleted} quest${totalCompleted !== 1 ? 's' : ''} complete`;
 }
 
-// Keep old name as alias for any callers
-function renderQuests() { renderQuestsOverview(); }
+// Smart re-render: domain page if on one, overview otherwise
+function renderQuests() {
+  if (currentDomain) { renderDomainPage(currentDomain); }
+  else { renderQuestsOverview(); }
+}
 
 // ── RENDER DOMAIN PAGE ───────────────────────────────────────────────
 function renderDomainPage(domainKey) {
