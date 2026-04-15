@@ -1311,12 +1311,12 @@ function classifyExercise(name) {
   // Check user overrides first (exact match on lowercase name)
   const userMap = getUserExerciseMap();
   const key = name.toLowerCase().trim();
-  if (userMap[key]) return userMap[key]; // already an array
+  if (userMap[key]) return userMap[key]; // already tiered array [{m,t}]
 
   for (const [pattern, groups] of EXERCISE_MUSCLE_MAP) {
     if (pattern.test(name)) return groups;
   }
-  return ['other'];
+  return [{m:'other',t:1}];
 }
 
 function parseStrongExport(text) {
