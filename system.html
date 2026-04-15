@@ -1362,14 +1362,14 @@ function parseStrongExport(text) {
   }
 
   // Compute working sets per muscle group (exclude warmups)
-  // Each working set counts as 1 full set for every muscle group the exercise hits
+  // Primary muscles get 1 full set, secondary muscles get 0.5 sets per working set
   result.exercises.forEach(ex => {
     const workingSets = ex.sets.filter(s => !s.warmup).length;
     ex.workingSets = workingSets;
     result.totalSets += workingSets;
-    ex.muscleGroups.forEach(mg => {
-      if (!result.muscleGroupSets[mg]) result.muscleGroupSets[mg] = 0;
-      result.muscleGroupSets[mg] += workingSets;
+    ex.muscleGroups.forEach(({m, t}) => {
+      if (!result.muscleGroupSets[m]) result.muscleGroupSets[m] = 0;
+      result.muscleGroupSets[m] += workingSets * t;
     });
   });
 
