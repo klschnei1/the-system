@@ -1341,10 +1341,10 @@ function parseStrongExport(text) {
     if (!line) { currentExercise = null; continue; }
     if (line.startsWith('http')) continue; // skip share URL
 
-    const setMatch = line.match(/^(Set \d+|W\d+):\s*(?:(\d+(?:\.\d+)?)\s*(?:lb|kg)\s*[×x]\s*)?(\d+)(?:\s*\[.*\])?/i);
+    const setMatch = line.match(/^(Set \d+|W\d+):\s*(?:(\d+(?:\.\d+)?)\s*(?:lb|kg)\s*[×x\u00d7\u2715\u2a09]\s*)?(\d+)(?:\s*\[.*\])?/i);
     if (setMatch) {
       if (!currentExercise) continue;
-      const isWarmup = /^W\d+/i.test(line) || /\[warm.?up\]/i.test(line);
+      const isWarmup = /^W\d+/i.test(line) || /\[warm/i.test(line);
       const weight = setMatch[2] ? parseFloat(setMatch[2]) : 0;
       const reps = parseInt(setMatch[3]) || 0;
       currentExercise.sets.push({ weight, reps, warmup: isWarmup });
