@@ -1354,19 +1354,22 @@ function parseStrongExport(text) {
     // Must be an exercise name (not a set line, not blank, not URL)
     currentExercise = {
       name: line,
-      muscleGroup: classifyExercise(line),
+      muscleGroups: classifyExercise(line),
       sets: []
     };
     result.exercises.push(currentExercise);
   }
 
   // Compute working sets per muscle group (exclude warmups)
+  // Each working set counts as 1 full set for every muscle group the exercise hits
   result.exercises.forEach(ex => {
     const workingSets = ex.sets.filter(s => !s.warmup).length;
     ex.workingSets = workingSets;
     result.totalSets += workingSets;
-    if (!result.muscleGroupSets[ex.muscleGroup]) result.muscleGroupSets[ex.muscleGroup] = 0;
-    result.muscleGroupSets[ex.muscleGroup] += workingSets;
+    ex.muscleGroups.forEach(mg => {
+      if (!result.muscleGroupSets[mg]) result.muscleGroupSets[mg] = 0;
+      result.muscleGroupSets[mg] += workingSets;
+    });
   });
 
   return result;
