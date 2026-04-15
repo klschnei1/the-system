@@ -1229,82 +1229,93 @@ let currentDomain = null;
 let domainPageSource = 'quests';
 
 // ── STRONG APP PARSER ────────────────────────────────────────────────
-// Maps exercise name keywords (lowercase) to primary muscle group.
+// Maps exercise name keywords to muscle groups (arrays for compounds).
 // Checked in order; first match wins. More specific patterns first.
+// User-defined overrides (from localStorage) are checked before this table.
 const EXERCISE_MUSCLE_MAP = [
-  // Legs — quads
-  [/leg extension/i, 'quads'],
-  [/leg press/i, 'quads'],
-  [/hack squat/i, 'quads'],
-  [/front squat/i, 'quads'],
-  [/goblet squat/i, 'quads'],
-  [/squat/i, 'quads'],
-  [/lunge/i, 'quads'],
-  [/split squat/i, 'quads'],
-  [/step up/i, 'quads'],
-  // Legs — hamstrings
-  [/leg curl/i, 'hamstrings'],
-  [/stiff.?leg.?dead/i, 'hamstrings'],
-  [/romanian.?dead/i, 'hamstrings'],
-  [/good morning/i, 'hamstrings'],
-  [/nordic/i, 'hamstrings'],
-  // Legs — glutes
-  [/hip thrust/i, 'glutes'],
-  [/glute/i, 'glutes'],
-  [/hip abduct/i, 'glutes'],
-  // Legs — adductors
-  [/hip adduct/i, 'adductors'],
-  // Legs — calves
-  [/calf raise/i, 'calves'],
-  [/tib(i|e)al/i, 'calves'],
+  // Isolation — legs
+  [/leg extension/i, ['quads']],
+  [/leg press/i, ['quads', 'glutes']],
+  [/hack squat/i, ['quads', 'glutes']],
+  [/front squat/i, ['quads', 'glutes']],
+  [/goblet squat/i, ['quads', 'glutes']],
+  [/split squat/i, ['quads', 'glutes']],
+  [/lunge/i, ['quads', 'glutes']],
+  [/step up/i, ['quads', 'glutes']],
+  [/squat/i, ['quads', 'glutes']],
+  [/leg curl/i, ['hamstrings']],
+  [/stiff.?leg.?dead/i, ['hamstrings', 'glutes']],
+  [/romanian.?dead/i, ['hamstrings', 'glutes']],
+  [/good morning/i, ['hamstrings', 'glutes']],
+  [/nordic/i, ['hamstrings']],
+  [/hip thrust/i, ['glutes']],
+  [/glute/i, ['glutes']],
+  [/hip abduct/i, ['glutes']],
+  [/hip adduct/i, ['adductors']],
+  [/calf raise/i, ['calves']],
+  [/tib(i|e)al/i, ['calves']],
+  [/tib raise/i, ['calves']],
   // Chest
-  [/bench press/i, 'chest'],
-  [/chest fly/i, 'chest'],
-  [/chest press/i, 'chest'],
-  [/cable cross/i, 'chest'],
-  [/push.?up/i, 'chest'],
-  [/pec/i, 'chest'],
+  [/close.?grip bench/i, ['triceps', 'chest']],
+  [/bench press/i, ['chest', 'triceps', 'shoulders']],
+  [/chest fly/i, ['chest']],
+  [/chest press/i, ['chest', 'triceps', 'shoulders']],
+  [/cable cross/i, ['chest']],
+  [/push.?up/i, ['chest', 'triceps']],
+  [/pec/i, ['chest']],
   // Back
-  [/pull.?up/i, 'back'],
-  [/chin.?up/i, 'back'],
-  [/lat pull/i, 'back'],
-  [/row/i, 'back'],
-  [/deadlift/i, 'back'],
-  [/t.?bar/i, 'back'],
-  [/face pull/i, 'rear delts'],
-  [/rear delt/i, 'rear delts'],
+  [/pull.?up/i, ['back', 'biceps']],
+  [/chin.?up/i, ['back', 'biceps']],
+  [/lat pull/i, ['back', 'biceps']],
+  [/row/i, ['back', 'biceps']],
+  [/deadlift/i, ['back', 'glutes', 'hamstrings']],
+  [/t.?bar/i, ['back', 'biceps']],
+  [/face pull/i, ['rear delts']],
+  [/rear delt/i, ['rear delts']],
   // Shoulders
-  [/overhead press/i, 'shoulders'],
-  [/shoulder press/i, 'shoulders'],
-  [/military press/i, 'shoulders'],
-  [/lateral raise/i, 'shoulders'],
-  [/front raise/i, 'shoulders'],
-  [/arnold/i, 'shoulders'],
-  [/upright row/i, 'shoulders'],
+  [/overhead press/i, ['shoulders', 'triceps']],
+  [/shoulder press/i, ['shoulders', 'triceps']],
+  [/military press/i, ['shoulders', 'triceps']],
+  [/lateral raise/i, ['shoulders']],
+  [/front raise/i, ['shoulders']],
+  [/arnold/i, ['shoulders', 'triceps']],
+  [/upright row/i, ['shoulders']],
   // Biceps
-  [/curl/i, 'biceps'],
-  [/hammer/i, 'biceps'],
+  [/curl/i, ['biceps']],
+  [/hammer/i, ['biceps']],
   // Triceps
-  [/tricep/i, 'triceps'],
-  [/skull crush/i, 'triceps'],
-  [/close.?grip bench/i, 'triceps'],
-  [/pushdown/i, 'triceps'],
-  [/cable extension/i, 'triceps'],
+  [/tricep/i, ['triceps']],
+  [/skull crush/i, ['triceps']],
+  [/pushdown/i, ['triceps']],
+  [/cable extension/i, ['triceps']],
   // Core
-  [/plank/i, 'core'],
-  [/crunch/i, 'core'],
-  [/leg raise/i, 'core'],
-  [/ab wheel/i, 'core'],
-  [/russian twist/i, 'core'],
-  // Dips — context-dependent, default to chest
-  [/dip/i, 'chest'],
+  [/plank/i, ['core']],
+  [/crunch/i, ['core']],
+  [/leg raise/i, ['core']],
+  [/ab wheel/i, ['core']],
+  [/russian twist/i, ['core']],
+  // Dips
+  [/dip/i, ['chest', 'triceps']],
 ];
 
+// User-defined exercise→muscle group overrides (persisted in localStorage)
+function getUserExerciseMap() {
+  try { return JSON.parse(localStorage.getItem('css_exercise_map') || '{}'); } catch { return {}; }
+}
+function saveUserExerciseMap(map) {
+  localStorage.setItem('css_exercise_map', JSON.stringify(map));
+}
+
 function classifyExercise(name) {
-  for (const [pattern, group] of EXERCISE_MUSCLE_MAP) {
-    if (pattern.test(name)) return group;
+  // Check user overrides first (exact match on lowercase name)
+  const userMap = getUserExerciseMap();
+  const key = name.toLowerCase().trim();
+  if (userMap[key]) return userMap[key]; // already an array
+
+  for (const [pattern, groups] of EXERCISE_MUSCLE_MAP) {
+    if (pattern.test(name)) return groups;
   }
-  return 'other';
+  return ['other'];
 }
 
 function parseStrongExport(text) {
