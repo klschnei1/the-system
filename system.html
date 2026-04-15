@@ -1228,6 +1228,139 @@ let preFocusCollapseState = null;
 let currentDomain = null;
 let domainPageSource = 'quests';
 
+// ── STRONG APP PARSER ────────────────────────────────────────────────
+// Maps exercise name keywords (lowercase) to primary muscle group.
+// Checked in order; first match wins. More specific patterns first.
+const EXERCISE_MUSCLE_MAP = [
+  // Legs — quads
+  [/leg extension/i, 'quads'],
+  [/leg press/i, 'quads'],
+  [/hack squat/i, 'quads'],
+  [/front squat/i, 'quads'],
+  [/goblet squat/i, 'quads'],
+  [/squat/i, 'quads'],
+  [/lunge/i, 'quads'],
+  [/split squat/i, 'quads'],
+  [/step up/i, 'quads'],
+  // Legs — hamstrings
+  [/leg curl/i, 'hamstrings'],
+  [/stiff.?leg.?dead/i, 'hamstrings'],
+  [/romanian.?dead/i, 'hamstrings'],
+  [/good morning/i, 'hamstrings'],
+  [/nordic/i, 'hamstrings'],
+  // Legs — glutes
+  [/hip thrust/i, 'glutes'],
+  [/glute/i, 'glutes'],
+  [/hip abduct/i, 'glutes'],
+  // Legs — adductors
+  [/hip adduct/i, 'adductors'],
+  // Legs — calves
+  [/calf raise/i, 'calves'],
+  [/tib(i|e)al/i, 'calves'],
+  // Chest
+  [/bench press/i, 'chest'],
+  [/chest fly/i, 'chest'],
+  [/chest press/i, 'chest'],
+  [/cable cross/i, 'chest'],
+  [/push.?up/i, 'chest'],
+  [/pec/i, 'chest'],
+  // Back
+  [/pull.?up/i, 'back'],
+  [/chin.?up/i, 'back'],
+  [/lat pull/i, 'back'],
+  [/row/i, 'back'],
+  [/deadlift/i, 'back'],
+  [/t.?bar/i, 'back'],
+  [/face pull/i, 'rear delts'],
+  [/rear delt/i, 'rear delts'],
+  // Shoulders
+  [/overhead press/i, 'shoulders'],
+  [/shoulder press/i, 'shoulders'],
+  [/military press/i, 'shoulders'],
+  [/lateral raise/i, 'shoulders'],
+  [/front raise/i, 'shoulders'],
+  [/arnold/i, 'shoulders'],
+  [/upright row/i, 'shoulders'],
+  // Biceps
+  [/curl/i, 'biceps'],
+  [/hammer/i, 'biceps'],
+  // Triceps
+  [/tricep/i, 'triceps'],
+  [/skull crush/i, 'triceps'],
+  [/close.?grip bench/i, 'triceps'],
+  [/pushdown/i, 'triceps'],
+  [/cable extension/i, 'triceps'],
+  // Core
+  [/plank/i, 'core'],
+  [/crunch/i, 'core'],
+  [/leg raise/i, 'core'],
+  [/ab wheel/i, 'core'],
+  [/russian twist/i, 'core'],
+  // Dips — context-dependent, default to chest
+  [/dip/i, 'chest'],
+];
+
+function classifyExercise(name) {
+  for (const [pattern, group] of EXERCISE_MUSCLE_MAP) {
+    if (pattern.test(name)) return group;
+  }
+  return 'other';
+}
+
+function parseStrongExport(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 4) return null;
+
+  // Detect Strong format: look for "Set N:" or "W1:" patterns
+  const hasSetPattern = lines.some(l => /^(Set \d+|W\d+):/i.test(l.trim()));
+  if (!hasSetPattern) return null;
+
+  const result = {
+    name: lines[0].trim(),
+    date: lines[1]?.trim() || '',
+    exercises: [],
+    muscleGroupSets: {},
+    totalSets: 0
+  };
+
+  let currentExercise = null;
+
+  for (let i = 2; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) { currentExercise = null; continue; }
+    if (line.startsWith('http')) continue; // skip share URL
+
+    const setMatch = line.match(/^(Set \d+|W\d+):\s*(?:(\d+(?:\.\d+)?)\s*(?:lb|kg)\s*[×x]\s*)?(\d+)(?:\s*\[.*\])?/i);
+    if (setMatch) {
+      if (!currentExercise) continue;
+      const isWarmup = /^W\d+/i.test(line) || /\[warm.?up\]/i.test(line);
+      const weight = setMatch[2] ? parseFloat(setMatch[2]) : 0;
+      const reps = parseInt(setMatch[3]) || 0;
+      currentExercise.sets.push({ weight, reps, warmup: isWarmup });
+      continue;
+    }
+
+    // Must be an exercise name (not a set line, not blank, not URL)
+    currentExercise = {
+      name: line,
+      muscleGroup: classifyExercise(line),
+      sets: []
+    };
+    result.exercises.push(currentExercise);
+  }
+
+  // Compute working sets per muscle group (exclude warmups)
+  result.exercises.forEach(ex => {
+    const workingSets = ex.sets.filter(s => !s.warmup).length;
+    ex.workingSets = workingSets;
+    result.totalSets += workingSets;
+    if (!result.muscleGroupSets[ex.muscleGroup]) result.muscleGroupSets[ex.muscleGroup] = 0;
+    result.muscleGroupSets[ex.muscleGroup] += workingSets;
+  });
+
+  return result;
+}
+
 // ── COLLAPSE HELPERS ──────────────────────────────────────────────────
 function getDefaultExpandedDomain() {
   const seed = getDailySeed();
