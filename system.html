@@ -1776,12 +1776,59 @@ function renderDomainPage(domainKey) {
 // ── DOMAIN WIDGETS ───────────────────────────────────────────────────
 const DOMAIN_WIDGETS = {
   geburah: function(el, dk, domain) {
+    // ── Nutrition totals ──
     const g2log = todayLog['g2'];
     const entries = g2log?.entries || [];
     const totals = g2log?.totals || { calories: 0, protein: 0 };
     const entryCount = entries.length;
 
+    // ── Weekly workout volume (rolling 7 days from dailyLogs) ──
+    const today = getTodayStr();
+    const weekVolume = {};
+    let weekSessions = 0;
+    let weekTotalSets = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const ds = d.toISOString().split('T')[0];
+      const dayG1 = data.dailyLogs?.[ds]?.g1;
+      if (dayG1?.workout) {
+        weekSessions++;
+        const w = dayG1.workout;
+        weekTotalSets += w.totalSets || 0;
+        Object.entries(w.muscleGroupSets || {}).forEach(([mg, sets]) => {
+          weekVolume[mg] = (weekVolume[mg] || 0) + sets;
+        });
+      }
+    }
+    // Include today's not-yet-saved log too
+    const todayG1 = todayLog['g1'];
+    if (todayG1?.workout && !data.dailyLogs?.[today]?.g1?.workout) {
+      weekSessions++;
+      const w = todayG1.workout;
+      weekTotalSets += w.totalSets || 0;
+      Object.entries(w.muscleGroupSets || {}).forEach(([mg, sets]) => {
+        weekVolume[mg] = (weekVolume[mg] || 0) + sets;
+      });
+    }
+
+    const hasVolume = Object.keys(weekVolume).length > 0;
+    const volumeGroups = Object.entries(weekVolume).sort((a,b) => b[1] - a[1]);
+
     el.innerHTML = `
+      ${hasVolume ? `
+      <div class="domain-widget" style="border-color:${domain.color};margin-bottom:8px">
+        <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:8px">7-day volume · ${weekSessions} sessions · ${weekTotalSets} sets</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${volumeGroups.map(([mg, sets]) => `
+            <div style="flex:1;min-width:70px;text-align:center;padding:6px 4px;border:1px solid var(--border);border-radius:2px">
+              <div style="font-size:18px;font-weight:bold;color:var(--text)">${sets}</div>
+              <div style="font-size:8px;letter-spacing:1px;color:var(--text3);text-transform:uppercase">${mg}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
       <div class="domain-widget" style="border-color:${domain.color}">
         <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${entryCount > 0 ? '12px' : '0'}">
           <div>
