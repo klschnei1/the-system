@@ -1234,25 +1234,30 @@ let domainPageSource = 'quests';
 // Checked in order; first match wins. More specific patterns first.
 // User-defined overrides (from localStorage) are checked before this table.
 const EXERCISE_MUSCLE_MAP = [
-  // Isolation — legs
+  // Legs — quad-dominant (quad primary, glutes secondary)
   [/leg extension/i, [{m:'quads',t:1}]],
+  [/hack squat/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  [/front squat/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  [/goblet squat/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  [/split squat/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  [/lunge/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  [/step up/i, [{m:'quads',t:1},{m:'glutes',t:0.5}]],
+  // Legs — balanced squat variants (full for both)
   [/leg press/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/hack squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/front squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/goblet squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/split squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/lunge/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
-  [/step up/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
   [/squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
+  // Legs — hamstrings
   [/leg curl/i, [{m:'hamstrings',t:1}]],
   [/stiff.?leg.?dead/i, [{m:'hamstrings',t:1},{m:'glutes',t:1}]],
   [/romanian.?dead/i, [{m:'hamstrings',t:1},{m:'glutes',t:1}]],
   [/good morning/i, [{m:'hamstrings',t:1},{m:'glutes',t:0.5}]],
   [/nordic/i, [{m:'hamstrings',t:1}]],
+  // Legs — glutes
   [/hip thrust/i, [{m:'glutes',t:1}]],
   [/glute/i, [{m:'glutes',t:1}]],
   [/hip abduct/i, [{m:'glutes',t:1}]],
+  // Legs — adductors
   [/hip adduct/i, [{m:'adductors',t:1}]],
+  // Legs — calves
   [/calf raise/i, [{m:'calves',t:1}]],
   [/tib(i|e)al/i, [{m:'calves',t:1}]],
   [/tib raise/i, [{m:'calves',t:1}]],
@@ -1264,13 +1269,18 @@ const EXERCISE_MUSCLE_MAP = [
   [/cable cross/i, [{m:'chest',t:1}]],
   [/push.?up/i, [{m:'chest',t:1},{m:'triceps',t:0.5}]],
   [/pec/i, [{m:'chest',t:1}]],
-  // Back
-  [/pull.?up/i, [{m:'back',t:1},{m:'biceps',t:0.5}]],
-  [/chin.?up/i, [{m:'back',t:1},{m:'biceps',t:0.5}]],
-  [/lat pull/i, [{m:'back',t:1},{m:'biceps',t:0.5}]],
-  [/row/i, [{m:'back',t:1},{m:'biceps',t:0.5}]],
-  [/deadlift/i, [{m:'back',t:1},{m:'glutes',t:1},{m:'hamstrings',t:0.5}]],
-  [/t.?bar/i, [{m:'back',t:1},{m:'biceps',t:0.5}]],
+  // Back — split into lats, traps, erectors
+  [/pull.?up/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/chin.?up/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/lat pull/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/cable row/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/seated row/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/barbell row/i, [{m:'lats',t:1},{m:'traps',t:0.5},{m:'biceps',t:0.5}]],
+  [/pendlay/i, [{m:'lats',t:1},{m:'traps',t:0.5},{m:'biceps',t:0.5}]],
+  [/t.?bar/i, [{m:'lats',t:1},{m:'traps',t:0.5},{m:'biceps',t:0.5}]],
+  [/row/i, [{m:'lats',t:1},{m:'biceps',t:0.5}]],
+  [/deadlift/i, [{m:'glutes',t:1},{m:'hamstrings',t:1},{m:'erectors',t:1},{m:'traps',t:0.5}]],
+  [/shrug/i, [{m:'traps',t:1}]],
   [/face pull/i, [{m:'rear delts',t:1}]],
   [/rear delt/i, [{m:'rear delts',t:1}]],
   // Shoulders
@@ -1280,7 +1290,7 @@ const EXERCISE_MUSCLE_MAP = [
   [/lateral raise/i, [{m:'shoulders',t:1}]],
   [/front raise/i, [{m:'shoulders',t:1}]],
   [/arnold/i, [{m:'shoulders',t:1},{m:'triceps',t:0.5}]],
-  [/upright row/i, [{m:'shoulders',t:1}]],
+  [/upright row/i, [{m:'shoulders',t:1},{m:'traps',t:0.5}]],
   // Biceps
   [/curl/i, [{m:'biceps',t:1}]],
   [/hammer/i, [{m:'biceps',t:1}]],
@@ -1295,8 +1305,8 @@ const EXERCISE_MUSCLE_MAP = [
   [/leg raise/i, [{m:'core',t:1}]],
   [/ab wheel/i, [{m:'core',t:1}]],
   [/russian twist/i, [{m:'core',t:1}]],
-  // Dips
-  [/dip/i, [{m:'chest',t:1},{m:'triceps',t:0.5}]],
+  // Dips — triceps primary
+  [/dip/i, [{m:'triceps',t:1},{m:'chest',t:0.5}]],
 ];
 
 // User-defined exercise→muscle group overrides (persisted in localStorage)
