@@ -1937,9 +1937,7 @@ function buildQuestInput(qid, quest, done) {
         const w = logged.workout;
         const groups = Object.entries(w.muscleGroupSets).sort((a,b) => b[1] - a[1]);
         return `<div style="margin:8px 0">
-          <div style="font-size:11px;color:var(--green);margin-bottom:6px">✓ ${w.name || 'Workout'} — ${w.exercises.length} exercises · ${w.totalSets} working sets
-            <span onclick="unlogQuest('${qid}')" style="color:var(--text3);cursor:pointer;margin-left:8px;text-decoration:underline">undo</span>
-          </div>
+          <div style="font-size:11px;color:var(--green);margin-bottom:6px">✓ ${w.name || 'Workout'} — ${w.exercises.length} exercises · ${w.totalSets} working sets</div>
           <div style="display:flex;flex-wrap:wrap;gap:4px">${groups.map(([g, sets]) =>
             `<span style="font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:2px;color:var(--text2)">${g} ${sets}s</span>`
           ).join('')}</div>
@@ -1947,9 +1945,7 @@ function buildQuestInput(qid, quest, done) {
       }
       if (done) {
         return `<div style="margin:8px 0">
-          <div style="font-size:11px;color:var(--green)">✓ Logged${logged?.note ? ' — ' + logged.note.substring(0, 50) : ''}
-            <span onclick="unlogQuest('${qid}')" style="color:var(--text3);cursor:pointer;margin-left:8px;text-decoration:underline">undo</span>
-          </div>
+          <div style="font-size:11px;color:var(--green)">✓ Logged${logged?.note ? ' — ' + logged.note.substring(0, 50) : ''}</div>
         </div>`;
       }
       return `<textarea class="log-input" id="note-${qid}" rows="4"
