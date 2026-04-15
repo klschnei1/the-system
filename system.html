@@ -2143,6 +2143,28 @@ function logQuest(qid, xp) {
   }
 }
 
+function unlogQuest(qid) {
+  const entry = todayLog[qid];
+  if (!entry) return;
+
+  // Reverse XP
+  const xpLost = entry.xp || 0;
+  todayXpEarned = Math.max(0, todayXpEarned - xpLost);
+  data.xp = Math.max(0, (data.xp || 0) - xpLost);
+
+  // Remove from todayLog and dailyLogs
+  delete todayLog[qid];
+  const today = getTodayStr();
+  if (data.dailyLogs?.[today]) {
+    delete data.dailyLogs[today][qid];
+  }
+
+  saveData();
+  renderHeader();
+  renderQuests();
+  notify('Quest unlogged. −' + xpLost + ' XP.');
+}
+
 // ── RENDER TREE ───────────────────────────────────────────────────────
 const SEPHIRA_MAP = {
   keter: { name:'Keter // Crown', anchor:'The Source — intent, will, origin', domain:null, color:'var(--gold)', desc:'The origin point of all signal. Crown does not track — it witnesses.' },
