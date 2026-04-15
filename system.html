@@ -1676,6 +1676,7 @@ function buildQuestCard(qid, quest, domain, options = {}) {
               ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
             </button>`
         }
+        ${done ? `<span onclick="unlogQuest('${qid}')" style="font-size:10px;color:var(--text3);cursor:pointer;text-decoration:underline;margin-left:12px">undo</span>` : ''}
       </div>
     </div>
   `;
