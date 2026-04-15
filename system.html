@@ -2002,6 +2002,13 @@ function logQuest(qid, xp) {
     const raw = el ? parseFloat(el.value) || 0 : 0;
     note = raw + (quest.units ? ' ' + quest.units : '');
     extraData.rawValue = raw;
+  } else if (inputType === 'strong-paste') {
+    note = document.getElementById(`note-${qid}`)?.value?.trim() || '';
+    const parsed = parseStrongExport(note);
+    if (parsed) {
+      extraData.workout = parsed;
+      extraData.source = 'strong';
+    }
   } else {
     note = document.getElementById(`note-${qid}`)?.value?.trim() || '';
   }
