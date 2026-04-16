@@ -2326,7 +2326,7 @@ const THEME_BANK = [
       transitionSpeed: '0.1s',
       injectedKeyframes: `
         @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
-        @keyframes glitch { 0%,100% { transform: translate(0); } 20% { transform: translate(-2px,1px); } 40% { transform: translate(2px,-1px); } 60% { transform: translate(-1px,2px); } 80% { transform: translate(1px,-2px); } }
+        @keyframes glitch { 0%,86%,100% { text-shadow:none; filter:none; } 87% { text-shadow:-3px 0 #ff003c, 3px 0 #00ffff; filter:brightness(1.3); } 88% { text-shadow:3px 0 #ff003c, -3px 0 #00ffff; } 89% { text-shadow:-1px 0 #ff003c, 1px 0 #00ffff; filter:brightness(1.1); } 90% { text-shadow:none; filter:none; } 94% { text-shadow:-2px 0 #ff003c, 2px 0 #00ffff; } 95% { text-shadow:none; } }
         @keyframes flicker { 0%,100% { opacity:1; } 92% { opacity:1; } 93% { opacity:0.8; } 94% { opacity:1; } 97% { opacity:0.9; } 98% { opacity:1; } }
       `
     },
