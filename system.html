@@ -1802,12 +1802,6 @@ function renderDomainPage(domainKey) {
 // ── DOMAIN WIDGETS ───────────────────────────────────────────────────
 const DOMAIN_WIDGETS = {
   geburah: function(el, dk, domain) {
-    // ── Nutrition totals ──
-    const g2log = todayLog['g2'];
-    const entries = g2log?.entries || [];
-    const totals = g2log?.totals || { calories: 0, protein: 0 };
-    const entryCount = entries.length;
-
     // ── Weekly workout volume (rolling 7 days from dailyLogs) ──
     const today = getTodayStr();
     const weekVolume = {};
@@ -1841,9 +1835,8 @@ const DOMAIN_WIDGETS = {
     const hasVolume = Object.keys(weekVolume).length > 0;
     const volumeGroups = Object.entries(weekVolume).sort((a,b) => b[1] - a[1]);
 
-    el.innerHTML = `
-      ${hasVolume ? `
-      <div class="domain-widget" style="border-color:${domain.color};margin-bottom:8px">
+    el.innerHTML = hasVolume ? `
+      <div class="domain-widget" style="border-color:${domain.color}">
         <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:8px">7-day volume · ${weekSessions} sessions · ${weekTotalSets} sets</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px">
           ${volumeGroups.map(([mg, sets]) => `
@@ -1854,7 +1847,17 @@ const DOMAIN_WIDGETS = {
           `).join('')}
         </div>
       </div>
-      ` : ''}
+    ` : '';
+  },
+
+  malkuth: function(el, dk, domain) {
+    // ── Nutrition totals (g2 accumulator) ──
+    const g2log = todayLog['g2'];
+    const entries = g2log?.entries || [];
+    const totals = g2log?.totals || { calories: 0, protein: 0 };
+    const entryCount = entries.length;
+
+    el.innerHTML = `
       <div class="domain-widget" style="border-color:${domain.color}">
         <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${entryCount > 0 ? '12px' : '0'}">
           <div>
