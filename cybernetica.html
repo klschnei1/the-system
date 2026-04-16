@@ -23,7 +23,7 @@
     // 'rpg.html',
   ];
 
-  window.location.replace(skins[Math.abs(seed) % skins.length]);
+  window.location.replace(skins[Math.abs(seed) % skins.length] + '?v=' + Date.now());
 </script>
 </body>
 </html>
