@@ -1431,6 +1431,95 @@ function parseStrongExport(text) {
   return result;
 }
 
+// ── EXERCISE CLASSIFY MODAL ───────────────────────────────────────────
+const KNOWN_MUSCLES = ['quads','hamstrings','glutes','calves','adductors',
+  'chest','lats','traps','erectors','rear delts','shoulders','triceps','biceps','core'];
+
+function showExerciseClassifyModal(unknownNames, onComplete) {
+  const selections = {};
+  unknownNames.forEach(n => { selections[n] = {}; });
+
+  const overlay = document.createElement('div');
+  overlay.className = 'classify-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'classify-modal';
+
+  function render() {
+    modal.innerHTML = `
+      <div class="classify-title">Unknown Exercises</div>
+      <div class="classify-subtitle">Tap once for primary · tap again for secondary · tap again to clear</div>
+    `;
+
+    unknownNames.forEach(exName => {
+      const block = document.createElement('div');
+      block.className = 'classify-exercise';
+      const nameEl = document.createElement('div');
+      nameEl.className = 'classify-ex-name';
+      nameEl.textContent = exName;
+      block.appendChild(nameEl);
+
+      const pillRow = document.createElement('div');
+      pillRow.className = 'classify-muscles';
+
+      KNOWN_MUSCLES.forEach(muscle => {
+        const tier = selections[exName][muscle] || 0;
+        const pill = document.createElement('button');
+        pill.className = 'classify-pill' + (tier === 1 ? ' primary' : tier === 0.5 ? ' secondary' : '');
+        pill.textContent = muscle + (tier === 1 ? ' ●' : tier === 0.5 ? ' ◌' : '');
+        pill.onclick = () => {
+          const cur = selections[exName][muscle] || 0;
+          selections[exName][muscle] = cur === 0 ? 1 : cur === 1 ? 0.5 : 0;
+          render();
+        };
+        pillRow.appendChild(pill);
+      });
+
+      block.appendChild(pillRow);
+      modal.appendChild(block);
+    });
+
+    const btnRow = document.createElement('div');
+    btnRow.className = 'classify-btn-row';
+
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'btn btn-primary';
+    saveBtn.textContent = 'Save & Log';
+    saveBtn.onclick = () => {
+      const userMap = getUserExerciseMap();
+      const result = {};
+      unknownNames.forEach(name => {
+        const groups = Object.entries(selections[name])
+          .filter(([, t]) => t > 0)
+          .map(([m, t]) => ({m, t}));
+        result[name] = groups.length ? groups : [{m:'other', t:1}];
+        userMap[name.toLowerCase().trim()] = result[name];
+      });
+      saveUserExerciseMap(userMap);
+      overlay.remove();
+      onComplete(result);
+    };
+
+    const skipBtn = document.createElement('button');
+    skipBtn.className = 'btn';
+    skipBtn.textContent = 'Skip';
+    skipBtn.onclick = () => {
+      const result = {};
+      unknownNames.forEach(n => { result[n] = [{m:'other', t:1}]; });
+      overlay.remove();
+      onComplete(result);
+    };
+
+    btnRow.appendChild(saveBtn);
+    btnRow.appendChild(skipBtn);
+    modal.appendChild(btnRow);
+  }
+
+  render();
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
+
 // ── COLLAPSE HELPERS ──────────────────────────────────────────────────
 function getDefaultExpandedDomain() {
   const seed = getDailySeed();
