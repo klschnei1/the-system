@@ -2152,7 +2152,7 @@ function logAccumulator(qid, xp) {
   renderQuests();
 
   if (isFirst) {
-    notify(`Nutrition logged. +${xp} XP. Keep adding entries throughout the day.`);
+    notify(`${quest.name} logged. +${xp} XP. Keep adding entries throughout the day.`);
   } else {
     const summary = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' · ');
     notify(`Updated: ${summary}`);
