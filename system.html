@@ -1986,37 +1986,8 @@ const DOMAIN_WIDGETS = {
   },
 
   malkuth: function(el, dk, domain) {
-    // ── Nutrition totals (g2 accumulator) ──
-    const g2log = todayLog['g2'];
-    const entries = g2log?.entries || [];
-    const totals = g2log?.totals || { calories: 0, protein: 0 };
-    const entryCount = entries.length;
-
-    el.innerHTML = `
-      <div class="domain-widget" style="border-color:${domain.color}">
-        <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${entryCount > 0 ? '12px' : '0'}">
-          <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${totals.calories || 0}</div>
-            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">kcal</div>
-          </div>
-          <div style="width:1px;background:var(--border)"></div>
-          <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${totals.protein || 0}</div>
-            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">g protein</div>
-          </div>
-        </div>
-        ${entryCount > 0 ? `
-          <div style="border-top:1px solid var(--border);padding-top:8px">
-            ${entries.map(e => `
-              <div style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
-                <span>${new Date(e.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}${e.note ? ' — ' + e.note : ''}</span>
-                <span style="color:var(--text2)">${e.calories || 0} kcal · ${e.protein || 0}g</span>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-      </div>
-    `;
+    // Delegates to intake.js — combined hydration + nutrition widget.
+    window.renderIntakeWidget(el, dk, domain);
   }
 };
 
