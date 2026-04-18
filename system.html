@@ -1699,8 +1699,11 @@ const DOMAIN_WIDGETS = {
   },
 
   malkuth: function(el, dk, domain) {
-    // Delegates to intake.js — combined hydration + nutrition widget.
     window.renderIntakeWidget(el, dk, domain);
+  },
+
+  chesed: function(el, dk, domain) {
+    window.renderFinanceWidget(el, dk, domain);
   }
 };
 
