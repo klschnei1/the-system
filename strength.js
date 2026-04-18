@@ -18,6 +18,10 @@ const EXERCISE_MUSCLE_MAP = [
   // Legs — balanced squat variants
   [/leg press/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
   [/squat/i, [{m:'quads',t:1},{m:'glutes',t:1}]],
+  // Legs — posterior chain / back extensions
+  [/back extension/i, [{m:'erectors',t:1},{m:'glutes',t:0.5}]],
+  [/hyperextension/i, [{m:'erectors',t:1},{m:'glutes',t:0.5}]],
+  [/45.?degree.*(extension|hyper)/i, [{m:'erectors',t:1},{m:'glutes',t:0.5}]],
   // Legs — hamstrings
   [/leg curl/i, [{m:'hamstrings',t:1}]],
   [/stiff.?leg.?dead/i, [{m:'hamstrings',t:1},{m:'glutes',t:1}]],
