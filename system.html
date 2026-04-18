@@ -2048,7 +2048,7 @@ function buildQuestInput(qid, quest, done) {
           </div>
           <input type="text" class="log-input" id="accum-${qid}-note"
             style="margin-top:6px;font-size:11px;width:100%;padding:6px 8px"
-            placeholder="What did you eat? (optional)">
+            placeholder="${quest.notePrompt || 'Note (optional)'}">
         </div>`;
     }
 
