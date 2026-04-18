@@ -1275,11 +1275,7 @@ let preFocusCollapseState = null;
 let currentDomain = null;
 let domainPageSource = 'quests';
 
-// ── STRONG APP PARSER ────────────────────────────────────────────────
-// Maps exercise name keywords to muscle groups with tiers.
-// Each group is { m: 'muscle', t: 1 } (primary = 1 set) or { m: 'muscle', t: 0.5 } (secondary = 0.5 sets).
-// Checked in order; first match wins. More specific patterns first.
-// User-defined overrides (from localStorage) are checked before this table.
+// ── STRONG APP PARSER — extracted to strength.js ─────────────────────
 const EXERCISE_MUSCLE_MAP = [
   // Legs — quad-dominant (quad primary, glutes secondary)
   [/leg extension/i, [{m:'quads',t:1}]],
