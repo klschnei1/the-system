@@ -1572,6 +1572,10 @@ function buildQuestCard(qid, quest, domain, options = {}) {
           ? `<button class="btn btn-primary" onclick="logAccumulator('${qid}', ${quest.xp})">
               ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
             </button>`
+          : quest.inputType === 'transaction'
+          ? `<button class="btn btn-primary" onclick="logTransaction('${qid}', ${quest.xp})">
+              ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
+            </button>`
           : `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
               ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
             </button>`
