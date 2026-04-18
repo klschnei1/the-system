@@ -1,7 +1,7 @@
 // ── INTAKE DOMAIN (Malkuth) ──────────────────────────────────────────
-// What enters the body: water, other beverages, food (calories + protein).
-// Quests live in questDefinitions.malkuth: m1 (hydration accumulator), g2 (nutrition accumulator).
-// Widget combines both accumulators into a single intake readout + chronological entry log.
+// What enters the body: fluid (oz), food (calories + protein).
+// Quests: m1 (hydration accumulator — total oz), g2 (nutrition accumulator).
+// Widget: single row oz · kcal · g protein + merged chronological entry log.
 
 (function() {
   'use strict';
