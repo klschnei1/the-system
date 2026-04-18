@@ -13,7 +13,7 @@
     const waterLog = todayLog['m1'];
     const nutritionLog = todayLog['g2'];
 
-    const waterTotals = waterLog?.totals || { water: 0, other: 0 };
+    const waterTotals = waterLog?.totals || { oz: 0 };
     const nutritionTotals = nutritionLog?.totals || { calories: 0, protein: 0 };
 
     const waterEntries = (waterLog?.entries || []).map(e => ({ ...e, kind: 'fluid' }));
@@ -22,36 +22,22 @@
       new Date(a.time) - new Date(b.time)
     );
 
-    const totalFluidOz = (waterTotals.water || 0) + (waterTotals.other || 0);
-
     el.innerHTML = `
       <div class="domain-widget" style="border-color:${domain.color}">
-        <!-- Fluid intake row -->
-        <div style="display:flex;justify-content:space-around;text-align:center;padding-bottom:12px;border-bottom:1px solid var(--border)">
+        <!-- oz · kcal · protein -->
+        <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
           <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.water || 0}</div>
-            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">oz water</div>
+            <div style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.oz || 0}</div>
+            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">oz</div>
           </div>
           <div style="width:1px;background:var(--border)"></div>
           <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.other || 0}</div>
-            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">oz other</div>
-          </div>
-          <div style="width:1px;background:var(--border)"></div>
-          <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--accent)">${totalFluidOz}</div>
-            <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">total oz</div>
-          </div>
-        </div>
-        <!-- Nutrition row -->
-        <div style="display:flex;justify-content:space-around;text-align:center;padding-top:12px;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
-          <div>
-            <div style="font-size:22px;font-weight:bold;color:var(--text)">${nutritionTotals.calories || 0}</div>
+            <div style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.calories || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">kcal</div>
           </div>
           <div style="width:1px;background:var(--border)"></div>
           <div>
-            <div style="font-size:22px;font-weight:bold;color:var(--text)">${nutritionTotals.protein || 0}</div>
+            <div style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.protein || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">g protein</div>
           </div>
         </div>
