@@ -1034,10 +1034,11 @@
 <!-- NOTIFY -->
 <div class="notify" id="notify"></div>
 
-<script src="sigils.js"></script>
-<script src="themes.js"></script>
-<script src="sensei.js"></script>
-<script src="intake.js"></script>
+<script>
+  ['sigils.js','themes.js','sensei.js','intake.js'].forEach(function(src) {
+    document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
+  });
+</script>
 <script>
 // ── DATASTORE LAYER (GitHub → Electron → CRDT) ───────────────────────
 // ═══════════════════════════════════════════════════════════════════════
