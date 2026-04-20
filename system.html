@@ -430,7 +430,7 @@
   }
   .classify-btn-row { display: flex; gap: 10px; margin-top: 20px; }
 
-  /* ── FOCUS QUESTS (communion output) ── */
+  /* ── FOCUS QUESTS (check-in nudge output) ── */
   .focus-quests {
     margin-bottom: 14px; padding: 8px 14px;
     border-left: 2px solid var(--gold); background: rgba(201,168,76,0.04);
@@ -1530,7 +1530,7 @@ function renderDispatchBanner() {
   banner.appendChild(body);
 }
 
-// ── FOCUS QUESTS (communion adaptation output) ───────────────────────
+// ── FOCUS QUESTS (check-in nudge output) ────────────────────────────
 function renderFocusQuests() {
   const el = document.getElementById('focusQuests');
   const quests = data.currentWeekQuests;
