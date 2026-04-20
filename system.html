@@ -1035,7 +1035,7 @@
 <div class="notify" id="notify"></div>
 
 <script>
-  ['sigils.js','themes.js','sensei.js','strength.js','intake.js','finance.js'].forEach(function(src) {
+  ['sigils.js','themes.js','sensei.js','strength.js','intake.js','finance.js','checkin.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
@@ -1263,7 +1263,7 @@ async function setupGitHubDataStore(token, repo, path = 'CSS/CSS_DATA.json') {
 
 
 // ── DATA ──────────────────────────────────────────────────────────────
-const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","daysActive":0,"coherenceHistory":[],"stats":{"lab":0,"gym":0,"nutrition":0,"hygiene":0,"sleep":0,"finance":0,"art":0,"practice":0},"ltDone":{"ddpcr":false,"viab":false,"ctg":false,"draft":false,"def":false,"fit_3w":true,"fit_pro":false,"fit_4x":false,"fin_budget30":false,"fin_dca":false,"fin_emergency":false,"fin_grad":false,"gf1":false,"gf2":false,"gf3":false},"longTermGoals":{"dissertation":{"name":"Dissertation Defense","color":"#D85A30","domain":"hod","milestones":{"ddpcr":"ddPCR probe validation complete","viab":"All cell viability assays finalized","ctg":"CT genes data analysis done","draft":"Full draft submitted to advisor","def":"Defense scheduled"}},"fitness":{"name":"Fitness Baseline Restored","color":"#1D9E75","domain":"geburah","milestones":{"fit_3w":"3 gym sessions in one week (confirmed with evidence)","fit_pro":"14-day protein streak (200g+ confirmed)","fit_4x":"Back on 4x/week program"}},"finance":{"name":"Financial System Operational","color":"#4ddebb","domain":"chesed","milestones":{"fin_budget30":"Budget tracked for 30 consecutive days","fin_dca":"Weekly DCA established and automated","fin_emergency":"Emergency fund: $2k baseline","fin_grad":"Graduation fund: rent + moving costs + $1k buffer"}},"graduation":{"name":"Post-Defense Transition","color":"#378ADD","domain":"chesed","milestones":{"gf1":"$1k saved post-defense","gf2":"Moving costs covered","gf3":"First month rent secured"}}},"evidenceLog":[],"weeklyAssessments":[],"dailyLogs":{},"currentWeekQuests":["HOD: Complete and log 3 full lab sessions this week","HOD: Write dissertation text at least twice this week","GEBURAH: Log protein intake at 200g+ on 5 of 7 days"],"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending — what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}}};
+const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","daysActive":0,"coherenceHistory":[],"stats":{"lab":0,"gym":0,"nutrition":0,"hygiene":0,"sleep":0,"finance":0,"art":0,"practice":0},"ltDone":{"ddpcr":false,"viab":false,"ctg":false,"draft":false,"def":false,"fit_3w":true,"fit_pro":false,"fit_4x":false,"fin_budget30":false,"fin_dca":false,"fin_emergency":false,"fin_grad":false,"gf1":false,"gf2":false,"gf3":false},"longTermGoals":{"dissertation":{"name":"Dissertation Defense","color":"#D85A30","domain":"hod","milestones":{"ddpcr":"ddPCR probe validation complete","viab":"All cell viability assays finalized","ctg":"CT genes data analysis done","draft":"Full draft submitted to advisor","def":"Defense scheduled"}},"fitness":{"name":"Fitness Baseline Restored","color":"#1D9E75","domain":"geburah","milestones":{"fit_3w":"3 gym sessions in one week (confirmed with evidence)","fit_pro":"14-day protein streak (200g+ confirmed)","fit_4x":"Back on 4x/week program"}},"finance":{"name":"Financial System Operational","color":"#4ddebb","domain":"chesed","milestones":{"fin_budget30":"Budget tracked for 30 consecutive days","fin_dca":"Weekly DCA established and automated","fin_emergency":"Emergency fund: $2k baseline","fin_grad":"Graduation fund: rent + moving costs + $1k buffer"}},"graduation":{"name":"Post-Defense Transition","color":"#378ADD","domain":"chesed","milestones":{"gf1":"$1k saved post-defense","gf2":"Moving costs covered","gf3":"First month rent secured"}}},"evidenceLog":[],"weeklyAssessments":[],"dailyLogs":{},"currentWeekQuests":["HOD: Complete and log 3 full lab sessions this week","HOD: Write dissertation text at least twice this week","GEBURAH: Log protein intake at 200g+ on 5 of 7 days"],"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending — what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}},"activeNudges":[],"checkinLog":[]};
 
 // ── STATE ─────────────────────────────────────────────────────────────
 let data = {};
@@ -1678,6 +1678,7 @@ function renderDomainPage(domainKey) {
   if (DOMAIN_WIDGETS[domainKey]) {
     DOMAIN_WIDGETS[domainKey](widgetEl, domainKey, domain);
   }
+  if (window.renderNudgeChecklist) window.renderNudgeChecklist(domainKey);
 
   // Render quest cards (auto-expanded on domain pages)
   const cardsEl = document.getElementById('domainQuestCards');
@@ -2162,6 +2163,7 @@ const PALETTE_MOODS = [
 // → sensei.js
 // ── RENDER TRANSMISSIONS ──────────────────────────────────────────────
 function renderTransmissions() {
+  if (window.renderCheckinCard) window.renderCheckinCard(document.getElementById('view-transmit'));
   const seed = getDailySeed();
   const palette = PALETTE_MOODS[seed % PALETTE_MOODS.length];
   const todaySenseiKey = getTodaySensei();
@@ -2455,89 +2457,9 @@ function notify(msg, duration = 3000) {
   setTimeout(() => n.classList.remove('show'), duration);
 }
 
-// ── COMMUNION ─────────────────────────────────────────────────────────
-let communionMessages = []; // {role:'user'|'assistant', content:string}
-let communionSenseiKey = null;
-let communionWeekData = null;
-let communionTurnCount = 0;
-const COMMUNION_MAX_TURNS = 5;
+// ── WEEKLY RHYTHM ────────────────────────────────────────────────────
 
 function isSunday() { return new Date().getDay() === 0; }
-
-function communionDoneThisWeek() {
-  // Only count assessments that have an interviewLog (live communion),
-  // not automated/scheduled assessments from earlier in the week
-  const today = new Date();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
-  const mondayStr = monday.toISOString().slice(0, 10);
-  return (data.weeklyAssessments || []).some(a => a.date >= mondayStr && a.interviewLog);
-}
-
-function checkCommunionAvailable() {
-  if (!isSunday() || communionDoneThisWeek()) return;
-  const apiKey = localStorage.getItem('css_anthropic_key');
-  if (!apiKey) return;
-  // Insert banner above quest list
-  const existing = document.getElementById('communionBanner');
-  if (existing) return;
-  const banner = document.createElement('div');
-  banner.id = 'communionBanner';
-  banner.className = 'communion-banner';
-  banner.innerHTML = '∴ Weekly Communion Available — Begin Interview';
-  banner.onclick = startCommunion;
-  const questView = document.getElementById('view-quests');
-  questView.insertBefore(banner, questView.firstChild);
-}
-
-function buildWeekAnalysis() {
-  const today = new Date();
-  const days = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(today); d.setDate(today.getDate() - i);
-    days.push(d.toISOString().slice(0, 10));
-  }
-
-  const domains = {};
-  const questHits = {};
-  let weekXP = 0;
-
-  Object.entries(data.questDefinitions).forEach(([dk, domain]) => {
-    domains[dk] = { name: domain.name, daysActive: 0, quests: {} };
-    Object.keys(domain.quests).forEach(qid => {
-      questHits[qid] = { count: 0, name: domain.quests[qid].name, domain: dk, xp: domain.quests[qid].xp, tier: domain.quests[qid].tier };
-    });
-  });
-
-  days.forEach(day => {
-    const log = data.dailyLogs?.[day] || {};
-    const activeDomains = new Set();
-    Object.entries(log).forEach(([qid, entry]) => {
-      if (questHits[qid]) {
-        questHits[qid].count++;
-        activeDomains.add(questHits[qid].domain);
-        weekXP += entry.xp || 0;
-      }
-    });
-    activeDomains.forEach(dk => { if (domains[dk]) domains[dk].daysActive++; });
-  });
-
-  const darkDomains = Object.entries(domains).filter(([, d]) => d.daysActive === 0).map(([dk]) => dk);
-  const activeDomains = Object.entries(domains).filter(([, d]) => d.daysActive >= 3).map(([dk]) => dk);
-  const dormantQuests = Object.entries(questHits).filter(([, q]) => q.count === 0).map(([qid, q]) => ({ qid, ...q }));
-  const highTierHits = Object.entries(questHits).filter(([, q]) => q.xp >= 35 && q.count > 0);
-
-  return {
-    days, domains, questHits, weekXP, darkDomains, activeDomains,
-    dormantQuests, highTierHits,
-    streak: data.streak || 0,
-    rank: data.rank || 'E',
-    xp: data.xp || 0,
-    domainWeights: data.domainWeights || {},
-    currentWeekQuests: data.currentWeekQuests || [],
-    domainScores: calcDomainScores()
-  };
-}
 
 function selectCommunionSensei(week) {
   const domainActivity = {};
@@ -2566,286 +2488,6 @@ function selectCommunionSensei(week) {
   return 'hekate';
 }
 
-function buildCommunionSystemPrompt(senseiKey, week) {
-  const sensei = SENSEI[senseiKey];
-  const domainSummary = Object.entries(week.domains)
-    .map(([dk, d]) => `${d.name} (${dk}): ${d.daysActive}/7 days active`)
-    .join('\n');
-
-  const dormantList = week.dormantQuests.map(q => `${q.qid} — ${q.name} (${q.domain})`).join('\n') || 'None';
-  const highTierList = week.highTierHits.map(([qid, q]) => `${qid}: ${q.name} — ${q.count}/7`).join('\n') || 'None';
-
-  const perturbations = data.perturbationCatalogue
-    ? JSON.stringify(data.perturbationCatalogue)
-    : 'Hod: cubicle drift, scope ambiguity. Geburah: logging gap. Chesed: tilt spending under stress.';
-
-  const missData = Object.entries(data.missDetection || {})
-    .sort(([a],[b]) => b.localeCompare(a)).slice(0, 7)
-    .map(([date, m]) => `${date}: ${m.totalMissed} missed, gaps: ${Object.keys(m.domainGaps).join(', ') || 'none'}`)
-    .join('\n') || 'No miss data available';
-
-  const weeklyAssessmentHistory = (data.weeklyAssessments || []).slice(-3)
-    .map(a => `[${a.date}] ${a.sensei}: dark=${a.domainsDark?.join(',')}, active=${a.domainsActive?.join(',')}, xp=${a.weeklyXP}`)
-    .join('\n') || 'No prior assessments';
-
-  return `You are ${sensei.name}, conducting the Weekly Communion interview for the Cybernetic Self System.
-
-YOUR IDENTITY: ${sensei.domain}
-YOUR ROLE: ${sensei.role}
-YOUR VOICE: ${SENSEI_VOICE_INSTRUCTIONS[senseiKey] || ''}
-
-THEORETICAL FRAMEWORK:
-This system operates on three integrated layers:
-1. STRUCTURE (Tree of Life): Eight domains organize all quests. Domain weights allocate attention.
-2. THEORY (Choice Architecture — Thaler/Sunstein): Every quest is a nudge or sludge. The system shapes behavior by structuring the choice environment: defaults, salience, friction, framing, commitment devices. Your job is to reason about WHY interventions work or fail at this level — not just WHAT was done.
-3. MECHANISM (Cybernetics / Internal Model Principle): The system and the operator are mutual regulators. Weekly communion is the adaptation loop. You update the internal model based on observed behavior.
-
-When analyzing gaps, think in choice architecture terms:
-- A missed domain might be a FRICTION problem (too much effort to start), not a motivation problem
-- A dominant domain might benefit from a SLUDGE (add friction to rebalance attention)
-- A dormant quest might need reframing (SALIENCE), not more willpower
-- A streak break might indicate the DEFAULT needs changing (environment, not discipline)
-
-This is a live interview. You ask questions based on the week's data, listen to responses, and build toward a final communion transmission. Respond to what they actually say — don't recite analysis.
-
-INTERVIEW STRUCTURE:
-- Turn 1: Open with the dominant pattern. Name it. Ask your first question — targeted at the biggest gap or most interesting signal.
-- Turn 2: Dig into the choice environment. What friction exists around dark domains? What defaults are making active domains easy? Ask the operator to describe the CONTEXT around gaps, not just acknowledge them.
-- Turn 3: Challenge. Push on vague answers. If they say "I just didn't get to it," ask what they DID do instead and what made that easier. This is where you surface the real choice architecture — the path of least resistance they're actually following.
-- Turn 4: BLIND SPOT PROBE — "What is happening in your life right now that this system cannot see?" Surface an area absent from the quest structure. This is mandatory.
-- Turn 5 (final): Deliver the communion transmission, then propose adaptations. For EACH adaptation, name the choice architecture mechanism:
-  * domainWeight changes (format: "domain: current → proposed — REASON: mechanism")
-  * 3-4 focus quests for next week (format: "DOMAIN: specific measurable target")
-  * Quest modifications: new nudges/sludges to propose, stale quests to retire, reframings. For each, state whether it's a friction reduction, default change, salience boost, commitment device, or sludge.
-  * Environmental nudges: real-world changes to the choice environment (not app changes). E.g., "put running shoes by the door" or "delete the app shortcut."
-  End with: "Confirm these adaptations, modify them, or reject."
-
-ANTI-SYCOPHANCY DIRECTIVE:
-Do NOT validate, reassure, or praise. You are not a therapist. A streak is not an achievement to celebrate — it's data. A gap is not a failure to soften — it's information about the choice environment. Never agree with the operator's self-assessment without interrogating it. If they say "it was a good week," ask what the data says. If the data disagrees, say so. ${sensei.name} does not comfort.
-
-RULES:
-- Address the operator as "you" — never "Karl" or "the operator"
-- Dense, not long. Each message 3-6 sentences max.
-- Reference specific data points. "${sensei.name} doesn't do vague."
-- On your FINAL turn (turn 5), you MUST include a line that says exactly "COMMUNION_COMPLETE" at the very end, after all content. This signals the system to process adaptations.
-
-SYSTEM STATE:
-Rank: ${week.rank} | XP: ${week.xp.toLocaleString()} | Streak: ${week.streak} days
-Week XP earned: ${week.weekXP}
-
-DOMAIN COVERAGE (past 7 days):
-${domainSummary}
-
-Dark domains (0 days): ${week.darkDomains.join(', ') || 'None'}
-Active domains (3+ days): ${week.activeDomains.join(', ') || 'None'}
-
-DORMANT QUESTS (0 completions this week):
-${dormantList}
-
-HIGH-TIER QUEST ENGAGEMENT:
-${highTierList}
-
-DOMAIN SIGNAL (7-day rolling): ${JSON.stringify(week.domainScores)}
-CURRENT DOMAIN WEIGHTS: ${JSON.stringify(week.domainWeights)}
-LAST WEEK'S FOCUS QUESTS: ${week.currentWeekQuests.join(' | ')}
-
-KNOWN FAILURE MODES (perturbation catalogue): ${perturbations}
-
-DAILY MISS DETECTION (past 7 days — computed client-side):
-${missData}
-
-PRIOR COMMUNION HISTORY (last 3 weeks):
-${weeklyAssessmentHistory}
-
-QUEST STRUCTURE (for proposing modifications):
-${Object.entries(data.questDefinitions).map(([dk, d]) =>
-  `${d.name} (${dk}): ${Object.entries(d.quests).map(([qid, q]) => qid + '=' + q.name).join(', ')}`
-).join('\n')}`;
-}
-
-async function startCommunion() {
-  const apiKey = localStorage.getItem('css_anthropic_key');
-  if (!apiKey) { notify('API key required for communion.'); return; }
-
-  communionMessages = [];
-  communionTurnCount = 0;
-  communionWeekData = buildWeekAnalysis();
-  communionSenseiKey = selectCommunionSensei(communionWeekData);
-
-  const overlay = document.getElementById('communionOverlay');
-  const thread = document.getElementById('communionThread');
-  overlay.classList.add('open');
-  thread.innerHTML = '';
-
-  const sensei = SENSEI[communionSenseiKey];
-  appendCommunionNote(`${sensei.name} presiding — ${communionWeekData.days[0]} to ${communionWeekData.days[6]}`);
-
-  // Get opening message from sensei
-  await sendCommunionTurn(null);
-}
-
-function appendCommunionMsg(role, text) {
-  const thread = document.getElementById('communionThread');
-  const div = document.createElement('div');
-  div.className = 'communion-msg ' + (role === 'assistant' ? 'sensei' : 'user');
-  div.innerHTML = text.replace(/\n/g, '<br>');
-  thread.appendChild(div);
-  thread.scrollTop = thread.scrollHeight;
-}
-
-function appendCommunionNote(text) {
-  const thread = document.getElementById('communionThread');
-  const div = document.createElement('div');
-  div.className = 'communion-msg system-note';
-  div.textContent = text;
-  thread.appendChild(div);
-}
-
-async function sendCommunionTurn(userText) {
-  const apiKey = localStorage.getItem('css_anthropic_key');
-  const typing = document.getElementById('communionTyping');
-  const sendBtn = document.getElementById('communionSendBtn');
-  const input = document.getElementById('communionInput');
-
-  sendBtn.disabled = true;
-  input.disabled = true;
-  typing.textContent = '∴ ' + SENSEI[communionSenseiKey].name + ' is considering...';
-
-  if (userText) {
-    communionMessages.push({ role: 'user', content: userText });
-    appendCommunionMsg('user', userText);
-    communionTurnCount++;
-  }
-
-  try {
-    const systemPrompt = buildCommunionSystemPrompt(communionSenseiKey, communionWeekData);
-    const messages = communionMessages.length > 0
-      ? communionMessages
-      : [{ role: 'user', content: 'Begin the communion interview. This is turn 1.' }];
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-opus-4-5',
-        max_tokens: 800,
-        system: systemPrompt,
-        messages
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `API error ${res.status}`);
-    }
-
-    const json = await res.json();
-    const responseText = json.content?.[0]?.text || '∴';
-    communionMessages.push({ role: 'assistant', content: responseText });
-
-    // Check for communion complete signal
-    const isComplete = responseText.includes('COMMUNION_COMPLETE');
-    const displayText = responseText.replace('COMMUNION_COMPLETE', '').trim();
-    appendCommunionMsg('assistant', displayText);
-
-    if (isComplete) {
-      finalizeCommunion(displayText);
-    }
-
-  } catch (e) {
-    appendCommunionNote('Signal error: ' + e.message);
-    console.error('Communion API error:', e);
-  }
-
-  typing.textContent = '';
-  sendBtn.disabled = false;
-  input.disabled = false;
-  input.focus();
-}
-
-async function sendCommunionReply() {
-  const input = document.getElementById('communionInput');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  await sendCommunionTurn(text);
-}
-
-function finalizeCommunion(transmissionText) {
-  // Hide input row, show confirmation
-  const inputRow = document.getElementById('communionInputRow');
-  inputRow.innerHTML = `
-    <button onclick="confirmCommunion()" style="flex:1;background:var(--accent);color:#000;border:none;padding:12px;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px">
-      Confirm Adaptations
-    </button>
-    <button onclick="closeCommunion()" style="flex:1;background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:12px;font-family:inherit;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px">
-      Reject & Close
-    </button>
-  `;
-
-  // Store the final transmission for write-back
-  communionWeekData.finalTransmission = transmissionText;
-}
-
-function confirmCommunion() {
-  const sensei = SENSEI[communionSenseiKey];
-  const week = communionWeekData;
-
-  // Store communion transmission
-  const txEntry = {
-    date: getTodayStr(),
-    archetype: sensei.name,
-    body: week.finalTransmission
-  };
-  if (!data.transmissionLog) data.transmissionLog = [];
-  data.transmissionLog.push(txEntry);
-  data.lastTransmission = txEntry;
-
-  // Store weekly assessment
-  if (!data.weeklyAssessments) data.weeklyAssessments = [];
-  data.weeklyAssessments.push({
-    date: getTodayStr(),
-    sensei: sensei.name,
-    domainsActive: week.activeDomains,
-    domainsDark: week.darkDomains,
-    weeklyXP: week.weekXP,
-    streakHeld: week.streak > 0,
-    interviewLog: communionMessages.map(m => ({ role: m.role, content: m.content.slice(0, 500) }))
-  });
-
-  // Parse and apply weight changes from the transmission
-  // The sensei proposes them in text — we store the raw proposal
-  // and let the operator confirm specific changes in future iterations
-  // For now: save the communion, update meta
-  data._meta.lastUpdated = getTodayStr();
-
-  saveData();
-  notify('Communion recorded. ' + sensei.name + ' has spoken.');
-  closeCommunion();
-
-  // Remove banner
-  const banner = document.getElementById('communionBanner');
-  if (banner) banner.remove();
-
-  // Refresh UI
-  renderHeader();
-  renderDispatchBanner();
-  renderFocusQuests();
-}
-
-function closeCommunion() {
-  document.getElementById('communionOverlay').classList.remove('open');
-  // Restore input row for next time
-  document.getElementById('communionInputRow').innerHTML = `
-    <textarea id="communionInput" rows="2" placeholder="Respond..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCommunionReply()}"></textarea>
-    <button id="communionSendBtn" onclick="sendCommunionReply()">Transmit</button>
-  `;
-}
 
 // ── INIT ──────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -2917,7 +2559,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderDispatchBanner();
   renderFocusQuests();
   renderQuests();
-  checkCommunionAvailable();
 });
 
 function showSetupModal() {
@@ -2941,19 +2582,6 @@ async function completeSetup() {
 }
 </script>
 
-<!-- ── COMMUNION MODAL ──────────────────────────────────────────── -->
-<div class="communion-overlay" id="communionOverlay">
-  <div class="communion-header">
-    <span>∴ Weekly Communion</span>
-    <button onclick="closeCommunion()" style="background:none;border:none;color:var(--text3);font-family:inherit;font-size:14px;cursor:pointer">✕</button>
-  </div>
-  <div class="communion-thread" id="communionThread"></div>
-  <div class="communion-typing" id="communionTyping"></div>
-  <div class="communion-input-row" id="communionInputRow">
-    <textarea id="communionInput" rows="2" placeholder="Respond..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCommunionReply()}"></textarea>
-    <button id="communionSendBtn" onclick="sendCommunionReply()">Transmit</button>
-  </div>
-</div>
 
 <!-- ── GITHUB DATASTORE SETUP MODAL ───────────────────────────────── -->
 <div id="setupModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px">
