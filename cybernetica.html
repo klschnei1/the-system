@@ -23,6 +23,7 @@
     // 'rpg.html',
   ];
 
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
   window.location.replace(skins[Math.abs(seed) % skins.length] + '?v=' + Date.now());
 </script>
 </body>
