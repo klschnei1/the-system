@@ -1,11 +1,11 @@
-// checkin.js — Weekly Check-In / Nudge-Sludge Engine
-// Replaces live-per-turn communion with scripted chat + single API call.
+// checkin.js — Weekly Check-In Engine
+// Live conversational interview (per-turn API) + deterministic write-back on close.
 // Globals consumed: data, todayLog, saveData, getTodayStr, calcDomainScores,
 //                   SENSEI, selectCommunionSensei, isSunday, notify
 
 (function () {
 
-  // ── ISO week helpers ────────────────────────────────────────────────────
+  // ── ISO week helpers ─────────────────────────────────────────────────────
 
   function dateToISOWeek(d) {
     d = new Date(+d);
@@ -30,7 +30,7 @@
     return dateToISOWeek(monday);
   }
 
-  // ── State ───────────────────────────────────────────────────────────────
+  // ── State ────────────────────────────────────────────────────────────────
 
   let CI = null;
   let _gradeState = {};
@@ -39,7 +39,7 @@
     return (data.checkinLog || []).some(e => e.isoWeek === currentISOWeek());
   }
 
-  // ── Week analysis ───────────────────────────────────────────────────────
+  // ── Week analysis ────────────────────────────────────────────────────────
 
   function buildCheckinWeekData() {
     const today = typeof getTodayStr === 'function' ? getTodayStr() : new Date().toLocaleDateString('en-CA');
@@ -81,7 +81,7 @@
     return { days, domainHits, questHits, weekXP, darkDomains, scores };
   }
 
-  // ── Sensei selection ────────────────────────────────────────────────────
+  // ── Sensei selection ─────────────────────────────────────────────────────
 
   function selectCheckinSensei(week) {
     if (typeof selectCommunionSensei === 'function') {
@@ -95,103 +95,46 @@
     return 'hekate';
   }
 
-  // ── Copy bank (keyed by sensei) ─────────────────────────────────────────
+  // ── System prompt ─────────────────────────────────────────────────────────
 
-  const CHECKIN_COPY = {
-    leviathan: {
-      opening: 'Week {W}. State the data first.',
-      hitPrompt: 'What made that possible. One specific thing.',
-      missPrompt: 'What happened instead of {domain}.',
-      gradeIntro: 'Your active interventions. Grade them.',
-      targetIntro: 'Targets. Adjust if last week was wrong.',
-      newNudgeIntro: 'New interventions. If-then. No more than three.',
-      lockInPrompt: 'Lock in.',
-      closingLine: 'The system has updated.',
-    },
-    asclepius: {
-      opening: 'Week {W}. Systems check.',
-      hitPrompt: 'What physiological or environmental condition enabled that.',
-      missPrompt: 'What upstream condition caused the {domain} gap.',
-      gradeIntro: 'Active protocols. Efficacy assessment.',
-      targetIntro: 'Adjust targets to reflect actual capacity.',
-      newNudgeIntro: 'New protocols to test this cycle.',
-      lockInPrompt: 'Confirm parameters.',
-      closingLine: 'Parameters updated.',
-    },
-    hermes: {
-      opening: 'Week {W}. What\'s the structure of what happened.',
-      hitPrompt: 'What was the deciding variable.',
-      missPrompt: 'What path was taken instead of {domain}.',
-      gradeIntro: 'Review your conditionals. What held structurally.',
-      targetIntro: 'Recalibrate.',
-      newNudgeIntro: 'New conditionals to run.',
-      lockInPrompt: 'Commit.',
-      closingLine: 'Structure updated.',
-    },
-    hekate: {
-      opening: 'Week {W}. The threshold between what was and what begins.',
-      hitPrompt: 'What opened that door.',
-      missPrompt: 'What threshold wasn\'t crossed in {domain}.',
-      gradeIntro: 'Your rituals. What held, what didn\'t.',
-      targetIntro: 'Set the markers for the week ahead.',
-      newNudgeIntro: 'New thresholds to cross.',
-      lockInPrompt: 'Commit to the crossing.',
-      closingLine: 'The threshold shifts.',
-    },
-    gojo: {
-      opening: 'Week {W}. Let\'s make this fast.',
-      hitPrompt: 'Why did that work. Real reason.',
-      missPrompt: 'Why didn\'t {domain} happen. Be honest.',
-      gradeIntro: 'Active plays. Honest assessment.',
-      targetIntro: 'Targets. Don\'t lowball yourself.',
-      newNudgeIntro: 'New plays.',
-      lockInPrompt: 'Lock it.',
-      closingLine: 'Updated. Go.',
-    },
-    sapolsky: {
-      opening: 'Week {W}. What conditions produced what behaviors.',
-      hitPrompt: 'What upstream conditions made that the path of least resistance.',
-      missPrompt: 'What conditions made {domain} high-friction this week.',
-      gradeIntro: 'Your environmental modifications. Did conditions change.',
-      targetIntro: 'Adjust targets to match environment, not intention.',
-      newNudgeIntro: 'New environmental modifications to test.',
-      lockInPrompt: 'Commit.',
-      closingLine: 'Conditions updated.',
-    }
-  };
+  function buildSystemPrompt(week, senseiKey) {
+    const sensei = (typeof SENSEI !== 'undefined' && SENSEI[senseiKey]) ? SENSEI[senseiKey] : null;
+    const persona = sensei?.prompt || 'You are a direct, perceptive behavioral coach.';
 
-  function getCopy() {
-    return CHECKIN_COPY[CI.senseiKey] || CHECKIN_COPY.hekate;
+    const domainLines = Object.entries(week.domainHits)
+      .map(([, d]) => `${d.name}: ${d.daysActive}/7`)
+      .join(', ');
+
+    const nudgeLines = (data.activeNudges || [])
+      .filter(n => n.status === 'active')
+      .map(n => {
+        const dname = (data.questDefinitions[n.domain] || {}).name || n.domain;
+        const grades = (n.grades || []).slice(-1)[0];
+        const gradeStr = grades ? ` (last: stuck=${grades.stuck}, worked=${grades.worked})` : '';
+        return `  [${n.type}] ${dname}: if ${n.if} → ${n.then}${gradeStr}`;
+      }).join('\n') || '  None active';
+
+    return `${persona}
+
+You are conducting the weekly check-in for a personal cybernetic self-regulation system. The user tracks 9 life domains daily.
+
+WEEK ${currentISOWeek()} DATA:
+${domainLines}
+XP earned: ${week.weekXP}
+
+ACTIVE IF-THEN INTERVENTIONS:
+${nudgeLines}
+
+You already have the data — don't ask the user to report their stats. Conduct a natural, focused conversation:
+- What drove the strongest domain this week
+- What caused the biggest gap
+- How the active interventions felt in practice
+- What they want to prioritize
+
+Keep responses short — 2-4 sentences max. No bullet lists. Stay in character. The user will end the conversation when ready and then set targets.`;
   }
 
-  // ── Step builder ────────────────────────────────────────────────────────
-
-  function buildSteps(week) {
-    const steps = [];
-    const thisWeek = currentISOWeek();
-
-    steps.push({ type: 'readback', week });
-    steps.push({ type: 'attribution', key: 'hit' });
-    steps.push({ type: 'attribution', key: 'miss' });
-
-    const active = (data.activeNudges || []).filter(n => n.status === 'active');
-
-    // Nudges still in trial (grade only)
-    active.filter(n => n.trialEndsISO > thisWeek)
-      .forEach(n => steps.push({ type: 'grade_nudge', nudgeId: n.id }));
-
-    // Nudges at end of trial (decision required)
-    active.filter(n => n.trialEndsISO <= thisWeek)
-      .forEach(n => steps.push({ type: 'trial_decision', nudgeId: n.id }));
-
-    steps.push({ type: 'domain_targets', week });
-    steps.push({ type: 'new_nudges' });
-    steps.push({ type: 'lock_in' });
-
-    return steps;
-  }
-
-  // ── Overlay management ──────────────────────────────────────────────────
+  // ── Overlay management ───────────────────────────────────────────────────
 
   function getOrCreateOverlay() {
     let el = document.getElementById('checkinOverlay');
@@ -244,10 +187,10 @@
     if (el) el.innerHTML = html;
   }
 
-  // ── Style helpers ───────────────────────────────────────────────────────
+  // ── Style helpers ─────────────────────────────────────────────────────────
 
-  function chipBtn(label, onclick, disabled) {
-    return `<button onclick="${onclick}" ${disabled ? 'disabled' : ''} style="background:var(--accent);color:#000;border:none;padding:8px 16px;font-family:inherit;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px${disabled ? ';opacity:0.4' : ''}">${label}</button>`;
+  function chipBtn(label, onclick) {
+    return `<button onclick="${onclick}" style="background:var(--accent);color:#000;border:none;padding:8px 16px;font-family:inherit;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px">${label}</button>`;
   }
 
   function ghostBtn(label, onclick) {
@@ -258,223 +201,211 @@
     return `<button onclick="${onclick}" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);padding:2px 8px;font-family:inherit;font-size:12px;cursor:pointer;border-radius:2px">${label}</button>`;
   }
 
+  function gradeChip(label, groupId, value) {
+    const selected = _gradeState[groupId] === value;
+    return `<button onclick="window._ci_selectGrade('${groupId}','${value}',this)"
+      style="background:${selected ? 'var(--accent)' : 'var(--bg3)'};color:${selected ? '#000' : 'var(--text2)'};border:1px solid var(--border);padding:5px 10px;font-family:inherit;font-size:10px;cursor:pointer;border-radius:3px">${label}</button>`;
+  }
+
   function inputCSS() {
     return 'width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:12px;padding:8px 10px;border-radius:3px;outline:none;box-sizing:border-box';
-  }
-
-  // ── Step renderers ──────────────────────────────────────────────────────
-
-  function renderStep(step) {
-    switch (step.type) {
-      case 'readback':       return renderReadback(step);
-      case 'attribution':    return renderAttribution(step);
-      case 'grade_nudge':    return renderGradeNudge(step);
-      case 'trial_decision': return renderTrialDecision(step);
-      case 'domain_targets': return renderDomainTargets(step);
-      case 'new_nudges':     return renderNewNudges();
-      case 'lock_in':        return renderLockIn();
-    }
-  }
-
-  function renderReadback(step) {
-    const copy = getCopy();
-    const w = step.week;
-    const isoW = currentISOWeek();
-
-    const domainLines = Object.entries(w.domainHits).map(([dk, d]) => {
-      const daysActive = w.scores[dk]?.daysActive ?? d.daysActive;
-      return `<span style="color:${d.color}">${d.name}</span>: ${daysActive}/7`;
-    }).join(' &nbsp;·&nbsp; ');
-
-    const dark = w.darkDomains.map(dk => (data.questDefinitions[dk] || {}).name || dk).join(', ');
-
-    appendSenseiMsg(
-      copy.opening.replace('{W}', isoW) +
-      `<br><br><div style="font-size:10px;color:var(--text2);line-height:2">${domainLines}</div>` +
-      `<div style="margin-top:6px;font-size:10px;color:var(--text2)">Week XP: +${w.weekXP}` +
-      (dark ? ` &nbsp;·&nbsp; Dark: ${dark}` : '') + '</div>'
-    );
-
-    setInput(chipBtn('Continue', 'window._ci_advance(null)'));
-  }
-
-  function renderAttribution(step) {
-    const copy = getCopy();
-    const isHit = step.key === 'hit';
-
-    let prompt;
-    if (isHit) {
-      prompt = copy.hitPrompt;
-    } else {
-      const week = CI.steps[0].week;
-      const darkDks = week.darkDomains;
-      let domainName = 'the gap domain';
-      if (darkDks.length) {
-        domainName = (data.questDefinitions[darkDks[0]] || {}).name || darkDks[0];
-      } else {
-        let minDk = null, minScore = Infinity;
-        Object.entries(week.domainHits).forEach(([dk, d]) => {
-          if (d.daysActive < minScore) { minScore = d.daysActive; minDk = dk; }
-        });
-        if (minDk) domainName = (data.questDefinitions[minDk] || {}).name || minDk;
-      }
-      prompt = copy.missPrompt.replace('{domain}', domainName);
-    }
-
-    appendSenseiMsg(prompt);
-    setInput(`
-      <textarea id="ciAttrInput" rows="2" style="${inputCSS()};display:block" placeholder=""></textarea>
-      <div style="margin-top:8px;text-align:right">${chipBtn('Submit', 'window._ci_submitAttribution()')}</div>
-    `);
-    setTimeout(() => { const el = document.getElementById('ciAttrInput'); if (el) el.focus(); }, 50);
-  }
-
-  function renderGradeNudge(step) {
-    const copy = getCopy();
-    const nudge = (data.activeNudges || []).find(n => n.id === step.nudgeId);
-    if (!nudge) { advanceStep(null); return; }
-
-    const typeLabel = nudge.type === 'sludge' ? 'SLUDGE' : 'NUDGE';
-    const domainName = (data.questDefinitions[nudge.domain] || {}).name || nudge.domain;
-
-    _gradeState = {};
-    appendSenseiMsg(`<span style="font-size:10px;color:var(--text3)">${typeLabel} · ${domainName}</span><br>if ${escHtml(nudge.if)}<br>→ ${escHtml(nudge.then)}`);
-    setInput(`
-      <div style="margin-bottom:6px;font-size:11px;color:var(--text2)">Stuck to it?</div>
-      <div id="ciGradeStuck" style="display:flex;gap:6px;margin-bottom:10px">
-        ${gradeChip('yes', 'ciGradeStuck', 'yes')}
-        ${gradeChip('partial', 'ciGradeStuck', 'partial')}
-        ${gradeChip('no', 'ciGradeStuck', 'no')}
-      </div>
-      <div style="margin-bottom:6px;font-size:11px;color:var(--text2)">Did it work?</div>
-      <div id="ciGradeWorked" style="display:flex;gap:6px;margin-bottom:10px">
-        ${gradeChip('yes', 'ciGradeWorked', 'yes')}
-        ${gradeChip('partial', 'ciGradeWorked', 'mixed')}
-        ${gradeChip('no', 'ciGradeWorked', 'no')}
-      </div>
-      <div style="text-align:right">${chipBtn('Next', 'window._ci_submitGrade()')}</div>
-    `);
-  }
-
-  function renderTrialDecision(step) {
-    const nudge = (data.activeNudges || []).find(n => n.id === step.nudgeId);
-    if (!nudge) { advanceStep(null); return; }
-
-    const domainName = (data.questDefinitions[nudge.domain] || {}).name || nudge.domain;
-    const gradesText = (nudge.grades || [])
-      .map(g => `W${g.isoWeek.split('-W')[1]}: stuck=${g.stuck}, worked=${g.worked}`)
-      .join(' · ') || 'no grades';
-
-    appendSenseiMsg(
-      `Trial ended: <em>${escHtml(nudge.if)} → ${escHtml(nudge.then)}</em> (${domainName})` +
-      `<br><span style="font-size:10px;color:var(--text3)">${gradesText}</span>`
-    );
-    setInput(`
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${ghostBtn('renew', `window._ci_submitTrialDecision('${step.nudgeId}','renew')`)}
-        ${ghostBtn('archive', `window._ci_submitTrialDecision('${step.nudgeId}','archive')`)}
-        ${ghostBtn('mutate', `window._ci_showMutate('${step.nudgeId}')`)}
-      </div>
-      <div id="ciMutateInputs" style="display:none;margin-top:10px">
-        <input id="ciMutateIf" placeholder="if..." style="${inputCSS()}" value="${escHtml(nudge.if)}">
-        <input id="ciMutateThen" placeholder="then..." style="${inputCSS()};margin-top:6px" value="${escHtml(nudge.then)}">
-        <div style="margin-top:8px;text-align:right">
-          ${chipBtn('Confirm', `window._ci_submitTrialDecision('${step.nudgeId}','mutate')`)}
-        </div>
-      </div>
-    `);
-  }
-
-  function renderDomainTargets(step) {
-    const copy = getCopy();
-    appendSenseiMsg(copy.targetIntro);
-
-    const domains = Object.entries(data.questDefinitions || {});
-    let html = '<div style="font-size:10px;color:var(--text3);margin-bottom:8px">floor = minimum, reach = stretch</div>';
-
-    domains.forEach(([dk, domain]) => {
-      const t = CI.responses.targets[dk];
-      html += `
-        <div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border)">
-          <span style="flex:1;font-size:11px;color:${domain.color}">${domain.name}</span>
-          <span style="font-size:10px;color:var(--text3)">floor</span>
-          ${adjBtn('−', `window._ci_adjTarget('${dk}','floor',-1)`)}
-          <span id="ciFloor_${dk}" style="min-width:14px;text-align:center;font-size:12px">${t.floor}</span>
-          ${adjBtn('+', `window._ci_adjTarget('${dk}','floor',1)`)}
-          <span style="font-size:10px;color:var(--text3);margin-left:4px">reach</span>
-          ${adjBtn('−', `window._ci_adjTarget('${dk}','reach',-1)`)}
-          <span id="ciReach_${dk}" style="min-width:14px;text-align:center;font-size:12px">${t.reach}</span>
-          ${adjBtn('+', `window._ci_adjTarget('${dk}','reach',1)`)}
-        </div>`;
-    });
-
-    html += `<div style="margin-top:10px;text-align:right">${chipBtn('Confirm', 'window._ci_advance(null)')}</div>`;
-    setInput(html);
-  }
-
-  function renderNewNudges() {
-    const copy = getCopy();
-    appendSenseiMsg(copy.newNudgeIntro);
-
-    const domainOpts = Object.entries(data.questDefinitions || {})
-      .map(([dk, d]) => `<option value="${dk}">${d.name}</option>`).join('');
-
-    setInput(`
-      <div id="ciNudgeSlots"></div>
-      <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
-        ${ghostBtn('+ Add intervention', 'window._ci_addNudgeSlot()')}
-        ${chipBtn('Done', 'window._ci_advance(null)')}
-      </div>
-    `);
-
-    CI._domainOpts = domainOpts;
-  }
-
-  function renderLockIn() {
-    const copy = getCopy();
-    appendSenseiMsg(copy.lockInPrompt);
-    setInput(chipBtn('Lock In', 'window._ci_lockIn()'));
-  }
-
-  // ── Component helpers ───────────────────────────────────────────────────
-
-  function gradeChip(label, groupId, value) {
-    return `<button onclick="window._ci_selectGrade('${groupId}','${value}',this)"
-      style="background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:6px 12px;font-family:inherit;font-size:10px;cursor:pointer;border-radius:3px">${label}</button>`;
   }
 
   function escHtml(s) {
     return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // ── Advance step ────────────────────────────────────────────────────────
+  // ── Live chat ─────────────────────────────────────────────────────────────
 
-  function advanceStep(response) {
-    if (response !== null) {
-      const step = CI.steps[CI.step];
-      if (step.type === 'attribution') {
-        if (step.key === 'hit') CI.responses.hit = response;
-        else CI.responses.miss = response;
-        appendUserBubble(response);
-      }
-    }
-    CI.step++;
-    if (CI.step < CI.steps.length) renderStep(CI.steps[CI.step]);
+  function renderChatInput() {
+    setInput(`
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <textarea id="ciMsgInput" rows="2" placeholder="..."
+          style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:12px;padding:8px 10px;border-radius:3px;outline:none;resize:none;box-sizing:border-box"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();window._ci_sendMsg()}"></textarea>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button id="ciSendBtn" onclick="window._ci_sendMsg()"
+            style="background:var(--accent);color:#000;border:none;padding:8px 14px;font-family:inherit;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px">Send</button>
+          <button id="ciWrapBtn" onclick="window._ci_showWrapUp()"
+            style="display:none;background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:6px 14px;font-family:inherit;font-size:10px;letter-spacing:1px;cursor:pointer;border-radius:3px">Wrap Up</button>
+        </div>
+      </div>
+    `);
+    setTimeout(() => document.getElementById('ciMsgInput')?.focus(), 50);
   }
 
-  // ── Event handlers ──────────────────────────────────────────────────────
+  async function sendTurn(userText) {
+    if (!CI || CI.inWrapUp) return;
+    CI.messages.push({ role: 'user', content: userText });
+    appendUserBubble(userText);
 
-  window._ci_advance = advanceStep;
+    const sendBtn = document.getElementById('ciSendBtn');
+    const wrapBtn = document.getElementById('ciWrapBtn');
+    if (sendBtn) sendBtn.disabled = true;
+    if (wrapBtn) wrapBtn.disabled = true;
 
-  window._ci_submitAttribution = function () {
-    const el = document.getElementById('ciAttrInput');
-    const val = (el ? el.value : '').trim();
-    if (!val) return;
-    advanceStep(val);
+    const typingDiv = appendSenseiMsg('<span style="color:var(--text3);letter-spacing:2px">...</span>');
+
+    const apiKey = localStorage.getItem('css_anthropic_key');
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 300,
+          system: CI.systemPrompt,
+          messages: CI.messages
+        })
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        const text = json.content?.[0]?.text || '';
+        typingDiv.className = 'communion-msg sensei';
+        typingDiv.textContent = text;
+        CI.messages.push({ role: 'assistant', content: text });
+      } else {
+        typingDiv.textContent = 'Signal lost.';
+        CI.messages.pop();
+      }
+    } catch (e) {
+      typingDiv.textContent = 'Signal lost.';
+      CI.messages.pop();
+    }
+
+    if (sendBtn) sendBtn.disabled = false;
+    // Show wrap-up after 2+ user turns
+    if (wrapBtn && CI.messages.filter(m => m.role === 'user').length >= 2) {
+      wrapBtn.style.display = 'block';
+      wrapBtn.disabled = false;
+    }
+    document.getElementById('checkinThread')?.scrollTo(0, 9999);
+  }
+
+  window._ci_sendMsg = function () {
+    const el = document.getElementById('ciMsgInput');
+    const text = (el?.value || '').trim();
+    if (!text || !CI) return;
+    el.value = '';
+    sendTurn(text);
   };
 
+  // ── Wrap-up form ──────────────────────────────────────────────────────────
+
+  window._ci_showWrapUp = function () {
+    if (!CI) return;
+    CI.inWrapUp = true;
+    _gradeState = {};
+
+    // Initialize targets from last week's actuals
+    if (!CI.responses.targets) {
+      CI.responses.targets = {};
+      Object.keys(data.questDefinitions || {}).forEach(dk => {
+        const daysActive = CI.week.domainHits[dk]?.daysActive || 0;
+        CI.responses.targets[dk] = {
+          floor: Math.max(1, daysActive),
+          reach: Math.min(7, daysActive + 1)
+        };
+      });
+    }
+    if (!CI.responses.newNudges) CI.responses.newNudges = [];
+
+    const thisWeek = currentISOWeek();
+    const activeNudges = (data.activeNudges || []).filter(n => n.status === 'active');
+    const toGrade = activeNudges.filter(n => n.trialEndsISO > thisWeek);
+    const toDecide = activeNudges.filter(n => n.trialEndsISO <= thisWeek);
+
+    let html = '<div style="overflow-y:auto;max-height:55vh;padding-right:4px">';
+
+    if (toGrade.length) {
+      html += '<div style="font-size:9px;letter-spacing:2px;color:var(--text3);margin-bottom:8px;text-transform:uppercase">Grade Interventions</div>';
+      toGrade.forEach(n => {
+        const dname = (data.questDefinitions[n.domain] || {}).name || n.domain;
+        const color = n.type === 'sludge' ? 'var(--red)' : 'var(--accent)';
+        html += `
+          <div style="border-left:3px solid ${color};padding:8px 10px;background:var(--bg2);margin-bottom:8px;border-radius:0 3px 3px 0">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:4px">${n.type.toUpperCase()} · ${dname}</div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:8px">if ${escHtml(n.if)} → ${escHtml(n.then)}</div>
+            <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
+              <span style="font-size:10px;color:var(--text3);min-width:56px">Stuck to it?</span>
+              ${['yes','partial','no'].map(v => gradeChip(v, 'ciGradeStuck_'+n.id, v)).join('')}
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span style="font-size:10px;color:var(--text3);min-width:56px">Did it work?</span>
+              ${['yes','mixed','no'].map(v => gradeChip(v, 'ciGradeWorked_'+n.id, v)).join('')}
+            </div>
+          </div>`;
+      });
+    }
+
+    if (toDecide.length) {
+      html += '<div style="font-size:9px;letter-spacing:2px;color:var(--text3);margin:12px 0 8px;text-transform:uppercase">Trial Ended — Decide</div>';
+      toDecide.forEach(n => {
+        const dname = (data.questDefinitions[n.domain] || {}).name || n.domain;
+        const grades = (n.grades || []).map(g => `W${g.isoWeek.split('-W')[1]}: ${g.stuck}/${g.worked}`).join(' · ') || 'no grades';
+        html += `
+          <div style="border:1px solid var(--border);padding:8px 10px;margin-bottom:8px;border-radius:3px">
+            <div style="font-size:10px;color:var(--text3);margin-bottom:2px">${dname} · ${grades}</div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:8px">if ${escHtml(n.if)} → ${escHtml(n.then)}</div>
+            <div id="ciDecisionBtns_${n.id}" style="display:flex;gap:6px">
+              ${ghostBtn('Renew', `window._ci_submitTrialDecision('${n.id}','renew')`)}
+              ${ghostBtn('Archive', `window._ci_submitTrialDecision('${n.id}','archive')`)}
+              ${ghostBtn('Mutate', `window._ci_showMutate('${n.id}')`)}
+            </div>
+            <div id="ciMutateInputs_${n.id}" style="display:none;margin-top:8px">
+              <input id="ciMutateIf_${n.id}" placeholder="if..." style="${inputCSS()}" value="${escHtml(n.if)}">
+              <input id="ciMutateThen_${n.id}" placeholder="then..." style="${inputCSS()};margin-top:4px" value="${escHtml(n.then)}">
+              <div style="margin-top:6px;text-align:right">${chipBtn('Confirm', `window._ci_submitTrialDecision('${n.id}','mutate')`)}</div>
+            </div>
+          </div>`;
+      });
+    }
+
+    html += '<div style="font-size:9px;letter-spacing:2px;color:var(--text3);margin:12px 0 8px;text-transform:uppercase">Targets — floor / reach (days/week)</div>';
+    Object.entries(data.questDefinitions || {}).forEach(([dk, domain]) => {
+      const t = CI.responses.targets[dk];
+      html += `
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border)">
+          <span style="flex:1;font-size:11px;color:${domain.color}">${domain.name}</span>
+          ${adjBtn('−', `window._ci_adjTarget('${dk}','floor',-1)`)}
+          <span id="ciFloor_${dk}" style="min-width:14px;text-align:center;font-size:12px">${t.floor}</span>
+          ${adjBtn('+', `window._ci_adjTarget('${dk}','floor',1)`)}
+          <span style="font-size:10px;color:var(--text3);margin:0 3px">/</span>
+          ${adjBtn('−', `window._ci_adjTarget('${dk}','reach',-1)`)}
+          <span id="ciReach_${dk}" style="min-width:14px;text-align:center;font-size:12px">${t.reach}</span>
+          ${adjBtn('+', `window._ci_adjTarget('${dk}','reach',1)`)}
+        </div>`;
+    });
+
+    const domainOpts = Object.entries(data.questDefinitions || {})
+      .map(([dk, d]) => `<option value="${dk}">${d.name}</option>`).join('');
+    CI._domainOpts = domainOpts;
+
+    html += `
+      <div style="margin-top:12px">
+        <div id="ciNudgeSlots"></div>
+        <button onclick="window._ci_addNudgeSlot()"
+          style="background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:6px 12px;font-family:inherit;font-size:10px;letter-spacing:1px;cursor:pointer;border-radius:3px;margin-top:4px">
+          + Add intervention
+        </button>
+      </div>
+      <div style="margin-top:14px;text-align:right">${chipBtn('Lock In', 'window._ci_lockIn()')}</div>
+    </div>`;
+
+    setInput(html);
+  };
+
+  // ── Wrap-up event handlers ────────────────────────────────────────────────
+
   window._ci_selectGrade = function (groupId, value, btn) {
-    const group = document.getElementById(groupId);
+    _gradeState[groupId] = value;
+    const group = btn.parentElement;
     if (!group) return;
     group.querySelectorAll('button').forEach(b => {
       b.style.background = 'var(--bg3)';
@@ -482,42 +413,6 @@
     });
     btn.style.background = 'var(--accent)';
     btn.style.color = '#000';
-    _gradeState[groupId] = value;
-  };
-
-  window._ci_submitGrade = function () {
-    const stuck = _gradeState['ciGradeStuck'];
-    const worked = _gradeState['ciGradeWorked'];
-    if (!stuck || !worked) { notify('Select both grades.'); return; }
-
-    const step = CI.steps[CI.step];
-    CI.responses.nudgeGrades.push({ id: step.nudgeId, stuck, worked });
-
-    const stuckLabel = stuck === 'yes' ? 'stuck to it' : stuck === 'partial' ? 'partial' : 'didn\'t stick';
-    const workedLabel = worked === 'yes' ? 'worked' : worked === 'mixed' ? 'mixed' : 'didn\'t work';
-    appendUserBubble(`${stuckLabel} · ${workedLabel}`);
-    _gradeState = {};
-
-    CI.step++;
-    if (CI.step < CI.steps.length) renderStep(CI.steps[CI.step]);
-  };
-
-  window._ci_showMutate = function (nudgeId) {
-    const el = document.getElementById('ciMutateInputs');
-    if (el) el.style.display = 'block';
-  };
-
-  window._ci_submitTrialDecision = function (nudgeId, decision) {
-    let mutatedIf = null, mutatedThen = null;
-    if (decision === 'mutate') {
-      mutatedIf = (document.getElementById('ciMutateIf')?.value || '').trim();
-      mutatedThen = (document.getElementById('ciMutateThen')?.value || '').trim();
-      if (!mutatedIf || !mutatedThen) { notify('Fill both fields.'); return; }
-    }
-    CI.responses.trialDecisions.push({ id: nudgeId, decision, mutatedIf, mutatedThen });
-    appendUserBubble(decision + (decision === 'mutate' ? `: if ${mutatedIf} → ${mutatedThen}` : ''));
-    CI.step++;
-    if (CI.step < CI.steps.length) renderStep(CI.steps[CI.step]);
   };
 
   window._ci_adjTarget = function (dk, field, delta) {
@@ -532,6 +427,25 @@
     if (reachEl) reachEl.textContent = t.reach;
   };
 
+  window._ci_showMutate = function (nudgeId) {
+    const el = document.getElementById('ciMutateInputs_' + nudgeId);
+    if (el) el.style.display = 'block';
+  };
+
+  window._ci_submitTrialDecision = function (nudgeId, decision) {
+    let mutatedIf = null, mutatedThen = null;
+    if (decision === 'mutate') {
+      mutatedIf = (document.getElementById('ciMutateIf_' + nudgeId)?.value || '').trim();
+      mutatedThen = (document.getElementById('ciMutateThen_' + nudgeId)?.value || '').trim();
+      if (!mutatedIf || !mutatedThen) { notify('Fill both fields.'); return; }
+    }
+    CI.responses.trialDecisions.push({ id: nudgeId, decision, mutatedIf, mutatedThen });
+    const btnsEl = document.getElementById('ciDecisionBtns_' + nudgeId);
+    const mutateEl = document.getElementById('ciMutateInputs_' + nudgeId);
+    if (btnsEl) btnsEl.innerHTML = `<span style="font-size:10px;color:var(--text3)">${decision}${decision === 'mutate' ? `: if ${escHtml(mutatedIf)} → ${escHtml(mutatedThen)}` : ''}</span>`;
+    if (mutateEl) mutateEl.style.display = 'none';
+  };
+
   window._ci_addNudgeSlot = function () {
     if (!CI.responses.newNudges) CI.responses.newNudges = [];
     if (CI.responses.newNudges.length >= 3) { notify('Max 3 interventions.'); return; }
@@ -544,7 +458,6 @@
   function renderNudgeSlot(idx) {
     const slotsEl = document.getElementById('ciNudgeSlots');
     if (!slotsEl || document.getElementById('ciSlot_' + idx)) return;
-
     const n = CI.responses.newNudges[idx];
     const el = document.createElement('div');
     el.id = 'ciSlot_' + idx;
@@ -564,10 +477,9 @@
           style="background:var(--bg2);color:var(--text3);border:1px solid var(--border);padding:2px 8px;font-family:inherit;font-size:12px;cursor:pointer;border-radius:2px">✕</button>
       </div>
       <input id="ciSlotIf_${idx}" oninput="window._ci_updateNudge(${idx},'if',this.value)"
-        placeholder="if..." style="${inputCSS()};display:block;margin-bottom:6px" value="">
+        placeholder="if..." style="${inputCSS()};display:block;margin-bottom:6px">
       <input id="ciSlotThen_${idx}" oninput="window._ci_updateNudge(${idx},'then',this.value)"
-        placeholder="then..." style="${inputCSS()};display:block" value="">
-    `;
+        placeholder="then..." style="${inputCSS()};display:block">`;
     slotsEl.appendChild(el);
   }
 
@@ -581,16 +493,24 @@
     if (el) el.remove();
   };
 
-  // ── Lock in: deterministic adjustments + API call ───────────────────────
+  // ── Lock in: deterministic adjustments + API call ─────────────────────────
 
   window._ci_lockIn = async function () {
-    setInput('<div style="font-size:11px;color:var(--text3);letter-spacing:2px">Processing...</div>');
+    setInput('<div style="font-size:11px;color:var(--text3);letter-spacing:2px;padding:8px 0">Processing...</div>');
 
     const thisWeek = currentISOWeek();
     if (!data.activeNudges) data.activeNudges = [];
 
+    // Collect nudge grades from _gradeState
+    const nudgeGrades = [];
+    (data.activeNudges || []).filter(n => n.status === 'active' && n.trialEndsISO > thisWeek).forEach(n => {
+      const stuck = _gradeState['ciGradeStuck_' + n.id];
+      const worked = _gradeState['ciGradeWorked_' + n.id];
+      if (stuck && worked) nudgeGrades.push({ id: n.id, stuck, worked });
+    });
+
     // 1. Apply nudge grades
-    CI.responses.nudgeGrades.forEach(grade => {
+    nudgeGrades.forEach(grade => {
       const nudge = data.activeNudges.find(n => n.id === grade.id);
       if (nudge) {
         if (!nudge.grades) nudge.grades = [];
@@ -615,51 +535,37 @@
         const newId = 'n_' + Date.now();
         nudge.mutatedTo = newId;
         data.activeNudges.push({
-          id: newId,
-          type: nudge.type,
-          domain: nudge.domain,
-          if: dec.mutatedIf,
-          then: dec.mutatedThen,
-          createdISO: thisWeek,
-          trialEndsISO: addISOWeeks(thisWeek, 2),
-          status: 'active',
-          grades: [],
-          finalDecision: null,
-          mutatedTo: null
+          id: newId, type: nudge.type, domain: nudge.domain,
+          if: dec.mutatedIf, then: dec.mutatedThen,
+          createdISO: thisWeek, trialEndsISO: addISOWeeks(thisWeek, 2),
+          status: 'active', grades: [], finalDecision: null, mutatedTo: null
         });
       }
     });
 
     // 3. Create new nudges
-    CI.responses.newNudges.filter(n => n.if && n.then).forEach(n => {
+    (CI.responses.newNudges || []).filter(n => n.if && n.then).forEach(n => {
       data.activeNudges.push({
         id: 'n_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-        type: n.type || 'nudge',
-        domain: n.domain,
-        if: n.if,
-        then: n.then,
-        createdISO: thisWeek,
-        trialEndsISO: addISOWeeks(thisWeek, 2),
-        status: 'active',
-        grades: [],
-        finalDecision: null,
-        mutatedTo: null
+        type: n.type || 'nudge', domain: n.domain,
+        if: n.if, then: n.then,
+        createdISO: thisWeek, trialEndsISO: addISOWeeks(thisWeek, 2),
+        status: 'active', grades: [], finalDecision: null, mutatedTo: null
       });
     });
 
-    // 4. Auto-apply weight deltas (hysteresis: require consistent 2-week error)
+    // 4. Auto-apply weight deltas (hysteresis: consistent 2-week error, magnitude ≥ 2)
     const weightDeltas = {};
-    const checkins = data.checkinLog || [];
-    const lastCheckin = checkins[checkins.length - 1];
+    const lastCheckin = (data.checkinLog || []).slice(-1)[0];
 
     Object.keys(data.domainWeights || {}).forEach(dk => {
-      const thisActual = CI.steps[0].week.domainHits[dk]?.daysActive || 0;
+      const thisActual = CI.week.domainHits[dk]?.daysActive || 0;
       const thisTarget = (CI.responses.targets[dk] || {}).floor || 3;
       const thisError = thisTarget - thisActual;
 
       let prevError = thisError;
-      if (lastCheckin?.targets?.[dk] && lastCheckin?.weekData?.domainHits?.[dk] !== undefined) {
-        const prevActual = lastCheckin.weekData.domainHits[dk] || 0;
+      if (lastCheckin?.targets?.[dk]) {
+        const prevActual = lastCheckin.weekData?.domainHits?.[dk] || 0;
         const prevTarget = (lastCheckin.targets[dk] || {}).floor || 3;
         prevError = prevTarget - prevActual;
       }
@@ -673,7 +579,7 @@
       }
     });
 
-    // 5. Regenerate currentWeekQuests from active nudges
+    // 5. Regenerate currentWeekQuests
     data.currentWeekQuests = data.activeNudges
       .filter(n => n.status === 'active')
       .map(n => {
@@ -681,23 +587,22 @@
         return `${dname.toUpperCase()}: if ${n.if} → ${n.then}`;
       });
 
-    // 6. Build and write checkinLog entry
+    // 6. Write checkinLog entry
     const logEntry = {
       isoWeek: thisWeek,
       completedAt: new Date().toISOString(),
       weekData: {
-        domainScores: CI.steps[0].week.scores,
+        domainScores: CI.week.scores,
         domainHits: Object.fromEntries(
-          Object.entries(CI.steps[0].week.domainHits).map(([k, v]) => [k, v.daysActive])
+          Object.entries(CI.week.domainHits).map(([k, v]) => [k, v.daysActive])
         ),
-        xpEarned: CI.steps[0].week.weekXP
+        xpEarned: CI.week.weekXP
       },
-      attributions: { biggestHit: CI.responses.hit || '', biggestMiss: CI.responses.miss || '' },
       targets: CI.responses.targets || {},
       nudgeActions: [
-        ...CI.responses.nudgeGrades.map(g => ({ id: g.id, action: 'grade' })),
+        ...nudgeGrades.map(g => ({ id: g.id, action: 'grade' })),
         ...CI.responses.trialDecisions.map(d => ({ id: d.id, action: d.decision })),
-        ...CI.responses.newNudges.filter(n => n.if && n.then).map(() => ({ action: 'create' }))
+        ...(CI.responses.newNudges || []).filter(n => n.if && n.then).map(() => ({ action: 'create' }))
       ],
       weightDeltas,
       senseiResponse: null
@@ -708,43 +613,34 @@
     data._meta.lastUpdated = typeof getTodayStr === 'function' ? getTodayStr() : new Date().toLocaleDateString('en-CA');
     saveData();
 
-    // 7. Single API call
+    // 7. Single pattern-detection API call
     const apiKey = localStorage.getItem('css_anthropic_key');
     if (apiKey) {
       appendNote('∴ Analyzing patterns...');
       try {
         const last4 = (data.checkinLog || []).slice(-5, -1).map(e => ({
           isoWeek: e.isoWeek,
-          attributions: e.attributions,
-          topGaps: Object.entries(e.weekData?.domainHits || {})
-            .filter(([, v]) => v === 0).map(([k]) => k),
+          topGaps: Object.entries(e.weekData?.domainHits || {}).filter(([, v]) => v === 0).map(([k]) => k),
           nudgeActions: e.nudgeActions
         }));
 
-        const persistentGaps = Object.entries(CI.steps[0].week.domainHits)
+        const persistentGaps = Object.entries(CI.week.domainHits)
           .filter(([, d]) => d.daysActive === 0).map(([dk]) => dk);
 
         const senseiName = (typeof SENSEI !== 'undefined' && SENSEI[CI.senseiKey])
           ? SENSEI[CI.senseiKey].name : 'Cybernetica';
 
-        const systemPrompt = `You are ${senseiName}, reviewing the weekly check-in data for the Cybernetic Self System.
-
-Look for a single meaningful behavioral pattern across the data. Propose one targeted intervention (nudge or sludge) as a JSON object.
+        const analysisPrompt = `You are ${senseiName}. Review this weekly data and propose one targeted if-then intervention.
 
 Respond ONLY with a JSON code block:
 \`\`\`json
 {
-  "patternFlag": "brief description of pattern, or null if none worth flagging",
-  "proposedNudge": {
-    "type": "nudge",
-    "domain": "geburah",
-    "if": "condition",
-    "then": "action"
-  },
+  "patternFlag": "brief pattern description or null",
+  "proposedNudge": {"type":"nudge","domain":"geburah","if":"condition","then":"action"} or null,
   "reasoning": "one sentence"
 }
 \`\`\`
-Set proposedNudge to null if no intervention is warranted. Domain must be a valid key from: ${Object.keys(data.questDefinitions || {}).join(', ')}.`;
+Valid domain keys: ${Object.keys(data.questDefinitions || {}).join(', ')}.`;
 
         const res = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST',
@@ -758,19 +654,14 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
             model: 'claude-sonnet-4-6',
             max_tokens: 400,
             temperature: 0.4,
-            system: systemPrompt,
+            system: analysisPrompt,
             messages: [{
               role: 'user',
               content: JSON.stringify({
                 last_4_weeks: last4,
-                this_week: {
-                  isoWeek: thisWeek,
-                  domainHits: logEntry.weekData.domainHits,
-                  attributions: logEntry.attributions,
-                  nudgeGrades: CI.responses.nudgeGrades,
-                  newNudges: CI.responses.newNudges.filter(n => n.if && n.then)
-                },
-                domains_with_persistent_gaps: persistentGaps
+                this_week: { isoWeek: thisWeek, domainHits: logEntry.weekData.domainHits },
+                persistent_gaps: persistentGaps,
+                conversation_summary: CI.messages.filter(m => m.role === 'user').map(m => m.content).join(' | ')
               })
             }]
           })
@@ -786,33 +677,25 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
               const idx = data.checkinLog.findIndex(e => e.isoWeek === thisWeek);
               if (idx !== -1) data.checkinLog[idx].senseiResponse = parsed;
               saveData();
-
-              if (parsed.proposedNudge) {
-                CI._proposal = parsed.proposedNudge;
-                showProposal(parsed);
-                return;
-              }
-            } catch (e) { /* malformed JSON — skip */ }
+              if (parsed.proposedNudge) { showProposal(parsed); return; }
+            } catch (e) { /* malformed */ }
           }
         }
-      } catch (e) {
-        console.warn('Check-in API error:', e);
-      }
+      } catch (e) { console.warn('Check-in API error:', e); }
     }
 
     finalize();
   };
 
+  // ── Proposal handling ─────────────────────────────────────────────────────
+
   function showProposal(parsed) {
-    const copy = getCopy();
     const p = parsed.proposedNudge;
     const domainName = (data.questDefinitions[p.domain] || {}).name || p.domain;
-
     let msg = '';
     if (parsed.patternFlag) msg += `Pattern: ${parsed.patternFlag}<br><br>`;
     msg += `Proposed ${p.type} (${domainName}):<br><em>if ${escHtml(p.if)}</em><br><em>→ ${escHtml(p.then)}</em>`;
     if (parsed.reasoning) msg += `<br><span style="font-size:10px;color:var(--text3)">${parsed.reasoning}</span>`;
-
     appendSenseiMsg(msg);
     setInput(`
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -823,30 +706,22 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
       <div id="ciProposalEdit" style="display:none;margin-top:10px">
         <input id="ciPropIf" placeholder="if..." style="${inputCSS()};display:block" value="${escHtml(p.if)}">
         <input id="ciPropThen" placeholder="then..." style="${inputCSS()};display:block;margin-top:6px" value="${escHtml(p.then)}">
-        <div style="margin-top:8px;text-align:right">
-          ${chipBtn('Confirm Edit', 'window._ci_acceptProposalEdited()')}
-        </div>
+        <div style="margin-top:8px;text-align:right">${chipBtn('Confirm', 'window._ci_acceptProposalEdited()')}</div>
       </div>
     `);
+    CI._proposal = p;
   }
 
   window._ci_acceptProposal = function () {
     if (!CI._proposal) { finalize(); return; }
     const thisWeek = currentISOWeek();
     data.activeNudges.push({
-      id: 'n_' + Date.now(),
-      type: CI._proposal.type || 'nudge',
-      domain: CI._proposal.domain,
-      if: CI._proposal.if,
-      then: CI._proposal.then,
-      createdISO: thisWeek,
-      trialEndsISO: addISOWeeks(thisWeek, 2),
-      status: 'active',
-      grades: [],
-      finalDecision: null,
-      mutatedTo: null
+      id: 'n_' + Date.now(), type: CI._proposal.type || 'nudge', domain: CI._proposal.domain,
+      if: CI._proposal.if, then: CI._proposal.then,
+      createdISO: thisWeek, trialEndsISO: addISOWeeks(thisWeek, 2),
+      status: 'active', grades: [], finalDecision: null, mutatedTo: null
     });
-    _updateSenseiResponse(thisWeek, { accepted: true });
+    _patchSenseiResponse(thisWeek, { accepted: true });
     saveData();
     appendUserBubble('Accepted');
     finalize();
@@ -866,25 +741,25 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
   };
 
   window._ci_rejectProposal = function () {
-    _updateSenseiResponse(currentISOWeek(), { accepted: false });
+    _patchSenseiResponse(currentISOWeek(), { accepted: false });
     saveData();
     appendUserBubble('Rejected');
     finalize();
   };
 
-  function _updateSenseiResponse(isoWeek, patch) {
+  function _patchSenseiResponse(isoWeek, patch) {
     const entry = (data.checkinLog || []).find(e => e.isoWeek === isoWeek);
     if (entry) entry.senseiResponse = Object.assign({}, entry.senseiResponse, patch);
   }
 
   function finalize() {
-    appendSenseiMsg(getCopy().closingLine);
+    appendNote('Check-in complete. Changes written.');
     setInput(chipBtn('Close', 'window.closeCheckin()'));
     notify('Check-in complete.');
     if (typeof renderHeader === 'function') renderHeader();
   }
 
-  // ── Public API ──────────────────────────────────────────────────────────
+  // ── Public API ────────────────────────────────────────────────────────────
 
   window.startCheckin = function () {
     const overlay = getOrCreateOverlay();
@@ -899,36 +774,49 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
     const label = document.getElementById('checkinSenseiLabel');
     if (label) label.textContent = `∴ ${senseiName} // Week ${currentISOWeek().split('-W')[1]}`;
 
-    // Initialize targets from last week's actuals
-    const defaultTargets = {};
-    Object.keys(data.questDefinitions || {}).forEach(dk => {
-      const daysActive = week.domainHits[dk]?.daysActive || 0;
-      defaultTargets[dk] = {
-        floor: Math.max(1, daysActive),
-        reach: Math.min(7, daysActive + 1)
-      };
-    });
-
     CI = {
       senseiKey,
-      step: 0,
-      steps: [],
-      responses: {
-        hit: '',
-        miss: '',
-        nudgeGrades: [],
-        trialDecisions: [],
-        targets: defaultTargets,
-        newNudges: []
-      },
+      week,
+      systemPrompt: buildSystemPrompt(week, senseiKey),
+      messages: [],
+      inWrapUp: false,
+      responses: { targets: null, trialDecisions: [], newNudges: [] },
       _proposal: null,
       _domainOpts: null
     };
-    CI.steps = buildSteps(week);
 
     overlay.classList.add('open');
     appendNote(senseiName + ' presiding');
-    renderStep(CI.steps[0]);
+    renderChatInput();
+
+    // Kick off the first sensei message
+    const apiKey = localStorage.getItem('css_anthropic_key');
+    if (apiKey) {
+      const openingDiv = appendSenseiMsg('<span style="color:var(--text3);letter-spacing:2px">...</span>');
+      fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 200,
+          system: CI.systemPrompt,
+          messages: [{ role: 'user', content: 'Begin the check-in.' }]
+        })
+      }).then(r => r.json()).then(json => {
+        const text = json.content?.[0]?.text || '';
+        openingDiv.className = 'communion-msg sensei';
+        openingDiv.textContent = text;
+        CI.messages.push({ role: 'user', content: 'Begin the check-in.' });
+        CI.messages.push({ role: 'assistant', content: text });
+      }).catch(() => {
+        openingDiv.textContent = 'Signal lost on open.';
+      });
+    }
   };
 
   window.closeCheckin = function () {
@@ -936,7 +824,6 @@ Set proposedNudge to null if no intervention is warranted. Domain must be a vali
     if (overlay) overlay.classList.remove('open');
     CI = null;
     _gradeState = {};
-    // Remove banner so it doesn't re-appear until next check
     const banner = document.getElementById('checkinBanner');
     if (banner) banner.remove();
   };
