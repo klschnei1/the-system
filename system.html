@@ -1364,6 +1364,11 @@ async function initDataStore() {
       data.questDefinitions = JSON.parse(JSON.stringify(DEFAULT_DATA.questDefinitions));
       if (!data.weeklyCompletions) data.weeklyCompletions = {};
       if (!data.dailyLogs) data.dailyLogs = {};
+      // Backfill any domain keys added since last remote write
+      Object.entries(DEFAULT_DATA.domainWeights).forEach(([k, v]) => {
+        if (!data.domainWeights) data.domainWeights = {};
+        if (data.domainWeights[k] === undefined) data.domainWeights[k] = v;
+      });
     } else {
       data = JSON.parse(JSON.stringify(DEFAULT_DATA));
     }
