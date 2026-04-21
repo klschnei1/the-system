@@ -2560,6 +2560,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderDispatchBanner();
   renderFocusQuests();
   renderQuests();
+
+  // Deep-link: open domain page if URL hash matches a domain key (e.g. arcade sleeve → #geburah)
+  const hashKey = (window.location.hash || '').replace(/^#/, '');
+  if (hashKey && SEPHIRA_MAP[hashKey] && SEPHIRA_MAP[hashKey].domain) {
+    openDomainPage(hashKey, 'quests');
+  }
 });
 
 function showSetupModal() {

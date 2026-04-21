@@ -20,11 +20,19 @@
 
   const skins = [
     'system.html',
-    // 'rpg.html',
+    // 'sleeves/arcade.html',  // unlock when verified
   ];
 
+  // Manual sleeve override: cybernetica.html?sleeve=arcade
+  const params = new URLSearchParams(window.location.search);
+  const override = params.get('sleeve');
+  const overrideMap = { arcade: 'sleeves/arcade.html', system: 'system.html' };
+
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-  window.location.replace(skins[Math.abs(seed) % skins.length] + '?v=' + Date.now());
+  const target = override && overrideMap[override]
+    ? overrideMap[override]
+    : skins[Math.abs(seed) % skins.length];
+  window.location.replace(target + '?v=' + Date.now());
 </script>
 </body>
 </html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Cybernetica // Arcade</title>
+<link rel="manifest" href="../manifest.json">
+<style>
+  :root {
+    --bezel:        #1a0f2e;
+    --bezel-light:  #2d1b4e;
+    --bezel-shadow: #0a0518;
+    --pink:   #ff6ec7;
+    --pink-d: #b04088;
+    --cyan:   #5ac8fa;
+    --cyan-d: #2599c8;
+    --gold:   #ffd700;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #07070f;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    overflow: hidden;
+    height: 100%;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .device {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    height: 100dvh;
+    padding: 12px;
+    gap: 14px;
+  }
+  .header {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--pink);
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(255,110,199,0.5);
+  }
+  .screen-wrap {
+    background: var(--bezel);
+    border: 4px solid var(--bezel-light);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 8px 24px rgba(255, 110, 199, 0.25), inset 0 2px 4px var(--bezel-shadow);
+  }
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    width: min(85vw, 380px);
+    height: auto;
+    aspect-ratio: 240 / 160;
+    background: #000;
+  }
+  .controls {
+    display: flex;
+    width: 100%;
+    max-width: 420px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+  }
+  .dpad {
+    display: grid;
+    grid-template-columns: 46px 46px 46px;
+    grid-template-rows: 46px 46px 46px;
+    gap: 2px;
+  }
+  .dpad button, .dpad .center {
+    background: var(--bezel);
+    border: 2px solid var(--bezel-light);
+    color: var(--pink);
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    touch-action: none;
+    padding: 0;
+  }
+  .dpad button:active { background: var(--pink); color: var(--bezel); }
+  .dpad .up    { grid-column: 2; grid-row: 1; }
+  .dpad .left  { grid-column: 1; grid-row: 2; }
+  .dpad .right { grid-column: 3; grid-row: 2; }
+  .dpad .down  { grid-column: 2; grid-row: 3; }
+  .dpad .center {
+    grid-column: 2; grid-row: 2;
+    background: var(--bezel-light);
+    border: none;
+    pointer-events: none;
+  }
+
+  .ab {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    transform: rotate(-18deg);
+  }
+  .ab button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: inherit;
+    cursor: pointer;
+    touch-action: none;
+    padding: 0;
+    border: 3px solid;
+  }
+  .ab .a {
+    background: var(--pink);
+    border-color: var(--pink-d);
+    box-shadow: 0 4px 0 var(--pink-d);
+  }
+  .ab .b {
+    background: var(--cyan);
+    border-color: var(--cyan-d);
+    box-shadow: 0 4px 0 var(--cyan-d);
+  }
+  .ab .a:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--pink-d); }
+  .ab .b:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--cyan-d); }
+
+  .footer {
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #666;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="device">
+  <div class="header">CYBERNETICA · NILE-184</div>
+  <div class="screen-wrap">
+    <canvas id="screen" width="240" height="160"></canvas>
+  </div>
+  <div class="controls">
+    <div class="dpad">
+      <button class="up" data-key="ArrowUp">▲</button>
+      <button class="left" data-key="ArrowLeft">◀</button>
+      <div class="center"></div>
+      <button class="right" data-key="ArrowRight">▶</button>
+      <button class="down" data-key="ArrowDown">▼</button>
+    </div>
+    <div class="ab">
+      <button class="b" data-key="b">B</button>
+      <button class="a" data-key="a">A</button>
+    </div>
+  </div>
+  <div class="footer">A: ENTER · B: BACK · DPAD: MOVE</div>
+</div>
+
+<script>
+// ==== CONFIG ===========================================================
+const TILE = 16;
+const COLS = 15;
+const ROWS = 10;
+const W = COLS * TILE;  // 240
+const H = ROWS * TILE;  // 160
+
+const cnv = document.getElementById('screen');
+const ctx = cnv.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+// 8 domains arranged in 2 rows of 4. Each building = 2x2 tiles.
+const DOMAINS = [
+  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42', col: 1,  row: 2 },
+  { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577', col: 5,  row: 2 },
+  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff', col: 9,  row: 2 },
+  { key: 'yesod',   name: 'RECOVERY', glyph: 'ankh',    roof: '#b06bff', col: 12, row: 2 },
+  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4', col: 1,  row: 6 },
+  { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166', col: 5,  row: 6 },
+  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7', col: 9,  row: 6 },
+  { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5', col: 12, row: 6 },
+];
+
+// Solid map (1 = solid building, 0 = walkable)
+const solid = [];
+for (let r = 0; r < ROWS; r++) solid.push(new Array(COLS).fill(0));
+DOMAINS.forEach(d => {
+  for (let dy = 0; dy < 2; dy++)
+    for (let dx = 0; dx < 2; dx++)
+      solid[d.row + dy][d.col + dx] = 1;
+});
+
+// ==== STATE ============================================================
+let player = { x: 7, y: 4, dir: 'down', stepFrame: 0 };
+let dialogOpen = false;
+let dialogDomain = null;
+let dialogText = '';
+let dialogShown = 0;
+let typewriterTick = 0;
+
+// ==== HIEROGLYPHS (8x8 pixel patterns) =================================
+const GLYPHS = {
+  eye: [
+    ' XXXXXX ',
+    'X      X',
+    'X  XX  X',
+    'X XXXX X',
+    'X  XX  X',
+    'X      X',
+    ' XXXXXX ',
+    ' X    X ',
+  ],
+  khopesh: [
+    '  X     ',
+    '  X     ',
+    '  X     ',
+    '  XX    ',
+    '   XX   ',
+    ' XXXX   ',
+    'XX      ',
+    'X       ',
+  ],
+  wheat: [
+    '   X    ',
+    '  XXX   ',
+    ' X X X  ',
+    '  XXX   ',
+    ' X X X  ',
+    '  XXX   ',
+    '   X    ',
+    '   X    ',
+  ],
+  ankh: [
+    '  XXX   ',
+    ' X   X  ',
+    ' X   X  ',
+    '  XXX   ',
+    'XXXXXXX ',
+    '   X    ',
+    '   X    ',
+    '   X    ',
+  ],
+  scales: [
+    '   X    ',
+    ' XXXXX  ',
+    ' X X X  ',
+    'XX X XX ',
+    '   X    ',
+    '   X    ',
+    '  XXX   ',
+    ' XXXXX  ',
+  ],
+  pyramid: [
+    '   X    ',
+    '   XX   ',
+    '  XXX   ',
+    '  XXXX  ',
+    ' XXXXX  ',
+    ' XXXXXX ',
+    'XXXXXXX ',
+    'XXXXXXXX',
+  ],
+  lyre: [
+    ' X    X ',
+    ' X    X ',
+    ' XXXXXX ',
+    ' XX  XX ',
+    ' XXXXXX ',
+    ' X X  X ',
+    ' X X  X ',
+    ' XXXXXX ',
+  ],
+  figures: [
+    '  X X   ',
+    ' XXXXX  ',
+    '  X X   ',
+    ' XX XX  ',
+    'X X X X ',
+    '  X X   ',
+    ' XX XX  ',
+    ' XX XX  ',
+  ],
+};
+
+function drawGlyph(x, y, kind, color) {
+  ctx.fillStyle = color || '#ffd700';
+  const pat = GLYPHS[kind];
+  if (!pat) return;
+  for (let py = 0; py < 8; py++) {
+    for (let px = 0; px < 8; px++) {
+      if (pat[py][px] === 'X') ctx.fillRect(x + px, y + py, 1, 1);
+    }
+  }
+}
+
+// ==== DRAW =============================================================
+function drawSky() {
+  // Vaporwave gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, H * 0.65);
+  grad.addColorStop(0,   '#ff6ec7');
+  grad.addColorStop(0.5, '#b16cea');
+  grad.addColorStop(1,   '#5ac8fa');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H * 0.65);
+
+  // Sun (low circle behind buildings, top-right area)
+  const sx = W * 0.78, sy = H * 0.30, sr = 14;
+  ctx.fillStyle = '#ffe066';
+  ctx.beginPath();
+  ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+  ctx.fill();
+  // Vaporwave horizontal stripes across sun
+  ctx.fillStyle = '#ff71ce';
+  for (let i = 0; i < 5; i++) {
+    const y = sy - 2 + i * 3;
+    ctx.fillRect(sx - sr, y, sr * 2, 1);
+  }
+
+  // Distant stars (top band)
+  ctx.fillStyle = '#fff';
+  const stars = [[20,8],[60,4],[100,12],[150,6],[180,10],[210,4],[35,18],[125,20]];
+  stars.forEach(([x,y]) => ctx.fillRect(x, y, 1, 1));
+}
+
+function drawGround() {
+  // Sand bands — peachy pink
+  ctx.fillStyle = '#f4b8d8';
+  ctx.fillRect(0, H * 0.65, W, H * 0.35);
+  ctx.fillStyle = '#e198be';
+  ctx.fillRect(0, H * 0.85, W, H * 0.15);
+
+  // Horizontal path between building rows (y=4)
+  ctx.fillStyle = '#fbd9e8';
+  ctx.fillRect(0, 4 * TILE, W, TILE);
+  // path edge stipple
+  ctx.fillStyle = '#c89ab4';
+  for (let x = 0; x < W; x += 4) {
+    ctx.fillRect(x, 4 * TILE, 2, 1);
+    ctx.fillRect(x, 5 * TILE - 1, 2, 1);
+  }
+
+  // Vertical paths between buildings (cols 3-4, 7-8, 11)
+  ctx.fillStyle = '#fbd9e8';
+  [3, 7, 11].forEach(c => {
+    ctx.fillRect(c * TILE, 2 * TILE, TILE, 6 * TILE);
+  });
+
+  // Bottom sand "wanderable" area — keep it open
+}
+
+function drawBuilding(d) {
+  const x = d.col * TILE;
+  const y = d.row * TILE;
+  // wall (sandstone)
+  ctx.fillStyle = '#e8c5d6';
+  ctx.fillRect(x, y, 2 * TILE, 2 * TILE);
+  // wall shadow (right + bottom strip)
+  ctx.fillStyle = '#a8869c';
+  ctx.fillRect(x + 2 * TILE - 2, y + 2, 2, 2 * TILE - 2);
+  ctx.fillRect(x + 2, y + 2 * TILE - 2, 2 * TILE - 2, 2);
+  // roof block (top quarter)
+  ctx.fillStyle = d.roof;
+  ctx.fillRect(x, y, 2 * TILE, TILE / 2);
+  // roof rim
+  ctx.fillStyle = '#1a0f2e';
+  ctx.fillRect(x, y + TILE / 2, 2 * TILE, 1);
+  // door
+  ctx.fillStyle = '#3a1f2e';
+  ctx.fillRect(x + TILE - 4, y + TILE + 4, 8, TILE - 4);
+  // door arch top
+  ctx.fillStyle = d.roof;
+  ctx.fillRect(x + TILE - 4, y + TILE + 3, 8, 1);
+  // glyph sign — centered above door, on wall
+  drawGlyph(x + TILE - 4, y + TILE - 6, d.glyph, '#3a1f2e');
+}
+
+function drawPlayer() {
+  const px = player.x * TILE;
+  const py = player.y * TILE;
+  // shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fillRect(px + 4, py + TILE - 1, 8, 1);
+  // hood/head
+  ctx.fillStyle = '#2d1b4e';
+  ctx.fillRect(px + 5, py + 2, 6, 5);
+  // face
+  ctx.fillStyle = '#ffe5c0';
+  ctx.fillRect(px + 6, py + 5, 4, 2);
+  // robe
+  ctx.fillStyle = '#5a2d8f';
+  ctx.fillRect(px + 4, py + 7, 8, 7);
+  // robe trim (gold)
+  ctx.fillStyle = '#ffd700';
+  ctx.fillRect(px + 4, py + 13, 8, 1);
+  // facing tick (1px highlight)
+  ctx.fillStyle = '#fff';
+  if (player.dir === 'up')    ctx.fillRect(px + 7, py + 1, 2, 1);
+  if (player.dir === 'down')  ctx.fillRect(px + 7, py + 14, 2, 1);
+  if (player.dir === 'left')  ctx.fillRect(px + 3, py + 7, 1, 2);
+  if (player.dir === 'right') ctx.fillRect(px + 12, py + 7, 1, 2);
+}
+
+function drawDialog() {
+  if (!dialogOpen) return;
+  const dy = H - 50;
+  // shadow/box
+  ctx.fillStyle = '#1a0f2e';
+  ctx.fillRect(4, dy, W - 8, 46);
+  // outer frame (pink)
+  ctx.strokeStyle = '#ff6ec7';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(4.5, dy + 0.5, W - 9, 45);
+  // inner frame (cyan)
+  ctx.strokeStyle = '#5ac8fa';
+  ctx.strokeRect(7.5, dy + 3.5, W - 15, 39);
+  // text — typewriter
+  ctx.fillStyle = '#fff';
+  ctx.font = '8px "Courier New", monospace';
+  const lines = dialogText.split('\n');
+  let charsRemaining = dialogShown;
+  lines.forEach((line, i) => {
+    const visible = line.substring(0, Math.max(0, charsRemaining));
+    ctx.fillText(visible, 12, dy + 14 + i * 10);
+    charsRemaining -= line.length;
+  });
+  // ▶ A indicator (only after text fully revealed)
+  if (dialogShown >= dialogText.length) {
+    ctx.fillStyle = '#ffd700';
+    ctx.fillText('A', W - 18, dy + 40);
+    ctx.fillRect(W - 26, dy + 35, 4, 4);
+  }
+}
+
+function render() {
+  drawSky();
+  drawGround();
+  DOMAINS.forEach(drawBuilding);
+  drawPlayer();
+  drawDialog();
+}
+
+// ==== MOVEMENT =========================================================
+function tryMove(dx, dy) {
+  if (dialogOpen) return;
+  const newDir = dy < 0 ? 'up' : dy > 0 ? 'down' : dx < 0 ? 'left' : 'right';
+  player.dir = newDir;
+  const nx = player.x + dx;
+  const ny = player.y + dy;
+  if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) return;
+  if (solid[ny][nx]) return;
+  player.x = nx;
+  player.y = ny;
+}
+
+function findFacingDomain() {
+  let dx = 0, dy = 0;
+  if (player.dir === 'up')    dy = -1;
+  if (player.dir === 'down')  dy = 1;
+  if (player.dir === 'left')  dx = -1;
+  if (player.dir === 'right') dx = 1;
+  const tx = player.x + dx;
+  const ty = player.y + dy;
+  if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return null;
+  if (!solid[ty][tx]) return null;
+  return DOMAINS.find(d =>
+    tx >= d.col && tx < d.col + 2 && ty >= d.row && ty < d.row + 2
+  );
+}
+
+function pressA() {
+  if (dialogOpen) {
+    if (dialogShown < dialogText.length) {
+      dialogShown = dialogText.length; // skip typewriter
+      return;
+    }
+    if (dialogDomain) {
+      window.location.href = '../system.html?v=' + Date.now() + '#' + dialogDomain.key;
+    }
+    return;
+  }
+  const d = findFacingDomain();
+  if (d) {
+    dialogOpen = true;
+    dialogDomain = d;
+    dialogText = `${d.name} TEMPLE\n\nEnter? Press A.`;
+    dialogShown = 0;
+    typewriterTick = 0;
+  }
+}
+
+function pressB() {
+  if (dialogOpen) {
+    dialogOpen = false;
+    dialogDomain = null;
+    return;
+  }
+  window.location.href = '../system.html?v=' + Date.now();
+}
+
+// ==== INPUT ============================================================
+const KEY_MAP = {
+  ArrowUp:    () => tryMove(0, -1),
+  ArrowDown:  () => tryMove(0, 1),
+  ArrowLeft:  () => tryMove(-1, 0),
+  ArrowRight: () => tryMove(1, 0),
+  w: () => tryMove(0, -1),
+  s: () => tryMove(0, 1),
+  a: () => tryMove(-1, 0),
+  d: () => tryMove(1, 0),
+  z: pressA,
+  ' ': pressA,
+  Enter: pressA,
+  x: pressB,
+  Escape: pressB,
+};
+window.addEventListener('keydown', e => {
+  const fn = KEY_MAP[e.key];
+  if (fn) { e.preventDefault(); fn(); }
+});
+
+document.querySelectorAll('button[data-key]').forEach(btn => {
+  const key = btn.getAttribute('data-key');
+  let interval = null;
+  const fire = () => {
+    if (key === 'a') pressA();
+    else if (key === 'b') pressB();
+    else KEY_MAP[key]?.();
+  };
+  const start = e => {
+    e.preventDefault();
+    fire();
+    if (key.startsWith('Arrow')) interval = setInterval(fire, 160);
+  };
+  const stop = e => {
+    e.preventDefault();
+    if (interval) { clearInterval(interval); interval = null; }
+  };
+  btn.addEventListener('touchstart', start, { passive: false });
+  btn.addEventListener('touchend', stop, { passive: false });
+  btn.addEventListener('touchcancel', stop, { passive: false });
+  btn.addEventListener('mousedown', start);
+  btn.addEventListener('mouseup', stop);
+  btn.addEventListener('mouseleave', stop);
+});
+
+// ==== LOOP =============================================================
+function tick() {
+  // Typewriter (3 frames per char ≈ 50ms)
+  if (dialogOpen && dialogShown < dialogText.length) {
+    typewriterTick++;
+    if (typewriterTick >= 2) {
+      dialogShown++;
+      typewriterTick = 0;
+    }
+  }
+  render();
+  requestAnimationFrame(tick);
+}
+
+render();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
