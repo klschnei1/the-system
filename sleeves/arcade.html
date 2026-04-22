@@ -406,9 +406,8 @@ function drawPaths() {
 }
 
 function drawBuilding(d) {
-  const sheet = buildingSheets[d.key];
-  if (sheet) {
-    ctx.drawImage(sheet, d.px, d.py, d.w, d.h);
+  if (buildingsSheet) {
+    ctx.drawImage(buildingsSheet, d.sx, d.sy, d.sw, d.sh, d.px, d.py, d.w, d.h);
   } else {
     ctx.fillStyle = d.roof;
     ctx.globalAlpha = 0.7;
