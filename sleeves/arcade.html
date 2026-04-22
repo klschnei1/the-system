@@ -384,20 +384,15 @@ function drawPaths() {
 }
 
 function drawBuilding(d) {
-  const x = d.col * TILE;
-  const y = d.row * TILE;
-  const bw = 2 * TILE, bh = 2 * TILE;
   const sheet = buildingSheets[d.key];
-
   if (sheet) {
-    ctx.drawImage(sheet, 0, 0, sheet.width, sheet.height, x, y, bw, bh);
+    ctx.drawImage(sheet, d.px, d.py);
   } else {
-    // Fallback: colored box until sprite loads
-    ctx.fillStyle = '#e8d5a8';
-    ctx.fillRect(x, y, bw, bh);
     ctx.fillStyle = d.roof;
-    ctx.fillRect(x, y, bw, 5);
-    drawGlyph(x + TILE - 4, y + TILE - 4, d.glyph, '#3a2010');
+    ctx.globalAlpha = 0.7;
+    ctx.fillRect(d.px, d.py, d.w, d.h);
+    ctx.globalAlpha = 1;
+    drawGlyph(d.px + d.w / 2 - 4, d.py + d.h / 2 - 4, d.glyph, '#fff');
   }
 }
 
