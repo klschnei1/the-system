@@ -351,30 +351,37 @@ function drawSky() {
   stars.forEach(([x,y]) => ctx.fillRect(x, y, 1, 1));
 }
 
-function drawGround() {
-  // Sand bands — peachy pink
-  ctx.fillStyle = '#f4b8d8';
-  ctx.fillRect(0, H * 0.65, W, H * 0.35);
-  ctx.fillStyle = '#e198be';
-  ctx.fillRect(0, H * 0.85, W, H * 0.15);
-
-  // Horizontal path between building rows (y=4)
-  ctx.fillStyle = '#fbd9e8';
-  ctx.fillRect(0, 4 * TILE, W, TILE);
-  // path edge stipple
-  ctx.fillStyle = '#c89ab4';
-  for (let x = 0; x < W; x += 4) {
-    ctx.fillRect(x, 4 * TILE, 2, 1);
-    ctx.fillRect(x, 5 * TILE - 1, 2, 1);
+function drawGroundBase() {
+  // Grass tile fills the whole canvas (sky draws on top of upper rows)
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (terrainSheet) {
+        drawTile(terrainSheet, T_GRASS[0], T_GRASS[1], c * TILE, r * TILE);
+      } else {
+        ctx.fillStyle = '#f4b8d8';
+        ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
+      }
+    }
   }
+}
 
-  // Vertical paths between buildings (cols 3-4, 7-8, 11)
-  ctx.fillStyle = '#fbd9e8';
-  [3, 7, 11].forEach(c => {
-    ctx.fillRect(c * TILE, 2 * TILE, TILE, 6 * TILE);
+function drawPaths() {
+  // Horizontal path (row 4) and vertical paths (cols 3, 7, 11, rows 2–7)
+  const pathCells = new Set();
+  for (let c = 0; c < COLS; c++) pathCells.add(`4,${c}`);
+  [3, 7, 11].forEach(col => {
+    for (let r = 2; r <= 7; r++) pathCells.add(`${r},${col}`);
   });
 
-  // Bottom sand "wanderable" area — keep it open
+  pathCells.forEach(key => {
+    const [r, c] = key.split(',').map(Number);
+    if (terrainSheet) {
+      drawTile(terrainSheet, T_PATH[0], T_PATH[1], c * TILE, r * TILE);
+    } else {
+      ctx.fillStyle = '#fbd9e8';
+      ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
+    }
+  });
 }
 
 function drawBuilding(d) {
