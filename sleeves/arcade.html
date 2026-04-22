@@ -165,10 +165,12 @@
 <script>
 // ==== CONFIG ===========================================================
 const TILE = 16;
-const COLS = 20;
-const ROWS = 15;
-const W = COLS * TILE;  // 320
-const H = ROWS * TILE;  // 240
+const COLS = 36;         // world width in tiles
+const ROWS = 24;         // world height in tiles
+const VW   = 20;         // viewport width  (canvas stays 320px)
+const VH   = 15;         // viewport height (canvas stays 240px)
+const W = VW * TILE;     // 320 — canvas pixel width
+const H = VH * TILE;     // 240 — canvas pixel height
 
 const cnv = document.getElementById('screen');
 const ctx = cnv.getContext('2d');
