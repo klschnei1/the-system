@@ -419,14 +419,17 @@ function drawBuilding(d) {
 }
 
 function drawTree(c, r) {
-  if (!townSheet) return;
-  // draw darkened rough grass underneath first
-  drawTile(townSheet, 1, 1, c * TILE, r * TILE);
-  ctx.fillStyle = 'rgba(0,0,0,0.35)';
-  ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
-  // alternate pine/palm/bush by position for variety
-  const kind = (c * 3 + r) % 3;
-  drawTile(townSheet, 6 + kind, 1, c * TILE, r * TILE);
+  const x = c * TILE, y = r * TILE;
+  ctx.fillStyle = '#5a3010';
+  ctx.fillRect(x + 6, y + 10, 4, 6);
+  ctx.fillStyle = '#1a6020';
+  ctx.fillRect(x + 2, y + 5, 12, 8);
+  ctx.fillStyle = '#2a8030';
+  ctx.fillRect(x + 4, y + 2, 8, 7);
+  ctx.fillStyle = '#3aa040';
+  ctx.fillRect(x + 6, y, 4, 5);
+  ctx.fillStyle = '#5aba55';
+  ctx.fillRect(x + 7, y + 1, 2, 2);
 }
 
 function drawTrees() {
