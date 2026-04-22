@@ -509,7 +509,8 @@ function findFacingDomain() {
   if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return null;
   if (!solid[ty][tx]) return null;
   return DOMAINS.find(d =>
-    tx >= d.col && tx < d.col + 2 && ty >= d.row && ty < d.row + 2
+    tx >= d.solidCol && tx < d.solidCol + d.solidW &&
+    ty >= d.solidRow && ty < d.solidRow + d.solidH
   );
 }
 
