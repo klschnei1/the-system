@@ -409,8 +409,12 @@ function drawBuilding(d) {
 
 function drawTree(c, r) {
   if (!townSheet) return;
+  // draw darkened rough grass underneath first
+  drawTile(townSheet, 1, 1, c * TILE, r * TILE);
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
   // alternate pine/palm/bush by position for variety
-  const kind = (c * 3 + r) % 3; // 0=pine, 1=palm, 2=bush
+  const kind = (c * 3 + r) % 3;
   drawTile(townSheet, 6 + kind, 1, c * TILE, r * TILE);
 }
 
