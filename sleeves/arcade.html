@@ -207,33 +207,32 @@ function drawTile(sheet, col, row, dx, dy) {
 // solidCol/Row/W/H = tile-grid collision footprint.
 // Top row anchors from y=0; bottom row anchors from y=160.
 const DOMAINS = [
-  // Top row — spaced across 320px, anchored from y=0
-  // px/py/w/h are placeholders; update once new building PNGs land
+  // Top row — native V1 sizes, spaced across 320px, anchored from y=0
   { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42',
-    sprite: 'observatory', px: 4,   py: 0,   w: 64, h: 80,
-    solidCol: 0,  solidRow: 0, solidW: 4, solidH: 5 },
+    sprite: 'observatory', px: 10,  py: 0,  w: 40, h: 64,
+    solidCol: 0,  solidRow: 0, solidW: 3, solidH: 4 },
   { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
-    sprite: 'forge',       px: 84,  py: 0,   w: 64, h: 80,
-    solidCol: 5,  solidRow: 0, solidW: 4, solidH: 5 },
+    sprite: 'forge',       px: 72,  py: 8,  w: 56, h: 48,
+    solidCol: 4,  solidRow: 0, solidW: 4, solidH: 3 },
   { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff',
-    sprite: 'market',      px: 172, py: 0,   w: 64, h: 80,
-    solidCol: 11, solidRow: 0, solidW: 4, solidH: 5 },
+    sprite: 'market',      px: 150, py: 14, w: 64, h: 40,
+    solidCol: 9,  solidRow: 0, solidW: 4, solidH: 3 },
   { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',    roof: '#b06bff',
-    sprite: 'temple',      px: 252, py: 0,   w: 64, h: 80,
-    solidCol: 16, solidRow: 0, solidW: 4, solidH: 5 },
-  // Bottom row — anchored from y=240
+    sprite: 'temple',      px: 238, py: 4,  w: 48, h: 56,
+    solidCol: 15, solidRow: 0, solidW: 3, solidH: 4 },
+  // Bottom row — anchored so buildings end at y=240
   { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4',
-    sprite: 'treasury',    px: 4,   py: 160, w: 64, h: 80,
-    solidCol: 0,  solidRow: 10, solidW: 4, solidH: 5 },
+    sprite: 'treasury',    px: 18,  py: 188, w: 44, h: 52,
+    solidCol: 1,  solidRow: 12, solidW: 3, solidH: 3 },
   { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
-    sprite: 'clocktower',  px: 84,  py: 160, w: 64, h: 80,
-    solidCol: 5,  solidRow: 10, solidW: 4, solidH: 5 },
+    sprite: 'clocktower',  px: 88,  py: 160, w: 32, h: 80,
+    solidCol: 5,  solidRow: 10, solidW: 2, solidH: 5 },
   { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7',
-    sprite: 'atelier',     px: 172, py: 160, w: 64, h: 80,
-    solidCol: 11, solidRow: 10, solidW: 4, solidH: 5 },
+    sprite: 'atelier',     px: 150, py: 188, w: 60, h: 52,
+    solidCol: 9,  solidRow: 12, solidW: 4, solidH: 3 },
   { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
-    sprite: 'tavern',      px: 252, py: 160, w: 64, h: 80,
-    solidCol: 16, solidRow: 10, solidW: 4, solidH: 5 },
+    sprite: 'tavern',      px: 242, py: 200, w: 40, h: 40,
+    solidCol: 15, solidRow: 13, solidW: 3, solidH: 2 },
 ];
 
 // Solid map from domain footprints
