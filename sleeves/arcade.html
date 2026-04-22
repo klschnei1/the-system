@@ -421,25 +421,22 @@ function drawPlayer() {
   const py = player.y * TILE;
   // shadow
   ctx.fillStyle = 'rgba(0,0,0,0.3)';
-  ctx.fillRect(px + 4, py + TILE - 1, 8, 1);
-  // hood/head
-  ctx.fillStyle = '#2d1b4e';
-  ctx.fillRect(px + 5, py + 2, 6, 5);
-  // face
-  ctx.fillStyle = '#ffe5c0';
-  ctx.fillRect(px + 6, py + 5, 4, 2);
-  // robe
-  ctx.fillStyle = '#5a2d8f';
-  ctx.fillRect(px + 4, py + 7, 8, 7);
-  // robe trim (gold)
-  ctx.fillStyle = '#ffd700';
-  ctx.fillRect(px + 4, py + 13, 8, 1);
-  // facing tick (1px highlight)
-  ctx.fillStyle = '#fff';
-  if (player.dir === 'up')    ctx.fillRect(px + 7, py + 1, 2, 1);
-  if (player.dir === 'down')  ctx.fillRect(px + 7, py + 14, 2, 1);
-  if (player.dir === 'left')  ctx.fillRect(px + 3, py + 7, 1, 2);
-  if (player.dir === 'right') ctx.fillRect(px + 12, py + 7, 1, 2);
+  ctx.fillRect(px + 3, py + TILE - 1, 10, 1);
+  if (playerSheet) {
+    const row = { down: 0, left: 1, right: 2, up: 3 }[player.dir] ?? 0;
+    // middle frame (col 1) of the direction row; sprite is 16×20, offset 4px up so feet land on tile
+    ctx.drawImage(playerSheet, 16, row * 20, 16, 20, px, py - 4, 16, 20);
+  } else {
+    // fillRect fallback while sheet loads
+    ctx.fillStyle = '#2d1b4e';
+    ctx.fillRect(px + 5, py + 2, 6, 5);
+    ctx.fillStyle = '#ffe5c0';
+    ctx.fillRect(px + 6, py + 5, 4, 2);
+    ctx.fillStyle = '#5a2d8f';
+    ctx.fillRect(px + 4, py + 7, 8, 7);
+    ctx.fillStyle = '#ffd700';
+    ctx.fillRect(px + 4, py + 13, 8, 1);
+  }
 }
 
 function drawDialog() {
