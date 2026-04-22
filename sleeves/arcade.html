@@ -403,17 +403,11 @@ function drawBuilding(d) {
   }
 }
 
-function drawTree(x, y) {
-  ctx.fillStyle = '#5a3010';
-  ctx.fillRect(x + 6, y + 10, 4, 6);
-  ctx.fillStyle = '#1a6020';
-  ctx.fillRect(x + 2, y + 5, 12, 8);
-  ctx.fillStyle = '#2a8030';
-  ctx.fillRect(x + 4, y + 2, 8, 7);
-  ctx.fillStyle = '#3aa040';
-  ctx.fillRect(x + 6, y, 4, 5);
-  ctx.fillStyle = '#5aba55';
-  ctx.fillRect(x + 7, y + 1, 2, 2);
+function drawTree(c, r) {
+  if (!townSheet) return;
+  // alternate pine/palm/bush by position for variety
+  const kind = (c * 3 + r) % 3; // 0=pine, 1=palm, 2=bush
+  drawTile(townSheet, 6 + kind, 1, c * TILE, r * TILE);
 }
 
 function drawTrees() {
@@ -423,7 +417,7 @@ function drawTrees() {
     [2,14],[5,14],[9,14],[13,14],[17,14],
     [4,0],[10,0],[16,0],
   ];
-  pos.forEach(([c, r]) => drawTree(c * TILE, r * TILE));
+  pos.forEach(([c, r]) => drawTree(c, r));
 }
 
 function drawPlayer() {
