@@ -594,8 +594,9 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-render();
+// Start loop immediately (renders with fillRect fallback while sheet loads)
 requestAnimationFrame(tick);
+loadImage('assets/terrain_atlas.png').then(sheet => { terrainSheet = sheet; });
 </script>
 </body>
 </html>
