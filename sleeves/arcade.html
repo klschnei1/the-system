@@ -401,6 +401,12 @@ function drawBuilding(d) {
   // door arch top
   ctx.fillStyle = d.roof;
   ctx.fillRect(x + TILE - 4, y + TILE + 3, 8, 1);
+  // window (left side of building)
+  ctx.fillStyle = '#b8dff0';
+  ctx.fillRect(x + 2, y + TILE + 3, 5, 4);
+  ctx.fillStyle = '#6699bb';
+  ctx.fillRect(x + 4, y + TILE + 3, 1, 4);
+  ctx.fillRect(x + 2, y + TILE + 5, 5, 1);
   // glyph sign — centered above door, on wall
   drawGlyph(x + TILE - 4, y + TILE - 6, d.glyph, '#3a2010');
 }
