@@ -323,28 +323,6 @@ function drawGlyph(x, y, kind, color) {
 }
 
 // ==== DRAW =============================================================
-function drawSky() {
-  // Plain blue sky gradient
-  const grad = ctx.createLinearGradient(0, 0, 0, H * 0.65);
-  grad.addColorStop(0,   '#4a90d9');
-  grad.addColorStop(1,   '#a8d8f0');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, W, H * 0.65);
-
-  // Sun
-  const sx = W * 0.78, sy = H * 0.18, sr = 10;
-  ctx.fillStyle = '#fff7a0';
-  ctx.beginPath();
-  ctx.arc(sx, sy, sr, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Clouds (simple rectangles)
-  ctx.fillStyle = 'rgba(255,255,255,0.85)';
-  [[18, 10, 28, 5], [60, 6, 22, 4], [140, 14, 32, 5], [190, 8, 20, 4]].forEach(([x,y,w,h]) => {
-    ctx.fillRect(x, y, w, h);
-    ctx.fillRect(x + 4, y - 3, w - 8, 4);
-  });
-}
 
 function drawGroundBase() {
   // Grass tile fills the whole canvas (sky draws on top of upper rows)
