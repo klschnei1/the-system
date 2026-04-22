@@ -182,17 +182,11 @@ const T_GRASS = [0, 46]; // green grass — bottom-left of terrain_atlas
 const T_PATH  = [1, 37]; // gray stone — this coordinate confirmed working
 
 let terrainSheet = null;
-let buildingSheet = null;
 let playerSheet = null;
 const PLAYER_CHAR = Math.floor(Math.random() * 32) + 1;
 
-// Regions in arabtown-tile.png (sx, sy, sw, sh) — 4 distinct building styles
-const BLDG_TYPES = [
-  [26,  0, 58, 135],  // A: tall sandstone with arched door
-  [90,  0, 48, 135],  // B: medium flat-roofed
-  [140, 0, 40, 120],  // C: dome/tower
-  [182, 0, 64, 135],  // D: market/shop with awning
-];
+// One sprite per domain — loaded from assets/buildings/<key>.png
+const buildingSheets = {};
 
 function loadImage(src) {
   return new Promise(resolve => {
