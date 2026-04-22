@@ -597,9 +597,11 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-// Start loop immediately (renders with fillRect fallback while sheet loads)
+// Start loop immediately (renders with fillRect fallbacks while sheets load)
 requestAnimationFrame(tick);
 loadImage('assets/terrain_atlas.png').then(sheet => { terrainSheet = sheet; });
+loadImage(`assets/sprite_split/character_${PLAYER_CHAR}/character_${PLAYER_CHAR}_frame16x20.png`)
+  .then(sheet => { playerSheet = sheet; });
 </script>
 </body>
 </html>
