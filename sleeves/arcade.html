@@ -203,25 +203,47 @@ function drawTile(sheet, col, row, dx, dy) {
     dx, dy, TILE, TILE);
 }
 
-// 8 domains arranged in 2 rows of 4. Each building = 2x2 tiles.
+// px/py = pixel position on canvas. w/h = native sprite size.
+// solidCol/Row/W/H = tile-grid collision footprint.
+// Top row anchors from y=0; bottom row anchors from y=160.
 const DOMAINS = [
-  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42', col: 1,  row: 2 },
-  { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577', col: 5,  row: 2 },
-  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff', col: 9,  row: 2 },
-  { key: 'yesod',   name: 'RECOVERY', glyph: 'ankh',    roof: '#b06bff', col: 12, row: 2 },
-  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4', col: 1,  row: 6 },
-  { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166', col: 5,  row: 6 },
-  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7', col: 9,  row: 6 },
-  { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5', col: 12, row: 6 },
+  // Top row (left → right)
+  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42',
+    sprite: 'observatory', px: 4,   py: 0,   w: 40, h: 64,
+    solidCol: 0,  solidRow: 0, solidW: 3, solidH: 4 },
+  { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
+    sprite: 'forge',       px: 57,  py: 0,   w: 56, h: 48,
+    solidCol: 4,  solidRow: 0, solidW: 4, solidH: 3 },
+  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff',
+    sprite: 'market',      px: 126, py: 0,   w: 64, h: 40,
+    solidCol: 8,  solidRow: 0, solidW: 4, solidH: 3 },
+  { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',    roof: '#b06bff',
+    sprite: 'temple',      px: 203, py: -8,  w: 32, h: 80,
+    solidCol: 13, solidRow: 0, solidW: 2, solidH: 5 },
+  // Bottom row (left → right)
+  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4',
+    sprite: 'treasury',    px: 4,   py: 108, w: 44, h: 52,
+    solidCol: 0,  solidRow: 7, solidW: 3, solidH: 3 },
+  { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
+    sprite: 'clocktower',  px: 61,  py: 104, w: 48, h: 56,
+    solidCol: 4,  solidRow: 7, solidW: 3, solidH: 4 },
+  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7',
+    sprite: 'atelier',     px: 122, py: 108, w: 60, h: 52,
+    solidCol: 8,  solidRow: 7, solidW: 4, solidH: 3 },
+  { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
+    sprite: 'tavern',      px: 195, py: 120, w: 40, h: 40,
+    solidCol: 12, solidRow: 8, solidW: 3, solidH: 2 },
 ];
 
-// Solid map (1 = solid building, 0 = walkable)
+// Solid map from domain footprints
 const solid = [];
 for (let r = 0; r < ROWS; r++) solid.push(new Array(COLS).fill(0));
 DOMAINS.forEach(d => {
-  for (let dy = 0; dy < 2; dy++)
-    for (let dx = 0; dx < 2; dx++)
-      solid[d.row + dy][d.col + dx] = 1;
+  for (let dy = 0; dy < d.solidH; dy++)
+    for (let dx = 0; dx < d.solidW; dx++) {
+      const r = d.solidRow + dy, c = d.solidCol + dx;
+      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) solid[r][c] = 1;
+    }
 });
 
 // ==== STATE ============================================================
