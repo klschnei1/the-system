@@ -324,31 +324,26 @@ function drawGlyph(x, y, kind, color) {
 
 // ==== DRAW =============================================================
 function drawSky() {
-  // Vaporwave gradient
+  // Plain blue sky gradient
   const grad = ctx.createLinearGradient(0, 0, 0, H * 0.65);
-  grad.addColorStop(0,   '#ff6ec7');
-  grad.addColorStop(0.5, '#b16cea');
-  grad.addColorStop(1,   '#5ac8fa');
+  grad.addColorStop(0,   '#4a90d9');
+  grad.addColorStop(1,   '#a8d8f0');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H * 0.65);
 
-  // Sun (low circle behind buildings, top-right area)
-  const sx = W * 0.78, sy = H * 0.30, sr = 14;
-  ctx.fillStyle = '#ffe066';
+  // Sun
+  const sx = W * 0.78, sy = H * 0.18, sr = 10;
+  ctx.fillStyle = '#fff7a0';
   ctx.beginPath();
   ctx.arc(sx, sy, sr, 0, Math.PI * 2);
   ctx.fill();
-  // Vaporwave horizontal stripes across sun
-  ctx.fillStyle = '#ff71ce';
-  for (let i = 0; i < 5; i++) {
-    const y = sy - 2 + i * 3;
-    ctx.fillRect(sx - sr, y, sr * 2, 1);
-  }
 
-  // Distant stars (top band)
-  ctx.fillStyle = '#fff';
-  const stars = [[20,8],[60,4],[100,12],[150,6],[180,10],[210,4],[35,18],[125,20]];
-  stars.forEach(([x,y]) => ctx.fillRect(x, y, 1, 1));
+  // Clouds (simple rectangles)
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  [[18, 10, 28, 5], [60, 6, 22, 4], [140, 14, 32, 5], [190, 8, 20, 4]].forEach(([x,y,w,h]) => {
+    ctx.fillRect(x, y, w, h);
+    ctx.fillRect(x + 4, y - 3, w - 8, 4);
+  });
 }
 
 function drawGroundBase() {
