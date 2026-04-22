@@ -362,8 +362,12 @@ function drawGroundBase() {
       if (isPath) continue;
       if (townSheet) {
         drawTile(townSheet, isBorder ? 1 : 0, 1, c * TILE, r * TILE);
+        if (isBorder) {
+          ctx.fillStyle = 'rgba(0,0,0,0.35)';
+          ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
+        }
       } else {
-        ctx.fillStyle = isBorder ? '#3a6b22' : '#4a8c30';
+        ctx.fillStyle = isBorder ? '#2a4f18' : '#4a8c30';
         ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
       }
     }
