@@ -188,8 +188,7 @@ let townSheet = null;
 let playerSheet = null;
 const PLAYER_CHAR = Math.floor(Math.random() * 32) + 1;
 
-// One sprite per domain — loaded from assets/buildings/<key>.png
-const buildingSheets = {};
+let buildingsSheet = null;
 
 function loadImage(src) {
   return new Promise(resolve => {
