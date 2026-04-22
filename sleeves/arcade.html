@@ -468,8 +468,9 @@ function drawDialog() {
 }
 
 function render() {
-  drawSky();
-  drawGround();
+  drawGroundBase();           // grass tiles — full canvas
+  drawSky();                  // sky gradient covers upper rows
+  drawPaths();                // path tiles drawn over sky
   DOMAINS.forEach(drawBuilding);
   drawPlayer();
   drawDialog();
