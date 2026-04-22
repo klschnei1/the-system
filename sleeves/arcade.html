@@ -383,7 +383,7 @@ function drawPaths() {
 function drawBuilding(d) {
   const sheet = buildingSheets[d.key];
   if (sheet) {
-    ctx.drawImage(sheet, d.px, d.py);
+    ctx.drawImage(sheet, d.px, d.py, d.w, d.h);
   } else {
     ctx.fillStyle = d.roof;
     ctx.globalAlpha = 0.7;
