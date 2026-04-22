@@ -355,14 +355,14 @@ function drawGlyph(x, y, kind, color) {
 // ==== DRAW =============================================================
 
 function drawGroundBase() {
-  // Solid green grass base
-  ctx.fillStyle = '#4a8c30';
-  ctx.fillRect(0, 0, W, H);
-  // Subtle darker variation every other tile for depth
-  ctx.fillStyle = '#3f7a28';
   for (let r = 0; r < ROWS; r++) {
-    for (let c = (r % 2); c < COLS; c += 2) {
-      ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
+    for (let c = 0; c < COLS; c++) {
+      if (townSheet) {
+        drawTile(townSheet, 1, 1, c * TILE, r * TILE);
+      } else {
+        ctx.fillStyle = '#3a6b22';
+        ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
+      }
     }
   }
 }
