@@ -365,24 +365,18 @@ function drawBuilding(d) {
   const x = d.col * TILE;
   const y = d.row * TILE;
   const bw = 2 * TILE, bh = 2 * TILE;
-  const typeIdx = DOMAINS.indexOf(d) % BLDG_TYPES.length;
-  const [sx, sy, sw, sh] = BLDG_TYPES[typeIdx];
+  const sheet = buildingSheets[d.key];
 
-  if (buildingSheet) {
-    ctx.drawImage(buildingSheet, sx, sy, sw, sh, x, y, bw, bh);
+  if (sheet) {
+    ctx.drawImage(sheet, 0, 0, sheet.width, sheet.height, x, y, bw, bh);
   } else {
+    // Fallback: colored box until sprite loads
     ctx.fillStyle = '#e8d5a8';
     ctx.fillRect(x, y, bw, bh);
+    ctx.fillStyle = d.roof;
+    ctx.fillRect(x, y, bw, 5);
+    drawGlyph(x + TILE - 4, y + TILE - 4, d.glyph, '#3a2010');
   }
-
-  // Domain color band across the roof so you can still tell buildings apart
-  ctx.fillStyle = d.roof;
-  ctx.globalAlpha = 0.75;
-  ctx.fillRect(x, y, bw, 5);
-  ctx.globalAlpha = 1;
-
-  // Glyph sign centered on building
-  drawGlyph(x + TILE - 4, y + TILE - 4, d.glyph, '#fff');
 }
 
 function drawTree(x, y) {
