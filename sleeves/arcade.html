@@ -382,27 +382,27 @@ function drawPaths() {
 function drawBuilding(d) {
   const x = d.col * TILE;
   const y = d.row * TILE;
-  // wall (sandstone)
-  ctx.fillStyle = '#e8c5d6';
+  // wall (warm sandstone)
+  ctx.fillStyle = '#e8d5a8';
   ctx.fillRect(x, y, 2 * TILE, 2 * TILE);
   // wall shadow (right + bottom strip)
-  ctx.fillStyle = '#a8869c';
+  ctx.fillStyle = '#b09060';
   ctx.fillRect(x + 2 * TILE - 2, y + 2, 2, 2 * TILE - 2);
   ctx.fillRect(x + 2, y + 2 * TILE - 2, 2 * TILE - 2, 2);
   // roof block (top quarter)
   ctx.fillStyle = d.roof;
   ctx.fillRect(x, y, 2 * TILE, TILE / 2);
-  // roof rim
-  ctx.fillStyle = '#1a0f2e';
+  // roof rim (dark brown wood)
+  ctx.fillStyle = '#3a2010';
   ctx.fillRect(x, y + TILE / 2, 2 * TILE, 1);
   // door
-  ctx.fillStyle = '#3a1f2e';
+  ctx.fillStyle = '#3a2010';
   ctx.fillRect(x + TILE - 4, y + TILE + 4, 8, TILE - 4);
   // door arch top
   ctx.fillStyle = d.roof;
   ctx.fillRect(x + TILE - 4, y + TILE + 3, 8, 1);
   // glyph sign — centered above door, on wall
-  drawGlyph(x + TILE - 4, y + TILE - 6, d.glyph, '#3a1f2e');
+  drawGlyph(x + TILE - 4, y + TILE - 6, d.glyph, '#3a2010');
 }
 
 function drawPlayer() {
