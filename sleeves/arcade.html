@@ -182,8 +182,17 @@ const T_GRASS = [4, 32]; // green grass tile  ← tweak col/row if this looks ba
 const T_PATH  = [1, 37]; // stone path tile   ← tweak col/row if this looks bad
 
 let terrainSheet = null;
+let buildingSheet = null;
 let playerSheet = null;
 const PLAYER_CHAR = Math.floor(Math.random() * 32) + 1;
+
+// Regions in arabtown-tile.png (sx, sy, sw, sh) — 4 distinct building styles
+const BLDG_TYPES = [
+  [19,  0, 68, 135],  // A: tall sandstone with arched door
+  [88, 18, 50, 117],  // B: medium flat-roofed
+  [140,  0, 40, 120], // C: dome/tower
+  [182,  0, 64, 135], // D: market/shop with awning
+];
 
 function loadImage(src) {
   return new Promise(resolve => {
