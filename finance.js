@@ -102,13 +102,10 @@ window.editAccountBalances = function() {
     data.accountBalances = accounts.filter(a => a.name.trim());
     saveData();
     overlay.remove();
-    // Re-render finance widget
-    const el = document.querySelector('[data-domain-widget="chesed"]');
-    if (el && window.renderFinanceWidget) {
-      const domain = data.questDefinitions['chesed'];
-      window.renderFinanceWidget(el, 'chesed', domain);
+    const widgetEl = document.getElementById('domainWidget');
+    if (widgetEl && window.renderFinanceWidget) {
+      window.renderFinanceWidget(widgetEl, 'chesed', data.questDefinitions['chesed']);
     }
-    renderQuests();
   };
   window._accCancel = () => overlay.remove();
 
