@@ -724,7 +724,8 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-// Start loop immediately (renders with fillRect fallbacks while sheets load)
+// Randomize layout + start loop (renders with fillRect fallbacks while sheets load)
+layoutTown();
 requestAnimationFrame(tick);
 loadImage(`assets/terrain/topdown/${BIOME_PACK}.png`).then(sheet => {
   if (sheet) { biomeSheet = sheet; biomeTilePx = sheet.width / 8; }
