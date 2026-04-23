@@ -377,11 +377,17 @@ function drawGroundBase(ox, oy) {
       const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
       const isPath = r >= 6 && r <= 8;
       if (isPath) continue;
-      if (townSheet) {
-        drawTile(townSheet, isBorder ? 1 : 0, 1, c * TILE + ox, r * TILE + oy);
+      const dx = c * TILE + ox, dy = r * TILE + oy;
+      if (drawBiomeTile(B_GRASS[0], B_GRASS[1], dx, dy)) {
         if (isBorder) {
           ctx.fillStyle = 'rgba(0,0,0,0.35)';
-          ctx.fillRect(c * TILE + ox, r * TILE + oy, TILE, TILE);
+          ctx.fillRect(dx, dy, TILE, TILE);
+        }
+      } else if (townSheet) {
+        drawTile(townSheet, isBorder ? 1 : 0, 1, dx, dy);
+        if (isBorder) {
+          ctx.fillStyle = 'rgba(0,0,0,0.35)';
+          ctx.fillRect(dx, dy, TILE, TILE);
         }
       } else {
         ctx.fillStyle = isBorder ? '#2a4f18' : '#4a8c30';
