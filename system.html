@@ -1947,6 +1947,15 @@ function logQuest(qid, xp) {
     note = document.getElementById(`note-${qid}`)?.value?.trim() || '';
     const parsed = parseStrongExport(note);
     if (parsed) {
+      // Detect if workout is from a past date and offer retro logging
+      let targetDate = null;
+      const workoutDate = typeof parseStrongDate === 'function' ? parseStrongDate(parsed.date) : null;
+      if (workoutDate && workoutDate !== getTodayStr()) {
+        const diff = Math.round((new Date(getTodayStr()) - new Date(workoutDate)) / 86400000);
+        if (diff > 0 && diff <= 7) {
+          if (confirm(`Workout dated ${parsed.date}. Log to ${workoutDate} instead of today?`)) targetDate = workoutDate;
+        }
+      }
       const unknowns = parsed.exercises
         .filter(ex => ex.muscleGroups.length === 1 && ex.muscleGroups[0].m === 'other')
         .map(ex => ex.name);
@@ -1963,13 +1972,14 @@ function logQuest(qid, xp) {
               parsed.muscleGroupSets[m] = (parsed.muscleGroupSets[m] || 0) + working * t;
             });
           });
-          finishLogQuest(qid, xp, quest, domainKey, note, {workout: parsed, source: 'strong'});
+          finishLogQuest(qid, xp, quest, domainKey, note, {workout: parsed, source: 'strong'}, targetDate);
         });
         return;
       }
-      extraData.workout = parsed;
-      extraData.source = 'strong';
+      finishLogQuest(qid, xp, quest, domainKey, note, {workout: parsed, source: 'strong'}, targetDate);
+      return;
     }
+    // Not a Strong export — fall through as freeform text
   } else {
     note = document.getElementById(`note-${qid}`)?.value?.trim() || '';
   }
