@@ -183,6 +183,16 @@ const SHEET_TILE = 16;
 const T_GRASS = [0, 46]; // green grass — bottom-left of terrain_atlas
 const T_PATH  = [1, 37]; // gray stone — this coordinate confirmed working
 
+// Biome atlas: 2048×2048, 8×8 grid, 256px native tiles (autumn is 512×512, 64px).
+// Row semantics (per Manus spec): 0 base, 1 paths, 2 elevation, 3 primary trees,
+// 4 secondary flora, 5 props, 6 water, 7 features.
+const BIOME_PACK = 'master_forest'; // swap filename to change biome
+const B_GRASS = [0, 0]; // [col, row] in 8×8 grid
+const B_PATH  = [0, 1];
+const B_TREE  = [0, 3];
+let biomeSheet = null;
+let biomeTilePx = 256; // set from sheet width on load
+
 let terrainSheet = null;
 let townSheet = null;
 let playerSheet = null;
