@@ -59,6 +59,64 @@ window.logTransaction = function(qid, xp) {
   notify(`${label} ${sign}$${amount.toFixed(2)}${note ? ' — ' + note : ''}`);
 };
 
+// ── ACCOUNT BALANCES ──────────────────────────────────────────────────
+window.editAccountBalances = function() {
+  const accounts = JSON.parse(JSON.stringify(data.accountBalances || []));
+
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px';
+
+  const modal = document.createElement('div');
+  modal.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px;width:100%;max-width:380px;max-height:80vh;overflow-y:auto';
+
+  function renderModal() {
+    modal.innerHTML = `
+      <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:16px">Account Balances</div>
+      ${accounts.map((a, i) => `
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <input class="log-input" value="${a.name}" placeholder="Account name"
+            style="flex:1;font-size:12px;padding:6px 8px"
+            oninput="window._accEdit(${i},'name',this.value)">
+          <input class="log-input" type="number" value="${a.amount}" placeholder="0.00"
+            style="width:90px;font-size:12px;padding:6px 8px;text-align:right"
+            oninput="window._accEdit(${i},'amount',parseFloat(this.value)||0)">
+          <button onclick="window._accDel(${i})"
+            style="background:none;border:1px solid var(--border);color:var(--text3);padding:4px 8px;cursor:pointer;border-radius:2px;font-size:12px">✕</button>
+        </div>
+      `).join('')}
+      <button onclick="window._accAdd()"
+        class="btn" style="width:100%;margin-top:4px;font-size:11px">+ Add Account</button>
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button onclick="window._accSave()"
+          class="btn btn-primary" style="flex:1">Save</button>
+        <button onclick="window._accCancel()"
+          class="btn" style="flex:1">Cancel</button>
+      </div>
+    `;
+  }
+
+  window._accEdit = (i, key, val) => { accounts[i][key] = val; };
+  window._accDel  = (i) => { accounts.splice(i, 1); renderModal(); };
+  window._accAdd  = () => { accounts.push({ name: '', amount: 0 }); renderModal(); };
+  window._accSave = () => {
+    data.accountBalances = accounts.filter(a => a.name.trim());
+    saveData();
+    overlay.remove();
+    // Re-render finance widget
+    const el = document.querySelector('[data-domain-widget="chesed"]');
+    if (el && window.renderFinanceWidget) {
+      const domain = data.questDefinitions['chesed'];
+      window.renderFinanceWidget(el, 'chesed', domain);
+    }
+    renderQuests();
+  };
+  window._accCancel = () => overlay.remove();
+
+  renderModal();
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+};
+
 // ── FINANCE WIDGET ────────────────────────────────────────────────────
 // Cumulative balance line chart + today's totals + entry log.
 // Depends on globals: data, todayLog, getTodayStr (from system.html).
