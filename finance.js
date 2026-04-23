@@ -154,8 +154,34 @@ window.renderFinanceWidget = function(el, dk, domain) {
   const hasData = points.some(p => p.balance !== 0);
   const chartHtml = hasData ? buildBalanceChart(points, domain.color) : '';
 
+  // Account balances section
+  const accounts = data.accountBalances || [];
+  const totalNet = accounts.reduce((s, a) => s + (a.amount || 0), 0);
+  const accountsHtml = `
+    <div style="margin-bottom:${hasData || accounts.length ? '12px' : '0'}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">Where it lives</div>
+        <button onclick="window.editAccountBalances()"
+          style="background:none;border:1px solid var(--border);color:var(--text3);font-size:9px;letter-spacing:1px;padding:2px 8px;cursor:pointer;border-radius:2px;text-transform:uppercase">Edit</button>
+      </div>
+      ${accounts.length > 0 ? `
+        ${accounts.map(a => `
+          <div style="display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid var(--border)">
+            <span style="color:var(--text2)">${a.name}</span>
+            <span style="color:var(--text);font-weight:bold">$${(a.amount||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</span>
+          </div>
+        `).join('')}
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;margin-top:2px">
+          <span style="color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-size:9px">Total</span>
+          <span style="color:var(--text);font-weight:bold">$${totalNet.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</span>
+        </div>
+      ` : `<div style="font-size:11px;color:var(--text3);padding:4px 0">No accounts — tap Edit to add.</div>`}
+    </div>
+  `;
+
   el.innerHTML = `
     <div class="domain-widget" style="border-color:${domain.color}">
+      ${accountsHtml}
       ${chartHtml}
       <!-- Today's totals -->
       <div style="display:flex;justify-content:space-around;text-align:center;margin-top:${hasData ? '12px' : '0'};margin-bottom:${todayEntries.length > 0 ? '12px' : '0'}">
