@@ -453,27 +453,29 @@ function drawGlyph(x, y, kind, color) {
 function drawGroundBase(ox, oy) {
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
-      const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
-      const isPath = r >= 6 && r <= 8;
-      if (isPath) continue;
       const dx = c * TILE + ox, dy = r * TILE + oy;
-      if (drawBiomeTile(B_GRASS[0], B_GRASS[1], dx, dy)) {
-        if (isBorder) {
-          ctx.fillStyle = 'rgba(0,0,0,0.35)';
-          ctx.fillRect(dx, dy, TILE, TILE);
-        }
-      } else if (townSheet) {
-        drawTile(townSheet, isBorder ? 1 : 0, 1, dx, dy);
-        if (isBorder) {
-          ctx.fillStyle = 'rgba(0,0,0,0.35)';
-          ctx.fillRect(dx, dy, TILE, TILE);
-        }
-      } else {
+      const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
+      if (!drawBiomeTile(B_GRASS[0], B_GRASS[1], dx, dy)) {
         ctx.fillStyle = isBorder ? '#2a4f18' : '#4a8c30';
-        ctx.fillRect(c * TILE + ox, r * TILE + oy, TILE, TILE);
+        ctx.fillRect(dx, dy, TILE, TILE);
+      }
+      if (isBorder) {
+        ctx.fillStyle = 'rgba(0,0,0,0.25)';
+        ctx.fillRect(dx, dy, TILE, TILE);
       }
     }
   }
+}
+
+function drawElevation(ox, oy) {
+  ELEVATION_TILES.forEach(key => {
+    const [c, r] = key.split(',').map(Number);
+    const dx = c * TILE + ox, dy = r * TILE + oy;
+    if (!drawBiomeTile(B_ELEVATION[0], B_ELEVATION[1], dx, dy)) {
+      ctx.fillStyle = '#6a6a5a';
+      ctx.fillRect(dx, dy, TILE, TILE);
+    }
+  });
 }
 
 function drawWell(ox, oy) {
