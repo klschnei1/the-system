@@ -210,32 +210,33 @@ function drawTile(sheet, col, row, dx, dy) {
 // Top row anchors from y=0; bottom row anchors from y=160.
 const DOMAINS = [
   // sx/sy/sw/sh = crop from Buildings_Colour2.png (1136×197)
-  // Top row: anchored from py=0
+  // px/py = world-pixel position in 1152×768 space (TILE=32)
+  // Top row: above road (rows 6–8)
   { key: 'hod',     name: 'INTELLECT', glyph: 'eye',    roof: '#ff8c42',
-    sx: 474, sy: 0, sw: 118, sh: 197,  px: 8,   py: 0,   w: 112, h: 160,
-    solidCol: 0,  solidRow: 1, solidW: 4, solidH: 5 },
+    sx: 474, sy: 0, sw: 118, sh: 197,  px: 32,  py: 0,   w: 112, h: 192,
+    solidCol: 1,  solidRow: 0,  solidW: 4, solidH: 6 },
   { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
-    sx: 0,   sy: 0, sw: 121, sh: 197,  px: 144, py: 16,  w: 128, h: 144,
-    solidCol: 4,  solidRow: 0, solidW: 4, solidH: 4 },
+    sx: 0,   sy: 0, sw: 121, sh: 197,  px: 288, py: 32,  w: 128, h: 160,
+    solidCol: 9,  solidRow: 1,  solidW: 4, solidH: 5 },
   { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',  roof: '#00d4ff',
-    sx: 595, sy: 0, sw: 131, sh: 197,  px: 312, py: 16,  w: 128, h: 144,
-    solidCol: 9,  solidRow: 0, solidW: 4, solidH: 4 },
+    sx: 595, sy: 0, sw: 131, sh: 197,  px: 544, py: 32,  w: 128, h: 160,
+    solidCol: 17, solidRow: 1,  solidW: 4, solidH: 5 },
   { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',   roof: '#b06bff',
-    sx: 1047,sy: 0, sw: 88,  sh: 197,  px: 480, py: 32,  w: 96,  h: 128,
-    solidCol: 15, solidRow: 0, solidW: 3, solidH: 4 },
-  // Bottom row
+    sx: 1047,sy: 0, sw: 88,  sh: 197,  px: 832, py: 48,  w: 96,  h: 160,
+    solidCol: 26, solidRow: 1,  solidW: 3, solidH: 5 },
+  // Bottom row: below road
   { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales', roof: '#5dffb4',
-    sx: 857, sy: 0, sw: 188, sh: 197,  px: 8,   py: 320, w: 160, h: 144,
-    solidCol: 0,  solidRow: 12, solidW: 5, solidH: 4 },
+    sx: 857, sy: 0, sw: 188, sh: 197,  px: 32,  py: 480, w: 160, h: 160,
+    solidCol: 1,  solidRow: 15, solidW: 5, solidH: 5 },
   { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
-    sx: 729, sy: 0, sw: 125, sh: 197,  px: 184, py: 320, w: 128, h: 144,
-    solidCol: 5,  solidRow: 11, solidW: 4, solidH: 4 },
+    sx: 729, sy: 0, sw: 125, sh: 197,  px: 288, py: 480, w: 128, h: 160,
+    solidCol: 9,  solidRow: 15, solidW: 4, solidH: 5 },
   { key: 'netzach', name: 'CREATION',  glyph: 'lyre',   roof: '#ff6ec7',
-    sx: 131, sy: 0, sw: 74,  sh: 197,  px: 344, py: 320, w: 96,  h: 144,
-    solidCol: 10, solidRow: 11, solidW: 3, solidH: 4 },
+    sx: 131, sy: 0, sw: 74,  sh: 197,  px: 544, py: 480, w: 96,  h: 160,
+    solidCol: 17, solidRow: 15, solidW: 3, solidH: 5 },
   { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
-    sx: 367, sy: 0, sw: 103, sh: 197,  px: 488, py: 320, w: 96,  h: 144,
-    solidCol: 15, solidRow: 11, solidW: 3, solidH: 4 },
+    sx: 367, sy: 0, sw: 103, sh: 197,  px: 800, py: 480, w: 96,  h: 160,
+    solidCol: 25, solidRow: 15, solidW: 3, solidH: 5 },
 ];
 
 // Solid map from domain footprints
