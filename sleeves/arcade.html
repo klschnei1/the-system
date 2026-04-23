@@ -402,15 +402,15 @@ function drawPaths(ox, oy) {
   });
 }
 
-function drawBuilding(d) {
+function drawBuilding(d, ox, oy) {
   if (buildingsSheet) {
-    ctx.drawImage(buildingsSheet, d.sx, d.sy, d.sw, d.sh, d.px, d.py, d.w, d.h);
+    ctx.drawImage(buildingsSheet, d.sx, d.sy, d.sw, d.sh, d.px + ox, d.py + oy, d.w, d.h);
   } else {
     ctx.fillStyle = d.roof;
     ctx.globalAlpha = 0.7;
-    ctx.fillRect(d.px, d.py, d.w, d.h);
+    ctx.fillRect(d.px + ox, d.py + oy, d.w, d.h);
     ctx.globalAlpha = 1;
-    drawGlyph(d.px + d.w / 2 - 4, d.py + d.h / 2 - 4, d.glyph, '#fff');
+    drawGlyph(d.px + ox + d.w / 2 - 4, d.py + oy + d.h / 2 - 4, d.glyph, '#fff');
   }
 }
 
