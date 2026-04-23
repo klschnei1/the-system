@@ -105,6 +105,17 @@ function classifyExercise(name) {
 }
 
 // ── STRONG APP PARSER ─────────────────────────────────────────────────
+// Parses Strong's date line (e.g. "Jan 15, 2024" or "January 15, 2024 3:30 PM") → "YYYY-MM-DD"
+function parseStrongDate(dateStr) {
+  if (!dateStr) return null;
+  const m = dateStr.match(/([A-Za-z]+)\s+(\d+),?\s+(\d{4})/);
+  if (!m) return null;
+  const d = new Date(`${m[1]} ${m[2]}, ${m[3]}`);
+  if (isNaN(d)) return null;
+  return d.toLocaleDateString('en-CA'); // YYYY-MM-DD, same format as getTodayStr
+}
+window.parseStrongDate = parseStrongDate;
+
 function parseStrongExport(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 4) return null;
