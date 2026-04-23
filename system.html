@@ -1364,6 +1364,7 @@ async function initDataStore() {
       data.questDefinitions = JSON.parse(JSON.stringify(DEFAULT_DATA.questDefinitions));
       if (!data.weeklyCompletions) data.weeklyCompletions = {};
       if (!data.dailyLogs) data.dailyLogs = {};
+      if (!data.accountBalances) data.accountBalances = [];
       // Backfill any domain keys added since last remote write
       Object.entries(DEFAULT_DATA.domainWeights).forEach(([k, v]) => {
         if (!data.domainWeights) data.domainWeights = {};
