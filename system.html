@@ -1777,11 +1777,11 @@ function buildQuestInput(qid, quest, done) {
     }
 
     case 'transaction': {
-      if (done) {
-        const entries = logged?.entries || [];
-        return `<div style="margin:8px 0;font-size:11px;color:var(--text3)">${entries.length} transaction${entries.length !== 1 ? 's' : ''} logged today</div>`;
-      }
-      return `
+      const entries = logged?.entries || [];
+      const txCount = done
+        ? `<div style="margin-bottom:6px;font-size:11px;color:var(--text3)">${entries.length} transaction${entries.length !== 1 ? 's' : ''} today — add more below</div>`
+        : '';
+      return txCount + `
         <div style="margin:8px 0;display:flex;flex-direction:column;gap:8px">
           <input type="hidden" id="finance-direction" value="out">
           <div style="display:flex;gap:0">
