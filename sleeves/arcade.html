@@ -375,10 +375,9 @@ function drawGroundBase(ox, oy) {
   }
 }
 
-function drawWell() {
+function drawWell(ox, oy) {
   if (!townSheet) return;
-  const cx = Math.floor(VW / 2);
-  drawTile(townSheet, 5, 1, cx * TILE, 7 * TILE);
+  drawTile(townSheet, 5, 1, 18 * TILE + ox, 7 * TILE + oy);
 }
 
 function drawPaths() {
