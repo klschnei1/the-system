@@ -597,6 +597,7 @@ function render() {
   const oy = -cy * TILE;
   drawGroundBase(ox, oy);
   drawPaths(ox, oy);
+  drawElevation(ox, oy);
   drawTrees(ox, oy);
   drawWell(ox, oy);
   DOMAINS.forEach(d => drawBuilding(d, ox, oy));
