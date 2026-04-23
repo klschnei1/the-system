@@ -192,9 +192,10 @@ const BIOME_PACKS = [
   'biome_underwater', 'biome_volcanic', 'final_biome_autumn',
 ];
 const BIOME_PACK = BIOME_PACKS[Math.floor(Math.random() * BIOME_PACKS.length)];
-const B_GRASS = [0, 0]; // [col, row] in 8×8 grid
-const B_PATH  = [0, 1];
-const B_TREE  = [0, 3];
+const B_GRASS     = [0, 0]; // [col, row] in 8×8 grid
+const B_PATH      = [0, 1];
+const B_ELEVATION = [0, 2];
+const B_TREE      = [0, 3];
 let biomeSheet = null;
 let biomeTilePx = 256; // set from sheet width on load
 
