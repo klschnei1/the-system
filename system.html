@@ -1987,17 +1987,25 @@ function logQuest(qid, xp) {
   finishLogQuest(qid, xp, quest, domainKey, note, extraData);
 }
 
-function finishLogQuest(qid, xp, quest, domainKey, note, extraData) {
+function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) {
   const logEntry = { xp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
-  todayLog[qid] = logEntry;
   todayXpEarned += xp;
   data.xp = (data.xp || 0) + xp;
 
-  // Write to dailyLogs (synced to GitHub — harvest reads this)
   const today = getTodayStr();
   if (!data.dailyLogs) data.dailyLogs = {};
-  if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
-  data.dailyLogs[today][qid] = logEntry;
+
+  if (targetDate && targetDate !== today) {
+    // Retro log: write workout to past date; stub todayLog so quest shows done
+    if (!data.dailyLogs[targetDate]) data.dailyLogs[targetDate] = {};
+    data.dailyLogs[targetDate][qid] = logEntry;
+    // Stub has no .workout so the strength widget doesn't double-count it for today
+    todayLog[qid] = { xp, note: `logged to ${targetDate}`, time: logEntry.time, source: 'retro', retroDate: targetDate };
+  } else {
+    todayLog[qid] = logEntry;
+    if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
+    data.dailyLogs[today][qid] = logEntry;
+  }
 
   // Auto-collapse domain if all its quests are now done
   if (domainKey) {
