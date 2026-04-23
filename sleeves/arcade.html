@@ -491,13 +491,24 @@ function drawDialog() {
   }
 }
 
+function getCamera() {
+  let cx = Math.round(player.x - VW / 2);
+  let cy = Math.round(player.y - VH / 2);
+  cx = Math.max(0, Math.min(cx, COLS - VW));
+  cy = Math.max(0, Math.min(cy, ROWS - VH));
+  return { cx, cy };
+}
+
 function render() {
-  drawGroundBase();
-  drawPaths();
-  drawTrees();
-  drawWell();
-  DOMAINS.forEach(drawBuilding);
-  drawPlayer();
+  const { cx, cy } = getCamera();
+  const ox = -cx * TILE;
+  const oy = -cy * TILE;
+  drawGroundBase(ox, oy);
+  drawPaths(ox, oy);
+  drawTrees(ox, oy);
+  drawWell(ox, oy);
+  DOMAINS.forEach(d => drawBuilding(d, ox, oy));
+  drawPlayer(ox, oy);
   drawDialog();
 }
 
