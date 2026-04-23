@@ -209,34 +209,33 @@ function drawTile(sheet, col, row, dx, dy) {
 // solidCol/Row/W/H = tile-grid collision footprint.
 // Top row anchors from y=0; bottom row anchors from y=160.
 const DOMAINS = [
-  // sx/sy/sw/sh = crop from Buildings_Colour2.png (1136×197)
-  // px/py = world-pixel position in 1152×768 space (TILE=32)
+  // img = path relative to arcade.html; px/py = world-pixel position (TILE=32, world 1152×768)
   // Top row: above road (rows 6–8)
-  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',    roof: '#ff8c42',
-    sx: 474, sy: 0, sw: 118, sh: 197,  px: 32,  py: 0,   w: 112, h: 192,
-    solidCol: 1,  solidRow: 0,  solidW: 4, solidH: 6 },
+  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42',
+    img: 'assets/buildings/topdown/intellect/v5_intellect.png',
+    px: 32,  py: 0,   w: 112, h: 192, solidCol: 1,  solidRow: 0,  solidW: 4, solidH: 6 },
   { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
-    sx: 0,   sy: 0, sw: 121, sh: 197,  px: 288, py: 32,  w: 128, h: 160,
-    solidCol: 9,  solidRow: 1,  solidW: 4, solidH: 5 },
-  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',  roof: '#00d4ff',
-    sx: 595, sy: 0, sw: 131, sh: 197,  px: 544, py: 32,  w: 128, h: 160,
-    solidCol: 17, solidRow: 1,  solidW: 4, solidH: 5 },
-  { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',   roof: '#b06bff',
-    sx: 1047,sy: 0, sw: 88,  sh: 197,  px: 832, py: 48,  w: 96,  h: 160,
-    solidCol: 26, solidRow: 1,  solidW: 3, solidH: 5 },
+    img: 'assets/buildings/topdown/strength/final_v2_strength.png',
+    px: 288, py: 32,  w: 128, h: 160, solidCol: 9,  solidRow: 1,  solidW: 4, solidH: 5 },
+  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff',
+    img: 'assets/buildings/topdown/intake/v3_intake_market.png',
+    px: 544, py: 32,  w: 128, h: 160, solidCol: 17, solidRow: 1,  solidW: 4, solidH: 5 },
+  { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',    roof: '#b06bff',
+    img: 'assets/buildings/topdown/recovery/final_v2_recovery.png',
+    px: 832, py: 48,  w: 96,  h: 160, solidCol: 26, solidRow: 1,  solidW: 3, solidH: 5 },
   // Bottom row: below road
-  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales', roof: '#5dffb4',
-    sx: 857, sy: 0, sw: 188, sh: 197,  px: 32,  py: 480, w: 160, h: 160,
-    solidCol: 1,  solidRow: 15, solidW: 5, solidH: 5 },
+  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4',
+    img: 'assets/buildings/topdown/finance/v5_finance.png',
+    px: 32,  py: 480, w: 160, h: 160, solidCol: 1,  solidRow: 15, solidW: 5, solidH: 5 },
   { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
-    sx: 729, sy: 0, sw: 125, sh: 197,  px: 288, py: 480, w: 128, h: 160,
-    solidCol: 9,  solidRow: 15, solidW: 4, solidH: 5 },
-  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',   roof: '#ff6ec7',
-    sx: 131, sy: 0, sw: 74,  sh: 197,  px: 544, py: 480, w: 96,  h: 160,
-    solidCol: 17, solidRow: 15, solidW: 3, solidH: 5 },
+    img: 'assets/buildings/topdown/structure/final_v2_structure.png',
+    px: 288, py: 480, w: 128, h: 160, solidCol: 9,  solidRow: 15, solidW: 4, solidH: 5 },
+  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7',
+    img: 'assets/buildings/topdown/creation/final_v2_creation.png',
+    px: 544, py: 480, w: 96,  h: 160, solidCol: 17, solidRow: 15, solidW: 3, solidH: 5 },
   { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
-    sx: 367, sy: 0, sw: 103, sh: 197,  px: 800, py: 480, w: 96,  h: 160,
-    solidCol: 25, solidRow: 15, solidW: 3, solidH: 5 },
+    img: 'assets/buildings/topdown/social/final_v2_social.png',
+    px: 800, py: 480, w: 96,  h: 160, solidCol: 25, solidRow: 15, solidW: 3, solidH: 5 },
 ];
 
 // Solid map from domain footprints
