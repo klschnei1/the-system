@@ -215,6 +215,13 @@ function drawTile(sheet, col, row, dx, dy) {
     dx, dy, TILE, TILE);
 }
 
+function drawBiomeTile(col, row, dx, dy) {
+  if (!biomeSheet) return false;
+  const s = biomeTilePx;
+  ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE, TILE);
+  return true;
+}
+
 // px/py = pixel position on canvas. w/h = native sprite size.
 // solidCol/Row/W/H = tile-grid collision footprint.
 // Top row anchors from y=0; bottom row anchors from y=160.
