@@ -443,9 +443,9 @@ function drawTrees(ox, oy) {
   }
 }
 
-function drawPlayer() {
-  const px = player.x * TILE;
-  const py = player.y * TILE;
+function drawPlayer(ox, oy) {
+  const px = player.x * TILE + ox;
+  const py = player.y * TILE + oy;
   // shadow
   ctx.fillStyle = 'rgba(0,0,0,0.3)';
   ctx.fillRect(px + 6, py + TILE - 2, 20, 2);
