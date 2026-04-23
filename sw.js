@@ -1,4 +1,4 @@
-const CACHE = 'css-v2';
+const CACHE = 'css-v3';
 const STATIC = ['checkin.js','datastore.js','finance.js','intake.js','sensei.js','sigils.js','strength.js','themes.js','icon.svg','manifest.json'];
 
 self.addEventListener('install', e => {
