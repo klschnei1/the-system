@@ -231,46 +231,119 @@ function drawBiomeTile(col, row, dx, dy) {
 // px/py = pixel position on canvas. w/h = native sprite size.
 // solidCol/Row/W/H = tile-grid collision footprint.
 // Top row anchors from y=0; bottom row anchors from y=160.
+// px/py and solidCol/Row are assigned by layoutTown() at load time.
 const DOMAINS = [
-  // img = path relative to arcade.html; px/py = world-pixel position (TILE=32, world 1152×768)
-  // Top row: above road (rows 6–8)
   { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42',
     img: 'assets/buildings/topdown/intellect/v5_intellect.png',
-    px: 32,  py: 0,   w: 112, h: 192, solidCol: 1,  solidRow: 0,  solidW: 4, solidH: 6 },
+    w: 112, h: 192, solidW: 4, solidH: 6 },
   { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
     img: 'assets/buildings/topdown/strength/final_strength.png',
-    px: 288, py: 32,  w: 128, h: 160, solidCol: 9,  solidRow: 1,  solidW: 4, solidH: 5 },
+    w: 128, h: 160, solidW: 4, solidH: 5 },
   { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff',
     img: 'assets/buildings/topdown/intake/v3_intake_market.png',
-    px: 544, py: 32,  w: 128, h: 160, solidCol: 17, solidRow: 1,  solidW: 4, solidH: 5 },
+    w: 128, h: 160, solidW: 4, solidH: 5 },
   { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',    roof: '#b06bff',
     img: 'assets/buildings/topdown/recovery/final_v2_recovery.png',
-    px: 832, py: 48,  w: 96,  h: 160, solidCol: 26, solidRow: 1,  solidW: 3, solidH: 5 },
-  // Bottom row: below road
+    w: 96,  h: 160, solidW: 3, solidH: 5 },
   { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4',
     img: 'assets/buildings/topdown/finance/v5_finance.png',
-    px: 32,  py: 480, w: 160, h: 160, solidCol: 1,  solidRow: 15, solidW: 5, solidH: 5 },
+    w: 160, h: 160, solidW: 5, solidH: 5 },
   { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
     img: 'assets/buildings/topdown/structure/final_v2_structure.png',
-    px: 288, py: 480, w: 128, h: 160, solidCol: 9,  solidRow: 15, solidW: 4, solidH: 5 },
+    w: 128, h: 160, solidW: 4, solidH: 5 },
   { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7',
     img: 'assets/buildings/topdown/creation/final_v2_creation.png',
-    px: 544, py: 480, w: 96,  h: 160, solidCol: 17, solidRow: 15, solidW: 3, solidH: 5 },
+    w: 96,  h: 160, solidW: 3, solidH: 5 },
   { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
     img: 'assets/buildings/topdown/social/final_v2_social.png',
-    px: 800, py: 480, w: 96,  h: 160, solidCol: 25, solidRow: 15, solidW: 3, solidH: 5 },
+    w: 96,  h: 160, solidW: 3, solidH: 5 },
 ];
 
-// Solid map from domain footprints
 const solid = [];
 for (let r = 0; r < ROWS; r++) solid.push(new Array(COLS).fill(0));
-DOMAINS.forEach(d => {
-  for (let dy = 0; dy < d.solidH; dy++)
-    for (let dx = 0; dx < d.solidW; dx++) {
-      const r = d.solidRow + dy, c = d.solidCol + dx;
-      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) solid[r][c] = 1;
+const PATH_TILES = new Set();      // "c,r" strings
+const ELEVATION_TILES = new Set(); // "c,r" strings
+let plaza = { c: 18, r: 12 };
+
+function layoutTown() {
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) solid[r][c] = 0;
+  PATH_TILES.clear();
+  ELEVATION_TILES.clear();
+
+  // 4×2 region grid across 36×24 world; shuffle which domain gets which cell.
+  const regW = 9, regH = 12;
+  const regionOrder = [0,1,2,3,4,5,6,7].sort(() => Math.random() - 0.5);
+  const doors = [];
+
+  DOMAINS.forEach((d, i) => {
+    const ri = regionOrder[i];
+    const regCol = ri % 4;
+    const regRow = Math.floor(ri / 4);
+    const footW = d.solidW, footH = d.solidH;
+    const maxJX = Math.max(1, regW - footW - 1);
+    const maxJY = Math.max(1, regH - footH - 3);
+    const jx = Math.floor(Math.random() * maxJX);
+    const jy = Math.floor(Math.random() * maxJY);
+    const solidC = regCol * regW + 1 + jx;
+    const solidR = regRow * regH + 1 + jy;
+    d.solidCol = solidC;
+    d.solidRow = solidR;
+    const extraPxTop = d.h - footH * TILE;
+    d.px = solidC * TILE;
+    d.py = solidR * TILE - extraPxTop;
+    for (let dy = 0; dy < footH; dy++)
+      for (let dx = 0; dx < footW; dx++) {
+        const r = solidR + dy, c = solidC + dx;
+        if (r >= 0 && r < ROWS && c >= 0 && c < COLS) solid[r][c] = 1;
+      }
+    const doorC = solidC + Math.floor(footW / 2);
+    const doorR = Math.min(ROWS - 1, solidR + footH);
+    doors.push({ c: doorC, r: doorR });
+  });
+
+  // Plaza: geometric center of all doors
+  const avgC = Math.round(doors.reduce((s, d) => s + d.c, 0) / doors.length);
+  const avgR = Math.round(doors.reduce((s, d) => s + d.r, 0) / doors.length);
+  plaza = { c: Math.max(2, Math.min(COLS - 3, avgC)), r: Math.max(2, Math.min(ROWS - 3, avgR)) };
+
+  // Single-tile L-shaped path from each door to plaza.
+  doors.forEach(d => {
+    let c = d.c, r = d.r;
+    const horiz = Math.sign(plaza.c - c);
+    while (c !== plaza.c) { PATH_TILES.add(`${c},${r}`); c += horiz; }
+    const vert = Math.sign(plaza.r - r);
+    while (r !== plaza.r) { PATH_TILES.add(`${c},${r}`); r += vert; }
+    PATH_TILES.add(`${c},${r}`);
+    PATH_TILES.add(`${d.c},${d.r}`);
+  });
+
+  // Elevation: up to 6 small patches (2×2 or 2×3) on open ground.
+  let placed = 0, tries = 0;
+  while (placed < 6 && tries < 40) {
+    tries++;
+    const pw = 2 + Math.floor(Math.random() * 2);
+    const ph = 2;
+    const ec = 2 + Math.floor(Math.random() * (COLS - pw - 4));
+    const er = 2 + Math.floor(Math.random() * (ROWS - ph - 4));
+    let ok = true;
+    for (let dy = 0; dy < ph && ok; dy++)
+      for (let dx = 0; dx < pw && ok; dx++) {
+        if (solid[er+dy][ec+dx]) ok = false;
+        if (PATH_TILES.has(`${ec+dx},${er+dy}`)) ok = false;
+      }
+    if (ok) {
+      for (let dy = 0; dy < ph; dy++)
+        for (let dx = 0; dx < pw; dx++) {
+          ELEVATION_TILES.add(`${ec+dx},${er+dy}`);
+          solid[er+dy][ec+dx] = 1;
+        }
+      placed++;
     }
-});
+  }
+
+  player.x = plaza.c;
+  player.y = plaza.r;
+}
 
 // ==== STATE ============================================================
 let player = { x: 18, y: 7, dir: 'down', stepFrame: 0 };
