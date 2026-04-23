@@ -403,24 +403,31 @@ function drawWell(ox, oy) {
 }
 
 function drawPaths(ox, oy) {
-  // Main cobblestone road — rows 6–8
+  // Main path — rows 6–8
   for (let r = 6; r <= 8; r++) {
     for (let c = 0; c < COLS; c++) {
+      const dx = c * TILE + ox, dy = r * TILE + oy;
+      if (drawBiomeTile(B_PATH[0], B_PATH[1], dx, dy)) continue;
       if (townSheet) {
-        drawTile(townSheet, 0, 0, c * TILE + ox, r * TILE + oy);
+        drawTile(townSheet, 0, 0, dx, dy);
       } else {
         ctx.fillStyle = '#707068';
-        ctx.fillRect(c * TILE + ox, r * TILE + oy, TILE, TILE);
+        ctx.fillRect(dx, dy, TILE, TILE);
       }
     }
   }
 
-  if (!townSheet) return;
-  // Dirt approach paths — building center columns in world space
+  // Dirt approach paths — building center columns
   const cols = [3, 11, 19, 27];
   cols.forEach(c => {
-    for (let r = 3; r <= 5; r++) drawTile(townSheet, 9, 0, c * TILE + ox, r * TILE + oy);
-    for (let r = 9; r <= 11; r++) drawTile(townSheet, 9, 0, c * TILE + ox, r * TILE + oy);
+    for (let r = 3; r <= 5; r++) {
+      const dx = c * TILE + ox, dy = r * TILE + oy;
+      if (!drawBiomeTile(B_PATH[0], B_PATH[1], dx, dy) && townSheet) drawTile(townSheet, 9, 0, dx, dy);
+    }
+    for (let r = 9; r <= 11; r++) {
+      const dx = c * TILE + ox, dy = r * TILE + oy;
+      if (!drawBiomeTile(B_PATH[0], B_PATH[1], dx, dy) && townSheet) drawTile(townSheet, 9, 0, dx, dy);
+    }
   });
 }
 
