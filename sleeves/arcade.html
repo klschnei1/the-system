@@ -446,6 +446,7 @@ function drawBuilding(d, ox, oy) {
 
 function drawTree(c, r, ox, oy) {
   const x = c * TILE + ox, y = r * TILE + oy;
+  if (drawBiomeTile(B_TREE[0], B_TREE[1], x, y)) return;
   ctx.fillStyle = '#5a3010';
   ctx.fillRect(x + 6, y + 10, 4, 6);
   ctx.fillStyle = '#1a6020';
