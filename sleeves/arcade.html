@@ -414,8 +414,8 @@ function drawBuilding(d, ox, oy) {
   }
 }
 
-function drawTree(c, r) {
-  const x = c * TILE, y = r * TILE;
+function drawTree(c, r, ox, oy) {
+  const x = c * TILE + ox, y = r * TILE + oy;
   ctx.fillStyle = '#5a3010';
   ctx.fillRect(x + 6, y + 10, 4, 6);
   ctx.fillStyle = '#1a6020';
