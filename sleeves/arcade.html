@@ -193,10 +193,13 @@ const BIOME_PACKS = [
 ];
 const BIOME_PACK = BIOME_PACKS[Math.floor(Math.random() * BIOME_PACKS.length)];
 console.log('[arcade] biome pack:', BIOME_PACK);
-const B_GRASS     = [0, 0]; // [col, row] in 8×8 grid
-const B_PATH      = [0, 1];
-const B_ELEVATION = [0, 2];
-const B_TREE      = [0, 3];
+const B_GRASS     = [0, 0]; // [col, row] in 8×8 grid — grass_plain
+const B_PATH      = [0, 1]; // path_horizontal_center
+const B_ELEVATION = [0, 2]; // cliff_face_straight
+const B_TREE      = [0, 3]; // tree_small_deciduous
+const B_BUSH      = [0, 5]; // bush_plain
+const B_ROCK      = [2, 5]; // rock_small
+const B_WELL      = [1, 7]; // well_stone
 let biomeSheet = null;
 let biomeTilePx = 256; // set from sheet width on load
 
