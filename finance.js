@@ -40,6 +40,14 @@ window.logTransaction = function(qid, xp) {
   todayLog[qid].totals = { net: income - expenses, income, expenses };
   todayLog[qid].note = `+$${income.toFixed(2)} in · -$${expenses.toFixed(2)} out`;
 
+  // Auto-adjust Fifth Third balance
+  const fifthThird = (data.accountBalances || []).find(a =>
+    a.name.toLowerCase().includes('fifth third')
+  );
+  if (fifthThird) {
+    fifthThird.amount = (fifthThird.amount || 0) + (direction === 'in' ? amount : -amount);
+  }
+
   // Write to dailyLogs
   const today = getTodayStr();
   if (!data.dailyLogs) data.dailyLogs = {};
