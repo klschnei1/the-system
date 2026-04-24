@@ -265,8 +265,8 @@ const DOMAINS = [
 
 const solid = [];
 for (let r = 0; r < ROWS; r++) solid.push(new Array(COLS).fill(0));
-const PATH_TILES = new Set();      // "c,r" strings
-const ELEVATION_TILES = new Set(); // "c,r" strings
+const PATH_TILES = new Set();
+const ELEVATION_TILES = new Map(); // "c,r" → role string
 let plaza = { c: 18, r: 12 };
 
 function layoutTown() {
