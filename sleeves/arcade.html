@@ -321,12 +321,14 @@ function layoutTown() {
     PATH_TILES.add(`${d.c},${d.r}`);
   });
 
-  // Elevation: up to 6 small patches (2×2 or 2×3) on open ground.
+  // Elevation: up to 6 small patches (2×2 or 3×2) on open ground.
+  // Tiles are visual only — not marked solid, so navigation is never blocked.
+  ELEVATION_TILES.clear();
   let placed = 0, tries = 0;
   while (placed < 6 && tries < 40) {
     tries++;
-    const pw = 2 + Math.floor(Math.random() * 2);
-    const ph = 2;
+    const pw = 2 + Math.floor(Math.random() * 2); // 2 or 3 wide
+    const ph = 2;                                   // always 2 tall
     const ec = 2 + Math.floor(Math.random() * (COLS - pw - 4));
     const er = 2 + Math.floor(Math.random() * (ROWS - ph - 4));
     let ok = true;
@@ -336,11 +338,25 @@ function layoutTown() {
         if (PATH_TILES.has(`${ec+dx},${er+dy}`)) ok = false;
       }
     if (ok) {
-      for (let dy = 0; dy < ph; dy++)
+      // Stairs pair centered on bottom row
+      const stairsStart = Math.max(0, Math.floor((pw - 2) / 2));
+      for (let dy = 0; dy < ph; dy++) {
         for (let dx = 0; dx < pw; dx++) {
-          ELEVATION_TILES.add(`${ec+dx},${er+dy}`);
-          solid[er+dy][ec+dx] = 1;
+          let role;
+          if (dy === 0) {
+            if      (dx === 0)      role = 'corner_tl';
+            else if (dx === pw - 1) role = 'corner_tr';
+            else                    role = 'edge_top';
+          } else {
+            if      (dx === stairsStart)     role = 'stairs_l';
+            else if (dx === stairsStart + 1) role = 'stairs_r';
+            else if (dx === 0)               role = 'edge_bottom';
+            else if (dx === pw - 1)          role = 'edge_bottom';
+            else                             role = 'interior';
+          }
+          ELEVATION_TILES.set(`${ec+dx},${er+dy}`, role);
         }
+      }
       placed++;
     }
   }
