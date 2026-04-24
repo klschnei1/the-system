@@ -550,10 +550,10 @@ function pathTileInfo(c, r) {
   }
   // T-junctions — exactly 3 neighbors
   if (n === 3) {
-    if (!down)  return [4, 1,   0]; // t_junction_top  (open up+left+right)
-    if (!up)    return [7, 1,   0]; // t_junction_bottom (open down+left+right)
-    if (!left)  return [4, 1,  90]; // open up+down+right
-    if (!right) return [4, 1, -90]; // open up+down+left
+    if (!up)    return [4, 1,   0]; // ┬ dirt D+L+R
+    if (!down)  return [7, 1,   0]; // ┴ dirt U+L+R
+    if (!left)  return [4, 1,  90]; // ├ rotated
+    if (!right) return [4, 1, -90]; // ┤ rotated
   }
   // Vertical straight
   if ((up || down) && !left && !right) return [0, 1, 90];
