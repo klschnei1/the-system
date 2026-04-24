@@ -694,6 +694,8 @@ function render() {
   const { cx, cy } = getCamera();
   const ox = -cx * TILE;
   const oy = -cy * TILE;
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
   drawGroundBase(ox, oy);
   drawPaths(ox, oy);
   drawElevation(ox, oy);
