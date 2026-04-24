@@ -582,19 +582,31 @@ function drawBuilding(d, ox, oy) {
   }
 }
 
-function drawTree(c, r, ox, oy) {
+const DECOR_VARIANTS = [
+  [0, 3], // tree_small_deciduous
+  [2, 3], // tree_large_deciduous
+  [3, 3], // tree_large_ancient
+  [7, 3], // tree_pine_large
+  [0, 4], // tree_small_leafy
+  [2, 4], // tree_large_leafy
+  [0, 5], // bush_plain
+  [1, 5], // bush_with_red_berries
+  [2, 5], // rock_small
+  [3, 5], // rock_large_cracked
+  [4, 5], // rock_mossy
+  [5, 5], // mushroom_cluster
+];
+
+function drawDecoration(c, r, ox, oy) {
   const x = c * TILE + ox, y = r * TILE + oy;
-  if (drawBiomeTile(B_TREE[0], B_TREE[1], x, y)) return;
-  ctx.fillStyle = '#5a3010';
-  ctx.fillRect(x + 6, y + 10, 4, 6);
-  ctx.fillStyle = '#1a6020';
-  ctx.fillRect(x + 2, y + 5, 12, 8);
-  ctx.fillStyle = '#2a8030';
-  ctx.fillRect(x + 4, y + 2, 8, 7);
-  ctx.fillStyle = '#3aa040';
-  ctx.fillRect(x + 6, y, 4, 5);
-  ctx.fillStyle = '#5aba55';
-  ctx.fillRect(x + 7, y + 1, 2, 2);
+  const hash = (Math.imul(c * 1234567, r * 891011) ^ (c * 31 + r * 17)) >>> 0;
+  const v = DECOR_VARIANTS[hash % DECOR_VARIANTS.length];
+  if (drawBiomeTile(v[0], v[1], x, y)) return;
+  // fallback pixel art tree
+  ctx.fillStyle = '#5a3010'; ctx.fillRect(x + 6, y + 10, 4, 6);
+  ctx.fillStyle = '#1a6020'; ctx.fillRect(x + 2, y + 5, 12, 8);
+  ctx.fillStyle = '#2a8030'; ctx.fillRect(x + 4, y + 2, 8, 7);
+  ctx.fillStyle = '#3aa040'; ctx.fillRect(x + 6, y, 4, 5);
 }
 
 function drawTrees(ox, oy) {
@@ -602,10 +614,11 @@ function drawTrees(ox, oy) {
     for (let c = 0; c < COLS; c++) {
       if (solid[r]?.[c]) continue;
       if (PATH_TILES.has(`${c},${r}`)) continue;
+      if (ELEVATION_TILES.has(`${c},${r}`)) continue;
       const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
       const density = isBorder ? 0.65 : 0.07;
       const hash = (Math.imul(c * 1234567, r * 891011) ^ (c * 31 + r * 17)) >>> 0;
-      if ((hash / 0xffffffff) < density) drawTree(c, r, ox, oy);
+      if ((hash / 0xffffffff) < density) drawDecoration(c, r, ox, oy);
     }
   }
 }
