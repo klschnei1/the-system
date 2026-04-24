@@ -487,11 +487,25 @@ function drawGroundBase(ox, oy) {
   }
 }
 
+const ELEV_TILES = {
+  corner_tl:   [2, 2],
+  corner_tr:   [5, 2],
+  edge_top:    [3, 2],
+  edge_left:   [0, 2],
+  edge_right:  [0, 2],
+  edge_bottom: [4, 2],
+  stairs_l:    [6, 2],
+  stairs_r:    [7, 2],
+};
+
 function drawElevation(ox, oy) {
-  ELEVATION_TILES.forEach(key => {
+  ELEVATION_TILES.forEach((role, key) => {
+    if (role === 'interior') return;
     const [c, r] = key.split(',').map(Number);
     const dx = c * TILE + ox, dy = r * TILE + oy;
-    if (!drawBiomeTile(B_ELEVATION[0], B_ELEVATION[1], dx, dy)) {
+    const spec = ELEV_TILES[role];
+    if (!spec) return;
+    if (!drawBiomeTile(spec[0], spec[1], dx, dy)) {
       ctx.fillStyle = '#6a6a5a';
       ctx.fillRect(dx, dy, TILE, TILE);
     }
