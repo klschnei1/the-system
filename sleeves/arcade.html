@@ -483,8 +483,10 @@ function drawElevation(ox, oy) {
 }
 
 function drawWell(ox, oy) {
-  if (!townSheet) return;
-  drawTile(townSheet, 5, 1, plaza.c * TILE + ox, plaza.r * TILE + oy);
+  const dx = plaza.c * TILE + ox, dy = plaza.r * TILE + oy;
+  if (!drawBiomeTile(B_WELL[0], B_WELL[1], dx, dy) && townSheet) {
+    drawTile(townSheet, 5, 1, dx, dy);
+  }
 }
 
 function drawPaths(ox, oy) {
