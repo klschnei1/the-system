@@ -502,14 +502,21 @@ function drawPaths(ox, oy) {
 
 function drawBuilding(d, ox, oy) {
   const sheet = buildingSheets[d.key];
+  const footW = d.solidW * TILE;
+  const footH = d.solidH * TILE;
+  const baseX = d.solidCol * TILE;
+  const baseY = (d.solidRow + d.solidH) * TILE; // bottom of solid footprint
   if (sheet) {
-    ctx.drawImage(sheet, d.px + ox, d.py + oy, d.w, d.h);
+    const sw = sheet.width, sh = sheet.height;
+    const px = baseX + (footW - sw) / 2; // centered horizontally
+    const py = baseY - sh;               // bottom-anchored
+    ctx.drawImage(sheet, px + ox, py + oy, sw, sh);
   } else {
     ctx.fillStyle = d.roof;
     ctx.globalAlpha = 0.7;
-    ctx.fillRect(d.px + ox, d.py + oy, d.w, d.h);
+    ctx.fillRect(baseX + ox, baseY - footH + oy, footW, footH);
     ctx.globalAlpha = 1;
-    drawGlyph(d.px + ox + d.w / 2 - 4, d.py + oy + d.h / 2 - 4, d.glyph, '#fff');
+    drawGlyph(baseX + ox + footW / 2 - 4, baseY - footH / 2 + oy - 4, d.glyph, '#fff');
   }
 }
 
