@@ -539,14 +539,24 @@ function pathTileInfo(c, r) {
   const down  = PATH_TILES.has(`${c},${r+1}`);
   const left  = PATH_TILES.has(`${c-1},${r}`);
   const right = PATH_TILES.has(`${c+1},${r}`);
-  // Dedicated corner tiles for clean single-width turns
-  if (right && down && !left && !up)    return [2, 1, 0]; // corner_top_left
-  if (left  && down && !right && !up)   return [3, 1, 0]; // corner_top_right
-  if (right && up   && !left && !down)  return [5, 1, 0]; // corner_bottom_left
-  if (left  && up   && !right && !down) return [6, 1, 0]; // corner_bottom_right
-  // Vertical straight (rotated horizontal tile)
-  if ((up || down) && !left && !right)  return [0, 1, 90];
-  // Horizontal straight + all junctions/crosses
+  const n = (up?1:0)+(down?1:0)+(left?1:0)+(right?1:0);
+  // Corners — exactly 2 perpendicular neighbors
+  if (n === 2) {
+    if (right && down) return [2, 1,   0]; // corner_top_left
+    if (left  && down) return [3, 1,   0]; // corner_top_right
+    if (right && up)   return [5, 1,   0]; // corner_bottom_left
+    if (left  && up)   return [6, 1,   0]; // corner_bottom_right
+  }
+  // T-junctions — exactly 3 neighbors
+  if (n === 3) {
+    if (!down)  return [4, 1,   0]; // t_junction_top  (open up+left+right)
+    if (!up)    return [7, 1,   0]; // t_junction_bottom (open down+left+right)
+    if (!left)  return [4, 1,  90]; // open up+down+right
+    if (!right) return [4, 1, -90]; // open up+down+left
+  }
+  // Vertical straight
+  if ((up || down) && !left && !right) return [0, 1, 90];
+  // Horizontal straight, cross (n===4), isolated (n===0 or 1)
   return [0, 1, 0];
 }
 
