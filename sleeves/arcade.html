@@ -489,11 +489,48 @@ function drawWell(ox, oy) {
   }
 }
 
+function drawBiomeTileRotated(col, row, dx, dy, deg) {
+  if (!biomeSheet) return false;
+  const s = biomeTilePx;
+  if (deg === 0) {
+    ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE, TILE);
+  } else {
+    ctx.save();
+    ctx.translate(dx + TILE / 2, dy + TILE / 2);
+    ctx.rotate(deg * Math.PI / 180);
+    ctx.drawImage(biomeSheet, col * s, row * s, s, s, -TILE / 2, -TILE / 2, TILE, TILE);
+    ctx.restore();
+  }
+  return true;
+}
+
+function pathTileInfo(c, r) {
+  const up    = PATH_TILES.has(`${c},${r-1}`);
+  const down  = PATH_TILES.has(`${c},${r+1}`);
+  const left  = PATH_TILES.has(`${c-1},${r}`);
+  const right = PATH_TILES.has(`${c+1},${r}`);
+  // Corners
+  if ( right && down && !left && !up)   return [2, 1, 0];    // corner_top_left
+  if ( left  && down && !right && !up)  return [3, 1, 0];    // corner_top_right
+  if ( right && up   && !left && !down) return [5, 1, 0];    // corner_bottom_left
+  if ( left  && up   && !right && !down)return [6, 1, 0];    // corner_bottom_right
+  // T-junctions
+  if ( left && right && down && !up)    return [4, 1, 0];    // t_junction_top
+  if ( left && right && up   && !down)  return [7, 1, 0];    // t_junction_bottom
+  if ( up   && down  && right && !left) return [4, 1, 90];   // t_junction rotated left
+  if ( up   && down  && left  && !right)return [4, 1, -90];  // t_junction rotated right
+  // Vertical (no left/right neighbors)
+  if ((up || down) && !left && !right)  return [0, 1, 90];   // horizontal rotated 90°
+  // Horizontal / default
+  return [0, 1, 0];
+}
+
 function drawPaths(ox, oy) {
   PATH_TILES.forEach(key => {
     const [c, r] = key.split(',').map(Number);
     const dx = c * TILE + ox, dy = r * TILE + oy;
-    if (!drawBiomeTile(B_PATH[0], B_PATH[1], dx, dy)) {
+    const [col, row, deg] = pathTileInfo(c, r);
+    if (!drawBiomeTileRotated(col, row, dx, dy, deg)) {
       ctx.fillStyle = '#8a7550';
       ctx.fillRect(dx, dy, TILE, TILE);
     }
