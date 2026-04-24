@@ -1667,7 +1667,7 @@ function renderDomainPage(domainKey) {
   const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
 
   page.innerHTML = `
-    <div class="domain-page-back" onclick="switchTab('${domainPageSource}')">← back</div>
+    <div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>
     <div class="domain-page-identity">
       <div class="domain-page-sigil">${sigilSvg}</div>
       <div>
