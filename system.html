@@ -2528,6 +2528,63 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadSigilManifest();
   applyDailyTheme();
 
+  // ── ARCADE MODE: inject pixel stylesheet + font ───────────────────────
+  if (fromArcade) {
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
+    document.head.appendChild(fontLink);
+
+    const arcadeStyle = document.createElement('style');
+    arcadeStyle.textContent = `
+      #domainPage.arcade-mode {
+        --accent: #c8372d; --text: #f0e6d3; --text2: #aaa; --text3: #666;
+        --border: #333; --bg2: #0d0d1a; --green: #4caf50; --gold: #c8b97a;
+        font-family: 'Press Start 2P', monospace;
+        background: #0a0a14;
+      }
+      #domainPage.arcade-mode * { font-family: 'Press Start 2P', monospace !important; }
+      #domainPage.arcade-mode .domain-page-back { font-size:8px; color:#c8b97a; letter-spacing:1px; }
+      #domainPage.arcade-mode .domain-page-title { font-size:10px; letter-spacing:2px; }
+      #domainPage.arcade-mode .domain-page-anchor { font-size:7px; color:#888; margin-top:4px; }
+      #domainPage.arcade-mode .domain-page-score { font-size:6px; color:#c8b97a; margin-top:4px; }
+      #domainPage.arcade-mode .domain-page-sigil svg { filter:drop-shadow(0 0 5px #c8372d); }
+      #domainPage.arcade-mode .quest-card {
+        border:2px solid #c8372d !important; border-radius:0 !important;
+        background:#0a0a14 !important; margin-bottom:10px;
+      }
+      #domainPage.arcade-mode .quest-card.completed { border-color:#444 !important; opacity:0.65; }
+      #domainPage.arcade-mode .quest-name { font-size:8px !important; color:#f0e6d3 !important; line-height:1.8 !important; }
+      #domainPage.arcade-mode .quest-tier { font-size:6px !important; border-radius:0 !important; padding:2px 5px !important; }
+      #domainPage.arcade-mode .quest-xp { font-size:7px !important; color:#c8b97a !important; }
+      #domainPage.arcade-mode .domain-pip { border-radius:0 !important; }
+      #domainPage.arcade-mode .quest-log-area { background:#0d0d1a !important; border-top:1px solid #333 !important; }
+      #domainPage.arcade-mode textarea,
+      #domainPage.arcade-mode .log-input,
+      #domainPage.arcade-mode input[type="number"],
+      #domainPage.arcade-mode input[type="text"] {
+        font-size:7px !important; border:2px solid #444 !important; border-radius:0 !important;
+        background:#0d0d1a !important; color:#f0e6d3 !important;
+      }
+      #domainPage.arcade-mode textarea::placeholder,
+      #domainPage.arcade-mode input::placeholder { color:#444 !important; font-size:6px !important; }
+      #domainPage.arcade-mode .btn-primary {
+        font-size:7px !important; border-radius:0 !important; letter-spacing:1px !important;
+        border:2px solid #c8372d !important; background:#c8372d !important; color:#f0e6d3 !important;
+        padding:8px 12px !important;
+      }
+      #domainPage.arcade-mode .btn-primary:disabled { opacity:0.35 !important; }
+      #domainPage.arcade-mode .btn:not(.btn-primary) {
+        font-size:7px !important; border-radius:0 !important; border:1px solid #555 !important;
+        color:#888 !important; background:transparent !important;
+      }
+      #domainPage.arcade-mode .log-actions { padding-top:8px !important; }
+      #domainPage.arcade-mode [style*="color:var(--green)"] { color:#4caf50 !important; }
+      #domainPage.arcade-mode [style*="color:var(--text3)"] { color:#666 !important; }
+    `;
+    document.head.appendChild(arcadeStyle);
+  }
+
   // Check if new day
   const today = getTodayStr();
   if (data.lastDate && data.lastDate !== today) {
