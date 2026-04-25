@@ -541,24 +541,25 @@ function pathTileInfo(c, r) {
   const left  = PATH_TILES.has(`${c-1},${r}`);
   const right = PATH_TILES.has(`${c+1},${r}`);
   const n = (up?1:0)+(down?1:0)+(left?1:0)+(right?1:0);
-  // Corners — exactly 2 perpendicular neighbors
-  if (n === 2) {
-    if (right && down) return [2, 1,   0]; // corner_top_left
-    if (left  && down) return [3, 1,   0]; // corner_top_right
-    if (right && up)   return [5, 1,   0]; // corner_bottom_left
-    if (left  && up)   return [6, 1,   0]; // corner_bottom_right
-  }
-  // T-junctions — exactly 3 neighbors
+  // Cross
+  if (n === 4) return [3, 1, 0];
+  // T-junctions — arrayKey2 row1: col6=t_junction_open_top (D+L+R, top missing)
   if (n === 3) {
-    if (!up)    return [4, 1,   0]; // ┬ dirt D+L+R
-    if (!down)  return [7, 1,   0]; // ┴ dirt U+L+R
-    if (!left)  return [4, 1,  90]; // ├ rotated
-    if (!right) return [4, 1, -90]; // ┤ rotated
+    if (!up)    return [6, 1,   0]; // open top  → D+L+R
+    if (!down)  return [6, 1, 180]; // open bottom → U+L+R
+    if (!left)  return [6, 1, -90]; // open left  → U+R+D
+    if (!right) return [6, 1,  90]; // open right → U+L+D
   }
-  // Vertical straight
-  if ((up || down) && !left && !right) return [0, 1, 90];
-  // Horizontal straight, cross (n===4), isolated (n===0 or 1)
-  return [0, 1, 0];
+  // Corners — arrayKey2 row1: col2=corner_bottom_right, col4=corner_top_right, col5=corner_top_left
+  if (n === 2) {
+    if (right && down) return [2, 1,   0]; // corner_bottom_right
+    if (left  && down) return [2, 1,  90]; // corner_bottom_left (rotated)
+    if (right && up)   return [4, 1,   0]; // corner_top_right
+    if (left  && up)   return [5, 1,   0]; // corner_top_left
+  }
+  // Straight
+  if ((up || down) && !left && !right) return [1, 1, 0]; // vertical (col1)
+  return [0, 1, 0]; // horizontal (col0), isolated
 }
 
 function drawPaths(ox, oy) {
