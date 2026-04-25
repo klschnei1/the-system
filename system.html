@@ -2595,6 +2595,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (hashKey && SEPHIRA_MAP[hashKey] && SEPHIRA_MAP[hashKey].domain) {
     openDomainPage(hashKey, 'quests');
   }
+
+  // Tab routing from island sleeve (?tab=signal → open Signal tab)
+  const tabParam = new URLSearchParams(window.location.search).get('tab');
+  if (tabParam === 'signal') switchTab('transmit');
 });
 
 function showSetupModal() {
