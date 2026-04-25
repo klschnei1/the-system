@@ -297,13 +297,6 @@ window.renderStrengthWidget = function(el, dk, domain) {
 
   // ── 8-BIT MODE (arcade sleeve) ────────────────────────────────────────
   if (window.fromArcade) {
-    if (!document.querySelector('link[href*="Press+Start"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
-      document.head.appendChild(link);
-    }
-
     const maxSets = volumeGroups.length ? volumeGroups[0][1] : 1;
     const abbrev = s => s.replace('hamstrings','hams').replace('shoulders','shldrs')
                          .replace('adductors','addctrs').replace('rear delts','r.delts')
