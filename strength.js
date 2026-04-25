@@ -282,7 +282,6 @@ window.renderStrengthWidget = function(el, dk, domain) {
     }
   }
 
-  // Include today's unsaved log
   const todayG1 = todayLog['g1'];
   if (todayG1?.workout && !data.dailyLogs?.[today]?.g1?.workout) {
     weekSessions++;
@@ -296,6 +295,53 @@ window.renderStrengthWidget = function(el, dk, domain) {
   const hasVolume = Object.keys(weekVolume).length > 0;
   const volumeGroups = Object.entries(weekVolume).sort((a,b) => b[1] - a[1]);
 
+  // ── 8-BIT MODE (arcade sleeve) ────────────────────────────────────────
+  if (window.fromArcade) {
+    if (!document.querySelector('link[href*="Press+Start"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
+      document.head.appendChild(link);
+    }
+
+    const maxSets = volumeGroups.length ? volumeGroups[0][1] : 1;
+    const abbrev = s => s.replace('hamstrings','hams').replace('shoulders','shldrs')
+                         .replace('adductors','addctrs').replace('rear delts','r.delts')
+                         .replace('erectors','erctrs');
+
+    el.innerHTML = `
+      <style>
+        .px-widget { background:#0a0a14; border:3px solid #c8372d; padding:16px; font-family:'Press Start 2P',monospace; margin-top:12px; }
+        .px-header { color:#c8372d; font-size:9px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid #c8372d; }
+        .px-stat { color:#f0e6d3; font-size:7px; margin-bottom:6px; }
+        .px-divider { color:#c8b97a; font-size:7px; margin:12px 0 10px; }
+        .px-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+        .px-label { color:#f0e6d3; font-size:6px; width:68px; flex-shrink:0; text-transform:uppercase; overflow:hidden; white-space:nowrap; }
+        .px-track { flex:1; height:10px; background:#1a1a2e; border:1px solid #333; }
+        .px-fill { height:100%; background:#c8372d; }
+        .px-val { color:#c8b97a; font-size:7px; width:20px; text-align:right; flex-shrink:0; }
+        .px-empty { color:#444; font-size:7px; margin-top:12px; }
+      </style>
+      <div class="px-widget">
+        <div class="px-header">⚔ STRENGTH LOG</div>
+        <div class="px-stat">SESSIONS : ${String(weekSessions).padStart(2,'0')} / 07</div>
+        <div class="px-stat">TOTAL SETS: ${String(weekTotalSets).padStart(3,'0')}</div>
+        ${hasVolume ? `
+          <div class="px-divider">— MUSCLE VOL —</div>
+          ${volumeGroups.map(([mg, sets]) => `
+            <div class="px-row">
+              <div class="px-label">${abbrev(mg)}</div>
+              <div class="px-track"><div class="px-fill" style="width:${Math.round((sets/maxSets)*100)}%"></div></div>
+              <div class="px-val">${sets}</div>
+            </div>
+          `).join('')}
+        ` : '<div class="px-empty">NO DATA</div>'}
+      </div>
+    `;
+    return;
+  }
+
+  // ── DEFAULT MODE ──────────────────────────────────────────────────────
   el.innerHTML = hasVolume ? `
     <div class="domain-widget" style="border-color:${domain.color}">
       <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:8px">7-day volume · ${weekSessions} sessions · ${weekTotalSets} sets</div>
