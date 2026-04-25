@@ -2518,6 +2518,7 @@ function selectCommunionSensei(week) {
 
 
 const fromArcade = new URLSearchParams(window.location.search).get('from') === 'arcade';
+window.fromArcade = fromArcade;
 
 // ── INIT ──────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
