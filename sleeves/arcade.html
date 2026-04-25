@@ -229,7 +229,7 @@ function drawTile(sheet, col, row, dx, dy) {
 function drawBiomeTile(col, row, dx, dy) {
   if (!biomeSheet) return false;
   const s = biomeTilePx;
-  ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE, TILE);
+  ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE + 1, TILE + 1);
   return true;
 }
 
