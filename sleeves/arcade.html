@@ -2,843 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Cybernetica // Arcade</title>
-<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Cybernetica — Island</title>
 <style>
-  :root {
-    --bezel:        #1a0f2e;
-    --bezel-light:  #2d1b4e;
-    --bezel-shadow: #0a0518;
-    --pink:   #ff6ec7;
-    --pink-d: #b04088;
-    --cyan:   #5ac8fa;
-    --cyan-d: #2599c8;
-    --gold:   #ffd700;
-  }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body {
-    margin: 0; padding: 0;
-    background: #07070f;
-    font-family: 'Courier New', monospace;
-    color: #fff;
-    overflow: hidden;
-    height: 100%;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .device {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 100vh;
-    height: 100dvh;
-    padding: 12px;
-    gap: 14px;
-  }
-  .header {
-    font-size: 9px;
-    letter-spacing: 4px;
-    color: var(--pink);
-    text-transform: uppercase;
-    text-align: center;
-    text-shadow: 0 0 8px rgba(255,110,199,0.5);
-  }
-  .screen-wrap {
-    background: var(--bezel);
-    border: 4px solid var(--bezel-light);
-    border-radius: 10px;
-    padding: 12px;
-    box-shadow: 0 8px 24px rgba(255, 110, 199, 0.25), inset 0 2px 4px var(--bezel-shadow);
-  }
-  canvas {
-    background: #000;
-    display: block;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    image-rendering: -moz-crisp-edges;
-    width: 320px;
-    height: 240px;
-  }
-  @media (min-width: 700px) {
-    canvas { width: 640px; height: 480px; }
-  }
-  .controls {
-    display: flex;
-    width: 100%;
-    max-width: 420px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 4px;
-  }
-  .dpad {
-    display: grid;
-    grid-template-columns: 46px 46px 46px;
-    grid-template-rows: 46px 46px 46px;
-    gap: 2px;
-  }
-  .dpad button, .dpad .center {
-    background: var(--bezel);
-    border: 2px solid var(--bezel-light);
-    color: var(--pink);
-    font-size: 16px;
-    font-family: inherit;
-    cursor: pointer;
-    border-radius: 6px;
-    touch-action: none;
-    padding: 0;
-  }
-  .dpad button:active { background: var(--pink); color: var(--bezel); }
-  .dpad .up    { grid-column: 2; grid-row: 1; }
-  .dpad .left  { grid-column: 1; grid-row: 2; }
-  .dpad .right { grid-column: 3; grid-row: 2; }
-  .dpad .down  { grid-column: 2; grid-row: 3; }
-  .dpad .center {
-    grid-column: 2; grid-row: 2;
-    background: var(--bezel-light);
-    border: none;
-    pointer-events: none;
-  }
-
-  .ab {
-    display: flex;
-    gap: 14px;
-    align-items: flex-end;
-    transform: rotate(-18deg);
-  }
-  .ab button {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    color: #fff;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: inherit;
-    cursor: pointer;
-    touch-action: none;
-    padding: 0;
-    border: 3px solid;
-  }
-  .ab .a {
-    background: var(--pink);
-    border-color: var(--pink-d);
-    box-shadow: 0 4px 0 var(--pink-d);
-  }
-  .ab .b {
-    background: var(--cyan);
-    border-color: var(--cyan-d);
-    box-shadow: 0 4px 0 var(--cyan-d);
-  }
-  .ab .a:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--pink-d); }
-  .ab .b:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--cyan-d); }
-
-  .footer {
-    font-size: 8px;
-    letter-spacing: 3px;
-    color: #666;
-    text-align: center;
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%; height: 100%;
+  background: #0d1e35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+}
+.map-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100vw;
+  max-height: 100vh;
+  line-height: 0;
+}
+.map-wrap img {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  display: block;
+}
+.spot {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.spot:hover {
+  background: rgba(255, 255, 255, 0.12);
+  outline: 2px solid rgba(255, 255, 255, 0.35);
+}
+.spot:active {
+  background: rgba(255, 255, 255, 0.28);
+}
+.spot::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5, 8, 20, 0.92);
+  color: #c8b97a;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.spot:hover::after { opacity: 1; }
 </style>
 </head>
 <body>
+<div class="map-wrap">
+  <img src="island.png" alt="Cybernetica Island">
 
-<div class="device">
-  <div class="header">CYBERNETICA · NILE-184</div>
-  <div class="screen-wrap">
-    <canvas id="screen" width="640" height="480"></canvas>
-  </div>
-  <div class="controls">
-    <div class="dpad">
-      <button class="up" data-key="ArrowUp">▲</button>
-      <button class="left" data-key="ArrowLeft">◀</button>
-      <div class="center"></div>
-      <button class="right" data-key="ArrowRight">▶</button>
-      <button class="down" data-key="ArrowDown">▼</button>
-    </div>
-    <div class="ab">
-      <button class="b" data-key="b">B</button>
-      <button class="a" data-key="a">A</button>
-    </div>
-  </div>
-  <div class="footer">A: ENTER · B: BACK · DPAD: MOVE</div>
+  <!-- 9 domains -->
+  <div class="spot" data-label="Strength"   onclick="go('#geburah')"    style="left:11%;top:13%;width:14%;height:18%"></div>
+  <div class="spot" data-label="Intake"     onclick="go('#malkuth')"    style="left:41%;top:9%;width:17%;height:18%"></div>
+  <div class="spot" data-label="Recovery"   onclick="go('#yesod')"      style="left:8%;top:37%;width:15%;height:18%"></div>
+  <div class="spot" data-label="Finance"    onclick="go('#chesed')"     style="left:54%;top:33%;width:18%;height:18%"></div>
+  <div class="spot" data-label="Creation"   onclick="go('#netzach')"    style="left:12%;top:59%;width:15%;height:18%"></div>
+  <div class="spot" data-label="Structure"  onclick="go('#binah')"      style="left:38%;top:64%;width:18%;height:18%"></div>
+  <div class="spot" data-label="Social"     onclick="go('#chokmah')"    style="left:55%;top:56%;width:16%;height:16%"></div>
+  <div class="spot" data-label="Attunement" onclick="go('#pillar')"     style="left:6%;top:79%;width:13%;height:13%"></div>
+  <div class="spot" data-label="Intellect"  onclick="go('#hod')"        style="left:73%;top:73%;width:14%;height:15%"></div>
+
+  <!-- Signal: mountain temple -->
+  <div class="spot" data-label="Signal"     onclick="go('&tab=signal')" style="left:72%;top:4%;width:16%;height:25%"></div>
+
+  <!-- Dock: back to base -->
+  <div class="spot" data-label="← Base"     onclick="goBase()"          style="left:0%;top:62%;width:9%;height:15%"></div>
 </div>
 
 <script>
-// ==== CONFIG ===========================================================
-const TILE = 32;
-const COLS = 36;         // world width in tiles
-const ROWS = 24;         // world height in tiles
-const VW   = 20;         // viewport width  (canvas stays 320px)
-const VH   = 15;         // viewport height (canvas stays 240px)
-const W = VW * TILE;     // 320 — canvas pixel width
-const H = VH * TILE;     // 240 — canvas pixel height
-
-const cnv = document.getElementById('screen');
-const ctx = cnv.getContext('2d');
-ctx.imageSmoothingEnabled = false;
-
-// ==== ASSETS ============================================================
-// TILE TUNING: terrain_atlas.png is a 1024×1024 sheet at 16px tiles (64×64 grid).
-// If the tiles look wrong, adjust the [col, row] values below.
-const SHEET_TILE = 16;
-const T_GRASS = [0, 46]; // green grass — bottom-left of terrain_atlas
-const T_PATH  = [1, 37]; // gray stone — this coordinate confirmed working
-
-// Biome atlas: 2048×2048, 8×8 grid, 256px native tiles (autumn is 512×512, 64px).
-// Row semantics (per Manus spec): 0 base, 1 paths, 2 elevation, 3 primary trees,
-// 4 secondary flora, 5 props, 6 water, 7 features.
-const BIOME_PACKS = [
-  'master_forest', 'master_desert', 'master_snow', 'master_corrupted',
-  'biome_celestial', 'biome_crystal', 'biome_cyberpunk',
-  'biome_underwater', 'biome_volcanic', 'final_biome_autumn',
-];
-const BIOME_PACK = BIOME_PACKS[Math.floor(Math.random() * BIOME_PACKS.length)];
-console.log('[arcade] biome pack:', BIOME_PACK);
-const B_GRASS     = [0, 0]; // [col, row] in 8×8 grid — grass_plain
-const B_PATH      = [0, 1]; // path_horizontal_center
-const B_ELEVATION = [0, 2]; // cliff_face_straight
-const B_TREE      = [0, 3]; // tree_small_deciduous
-const B_BUSH      = [0, 5]; // bush_plain
-const B_ROCK      = [2, 5]; // rock_small
-const B_WELL      = [1, 7]; // well_stone
-let biomeSheet = null;
-let biomeTilePx = 256; // set from sheet width on load
-
-let terrainSheet = null;
-let townSheet = null;
-let playerSheet = null;
-const PLAYER_CHAR = Math.floor(Math.random() * 32) + 1;
-
-const buildingSheets = {}; // keyed by domain key
-
-function loadImage(src) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = src;
-  });
+function go(dest) {
+  window.location.href = '../system.html?v=' + Date.now() + '&from=arcade' + dest;
 }
-
-function drawTile(sheet, col, row, dx, dy) {
-  ctx.drawImage(sheet,
-    col * SHEET_TILE, row * SHEET_TILE, SHEET_TILE, SHEET_TILE,
-    dx, dy, TILE, TILE);
-}
-
-function drawBiomeTile(col, row, dx, dy) {
-  if (!biomeSheet) return false;
-  const s = biomeTilePx;
-  ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE + 1, TILE + 1);
-  return true;
-}
-
-// px/py = pixel position on canvas. w/h = native sprite size.
-// solidCol/Row/W/H = tile-grid collision footprint.
-// Top row anchors from y=0; bottom row anchors from y=160.
-// px/py and solidCol/Row are assigned by layoutTown() at load time.
-const DOMAINS = [
-  { key: 'hod',     name: 'INTELLECT', glyph: 'eye',     roof: '#ff8c42',
-    img: 'assets/buildings/topdown/intellect/v5_intellect.png',
-    w: 112, h: 192, solidW: 4, solidH: 6 },
-  { key: 'geburah', name: 'STRENGTH',  glyph: 'khopesh', roof: '#ff5577',
-    img: 'assets/buildings/topdown/strength/final_strength.png',
-    w: 128, h: 160, solidW: 4, solidH: 5 },
-  { key: 'malkuth', name: 'INTAKE',    glyph: 'wheat',   roof: '#00d4ff',
-    img: 'assets/buildings/topdown/intake/v3_intake_market.png',
-    w: 128, h: 160, solidW: 4, solidH: 5 },
-  { key: 'yesod',   name: 'RECOVERY',  glyph: 'ankh',    roof: '#b06bff',
-    img: 'assets/buildings/topdown/recovery/final_v2_recovery.png',
-    w: 96,  h: 160, solidW: 3, solidH: 5 },
-  { key: 'chesed',  name: 'CAPITAL',   glyph: 'scales',  roof: '#5dffb4',
-    img: 'assets/buildings/topdown/finance/v5_finance.png',
-    w: 160, h: 160, solidW: 5, solidH: 5 },
-  { key: 'binah',   name: 'STRUCTURE', glyph: 'pyramid', roof: '#ffd166',
-    img: 'assets/buildings/topdown/structure/final_v2_structure.png',
-    w: 128, h: 160, solidW: 4, solidH: 5 },
-  { key: 'netzach', name: 'CREATION',  glyph: 'lyre',    roof: '#ff6ec7',
-    img: 'assets/buildings/topdown/creation/final_v2_creation.png',
-    w: 96,  h: 160, solidW: 3, solidH: 5 },
-  { key: 'chokmah', name: 'SOCIAL',    glyph: 'figures', roof: '#06ffa5',
-    img: 'assets/buildings/topdown/social/final_v2_social.png',
-    w: 96,  h: 160, solidW: 3, solidH: 5 },
-];
-
-const solid = [];
-for (let r = 0; r < ROWS; r++) solid.push(new Array(COLS).fill(0));
-const PATH_TILES = new Set();
-const ELEVATION_TILES = new Map(); // "c,r" → role string
-let plaza = { c: 18, r: 12 };
-
-function layoutTown() {
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) solid[r][c] = 0;
-  PATH_TILES.clear();
-  ELEVATION_TILES.clear();
-
-  // 4×2 region grid across 36×24 world; shuffle which domain gets which cell.
-  const regW = 9, regH = 12;
-  const regionOrder = [0,1,2,3,4,5,6,7].sort(() => Math.random() - 0.5);
-  const doors = [];
-
-  DOMAINS.forEach((d, i) => {
-    const ri = regionOrder[i];
-    const regCol = ri % 4;
-    const regRow = Math.floor(ri / 4);
-    const footW = d.solidW, footH = d.solidH;
-    const maxJX = Math.max(1, regW - footW - 1);
-    const maxJY = Math.max(1, regH - footH - 3);
-    const jx = Math.floor(Math.random() * maxJX);
-    const jy = Math.floor(Math.random() * maxJY);
-    const solidC = regCol * regW + 1 + jx;
-    const solidR = regRow * regH + 1 + jy;
-    d.solidCol = solidC;
-    d.solidRow = solidR;
-    const extraPxTop = d.h - footH * TILE;
-    d.px = solidC * TILE;
-    d.py = solidR * TILE - extraPxTop;
-    for (let dy = 0; dy < footH; dy++)
-      for (let dx = 0; dx < footW; dx++) {
-        const r = solidR + dy, c = solidC + dx;
-        if (r >= 0 && r < ROWS && c >= 0 && c < COLS) solid[r][c] = 1;
-      }
-    const doorC = solidC + Math.floor(footW / 2);
-    const doorR = Math.min(ROWS - 1, solidR + footH);
-    doors.push({ c: doorC, r: doorR });
-  });
-
-  // Plaza: geometric center of all doors
-  const avgC = Math.round(doors.reduce((s, d) => s + d.c, 0) / doors.length);
-  const avgR = Math.round(doors.reduce((s, d) => s + d.r, 0) / doors.length);
-  plaza = { c: Math.max(2, Math.min(COLS - 3, avgC)), r: Math.max(2, Math.min(ROWS - 3, avgR)) };
-
-  // Single-tile L-shaped path from each door to plaza.
-  doors.forEach(d => {
-    let c = d.c, r = d.r;
-    const horiz = Math.sign(plaza.c - c);
-    while (c !== plaza.c) { PATH_TILES.add(`${c},${r}`); c += horiz; }
-    const vert = Math.sign(plaza.r - r);
-    while (r !== plaza.r) { PATH_TILES.add(`${c},${r}`); r += vert; }
-    PATH_TILES.add(`${c},${r}`);
-    PATH_TILES.add(`${d.c},${d.r}`);
-  });
-
-  // Elevation: up to 6 small patches (2×2 or 3×2) on open ground.
-  // Tiles are visual only — not marked solid, so navigation is never blocked.
-  ELEVATION_TILES.clear();
-  let placed = 0, tries = 0;
-  while (placed < 6 && tries < 40) {
-    tries++;
-    const pw = 2 + Math.floor(Math.random() * 2); // 2 or 3 wide
-    const ph = 2;                                   // always 2 tall
-    const ec = 2 + Math.floor(Math.random() * (COLS - pw - 4));
-    const er = 2 + Math.floor(Math.random() * (ROWS - ph - 4));
-    let ok = true;
-    for (let dy = 0; dy < ph && ok; dy++)
-      for (let dx = 0; dx < pw && ok; dx++) {
-        if (solid[er+dy][ec+dx]) ok = false;
-        if (PATH_TILES.has(`${ec+dx},${er+dy}`)) ok = false;
-      }
-    if (ok) {
-      // Stairs pair centered on bottom row
-      const stairsStart = Math.max(0, Math.floor((pw - 2) / 2));
-      for (let dy = 0; dy < ph; dy++) {
-        for (let dx = 0; dx < pw; dx++) {
-          let role;
-          if (dy === 0) {
-            if      (dx === 0)      role = 'corner_tl';
-            else if (dx === pw - 1) role = 'corner_tr';
-            else                    role = 'edge_top';
-          } else {
-            if      (dx === stairsStart)     role = 'stairs_l';
-            else if (dx === stairsStart + 1) role = 'stairs_r';
-            else if (dx === 0)               role = 'edge_bottom';
-            else if (dx === pw - 1)          role = 'edge_bottom';
-            else                             role = 'interior';
-          }
-          ELEVATION_TILES.set(`${ec+dx},${er+dy}`, role);
-        }
-      }
-      placed++;
-    }
-  }
-
-  player.x = plaza.c;
-  player.y = plaza.r;
-}
-
-// ==== STATE ============================================================
-let player = { x: 18, y: 7, dir: 'down', stepFrame: 0 };
-let dialogOpen = false;
-let dialogDomain = null;
-let dialogText = '';
-let dialogShown = 0;
-let typewriterTick = 0;
-
-// ==== HIEROGLYPHS (8x8 pixel patterns) =================================
-const GLYPHS = {
-  eye: [
-    ' XXXXXX ',
-    'X      X',
-    'X  XX  X',
-    'X XXXX X',
-    'X  XX  X',
-    'X      X',
-    ' XXXXXX ',
-    ' X    X ',
-  ],
-  khopesh: [
-    '  X     ',
-    '  X     ',
-    '  X     ',
-    '  XX    ',
-    '   XX   ',
-    ' XXXX   ',
-    'XX      ',
-    'X       ',
-  ],
-  wheat: [
-    '   X    ',
-    '  XXX   ',
-    ' X X X  ',
-    '  XXX   ',
-    ' X X X  ',
-    '  XXX   ',
-    '   X    ',
-    '   X    ',
-  ],
-  ankh: [
-    '  XXX   ',
-    ' X   X  ',
-    ' X   X  ',
-    '  XXX   ',
-    'XXXXXXX ',
-    '   X    ',
-    '   X    ',
-    '   X    ',
-  ],
-  scales: [
-    '   X    ',
-    ' XXXXX  ',
-    ' X X X  ',
-    'XX X XX ',
-    '   X    ',
-    '   X    ',
-    '  XXX   ',
-    ' XXXXX  ',
-  ],
-  pyramid: [
-    '   X    ',
-    '   XX   ',
-    '  XXX   ',
-    '  XXXX  ',
-    ' XXXXX  ',
-    ' XXXXXX ',
-    'XXXXXXX ',
-    'XXXXXXXX',
-  ],
-  lyre: [
-    ' X    X ',
-    ' X    X ',
-    ' XXXXXX ',
-    ' XX  XX ',
-    ' XXXXXX ',
-    ' X X  X ',
-    ' X X  X ',
-    ' XXXXXX ',
-  ],
-  figures: [
-    '  X X   ',
-    ' XXXXX  ',
-    '  X X   ',
-    ' XX XX  ',
-    'X X X X ',
-    '  X X   ',
-    ' XX XX  ',
-    ' XX XX  ',
-  ],
-};
-
-function drawGlyph(x, y, kind, color) {
-  ctx.fillStyle = color || '#ffd700';
-  const pat = GLYPHS[kind];
-  if (!pat) return;
-  for (let py = 0; py < 8; py++) {
-    for (let px = 0; px < 8; px++) {
-      if (pat[py][px] === 'X') ctx.fillRect(x + px, y + py, 1, 1);
-    }
-  }
-}
-
-// ==== DRAW =============================================================
-
-function drawGroundBase(ox, oy) {
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      const dx = c * TILE + ox, dy = r * TILE + oy;
-      const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
-      if (!drawBiomeTile(B_GRASS[0], B_GRASS[1], dx, dy)) {
-        ctx.fillStyle = isBorder ? '#2a4f18' : '#4a8c30';
-        ctx.fillRect(dx, dy, TILE, TILE);
-      }
-      if (isBorder) {
-        ctx.fillStyle = 'rgba(0,0,0,0.25)';
-        ctx.fillRect(dx, dy, TILE, TILE);
-      }
-    }
-  }
-}
-
-const ELEV_TILES = {
-  corner_tl:   [1, 2], // cliff_corner_convex_left
-  corner_tr:   [2, 2], // cliff_corner_convex_right
-  edge_top:    [0, 2], // cliff_face_straight
-  edge_left:   [0, 2],
-  edge_right:  [0, 2],
-  edge_bottom: [0, 2],
-  stairs_l:    [6, 2],
-  stairs_r:    [7, 2],
-};
-
-function drawElevation(ox, oy) {
-  ELEVATION_TILES.forEach((role, key) => {
-    if (role === 'interior') return;
-    const [c, r] = key.split(',').map(Number);
-    const dx = c * TILE + ox, dy = r * TILE + oy;
-    const spec = ELEV_TILES[role];
-    if (!spec) return;
-    if (!drawBiomeTile(spec[0], spec[1], dx, dy)) {
-      ctx.fillStyle = '#6a6a5a';
-      ctx.fillRect(dx, dy, TILE, TILE);
-    }
-  });
-}
-
-function drawWell(ox, oy) {
-  const dx = plaza.c * TILE + ox, dy = plaza.r * TILE + oy;
-  if (!drawBiomeTile(B_WELL[0], B_WELL[1], dx, dy) && townSheet) {
-    drawTile(townSheet, 5, 1, dx, dy);
-  }
-}
-
-function drawBiomeTileRotated(col, row, dx, dy, deg) {
-  if (!biomeSheet) return false;
-  const s = biomeTilePx;
-  if (deg === 0) {
-    ctx.drawImage(biomeSheet, col * s, row * s, s, s, dx, dy, TILE, TILE);
-  } else {
-    ctx.save();
-    ctx.translate(dx + TILE / 2, dy + TILE / 2);
-    ctx.rotate(deg * Math.PI / 180);
-    ctx.drawImage(biomeSheet, col * s, row * s, s, s, -TILE / 2, -TILE / 2, TILE, TILE);
-    ctx.restore();
-  }
-  return true;
-}
-
-function pathTileInfo(c, r) {
-  const up    = PATH_TILES.has(`${c},${r-1}`);
-  const down  = PATH_TILES.has(`${c},${r+1}`);
-  const left  = PATH_TILES.has(`${c-1},${r}`);
-  const right = PATH_TILES.has(`${c+1},${r}`);
-  const n = (up?1:0)+(down?1:0)+(left?1:0)+(right?1:0);
-  // Cross
-  if (n === 4) return [3, 1, 0];
-  // T-junctions — arrayKey2 row1: col6=t_junction_open_top (D+L+R, top missing)
-  if (n === 3) {
-    if (!up)    return [6, 1,   0]; // open top  → D+L+R
-    if (!down)  return [6, 1, 180]; // open bottom → U+L+R
-    if (!left)  return [6, 1, -90]; // open left  → U+R+D
-    if (!right) return [6, 1,  90]; // open right → U+L+D
-  }
-  // Corners — arrayKey2 row1: col2=corner_bottom_right, col4=corner_top_right, col5=corner_top_left
-  if (n === 2) {
-    if (right && down) return [2, 1,   0]; // corner_bottom_right
-    if (left  && down) return [2, 1,  90]; // corner_bottom_left (rotated)
-    if (right && up)   return [4, 1,   0]; // corner_top_right
-    if (left  && up)   return [5, 1,   0]; // corner_top_left
-  }
-  // Straight
-  if ((up || down) && !left && !right) return [1, 1, 0]; // vertical (col1)
-  return [0, 1, 0]; // horizontal (col0), isolated
-}
-
-function drawPaths(ox, oy) {
-  PATH_TILES.forEach(key => {
-    const [c, r] = key.split(',').map(Number);
-    const dx = c * TILE + ox, dy = r * TILE + oy;
-    const [col, row, deg] = pathTileInfo(c, r);
-    if (!drawBiomeTileRotated(col, row, dx, dy, deg)) {
-      ctx.fillStyle = '#8a7550';
-      ctx.fillRect(dx, dy, TILE, TILE);
-    }
-  });
-}
-
-function drawBuilding(d, ox, oy) {
-  const sheet = buildingSheets[d.key];
-  const footPxW = d.solidW * TILE;
-  const baseX = d.solidCol * TILE;
-  const baseY = (d.solidRow + d.solidH) * TILE;
-  if (sheet) {
-    const scale = footPxW / sheet.width;
-    const sw = footPxW;
-    const sh = Math.round(sheet.height * scale);
-    ctx.drawImage(sheet, baseX + ox, baseY - sh + oy, sw, sh);
-  } else {
-    const footPxH = d.solidH * TILE;
-    ctx.fillStyle = d.roof;
-    ctx.globalAlpha = 0.7;
-    ctx.fillRect(baseX + ox, baseY - footPxH + oy, footPxW, footPxH);
-    ctx.globalAlpha = 1;
-    drawGlyph(baseX + ox + footPxW / 2 - 4, baseY - footPxH / 2 + oy - 4, d.glyph, '#fff');
-  }
-}
-
-const DECOR_VARIANTS = [
-  [0, 3], // tree_small_deciduous
-  [2, 3], // tree_large_deciduous
-  [3, 3], // tree_large_ancient
-  [7, 3], // tree_pine_large
-  [0, 4], // tree_small_leafy
-  [2, 4], // tree_large_leafy
-  [0, 5], // bush_plain
-  [1, 5], // bush_with_red_berries
-  [2, 5], // rock_small
-  [3, 5], // rock_large_cracked
-  [4, 5], // rock_mossy
-  [5, 5], // mushroom_cluster
-];
-
-function drawDecoration(c, r, ox, oy) {
-  const x = c * TILE + ox, y = r * TILE + oy;
-  const hash = (Math.imul(c * 1234567, r * 891011) ^ (c * 31 + r * 17)) >>> 0;
-  const v = DECOR_VARIANTS[hash % DECOR_VARIANTS.length];
-  if (drawBiomeTile(v[0], v[1], x, y)) return;
-  // fallback pixel art tree
-  ctx.fillStyle = '#5a3010'; ctx.fillRect(x + 6, y + 10, 4, 6);
-  ctx.fillStyle = '#1a6020'; ctx.fillRect(x + 2, y + 5, 12, 8);
-  ctx.fillStyle = '#2a8030'; ctx.fillRect(x + 4, y + 2, 8, 7);
-  ctx.fillStyle = '#3aa040'; ctx.fillRect(x + 6, y, 4, 5);
-}
-
-function drawTrees(ox, oy) {
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (solid[r]?.[c]) continue;
-      if (PATH_TILES.has(`${c},${r}`)) continue;
-      if (ELEVATION_TILES.has(`${c},${r}`)) continue;
-      const isBorder = c <= 1 || c >= COLS - 2 || r <= 1 || r >= ROWS - 2;
-      const density = isBorder ? 0.65 : 0.07;
-      const hash = (Math.imul(c * 1234567, r * 891011) ^ (c * 31 + r * 17)) >>> 0;
-      if ((hash / 0xffffffff) < density) drawDecoration(c, r, ox, oy);
-    }
-  }
-}
-
-function drawPlayer(ox, oy) {
-  const px = player.x * TILE + ox;
-  const py = player.y * TILE + oy;
-  // shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.3)';
-  ctx.fillRect(px + 6, py + TILE - 2, 20, 2);
-  if (playerSheet) {
-    const row = { down: 0, left: 1, right: 2, up: 3 }[player.dir] ?? 0;
-    ctx.drawImage(playerSheet, 16, row * 20, 16, 20, px, py - 8, 32, 40);
-  } else {
-    // fillRect fallback while sheet loads
-    ctx.fillStyle = '#2d1b4e';
-    ctx.fillRect(px + 5, py + 2, 6, 5);
-    ctx.fillStyle = '#ffe5c0';
-    ctx.fillRect(px + 6, py + 5, 4, 2);
-    ctx.fillStyle = '#5a2d8f';
-    ctx.fillRect(px + 4, py + 7, 8, 7);
-    ctx.fillStyle = '#ffd700';
-    ctx.fillRect(px + 4, py + 13, 8, 1);
-  }
-}
-
-function drawDialog() {
-  if (!dialogOpen) return;
-  const dy = H - 100;
-  ctx.fillStyle = '#1a0f2e';
-  ctx.fillRect(8, dy, W - 16, 92);
-  ctx.strokeStyle = '#ff6ec7';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(9, dy + 1, W - 18, 90);
-  ctx.strokeStyle = '#5ac8fa';
-  ctx.strokeRect(15, dy + 7, W - 30, 78);
-  ctx.fillStyle = '#fff';
-  ctx.font = '16px "Courier New", monospace';
-  const lines = dialogText.split('\n');
-  let charsRemaining = dialogShown;
-  lines.forEach((line, i) => {
-    const visible = line.substring(0, Math.max(0, charsRemaining));
-    ctx.fillText(visible, 24, dy + 30 + i * 20);
-    charsRemaining -= line.length;
-  });
-  if (dialogShown >= dialogText.length) {
-    ctx.fillStyle = '#ffd700';
-    ctx.fillText('A', W - 36, dy + 78);
-    ctx.fillRect(W - 52, dy + 62, 8, 8);
-  }
-}
-
-function getCamera() {
-  let cx = Math.round(player.x - VW / 2);
-  let cy = Math.round(player.y - VH / 2);
-  cx = Math.max(0, Math.min(cx, COLS - VW));
-  cy = Math.max(0, Math.min(cy, ROWS - VH));
-  return { cx, cy };
-}
-
-function render() {
-  const { cx, cy } = getCamera();
-  const ox = -cx * TILE;
-  const oy = -cy * TILE;
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, W, H);
-  drawGroundBase(ox, oy);
-  drawPaths(ox, oy);
-  drawElevation(ox, oy);
-  drawTrees(ox, oy);
-  drawWell(ox, oy);
-  DOMAINS.forEach(d => drawBuilding(d, ox, oy));
-  drawPlayer(ox, oy);
-  drawDialog();
-}
-
-// ==== MOVEMENT =========================================================
-function tryMove(dx, dy) {
-  if (dialogOpen) return;
-  const newDir = dy < 0 ? 'up' : dy > 0 ? 'down' : dx < 0 ? 'left' : 'right';
-  player.dir = newDir;
-  const nx = player.x + dx;
-  const ny = player.y + dy;
-  if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) return;
-  if (solid[ny][nx]) return;
-  player.x = nx;
-  player.y = ny;
-}
-
-function findFacingDomain() {
-  let dx = 0, dy = 0;
-  if (player.dir === 'up')    dy = -1;
-  if (player.dir === 'down')  dy = 1;
-  if (player.dir === 'left')  dx = -1;
-  if (player.dir === 'right') dx = 1;
-  const tx = player.x + dx;
-  const ty = player.y + dy;
-  if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return null;
-  if (!solid[ty][tx]) return null;
-  return DOMAINS.find(d =>
-    tx >= d.solidCol && tx < d.solidCol + d.solidW &&
-    ty >= d.solidRow && ty < d.solidRow + d.solidH
-  );
-}
-
-function pressA() {
-  if (dialogOpen) {
-    if (dialogShown < dialogText.length) {
-      dialogShown = dialogText.length; // skip typewriter
-      return;
-    }
-    if (dialogDomain) {
-      window.location.href = '../system.html?v=' + Date.now() + '&from=arcade#' + dialogDomain.key;
-    }
-    return;
-  }
-  const d = findFacingDomain();
-  if (d) {
-    dialogOpen = true;
-    dialogDomain = d;
-    dialogText = `${d.name} TEMPLE\n\nEnter? Press A.`;
-    dialogShown = 0;
-    typewriterTick = 0;
-  }
-}
-
-function pressB() {
-  if (dialogOpen) {
-    dialogOpen = false;
-    dialogDomain = null;
-    return;
-  }
+function goBase() {
   window.location.href = '../system.html?v=' + Date.now();
 }
-
-// ==== INPUT ============================================================
-const KEY_MAP = {
-  ArrowUp:    () => tryMove(0, -1),
-  ArrowDown:  () => tryMove(0, 1),
-  ArrowLeft:  () => tryMove(-1, 0),
-  ArrowRight: () => tryMove(1, 0),
-  w: () => tryMove(0, -1),
-  s: () => tryMove(0, 1),
-  a: () => tryMove(-1, 0),
-  d: () => tryMove(1, 0),
-  z: pressA,
-  ' ': pressA,
-  Enter: pressA,
-  x: pressB,
-  Escape: pressB,
-};
-window.addEventListener('keydown', e => {
-  const fn = KEY_MAP[e.key];
-  if (fn) { e.preventDefault(); fn(); }
-});
-
-document.querySelectorAll('button[data-key]').forEach(btn => {
-  const key = btn.getAttribute('data-key');
-  let interval = null;
-  const fire = () => {
-    if (key === 'a') pressA();
-    else if (key === 'b') pressB();
-    else KEY_MAP[key]?.();
-  };
-  const start = e => {
-    e.preventDefault();
-    fire();
-    if (key.startsWith('Arrow')) interval = setInterval(fire, 160);
-  };
-  const stop = e => {
-    e.preventDefault();
-    if (interval) { clearInterval(interval); interval = null; }
-  };
-  btn.addEventListener('touchstart', start, { passive: false });
-  btn.addEventListener('touchend', stop, { passive: false });
-  btn.addEventListener('touchcancel', stop, { passive: false });
-  btn.addEventListener('mousedown', start);
-  btn.addEventListener('mouseup', stop);
-  btn.addEventListener('mouseleave', stop);
-});
-
-// ==== LOOP =============================================================
-function tick() {
-  // Typewriter (3 frames per char ≈ 50ms)
-  if (dialogOpen && dialogShown < dialogText.length) {
-    typewriterTick++;
-    if (typewriterTick >= 2) {
-      dialogShown++;
-      typewriterTick = 0;
-    }
-  }
-  render();
-  requestAnimationFrame(tick);
-}
-
-// Randomize layout + start loop (renders with fillRect fallbacks while sheets load)
-layoutTown();
-requestAnimationFrame(tick);
-loadImage(`assets/terrain/topdown/${BIOME_PACK}.png`).then(sheet => {
-  if (sheet) { biomeSheet = sheet; biomeTilePx = sheet.width / 8; }
-});
-loadImage('assets/terrain_atlas.png').then(sheet => { terrainSheet = sheet; });
-loadImage('assets/archival/town_tiles.png').then(sheet => { townSheet = sheet; });
-loadImage(`assets/sprite_split/character_${PLAYER_CHAR}/character_${PLAYER_CHAR}_frame16x20.png`)
-  .then(sheet => { playerSheet = sheet; });
-DOMAINS.forEach(d => loadImage(d.img).then(sheet => { buildingSheets[d.key] = sheet; }));
 </script>
 </body>
 </html>
