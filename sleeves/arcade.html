@@ -57,11 +57,13 @@
     background: #000;
     display: block;
     image-rendering: pixelated;
+    image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
-    width: min(85vw, 380px);
-    height: auto;
-    aspect-ratio: 320 / 240;
-    background: #000;
+    width: 320px;
+    height: 240px;
+  }
+  @media (min-width: 700px) {
+    canvas { width: 640px; height: 480px; }
   }
   .controls {
     display: flex;
