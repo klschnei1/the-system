@@ -489,14 +489,14 @@ function drawGroundBase(ox, oy) {
 }
 
 const ELEV_TILES = {
-  corner_tl:   [2, 2],
-  corner_tr:   [5, 2],
-  edge_top:    [3, 2],
+  corner_tl:   [1, 2], // cliff_corner_convex_left
+  corner_tr:   [2, 2], // cliff_corner_convex_right
+  edge_top:    [0, 2], // cliff_face_straight
   edge_left:   [0, 2],
   edge_right:  [0, 2],
-  edge_bottom: [4, 2],
-  stairs_l:    [4, 2],
-  stairs_r:    [5, 2],
+  edge_bottom: [0, 2],
+  stairs_l:    [6, 2],
+  stairs_r:    [7, 2],
 };
 
 function drawElevation(ox, oy) {
