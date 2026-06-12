@@ -2671,19 +2671,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     todayDate.setDate(todayDate.getDate() - 1);
     const yStr = todayDate.toLocaleDateString('en-CA');
 
+    // Was anything logged yesterday? (localStorage may have entries not yet in dailyLogs)
+    const yLocal = localStorage.getItem('css_v3_today_' + yStr);
+    const yLoggedCount = (yLocal ? Object.keys(JSON.parse(yLocal)).length : 0)
+      + Object.keys(data.dailyLogs?.[yStr] || {}).length;
+
     if (data.lastDate === yStr) {
-      // Last active day was yesterday — check if anything was logged
-      const localLog = localStorage.getItem('css_v3_today_' + yStr);
-      const localCount = localLog ? Object.keys(JSON.parse(localLog)).length : 0;
-      const githubCount = Object.keys(data.dailyLogs?.[yStr] || {}).length;
-      if (localCount > 0 || githubCount > 0) {
-        data.streak = (data.streak || 0) + 1;
-      } else {
-        data.streak = 0;
-      }
+      data.streak = yLoggedCount > 0 ? (data.streak || 0) + 1 : 0;
     } else {
       // Skipped at least one day — streak breaks
       data.streak = 0;
+    }
+
+    // ── Re-entry protocol: a regulator must handle dormancy ──
+    // Gap ≥ 7 days enters re-entry: floors only, reach quests dimmed,
+    // graduates after 3 consecutive logged days. A missed day resets the hold.
+    const gapDays = Math.round((new Date(today + 'T12:00:00') - new Date(data.lastDate + 'T12:00:00')) / 86400000);
+    if (gapDays >= 7) {
+      data.reentry = { startedOn: today, gapDays: gapDays, daysHeld: 0 };
+      const tx = buildReentryTransmission(gapDays, today);
+      data.lastTransmission = tx;
+      if (!data.transmissionLog) data.transmissionLog = [];
+      data.transmissionLog.push(tx);
+    } else if (data.reentry) {
+      data.reentry.daysHeld = yLoggedCount > 0 ? (data.reentry.daysHeld || 0) + 1 : 0;
+      if (data.reentry.daysHeld >= 3) {
+        delete data.reentry;
+        const tx = { date: today, archetype: 'The System',
+          body: 'Three days held. Re-entry complete — the full system is open again. The gap is history now, not weather.' };
+        data.lastTransmission = tx;
+        if (!data.transmissionLog) data.transmissionLog = [];
+        data.transmissionLog.push(tx);
+      }
     }
 
     // ── Miss detection: which quests were missed yesterday? ──
