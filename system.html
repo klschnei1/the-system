@@ -1929,7 +1929,8 @@ function addAccumEntry(qid, values, note) {
   if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
   data.dailyLogs[today][qid] = todayLog[qid];
 
-  // Domain modules may learn from entries (e.g. intake food bank) — before saveData so it rides the same write
+  // Domain modules may learn from entries (e.g. intake bank — an in-memory
+  // index derived from dailyLogs; the entry is already in dailyLogs here)
   if (window.captureAccumEntry) window.captureAccumEntry(qid, entry);
 
   saveData();
