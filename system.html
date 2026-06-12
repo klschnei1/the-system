@@ -1617,9 +1617,11 @@ function renderQuestsOverview() {
 
   Object.entries(defs).forEach(([domainKey, domain]) => {
     const questIds = Object.keys(domain.quests);
-    const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
-    totalCompleted += completedCount;
-    const allDone = completedCount === questIds.length;
+    // During re-entry the day's target is floors only — reach quests don't count against completion
+    const countedIds = data.reentry ? questIds.filter(qid => domain.quests[qid].role !== 'reach') : questIds;
+    const completedCount = countedIds.filter(qid => !!todayLog[qid]).length;
+    totalCompleted += questIds.filter(qid => !!todayLog[qid]).length;
+    const allDone = countedIds.length > 0 && completedCount === countedIds.length;
 
     const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
     const sigilSeed = getDailySeed() ^ (domainKey.charCodeAt(0) * 7919);
