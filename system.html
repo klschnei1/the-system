@@ -1886,33 +1886,30 @@ function toggleQuestLog(qid) {
   }
 }
 
-function logAccumulator(qid, xp) {
-  // Find quest def
-  let quest = null, domainKey = null;
-  for (const [dk, domain] of Object.entries(data.questDefinitions)) {
-    if (domain.quests[qid]) { quest = domain.quests[qid]; domainKey = dk; break; }
+// Programmatic core — called by the quest card button (via logAccumulator)
+// and by domain quick-logs (e.g. intake food bank chips).
+function addAccumEntry(qid, values, note) {
+  let quest = null;
+  for (const domain of Object.values(data.questDefinitions)) {
+    if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
   }
-  if (!quest || !quest.accumFields) return;
+  if (!quest || !quest.accumFields) return false;
 
-  // Read field values
   const entry = { time: new Date().toISOString() };
   let anyValue = false;
   quest.accumFields.forEach(f => {
-    const el = document.getElementById(`accum-${qid}-${f.key}`);
-    entry[f.key] = el ? parseFloat(el.value) || 0 : 0;
+    entry[f.key] = parseFloat(values[f.key]) || 0;
     if (entry[f.key] > 0) anyValue = true;
   });
-  if (!anyValue) { notify('Enter at least one value.'); return; }
-
-  const noteEl = document.getElementById(`accum-${qid}-note`);
-  entry.note = noteEl?.value?.trim() || '';
+  if (!anyValue) { notify('Enter at least one value.'); return false; }
+  entry.note = (note || '').trim();
 
   // First entry awards XP; subsequent entries just add data
   const isFirst = !todayLog[qid];
   if (isFirst) {
-    todayLog[qid] = { xp, entries: [], time: entry.time, source: 'manual' };
-    todayXpEarned += xp;
-    data.xp = (data.xp || 0) + xp;
+    todayLog[qid] = { xp: quest.xp, entries: [], time: entry.time, source: 'manual' };
+    todayXpEarned += quest.xp;
+    data.xp = (data.xp || 0) + quest.xp;
   }
   todayLog[qid].entries.push(entry);
 
@@ -1930,16 +1927,35 @@ function logAccumulator(qid, xp) {
   if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
   data.dailyLogs[today][qid] = todayLog[qid];
 
+  // Domain modules may learn from entries (e.g. intake food bank) — before saveData so it rides the same write
+  if (window.captureAccumEntry) window.captureAccumEntry(qid, entry);
+
   saveData();
   renderHeader();
   renderQuests();
 
   if (isFirst) {
-    notify(`${quest.name} logged. +${xp} XP. Keep adding entries throughout the day.`);
+    notify(`${quest.name} logged. +${quest.xp} XP. Keep adding entries throughout the day.`);
   } else {
     const summary = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' · ');
     notify(`Updated: ${summary}`);
   }
+  return true;
+}
+
+function logAccumulator(qid, xp) {
+  let quest = null;
+  for (const domain of Object.values(data.questDefinitions)) {
+    if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
+  }
+  if (!quest || !quest.accumFields) return;
+  const values = {};
+  quest.accumFields.forEach(f => {
+    const el = document.getElementById(`accum-${qid}-${f.key}`);
+    values[f.key] = el ? el.value : 0;
+  });
+  const noteEl = document.getElementById(`accum-${qid}-note`);
+  addAccumEntry(qid, values, noteEl?.value || '');
 }
 
 function logQuest(qid, xp) {
