@@ -1546,7 +1546,8 @@ function renderDispatchBanner() {
 function renderFocusQuests() {
   const el = document.getElementById('focusQuests');
   const quests = data.currentWeekQuests;
-  if (!quests || !quests.length) { el.style.display = 'none'; return; }
+  // During re-entry the week-focus list is stale context — floors are the only assignment
+  if (data.reentry || !quests || !quests.length) { el.style.display = 'none'; return; }
   el.style.display = 'block';
   el.innerHTML = '<div class="focus-quests-label">Focus // This Week</div>' +
     '<ul>' + quests.map(q => '<li>' + q + '</li>').join('') + '</ul>';
