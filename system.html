@@ -1802,7 +1802,8 @@ function buildQuestInput(qid, quest, done) {
           </div>
           <input type="text" class="log-input" id="accum-${qid}-note"
             style="margin-top:6px;font-size:11px;width:100%;padding:6px 8px"
-            placeholder="${quest.notePrompt || 'Note (optional)'}">
+            placeholder="${quest.notePrompt || 'Note (optional)'}"
+            oninput="window.filterAccumChips && filterAccumChips('${qid}', this.value)">
         </div>`;
     }
 
