@@ -1510,6 +1510,18 @@ function renderHeader() {
   }
 }
 
+// ── RE-ENTRY TRANSMISSION ─────────────────────────────────────────────
+// Local bank, deterministic by gap length. No API call — this must fire
+// reliably on the exact day you come back.
+function buildReentryTransmission(gapDays, today) {
+  const bank = [
+    gapDays + ' days of silence. The system held state — nothing was lost, nothing decayed past recovery. Streaks were always the cheapest currency here; the expensive thing is what you do in the next hour. Floors only. Hold three days and the full system reopens.',
+    'Signal reacquired after ' + gapDays + ' days. The gap is data, not debt — no autopsy required. Reach quests are dimmed until you hold three days of floors. Start small. Start anywhere. Start.',
+    gapDays + ' days dark. Most systems die exactly here: you come back, see the zeroed counters, and close the tab. You’re still reading. Floors only for three days. That’s the whole assignment.'
+  ];
+  return { date: today, archetype: 'The System', body: bank[gapDays % bank.length], reentry: true };
+}
+
 // ── DISPATCH BANNER ───────────────────────────────────────────────────
 function renderDispatchBanner() {
   const banner = document.getElementById('dispatchBanner');
