@@ -1493,7 +1493,9 @@ function renderHeader() {
   document.getElementById('xpDisplay').textContent = xp.toLocaleString() + ' XP';
   document.getElementById('todayXp').textContent = '+' + todayXpEarned + ' today';
   document.getElementById('xpBar').style.width = prog + '%';
-  document.getElementById('streakPill').textContent = '◈ ' + (data.streak||0) + '-day streak';
+  document.getElementById('streakPill').textContent = data.reentry
+    ? '◈ re-entry · ' + (data.reentry.daysHeld || 0) + '/3 held'
+    : '◈ ' + (data.streak||0) + '-day streak';
   document.getElementById('coherenceLabel').textContent = getSignalLabel(coherence);
 
   // signal bars
