@@ -1648,7 +1648,7 @@ function renderQuestsOverview() {
         ${metricHtml}
       </div>
       <div class="domain-card-status">
-        <span style="font-size:10px;color:${allDone ? 'var(--green)' : completedCount > 0 ? 'var(--accent)' : 'var(--text3)'}">${completedCount}/${questIds.length}</span>
+        <span style="font-size:10px;color:${allDone ? 'var(--green)' : completedCount > 0 ? 'var(--accent)' : 'var(--text3)'}">${completedCount}/${countedIds.length}</span>
         <span style="color:${allDone ? 'var(--green)' : 'var(--text3)'};font-size:14px">${allDone ? '✓' : '›'}</span>
       </div>
     `;
