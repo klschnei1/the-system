@@ -1577,7 +1577,7 @@ function buildQuestCard(qid, quest, domain, options = {}) {
   card.innerHTML = `
     <div class="quest-header" onclick="toggleQuestLog('${qid}')">
       <div class="domain-pip" style="background:${domain.color}"></div>
-      <div class="quest-name">${quest.name}${retroBadge}</div>
+      <div class="quest-name">${quest.name}${retroBadge}${deferredBadge}</div>
       ${isAccum && accumSummary
         ? `<div style="font-size:11px;color:var(--accent);margin-left:auto;margin-right:8px;letter-spacing:0.5px">${accumSummary}</div>`
         : `<span class="quest-tier tier-${quest.tier}">${quest.tier}</span>
