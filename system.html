@@ -1566,8 +1566,14 @@ function buildQuestCard(qid, quest, domain, options = {}) {
     ? `<span style="font-size:9px;color:var(--text3);margin-left:6px;font-style:italic">← yesterday</span>`
     : '';
 
+  // Re-entry: undone reach quests are de-emphasized, not disabled
+  const deferred = !!data.reentry && quest.role === 'reach' && !done;
+  const deferredBadge = deferred
+    ? `<span style="font-size:9px;color:var(--text3);margin-left:6px;font-style:italic">optional during re-entry</span>`
+    : '';
+
   const card = document.createElement('div');
-  card.className = 'quest-card' + (done && !isAccum ? ' completed' : '');
+  card.className = 'quest-card' + (done && !isAccum ? ' completed' : '') + (deferred ? ' reach-deferred' : '');
   card.innerHTML = `
     <div class="quest-header" onclick="toggleQuestLog('${qid}')">
       <div class="domain-pip" style="background:${domain.color}"></div>
