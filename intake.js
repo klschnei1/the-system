@@ -23,6 +23,7 @@
 
   function learnEntry(qid, entry) {
     if (!BANK_QUESTS.includes(qid) || !entry.note) return;
+    if (entry.batchId) return;   // batch servings are finite fridge state, not permanent bank foods
     const values = {};
     let any = false;
     bankFields(qid).forEach(f => {
