@@ -1906,6 +1906,7 @@ function addAccumEntry(qid, values, note, extra) {
   });
   if (!anyValue) { notify('Enter at least one value.'); return false; }
   entry.note = (note || '').trim();
+  if (extra) Object.assign(entry, extra);   // e.g. { batchId } — excluded from the derived bank
 
   // First entry awards XP; subsequent entries just add data
   const isFirst = !todayLog[qid];
