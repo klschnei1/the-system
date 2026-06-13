@@ -2,8 +2,11 @@
 // What enters the body: fluid (oz), food (calories + protein).
 // Quests: m1 (hydration accumulator — total oz), g2 (nutrition accumulator).
 // Widget: single row oz · kcal · g protein + merged chronological entry log.
-// Food bank: every named g2 entry auto-saves to data.foodBank; top foods
-// render as one-tap chips in the nutrition quest input.
+// Food bank: every named g2 entry is indexed (in memory, from dailyLogs);
+// top foods render as one-tap chips in the nutrition quest input.
+// Batch prep ("the fridge"): persisted finite meal-prep objects in
+// data.batches. A recipe → per-serving chip; tapping logs+decrements;
+// at zero servings the chip clears. Batch servings are excluded from the bank.
 
 (function() {
   'use strict';
