@@ -1891,7 +1891,7 @@ function toggleQuestLog(qid) {
 
 // Programmatic core — called by the quest card button (via logAccumulator)
 // and by domain quick-logs (e.g. intake food bank chips).
-function addAccumEntry(qid, values, note) {
+function addAccumEntry(qid, values, note, extra) {
   let quest = null;
   for (const domain of Object.values(data.questDefinitions)) {
     if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
