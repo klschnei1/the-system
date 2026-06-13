@@ -73,22 +73,40 @@
   window.getAccumQuickChips = function(qid, query) {
     if (!BANK_QUESTS.includes(qid)) return '';
     ensureBank();
-    const all = Object.entries(bank[qid]);
-    if (!all.length) return '';
     const q = (query || '').trim().toLowerCase();
-    const matches = all
+
+    // Batch chips (nutrition only), pinned to the front. Persisted, finite,
+    // self-clearing: per-serving macros · servings left · age. Newest first.
+    let batchHtml = '';
+    if (qid === 'g2') {
+      activeBatches()
+        .filter(b => !q || b.name.toLowerCase().includes(q))
+        .sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn))
+        .forEach(b => {
+          const left = b.servingsMade - b.servingsLogged;
+          const age = daysSince(b.createdOn);
+          const macros = `${b.perServing.calories || 0}kcal · ${b.perServing.protein || 0}g`;
+          batchHtml += `<button class="btn" style="font-size:10px;padding:4px 10px;border-color:var(--accent)"
+            onclick="event.stopPropagation();logBatchServing('${b.id}')">
+            🍱 ${escapeHtml(b.name)} <span style="color:var(--text3)">${macros} · ${left} left${age >= 1 ? ' · ' + age + 'd' : ''}</span></button>`;
+        });
+    }
+
+    const bankHtml = Object.entries(bank[qid])
       .filter(([key]) => !q || key.includes(q))
       .sort((a, b) => (b[1].count - a[1].count) || (new Date(b[1].lastUsed) - new Date(a[1].lastUsed)))
-      .slice(0, BANK_CHIP_LIMIT);
-    return `<div id="chips-${qid}" style="display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 8px">` +
-      matches.map(([key, f]) => {
+      .slice(0, BANK_CHIP_LIMIT)
+      .map(([key, f]) => {
         const vals = bankFields(qid)
           .map(f2 => f.values[f2.key] ? f.values[f2.key] + f2.units : '')
           .filter(Boolean).join(' · ');
         return `<button class="btn" style="font-size:10px;padding:4px 10px"
           onclick="event.stopPropagation();quickLogIntake('${qid}','${encodeURIComponent(key)}')">
           ${escapeHtml(f.name)}${vals ? ' <span style="color:var(--text3)">' + vals + '</span>' : ''}</button>`;
-      }).join('') + '</div>';
+      }).join('');
+
+    if (!batchHtml && !bankHtml) return '';
+    return `<div id="chips-${qid}" style="display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 8px">${batchHtml}${bankHtml}</div>`;
   };
 
   // oninput handler on the accumulator note field (wired in system.html)
