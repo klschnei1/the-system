@@ -1789,6 +1789,7 @@ function buildQuestInput(qid, quest, done) {
       const fields = quest.accumFields || [];
       return `
         <div style="margin:8px 0">
+          ${window.getBatchButton ? window.getBatchButton(qid) : ''}
           ${window.getAccumQuickChips ? window.getAccumQuickChips(qid) : ''}
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             ${fields.map(f => `
