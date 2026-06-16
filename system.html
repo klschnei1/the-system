@@ -2254,7 +2254,6 @@ const PALETTE_MOODS = [
 // → sensei.js
 // ── RENDER TRANSMISSIONS ──────────────────────────────────────────────
 function renderTransmissions() {
-  if (window.renderCheckinCard) window.renderCheckinCard(document.getElementById('view-transmit'));
   const seed = getDailySeed();
   const palette = PALETTE_MOODS[seed % PALETTE_MOODS.length];
   const todaySenseiKey = getTodaySensei();
