@@ -1961,13 +1961,20 @@ function logAccumulator(qid, xp) {
     if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
   }
   if (!quest || !quest.accumFields) return;
+  // Servings multiplier (nutrition only): typed macros are per-serving, the
+  // logged entry stores the consumed total (macros × servings).
+  const servEl = document.getElementById(`accum-${qid}-servings`);
+  const servings = servEl ? (parseFloat(servEl.value) || 1) : 1;
   const values = {};
   quest.accumFields.forEach(f => {
     const el = document.getElementById(`accum-${qid}-${f.key}`);
-    values[f.key] = el ? el.value : 0;
+    const raw = el ? (parseFloat(el.value) || 0) : 0;
+    values[f.key] = Math.round(raw * servings);
   });
   const noteEl = document.getElementById(`accum-${qid}-note`);
-  addAccumEntry(qid, values, noteEl?.value || '');
+  // Pass servings so the bank can derive per-serving values; omit when 1 to
+  // keep single-serving and hydration entries clean.
+  addAccumEntry(qid, values, noteEl?.value || '', servings !== 1 ? { servings } : undefined);
 }
 
 function logQuest(qid, xp) {
