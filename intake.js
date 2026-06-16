@@ -29,8 +29,11 @@
     if (entry.batchId) return;   // batch servings are finite fridge state, not permanent bank foods
     const values = {};
     let any = false;
+    // Entries store the consumed total (macros × servings). The bank stores
+    // PER-SERVING values so tapping a saved chip logs exactly one serving.
+    const servings = entry.servings > 0 ? entry.servings : 1;
     bankFields(qid).forEach(f => {
-      values[f.key] = entry[f.key] || 0;
+      values[f.key] = Math.round((entry[f.key] || 0) / servings);
       if (values[f.key] > 0) any = true;
     });
     if (!any) return;   // also skips pre-schema entries (old water/other keys)
