@@ -328,7 +328,21 @@
       new Date(a.time) - new Date(b.time)
     );
 
+    // Sigil button — opens the batch calculator. Lives here (between the log
+    // forms and the summary) rather than in the quick-log chip strip.
+    const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
+    const sigilSeed = (typeof getDailySeed === 'function' ? getDailySeed() : 0) ^ (dk.charCodeAt(0) * 7919);
+    const sigilSvg = (typeof SigilEngine !== 'undefined') ? SigilEngine.generate(dk, sigilSeed, sigilStyle) : '';
+
     el.innerHTML = `
+      <button class="batch-sigil-btn" onclick="openBatchCalculator()"
+        style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+               background:transparent;border:1px solid ${domain.color};border-radius:3px;
+               padding:8px;margin-bottom:12px;color:var(--text2);font-size:11px;
+               letter-spacing:2px;text-transform:uppercase;cursor:pointer">
+        <span style="width:22px;height:22px;display:inline-block;opacity:0.85">${sigilSvg}</span>
+        Batch prep
+      </button>
       <div class="domain-widget" style="border-color:${domain.color}">
         <!-- oz · kcal · protein -->
         <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
