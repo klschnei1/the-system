@@ -151,13 +151,6 @@
     return Math.max(0, Math.round((b - a) / 86400000));
   }
 
-  // "+ Batch prep" button — nutrition quest only.
-  window.getBatchButton = function(qid) {
-    if (qid !== 'g2') return '';
-    return `<button class="btn" style="font-size:10px;padding:4px 10px;margin-bottom:6px"
-      onclick="event.stopPropagation();openBatchCalculator()">+ Batch prep</button>`;
-  };
-
   // Tap a batch chip: log one serving to g2, then decrement the batch.
   window.logBatchServing = function(batchId) {
     const b = ensureBatches().find(x => x.id === batchId);
