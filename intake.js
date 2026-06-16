@@ -192,7 +192,7 @@
           placeholder="e.g. Slime — tiramisu" autocomplete="off">
       </div>
       <div class="modal-section">
-        <div class="modal-label">Ingredients · kcal · protein</div>
+        <div class="modal-label">Ingredient · qty · kcal · protein</div>
         <datalist id="batch-bank-list">
           ${bankNames.map(f => `<option value="${escapeHtml(f.name)}">`).join('')}
         </datalist>
