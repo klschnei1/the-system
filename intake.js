@@ -249,6 +249,7 @@
           recompute();
         }
       });
+      qtyI.addEventListener('input', recompute);
       kcalI.addEventListener('input', recompute);
       protI.addEventListener('input', recompute);
       row.querySelector('.bl-remove').onclick = () => { row.remove(); recompute(); };
