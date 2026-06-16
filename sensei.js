@@ -213,6 +213,19 @@ function queryOracle(input) {
 
   // Route to sensei category
   const senseiKey = routeToSensei(input);
+
+  // Revived: prefer the context-aware voice() — it reads live domain scores and
+  // branches on what was actually said, so the reply tracks your real state
+  // instead of returning a fixed aphorism. Local-only (no API). Falls back to the
+  // static oracle bank if voice() is unavailable or throws.
+  const s = SENSEI[senseiKey];
+  if (s && typeof s.voice === 'function') {
+    try {
+      const text = s.voice(input.toLowerCase());
+      if (text) return { text, senseiKey };
+    } catch (e) { /* fall through to the static bank */ }
+  }
+
   const bank = ORACLE_BANK[senseiKey] || ORACLE_BANK.system;
   return { text: bank[seed % bank.length], senseiKey };
 }
