@@ -127,13 +127,14 @@ window.editAccountBalances = function() {
 // Depends on globals: data, todayLog, getTodayStr (from system.html).
 window.renderFinanceWidget = function(el, dk, domain) {
   const today = getTodayStr();
+  const base = new Date(today + 'T12:00:00');   // local-noon anchor — avoids UTC date-shift
 
   // Build 30-day daily net array
   const days = [];
   for (let i = 29; i >= 0; i--) {
-    const d = new Date();
+    const d = new Date(base);
     d.setDate(d.getDate() - i);
-    const ds = d.toISOString().split('T')[0];
+    const ds = d.toLocaleDateString('en-CA');
     const dayData = data.dailyLogs?.[ds]?.f1;
     const net = dayData?.totals?.net || 0;
     days.push({ ds, net });
