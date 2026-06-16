@@ -217,19 +217,25 @@
       const row = document.createElement('div');
       row.className = 'batch-line';
       row.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px';
+      // autocomplete="off" on every input: without it the browser refills a
+      // freshly-added line with the previous line's values (the "doubling" bug).
       row.innerHTML = `
         <input type="text" class="bl-name log-input" list="batch-bank-list"
           style="flex:1;min-width:0;padding:6px 8px;font-size:12px" placeholder="ingredient" autocomplete="off">
+        <input type="number" class="bl-qty log-input"
+          style="width:42px;padding:6px;font-size:12px;text-align:right" placeholder="1" min="0" step="any" autocomplete="off">
         <input type="number" class="bl-kcal log-input"
-          style="width:60px;padding:6px;font-size:12px;text-align:right" placeholder="kcal" min="0">
+          style="width:58px;padding:6px;font-size:12px;text-align:right" placeholder="kcal" min="0" autocomplete="off">
         <input type="number" class="bl-protein log-input"
-          style="width:50px;padding:6px;font-size:12px;text-align:right" placeholder="g" min="0">
+          style="width:48px;padding:6px;font-size:12px;text-align:right" placeholder="g" min="0" autocomplete="off">
         <span class="bl-remove" style="cursor:pointer;color:var(--text3);font-size:14px;padding:0 2px">✕</span>`;
       const nameI = row.querySelector('.bl-name');
+      const qtyI = row.querySelector('.bl-qty');
       const kcalI = row.querySelector('.bl-kcal');
       const protI = row.querySelector('.bl-protein');
       if (prefill) {
         nameI.value = prefill.name || '';
+        if (prefill.qty) qtyI.value = prefill.qty;
         if (prefill.calories) kcalI.value = prefill.calories;
         if (prefill.protein) protI.value = prefill.protein;
       }
