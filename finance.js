@@ -108,8 +108,13 @@ window.editAccountBalances = function() {
   window._accEdit = (i, key, val) => { accounts[i][key] = val; };
   window._accDel  = (i) => { accounts.splice(i, 1); renderModal(); };
   window._accAdd  = () => { accounts.push({ name: '', amount: 0 }); renderModal(); };
+  window._accPrimary = (i) => { accounts.forEach((a, j) => { a.primary = (j === i); }); renderModal(); };
   window._accSave = () => {
     data.accountBalances = accounts.filter(a => a.name.trim());
+    // Ensure exactly one primary so transactions always have a target.
+    if (data.accountBalances.length && !data.accountBalances.some(a => a.primary)) {
+      data.accountBalances[0].primary = true;
+    }
     saveData();
     overlay.remove();
     const widgetEl = document.getElementById('domainWidget');
