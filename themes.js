@@ -230,9 +230,19 @@ const THEME_BANK = [
 //   }
 // }
 
+// Avalanche mix (mix32): consecutive daily seeds differ by ~1, which made
+// `seed % 6` walk a predictable cycle. Mixing diffuses that 1-bit delta across
+// all bits, so the theme is unguessable day-to-day but still stable within a day
+// (same date → same seed → same theme; survives reloads).
+function mix32(n) {
+  n = Math.imul(n ^ (n >>> 16), 0x45d9f3b);
+  n = Math.imul(n ^ (n >>> 16), 0x45d9f3b);
+  return (n ^ (n >>> 16)) >>> 0;
+}
+
 function applyDailyTheme() {
   const seed = getDailySeed();
-  const theme = THEME_BANK[seed % THEME_BANK.length];
+  const theme = THEME_BANK[mix32(seed) % THEME_BANK.length];
   const root = document.documentElement;
 
   // Apply palette mood (preserve PALETTE_MOODS rotation within theme)
