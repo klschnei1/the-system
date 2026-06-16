@@ -263,14 +263,15 @@ function showExerciseClassifyModal(unknownNames, onComplete) {
 // Depends on globals: data, todayLog, getTodayStr (from system.html inline script).
 window.renderStrengthWidget = function(el, dk, domain) {
   const today = getTodayStr();
+  const base = new Date(today + 'T12:00:00');   // local-noon anchor — avoids UTC date-shift
   const weekVolume = {};
   let weekSessions = 0;
   let weekTotalSets = 0;
 
   for (let i = 0; i < 7; i++) {
-    const d = new Date();
+    const d = new Date(base);
     d.setDate(d.getDate() - i);
-    const ds = d.toISOString().split('T')[0];
+    const ds = d.toLocaleDateString('en-CA');
     const dayG1 = data.dailyLogs?.[ds]?.g1;
     if (dayG1?.workout) {
       weekSessions++;
