@@ -259,8 +259,10 @@
     function totals() {
       let kcal = 0, protein = 0;
       linesEl.querySelectorAll('.batch-line').forEach(r => {
-        kcal += parseFloat(r.querySelector('.bl-kcal').value) || 0;
-        protein += parseFloat(r.querySelector('.bl-protein').value) || 0;
+        const q = parseFloat(r.querySelector('.bl-qty').value);
+        const mult = q > 0 ? q : 1;   // blank qty counts as one serving
+        kcal += mult * (parseFloat(r.querySelector('.bl-kcal').value) || 0);
+        protein += mult * (parseFloat(r.querySelector('.bl-protein').value) || 0);
       });
       return { kcal, protein };
     }
