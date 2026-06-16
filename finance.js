@@ -156,9 +156,13 @@ window.renderFinanceWidget = function(el, dk, domain) {
   const todayTotals = todayF1?.totals || { net: 0, income: 0, expenses: 0 };
   const todayEntries = todayF1?.entries || [];
 
-  // SVG chart
+  // SVG chart — cumulative NET FLOW over the 30-day window (starts at 0, not a
+  // true account balance). Labeled as such so it isn't mistaken for "Where it lives".
   const hasData = points.some(p => p.balance !== 0);
-  const chartHtml = hasData ? buildBalanceChart(points, domain.color) : '';
+  const chartHtml = hasData ? `
+    <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:4px">30-day net flow</div>
+    ${buildBalanceChart(points, domain.color)}
+  ` : '';
 
   // Account balances section
   const accounts = data.accountBalances || [];
