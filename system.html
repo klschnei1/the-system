@@ -1800,6 +1800,14 @@ function buildQuestInput(qid, quest, done) {
               </div>
             `).join('')}
           </div>
+          ${qid === 'g2' ? `
+          <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+            <span style="font-size:13px;color:var(--text3)">×</span>
+            <input type="number" id="accum-${qid}-servings" class="log-input"
+              style="width:60px;padding:6px 8px;text-align:right;font-size:14px"
+              placeholder="1" min="0" step="any" autocomplete="off">
+            <span style="font-size:10px;color:var(--text3)">servings — macros are per serving</span>
+          </div>` : ''}
           <input type="text" class="log-input" id="accum-${qid}-note"
             style="margin-top:6px;font-size:11px;width:100%;padding:6px 8px"
             placeholder="${quest.notePrompt || 'Note (optional)'}"
