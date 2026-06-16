@@ -82,6 +82,8 @@ window.editAccountBalances = function() {
       <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:16px">Account Balances</div>
       ${accounts.map((a, i) => `
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <button onclick="window._accPrimary(${i})" title="Auto-adjust this account on transactions"
+            style="background:none;border:none;color:${a.primary ? 'var(--accent)' : 'var(--text3)'};cursor:pointer;font-size:15px;padding:0 2px;line-height:1">${a.primary ? '★' : '☆'}</button>
           <input class="log-input" value="${a.name}" placeholder="Account name"
             style="flex:1;font-size:12px;padding:6px 8px"
             oninput="window._accEdit(${i},'name',this.value)">
