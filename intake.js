@@ -321,21 +321,23 @@
       new Date(a.time) - new Date(b.time)
     );
 
-    // Sigil button — opens the batch calculator. Lives here (between the log
-    // forms and the summary) rather than in the quick-log chip strip.
-    const sigilStyle = window._currentTheme?.sigil?.style || 'geometric';
-    const sigilSeed = (typeof getDailySeed === 'function' ? getDailySeed() : 0) ^ (dk.charCodeAt(0) * 7919);
-    const sigilSvg = (typeof SigilEngine !== 'undefined') ? SigilEngine.generate(dk, sigilSeed, sigilStyle) : '';
+    // Batch prep — a small unlabeled glyph (an affordance, not a labeled
+    // button): a vessel holding three portions. Opens the calculator. Lives
+    // between the log forms and the summary, out of the quick-log chip strip.
+    const c = domain.color;
+    const batchGlyph = `
+      <button class="batch-glyph" onclick="openBatchCalculator()" title="Batch prep" aria-label="Batch prep">
+        <svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="${c}" stroke-width="0.8" opacity="0.3" stroke-dasharray="3,3"/>
+          <polygon points="7,9 25,9 16,25" fill="none" stroke="${c}" stroke-width="1" opacity="0.75"/>
+          <circle cx="12" cy="13" r="1.1" fill="${c}" opacity="0.85"/>
+          <circle cx="16" cy="13" r="1.1" fill="${c}" opacity="0.85"/>
+          <circle cx="20" cy="13" r="1.1" fill="${c}" opacity="0.85"/>
+        </svg>
+      </button>`;
 
     el.innerHTML = `
-      <button class="batch-sigil-btn" onclick="openBatchCalculator()"
-        style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
-               background:transparent;border:1px solid ${domain.color};border-radius:3px;
-               padding:8px;margin-bottom:12px;color:var(--text2);font-size:11px;
-               letter-spacing:2px;text-transform:uppercase;cursor:pointer">
-        <span style="width:22px;height:22px;display:inline-block;opacity:0.85">${sigilSvg}</span>
-        Batch prep
-      </button>
+      ${batchGlyph}
       <div class="domain-widget" style="border-color:${domain.color}">
         <!-- oz · kcal · protein -->
         <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
