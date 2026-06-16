@@ -326,7 +326,7 @@
     // between the log forms and the summary, out of the quick-log chip strip.
     const c = domain.color;
     const batchGlyph = `
-      <button class="batch-glyph" onclick="openBatchCalculator()" title="Batch prep" aria-label="Batch prep">
+      <button class="batch-glyph" onclick="openBatchCalculator()" title="Batch prep" aria-label="Batch prep" style="color:${c}">
         <svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="14" fill="none" stroke="${c}" stroke-width="0.8" opacity="0.3" stroke-dasharray="3,3"/>
           <polygon points="7,9 25,9 16,25" fill="none" stroke="${c}" stroke-width="1" opacity="0.75"/>
