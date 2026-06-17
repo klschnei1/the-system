@@ -1696,6 +1696,15 @@ function renderDomainPage(domainKey) {
   const domain = data.questDefinitions[domainKey];
   if (!domain) return;
   const page = document.getElementById('domainPage');
+
+  // Locked/unbuilt domains are DEAD everywhere — no quests, no widget, no score.
+  const gate = domainGate(domainKey);
+  if (gate !== 'open') {
+    renderLockedDomainPage(page, domainKey, domain, gate);
+    if (fromArcade) page.classList.add('arcade-mode');
+    return;
+  }
+
   const scores = calcDomainScores();
   const score = scores[domainKey] || { pct: 0, daysActive: 0 };
 
