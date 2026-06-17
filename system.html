@@ -1826,20 +1826,35 @@ function buildSealedChainSvg() {
     + `</g></svg>`;
 }
 
-function renderSealedWidget(el, dk, domain, gate) {
-  const unbuilt = gate === 'unbuilt';
+// One compact teaser CARD for the overview — heavy chain over an obscured name.
+// Not enterable; a tap just rattles the chain. The "next seal to break."
+function buildTeaserCard(dk, domain) {
+  const card = document.createElement('div');
+  card.className = 'domain-card teaser-card';
+  card.style.borderLeftColor = domain.color;
+  card.style.borderLeftWidth = '3px';
+  card.innerHTML = `
+    <div class="teaser-name" style="color:${domain.color}">${domain.name}</div>
+    ${buildSealedChainSvg()}
+    <div class="teaser-tag">Sealed · keep going to break it</div>`;
+  card.onclick = () => { card.classList.remove('lock-shake'); void card.offsetWidth; card.classList.add('lock-shake'); };
+  return card;
+}
+
+// Full DEAD page for a locked/unbuilt domain reached via tree/hash/arcade.
+// No quests, no widget, no score — just the seal. "Fully dead behind the lock."
+function renderLockedDomainPage(page, dk, domain, gate) {
   const ms = UNLOCK_MILESTONES[dk];
-  const headline = unbuilt ? 'Instrument · Not Yet Forged' : 'Instrument · Sealed';
-  const tagline = unbuilt ? 'Dashboard still being built' : 'Locked — earn to unlock';
-  const body = unbuilt
-    ? `Quests above are live — logging counts now.<br>This instrument is sealed until it's forged, then unlocked through progress.`
-    : (ms ? `Unlock: ${ms.label}` : `Keep making progress in this domain to break the seal.`);
-  el.innerHTML = `
-    <div class="domain-widget" style="border-color:${domain.color};text-align:center">
-      <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:10px">${headline}</div>
+  const tagline = gate === 'unbuilt'
+    ? 'This instrument has not been forged yet.'
+    : (ms ? `Unlock: ${ms.label}` : 'Keep making progress to break the seal.');
+  page.innerHTML = `
+    <div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>
+    <div class="sealed-page">
+      <div class="sealed-name" style="color:${domain.color}">${domain.name}</div>
       ${buildSealedChainSvg()}
-      <div style="font-size:10px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-top:10px">${tagline}</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:5px;line-height:1.5">${body}</div>
+      <div class="sealed-tag">Sealed</div>
+      <div class="sealed-sub">${tagline}</div>
     </div>`;
 }
 
