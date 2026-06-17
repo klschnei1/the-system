@@ -1271,7 +1271,7 @@ async function setupGitHubDataStore(token, repo, path = 'CSS/CSS_DATA.json') {
 
 
 // ── DATA ──────────────────────────────────────────────────────────────
-const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","dailyLogs":{},"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending \u2014 what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}},"accountBalances":[],"batches":[]};
+const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","dailyLogs":{},"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending \u2014 what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}},"accountBalances":[],"batches":[],"unlockedDomains":["geburah","malkuth","chesed"]};
 
 // ── STATE ─────────────────────────────────────────────────────────────
 let data = {};
@@ -1373,6 +1373,8 @@ async function initDataStore() {
       if (!data.weeklyCompletions) data.weeklyCompletions = {};
       if (!data.dailyLogs) data.dailyLogs = {};
       if (!data.accountBalances) data.accountBalances = [];
+      // Grandfather the built daily-driver domains as unlocked on first migration.
+      if (!data.unlockedDomains) data.unlockedDomains = ['geburah', 'malkuth', 'chesed'];
       // Backfill any domain keys added since last remote write
       Object.entries(DEFAULT_DATA.domainWeights).forEach(([k, v]) => {
         if (!data.domainWeights) data.domainWeights = {};
@@ -1652,14 +1654,16 @@ function renderQuestsOverview() {
       }
     });
 
+    const sealed = domainGate(domainKey) !== 'open';
+
     const card = document.createElement('div');
     card.className = 'domain-card';
     card.style.borderLeftColor = domain.color;
     card.style.borderLeftWidth = '3px';
     card.innerHTML = `
-      <div class="domain-sigil">${sigilSvg}</div>
+      <div class="domain-sigil"${sealed ? ' style="opacity:.5"' : ''}>${sigilSvg}</div>
       <div style="flex:1;min-width:0">
-        <div class="domain-card-name" style="color:${domain.color}">${domain.name}</div>
+        <div class="domain-card-name" style="color:${domain.color}">${domain.name} ${sealed ? `<span title="Sealed instrument" style="margin-left:3px">${LOCK_GLYPH}</span>` : ''}</div>
         <div class="domain-card-anchor">${domain.anchor}</div>
         ${metricHtml}
       </div>
@@ -1715,8 +1719,11 @@ function renderDomainPage(domainKey) {
 
   // Render domain-specific widget
   const widgetEl = document.getElementById('domainWidget');
-  if (DOMAIN_WIDGETS[domainKey]) {
+  const gate = domainGate(domainKey);
+  if (gate === 'open') {
     DOMAIN_WIDGETS[domainKey](widgetEl, domainKey, domain);
+  } else {
+    renderSealedWidget(widgetEl, domainKey, domain, gate);
   }
 
   // Render quest cards (auto-expanded on domain pages)
@@ -1746,6 +1753,85 @@ const DOMAIN_WIDGETS = {
     window.renderFinanceWidget(el, dk, domain);
   }
 };
+
+// ── DOMAIN GATING ─────────────────────────────────────────────────────
+// Two INDEPENDENT gates (Karl's model, June 17):
+//   built    — a real instrument widget exists for the domain (DOMAIN_WIDGETS)
+//   unlocked — the player has EARNED access via in-app progress (data.unlockedDomains)
+// Building is a PREREQUISITE for unlocking, never the unlock itself. A freshly
+// forged instrument stays sealed until its milestone is met.
+const UNLOCK_MILESTONES = {
+  // domainKey: { label, check(data) }  — defined when a built domain ships locked.
+  // Empty today: the 3 built domains are grandfathered-unlocked (daily drivers),
+  // the 6 unbuilt domains have no path until they're forged.
+};
+
+function domainGate(dk) {
+  if (!DOMAIN_WIDGETS[dk]) return 'unbuilt';                    // not forged — sealed, no path yet
+  if ((data.unlockedDomains || []).includes(dk)) return 'open';
+  return 'locked';                                              // built, earnable via milestone
+}
+
+// Small brass padlock glyph for at-a-glance gating on cards.
+const LOCK_GLYPH = `<svg width="11" height="13" viewBox="0 0 11 13" style="vertical-align:-1px"><path d="M2.6 5.4V3.6a2.4 2.4 0 0 1 4.8 0V5.4" fill="none" stroke="#cba94e" stroke-width="1.3"/><rect x="1" y="5.2" width="9" height="7" rx="1.6" fill="#cba94e"/><circle cx="5.5" cy="8.4" r="1.05" fill="#3a2e0e"/></svg>`;
+
+// ── SEALED INSTRUMENT ─────────────────────────────────────────────────
+// Honest placeholder for a gated domain. Heavy chain + brass padlock
+// (ported from prototypes/unlock-juice-mockup.html). Static for now;
+// the earn→unlock choreography (chain falls) lands per-feature as each
+// locked instrument gets built + juiced.
+function buildSealedChainSvg() {
+  const W = 280, H = 150;
+  function ring(L, h, w, stroke, extra) {
+    return `<rect x="${-L/2}" y="${-h/2}" width="${L}" height="${h}" rx="${h/2}" ry="${h/2}" fill="none" stroke="${stroke}" stroke-width="${w}"${extra || ''}/>`;
+  }
+  function link(x, y, ang, edge) {
+    const L = 32, h = edge ? 11 : 22;
+    return `<g transform="translate(${x} ${y}) rotate(${ang})">`
+      + ring(L, h, edge ? 11 : 15, '#07070c')
+      + ring(L, h, edge ? 7 : 10, 'url(#mSeal)')
+      + ring(L, h, 2.2, '#eceefc', ' opacity="0.5" stroke-dasharray="12 90" stroke-linecap="round"')
+      + `</g>`;
+  }
+  function chain(x1, y1, x2, y2) {
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy),
+          a = Math.atan2(dy, dx) * 180 / Math.PI, pitch = 14, n = Math.round(len / pitch);
+    let s = '';
+    for (let i = 0; i <= n; i++) { const t = i / n; s += link(x1 + dx * t, y1 + dy * t, a, i % 2); }
+    return s;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="150" style="display:block;overflow:visible">`
+    + `<defs>`
+    + `<linearGradient id="mSeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4d5e0"/><stop offset="0.34" stop-color="#9092a0"/><stop offset="0.63" stop-color="#54545f"/><stop offset="1" stop-color="#23232c"/></linearGradient>`
+    + `<linearGradient id="brassSeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4dc8c"/><stop offset="0.42" stop-color="#cba94e"/><stop offset="1" stop-color="#6a5620"/></linearGradient>`
+    + `</defs>`
+    + `<g>${chain(8, 12, 272, 138)}${chain(272, 12, 8, 138)}</g>`
+    + `<g transform="translate(140 75) scale(1.05)">`
+      + `<ellipse cx="2" cy="40" rx="30" ry="7" fill="#000" opacity="0.4"/>`
+      + `<path d="M-21 -6 V-27 a21 21 0 0 1 42 0 V-6" fill="none" stroke="url(#brassSeal)" stroke-width="11" stroke-linecap="round"/>`
+      + `<rect x="-28" y="-12" width="56" height="50" rx="9" fill="url(#brassSeal)" stroke="#4a3c14" stroke-width="2.5"/>`
+      + `<rect x="-24" y="-9" width="48" height="14" rx="6" fill="#fbe6a8" opacity="0.28"/>`
+      + `<circle cx="0" cy="10" r="6.5" fill="#3a2e0e"/>`
+      + `<rect x="-2.8" y="12" width="5.6" height="15" rx="2.4" fill="#3a2e0e"/>`
+    + `</g></svg>`;
+}
+
+function renderSealedWidget(el, dk, domain, gate) {
+  const unbuilt = gate === 'unbuilt';
+  const ms = UNLOCK_MILESTONES[dk];
+  const headline = unbuilt ? 'Instrument · Not Yet Forged' : 'Instrument · Sealed';
+  const tagline = unbuilt ? 'Dashboard still being built' : 'Locked — earn to unlock';
+  const body = unbuilt
+    ? `Quests above are live — logging counts now.<br>This instrument is sealed until it's forged, then unlocked through progress.`
+    : (ms ? `Unlock: ${ms.label}` : `Keep making progress in this domain to break the seal.`);
+  el.innerHTML = `
+    <div class="domain-widget" style="border-color:${domain.color};text-align:center">
+      <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:10px">${headline}</div>
+      ${buildSealedChainSvg()}
+      <div style="font-size:10px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-top:10px">${tagline}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:5px;line-height:1.5">${body}</div>
+    </div>`;
+}
 
 function buildQuestInput(qid, quest, done) {
   const inputType = quest.inputType || (quest.evidenceRequired ? 'text' : 'confirm');
