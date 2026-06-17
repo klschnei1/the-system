@@ -1777,8 +1777,13 @@ function domainGate(dk) {
   return 'locked';                                              // built, earnable via milestone
 }
 
-// Small brass padlock glyph for at-a-glance gating on cards.
-const LOCK_GLYPH = `<svg width="11" height="13" viewBox="0 0 11 13" style="vertical-align:-1px"><path d="M2.6 5.4V3.6a2.4 2.4 0 0 1 4.8 0V5.4" fill="none" stroke="#cba94e" stroke-width="1.3"/><rect x="1" y="5.2" width="9" height="7" rx="1.6" fill="#cba94e"/><circle cx="5.5" cy="8.4" r="1.05" fill="#3a2e0e"/></svg>`;
+// Exactly ONE locked teaser is visible at a time (Karl, June 17). The first
+// not-yet-open domain in this order is the current teaser; the rest stay fully
+// hidden until their turn. Intellect (hod) leads. Reorder freely.
+const LOCKED_ORDER = ['hod', 'yesod', 'binah', 'netzach', 'pillar', 'chokmah'];
+function currentTeaser() {
+  return LOCKED_ORDER.find(dk => domainGate(dk) !== 'open') || null;
+}
 
 // ── SEALED INSTRUMENT ─────────────────────────────────────────────────
 // Honest placeholder for a gated domain. Heavy chain + brass padlock
