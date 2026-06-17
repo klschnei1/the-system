@@ -1731,14 +1731,9 @@ function renderDomainPage(domainKey) {
 
   if (fromArcade) page.classList.add('arcade-mode');
 
-  // Render domain-specific widget
+  // Render domain-specific widget (always present — locked domains returned early)
   const widgetEl = document.getElementById('domainWidget');
-  const gate = domainGate(domainKey);
-  if (gate === 'open') {
-    DOMAIN_WIDGETS[domainKey](widgetEl, domainKey, domain);
-  } else {
-    renderSealedWidget(widgetEl, domainKey, domain, gate);
-  }
+  DOMAIN_WIDGETS[domainKey](widgetEl, domainKey, domain);
 
   // Render quest cards (auto-expanded on domain pages)
   const cardsEl = document.getElementById('domainQuestCards');
