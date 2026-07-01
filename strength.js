@@ -258,6 +258,19 @@ function showExerciseClassifyModal(unknownNames, onComplete) {
   document.body.appendChild(overlay);
 }
 
+// ── MULTI-WORKOUT READER ──────────────────────────────────────────────
+// A day's g1 log can hold MORE THAN ONE workout (multiple sessions, or a
+// late-logged workout from a prior day plus today's). New shape: g1.workouts
+// is an array. Legacy shape: g1.workout is a single object. This reader
+// normalizes both so every consumer iterates a list and old data still renders.
+function g1Workouts(g1) {
+  if (!g1) return [];
+  if (Array.isArray(g1.workouts)) return g1.workouts;
+  if (g1.workout) return [g1.workout];   // legacy single-workout shape
+  return [];
+}
+window.g1Workouts = g1Workouts;
+
 // ── STRENGTH WIDGET ───────────────────────────────────────────────────
 // 7-day rolling workout volume. Called from system.html DOMAIN_WIDGETS.geburah.
 // Depends on globals: data, todayLog, getTodayStr (from system.html inline script).
@@ -268,29 +281,25 @@ window.renderStrengthWidget = function(el, dk, domain) {
   let weekSessions = 0;
   let weekTotalSets = 0;
 
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(base);
-    d.setDate(d.getDate() - i);
-    const ds = d.toLocaleDateString('en-CA');
-    const dayG1 = data.dailyLogs?.[ds]?.g1;
-    if (dayG1?.workout) {
-      weekSessions++;
-      const w = dayG1.workout;
-      weekTotalSets += w.totalSets || 0;
-      Object.entries(w.muscleGroupSets || {}).forEach(([mg, sets]) => {
-        weekVolume[mg] = (weekVolume[mg] || 0) + sets;
-      });
-    }
-  }
-
-  const todayG1 = todayLog['g1'];
-  if (todayG1?.workout && !data.dailyLogs?.[today]?.g1?.workout) {
-    weekSessions++;
-    const w = todayG1.workout;
+  const addWorkout = (w) => {
+    weekSessions++;   // each workout counts as a session (two-a-days count twice)
     weekTotalSets += w.totalSets || 0;
     Object.entries(w.muscleGroupSets || {}).forEach(([mg, sets]) => {
       weekVolume[mg] = (weekVolume[mg] || 0) + sets;
     });
+  };
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(base);
+    d.setDate(d.getDate() - i);
+    const ds = d.toLocaleDateString('en-CA');
+    g1Workouts(data.dailyLogs?.[ds]?.g1).forEach(addWorkout);
+  }
+
+  // Defensive: surface today's workouts if they're in todayLog but not yet
+  // written through to dailyLogs (normally they are — finishLogQuest writes both).
+  if (!data.dailyLogs?.[today]?.g1) {
+    g1Workouts(todayLog['g1']).forEach(addWorkout);
   }
 
   const hasVolume = Object.keys(weekVolume).length > 0;

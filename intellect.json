@@ -1,0 +1,249 @@
+{
+  "generatedAt": "2026-07-01T16:24:14-04:00",
+  "source": "LOCKED (Google Drive)",
+  "deadline": {
+    "label": "Dissertation to committee",
+    "date": "2026-09-15",
+    "daysRemaining": 76
+  },
+  "defenseTarget": "late October 2026 (before Halloween)",
+  "week": {
+    "label": "(Jun 15–19) — Week 2 of June",
+    "deliverable": "Get the NextSeq run safely off the instrument and onto the HRI cluster, ready for analysis — **✓ met June 17** (run copied + verified; original untouched; BaseSpace backup exists). Next focus this week: demultiplex the run, sort samples by project, begin DESeq2.",
+    "groups": [
+      {
+        "heading": "Data extraction",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Sequencing run completed locally on NextSeq 2000"
+          },
+          {
+            "done": true,
+            "text": "rsync workflow practiced, then real extraction run directly"
+          },
+          {
+            "done": true,
+            "text": "Confirmed NextSeq could reach cluster; SSH'd to `seq-login.sabu.mtu.edu`"
+          },
+          {
+            "done": true,
+            "text": "Picked HRI storage path (`/mnt/hri/goetsch_lab/Illumina/...`); run ~126 GB"
+          },
+          {
+            "done": true,
+            "text": "rsync run folder → HRI (inside tmux, dry-run first), verified intact before touching original"
+          }
+        ],
+        "done": 5,
+        "total": 5,
+        "backlog": false
+      },
+      {
+        "heading": "Schedule milestones (Week 2 of June) — data now on HRI, these are active",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Demultiplex the new run + sort samples by project"
+          },
+          {
+            "done": false,
+            "text": "FlowJo — flow analysis workflow set up / flow data worked up"
+          },
+          {
+            "done": false,
+            "text": "RNA-seq DESeq2 run"
+          },
+          {
+            "done": false,
+            "text": "First volcano plot"
+          },
+          {
+            "done": false,
+            "text": "PCA plot"
+          },
+          {
+            "done": false,
+            "text": "MA plot"
+          }
+        ],
+        "done": 0,
+        "total": 6,
+        "backlog": false
+      },
+      {
+        "heading": "Upcoming hard deadlines",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Cold Spring Harbor \"Epigenetics & Chromatin\" abstract — submit by Jun 26"
+          },
+          {
+            "done": false,
+            "text": "Bianca's exosome RNA-seq — basic visualizations to her by Fri Jun 26 (she defends Aug; true deadline ~mid-July)"
+          }
+        ],
+        "done": 0,
+        "total": 2,
+        "backlog": false
+      },
+      {
+        "heading": "Carried forward from last week",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Western blot — another attempt tomorrow (6/19), this round with total-protein (Q) normalization (Paul requested; Zach learning). ~15 prior attempts failed with varied modes; then FIJI quantification → figure draft."
+          },
+          {
+            "done": true,
+            "text": "Bianca's exosomal RNA isolation — library prep (sequenced in the June run)"
+          },
+          {
+            "done": true,
+            "text": "RNA isolation"
+          },
+          {
+            "done": false,
+            "text": "CRISPR transfection round 2 — confirm pellets frozen"
+          },
+          {
+            "done": true,
+            "text": "ddPCR consumables/plasticware — ample supplies now for the new auto droplet generator"
+          },
+          {
+            "done": false,
+            "text": "PROSPERO — submit portal with updated (v2) scope"
+          },
+          {
+            "done": false,
+            "text": "Dallas — send inclusion/exclusion criteria + Covidence access"
+          },
+          {
+            "done": false,
+            "text": "Methods draft: ovarian paper"
+          },
+          {
+            "done": false,
+            "text": "Ovarian paper rough full draft (last week's deliverable — confirm shipped)"
+          },
+          {
+            "done": true,
+            "text": "Finishing Fellowship — submitted (Karl's materials in; was the Jun 8–12 deliverable). Paul's rec letter is his separate process."
+          }
+        ],
+        "done": 4,
+        "total": 10,
+        "backlog": true
+      },
+      {
+        "heading": "CRISPR paper — remaining wet lab",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Long HDR transfections: HT1080 and HEPG2 — harvest 72–96h post-transfection"
+          },
+          {
+            "done": false,
+            "text": "Run remaining ddPCR samples (most still unrun; HEYA8 partially done)"
+          },
+          {
+            "done": false,
+            "text": "Viability assay: all cell lines at experimental P+N doses"
+          },
+          {
+            "done": false,
+            "text": "T7 endonuclease cleavage: gRNA-only controls. HEYA8 done 6/18 (David, IDT kit) — inconclusive: PCR worked, controls cut, but no clear cleavage on TapeStation (likely low DSB rate). Remaining lines pending."
+          },
+          {
+            "done": false,
+            "text": "Review MDA FlowJo viability data (anomalous results)"
+          },
+          {
+            "done": false,
+            "text": "Try premixed RNP protocol (Paix 2019) — bump Cas9 to ~12 pmol per 24-well"
+          }
+        ],
+        "done": 0,
+        "total": 6,
+        "backlog": true
+      },
+      {
+        "heading": "Added 6/26",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Send Paul the CSHL Epigenetics & Chromatin abstract draft (finalize voice; decide recast vs cut the 6 h-release sentence)"
+          },
+          {
+            "done": false,
+            "text": "Make fresh 500 mL DMEM stock before thawing new cells (cell thaw paused until after the wedding)"
+          },
+          {
+            "done": false,
+            "text": "Install the lab-notebook launchd job (bootstrap in `code/lab_notebook/README.md`)"
+          },
+          {
+            "done": false,
+            "text": "(FYI) Draft-to-committee target moved Aug 28 → Sept 15; intermediary milestones now in SCHEDULE.md"
+          }
+        ],
+        "done": 0,
+        "total": 4,
+        "backlog": false
+      }
+    ],
+    "focusDone": 5,
+    "focusTotal": 17,
+    "doneTotal": 9,
+    "taskTotal": 33,
+    "blockers": [
+      "Make fresh 500 mL DMEM stock before thawing cells — contamination (6/25) was contained (cultures lost but resolved); fresh stock still needed."
+    ]
+  },
+  "projects": [
+    {
+      "name": "The ovarian paper",
+      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells. RNA-seq and ChIP-seq data now on HRI (June 17); processed ovarian RNA-seq (STAR, Oct 2024) located, pending confirmation it's the cocktail samples. Tier 2 ChIP sequenced in the June run; Tier 1 ChIP to pull from BaseSpace. Westerns being repeated again (Paul requested; Zach learning) — this round with total-protein (Q) normalization. Draft so far: outline + 2 intro drafts + methods draft; no full draft yet. Urgent next step: figure drafts (DESeq2/volcano/PCA/MA), even on incomplete data, to surface what needs repeating.",
+      "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells."
+    },
+    {
+      "name": "The CRISPR paper",
+      "status": "palbociclib + nocodazole synergy for CRISPR/HDR rates (enhancing CRISPR efficiency / HDR outcomes). **Data collection NOT complete:** ≥2 transfections remain (HT1080 + HEPG2 long HDR) and most ddPCR samples still need running. ddPCR so far (HEYA8 only): palbo alone and noc alone ~3–5 hits/µL; palbo+noc ~12–15 hits/µL — synergistic effect. ddPCR probes ordered; consumables/plasticware still needed. T7 on HEYA8 gRNA-only (June 18) inconclusive — likely low DSB rate (controls cut fine).",
+      "short": "palbociclib + nocodazole synergy for CRISPR/HDR rates (enhancing CRISPR efficiency / HDR outcomes)."
+    },
+    {
+      "name": "The review",
+      "status": "systematic review with pooled analysis of CDK4/6 inhibitors in non-breast/non-haematological solid tumors. RB1 pathway integrity framing (see `review/strategic-reframe-napkin.md`). With Dallas (also her masters report). Dissertation Chapter 1. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary). Pipeline: Zotero (dedup) → Covidence (screening) → Elicit (AI-assisted extraction, verify manually) → R + metafor (meta-analysis). Risk of bias: Newcastle-Ottawa (observational) + RoB 2 (RCTs).",
+      "short": "systematic review with pooled analysis of CDK4/6 inhibitors in non-breast/non-haematological solid tumors."
+    },
+    {
+      "name": "The dissertation",
+      "status": "three chapters from the three papers. Skeleton cleaned and scaffolded (all 3 chapters, full section headers). Full draft to committee by September 15, 2026.",
+      "short": "three chapters from the three papers."
+    }
+  ],
+  "lab": {
+    "lastEntryDate": "2026-07-01",
+    "daysSinceLastEntry": 0,
+    "recentEntries": [
+      {
+        "date": "2026-07-01 (Wed)",
+        "contexts": [
+          "Exploratory DESeq2 confirms gDNA confound; DE not the deliverable"
+        ]
+      },
+      {
+        "date": "2026-07-01 (Wed)",
+        "contexts": [
+          "CRISPR ddPCR (drop-off) rare-event run: plate design + prep for 7/2"
+        ]
+      },
+      {
+        "date": "2026-06-30 (Tue)",
+        "contexts": [
+          "ExoRNA alignment done; gDNA contamination QC finding"
+        ]
+      }
+    ]
+  }
+}

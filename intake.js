@@ -156,7 +156,8 @@
     const b = ensureBatches().find(x => x.id === batchId);
     if (!b || (b.servingsMade - b.servingsLogged) <= 0) return;
     const ok = window.addAccumEntry('g2',
-      { calories: b.perServing.calories, protein: b.perServing.protein },
+      { calories: b.perServing.calories, protein: b.perServing.protein,
+        carbs: b.perServing.carbs, fat: b.perServing.fat },
       b.name + ' (1 serving)',
       { batchId: b.id });   // tag: kept out of the derived bank
     if (ok) {
@@ -209,28 +210,36 @@
     function addLine(prefill) {
       const row = document.createElement('div');
       row.className = 'batch-line';
-      row.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px';
+      row.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px';
       // autocomplete="off" on every input: without it the browser refills a
       // freshly-added line with the previous line's values (the "doubling" bug).
       row.innerHTML = `
         <input type="text" class="bl-name log-input" list="batch-bank-list"
-          style="flex:1;min-width:0;padding:6px 8px;font-size:12px" placeholder="ingredient" autocomplete="off">
+          style="flex:1;min-width:90px;padding:6px 8px;font-size:12px" placeholder="ingredient" autocomplete="off">
         <input type="number" class="bl-qty log-input"
-          style="width:42px;padding:6px;font-size:12px;text-align:right" placeholder="1" min="0" step="any" autocomplete="off">
+          style="width:38px;padding:6px;font-size:12px;text-align:right" placeholder="1" min="0" step="any" autocomplete="off">
         <input type="number" class="bl-kcal log-input"
-          style="width:58px;padding:6px;font-size:12px;text-align:right" placeholder="kcal" min="0" autocomplete="off">
+          style="width:50px;padding:6px;font-size:12px;text-align:right" placeholder="kcal" min="0" autocomplete="off">
         <input type="number" class="bl-protein log-input"
-          style="width:48px;padding:6px;font-size:12px;text-align:right" placeholder="g" min="0" autocomplete="off">
+          style="width:40px;padding:6px;font-size:12px;text-align:right" placeholder="P" min="0" autocomplete="off">
+        <input type="number" class="bl-carbs log-input"
+          style="width:40px;padding:6px;font-size:12px;text-align:right" placeholder="C" min="0" autocomplete="off">
+        <input type="number" class="bl-fat log-input"
+          style="width:40px;padding:6px;font-size:12px;text-align:right" placeholder="F" min="0" autocomplete="off">
         <span class="bl-remove" style="cursor:pointer;color:var(--text3);font-size:14px;padding:0 2px">✕</span>`;
       const nameI = row.querySelector('.bl-name');
       const qtyI = row.querySelector('.bl-qty');
       const kcalI = row.querySelector('.bl-kcal');
       const protI = row.querySelector('.bl-protein');
+      const carbI = row.querySelector('.bl-carbs');
+      const fatI = row.querySelector('.bl-fat');
       if (prefill) {
         nameI.value = prefill.name || '';
         if (prefill.qty) qtyI.value = prefill.qty;
         if (prefill.calories) kcalI.value = prefill.calories;
         if (prefill.protein) protI.value = prefill.protein;
+        if (prefill.carbs) carbI.value = prefill.carbs;
+        if (prefill.fat) fatI.value = prefill.fat;
       }
       // Pull from the bank: choosing a known food fills its macros.
       nameI.addEventListener('change', () => {
@@ -239,34 +248,43 @@
         if (hit) {
           if (hit.values.calories) kcalI.value = hit.values.calories;
           if (hit.values.protein) protI.value = hit.values.protein;
+          if (hit.values.carbs) carbI.value = hit.values.carbs;
+          if (hit.values.fat) fatI.value = hit.values.fat;
           recompute();
         }
       });
       qtyI.addEventListener('input', recompute);
       kcalI.addEventListener('input', recompute);
       protI.addEventListener('input', recompute);
+      carbI.addEventListener('input', recompute);
+      fatI.addEventListener('input', recompute);
       row.querySelector('.bl-remove').onclick = () => { row.remove(); recompute(); };
       linesEl.appendChild(row);
     }
 
     function totals() {
-      let kcal = 0, protein = 0;
+      let kcal = 0, protein = 0, carbs = 0, fat = 0;
       linesEl.querySelectorAll('.batch-line').forEach(r => {
         const q = parseFloat(r.querySelector('.bl-qty').value);
         const mult = q > 0 ? q : 1;   // blank qty counts as one serving
         kcal += mult * (parseFloat(r.querySelector('.bl-kcal').value) || 0);
         protein += mult * (parseFloat(r.querySelector('.bl-protein').value) || 0);
+        carbs += mult * (parseFloat(r.querySelector('.bl-carbs').value) || 0);
+        fat += mult * (parseFloat(r.querySelector('.bl-fat').value) || 0);
       });
-      return { kcal, protein };
+      return { kcal, protein, carbs, fat };
     }
 
     function recompute() {
       const s = parseInt(modal.querySelector('#batch-servings').value) || 0;
       const t = totals();
       const prev = modal.querySelector('#batch-preview');
-      if (s >= 1 && (t.kcal > 0 || t.protein > 0)) {
+      if (s >= 1 && (t.kcal > 0 || t.protein > 0 || t.carbs > 0 || t.fat > 0)) {
+        const macroTail = (t.carbs > 0 || t.fat > 0)
+          ? ` · <b style="color:var(--text)">${Math.round(t.carbs / s)}</b> C · <b style="color:var(--text)">${Math.round(t.fat / s)}</b> F`
+          : '';
         prev.innerHTML = `Per serving: <b style="color:var(--text)">${Math.round(t.kcal / s)}</b> kcal · ` +
-          `<b style="color:var(--text)">${Math.round(t.protein / s)}</b> g protein ` +
+          `<b style="color:var(--text)">${Math.round(t.protein / s)}</b> g protein${macroTail} ` +
           `<span style="color:var(--text3)">· makes ${s}</span>`;
       } else {
         prev.innerHTML = `<span style="color:var(--text3)">Add ingredients + servings to preview</span>`;
@@ -293,7 +311,12 @@
         createdOn: today(),
         servingsMade: s,
         servingsLogged: 0,
-        perServing: { calories: Math.round(t.kcal / s), protein: Math.round(t.protein / s) }
+        perServing: {
+          calories: Math.round(t.kcal / s),
+          protein: Math.round(t.protein / s),
+          carbs: Math.round(t.carbs / s),
+          fat: Math.round(t.fat / s)
+        }
       });
       saveData();
       overlay.remove();
@@ -303,6 +326,158 @@
 
     document.body.appendChild(overlay);
     modal.querySelector('#batch-name').focus();
+  };
+
+  // ── CARB/FAT ESTIMATOR ───────────────────────────────────────────────
+  // Derives plausible carbs/fat from a food name + its recorded calories and
+  // protein, using the 4/4/9 kcal split. EXPLICITLY an estimate, never silent:
+  // it only seeds the Food Manager's inputs, which Karl reviews before saving.
+  // carbFrac = fraction of the NON-protein energy assumed to be carbohydrate.
+  const HI_CARB = /rice|bread|bagel|pasta|noodle|oat|granola|cereal|potato|fries|fruit|banana|apple|berr|pancake|waffle|toast|cookie|oreo|cracker|twinkie|cake|pie|muffin|sugar|cand(y|ie)|donut|honey|juice|soda|biscoff|palmier|bundt|tiramisu|parfait|graham|mac and cheese|slime|gainer|chocolate milk|\bmilk/;
+  const HI_FAT  = /oil|butter|cheese|alfredo|cream|\bnut|almond|peanut|avocado|bacon|sausage|charcuterie|pesto|mayo|palmier/;
+  const LEAN    = /chicken|beef|steak|fish|salmon|tuna|\begg|whey|protein shake|protein|greek yogurt|turkey|pork|jerky/;
+  function carbFrac(name) {
+    const n = (name || '').toLowerCase();
+    if (LEAN.test(n) && !HI_CARB.test(n)) return 0.25;
+    if (HI_FAT.test(n) && !HI_CARB.test(n)) return 0.20;
+    if (HI_CARB.test(n)) return 0.80;
+    return 0.50;   // mixed / unknown
+  }
+  window.estimateMacros = function(name, calories, protein) {
+    const C = calories || 0, P = protein || 0;
+    const R = Math.max(0, C - 4 * P);   // energy not accounted for by protein
+    const cf = carbFrac(name);
+    return { carbs: Math.round(R * cf / 4), fat: Math.round(R * (1 - cf) / 9) };
+  };
+
+  // ── WRITE-BACK: edit a food's macros on its most-recent entry ─────────
+  // The bank is derived ("latest values win"), so correcting a food = editing
+  // its latest dailyLogs entry. Inputs are PER-SERVING (what the chip shows);
+  // entries store the consumed total, so scale by that entry's servings.
+  function recomputeDayTotals(day, qid) {
+    const log = data.dailyLogs?.[day]?.[qid];
+    if (!log) return;
+    const totals = {};
+    bankFields(qid).forEach(f => {
+      totals[f.key] = (log.entries || []).reduce((s, e) => s + (e[f.key] || 0), 0);
+    });
+    log.totals = totals;
+    log.note = bankFields(qid).map(f => `${totals[f.key]} ${f.units}`).join(' | ');
+  }
+
+  function updateFoodMacros(key, vals) {
+    let target = null, targetDay = null;
+    Object.keys(data.dailyLogs || {}).sort().forEach(day => {
+      (data.dailyLogs[day]?.g2?.entries || []).forEach(e => {
+        if (e.batchId) return;   // batch servings aren't editable "foods"
+        const nk = (e.note || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        if (nk === key) { target = e; targetDay = day; }   // keep last = most recent
+      });
+    });
+    if (!target) return false;
+    const servings = target.servings > 0 ? target.servings : 1;
+    ['calories', 'protein', 'carbs', 'fat'].forEach(f => {
+      if (vals[f] !== undefined && vals[f] !== null && vals[f] !== '') {
+        target[f] = Math.round(parseFloat(vals[f]) * servings);
+      }
+    });
+    recomputeDayTotals(targetDay, 'g2');
+    // keep the live today view in sync if we edited today's log
+    if (typeof getTodayStr === 'function' && targetDay === getTodayStr()
+        && typeof todayLog !== 'undefined' && data.dailyLogs[targetDay]?.g2) {
+      todayLog['g2'] = data.dailyLogs[targetDay].g2;
+    }
+    return true;
+  }
+
+  // ── FOOD MANAGER MODAL ───────────────────────────────────────────────
+  // Lists every saved food (per-serving cal/P/C/F, editable). "Estimate
+  // missing C/F" seeds blanks from estimateMacros for review. Save writes
+  // changed rows back via updateFoodMacros, then rebuilds the bank.
+  window.openFoodManager = function() {
+    ensureBank();
+    const rows = Object.entries(bank.g2 || {})
+      .sort((a, b) => (b[1].count - a[1].count) || (new Date(b[1].lastUsed) - new Date(a[1].lastUsed)));
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay open';
+    overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    overlay.appendChild(modal);
+
+    const F = ['calories', 'protein', 'carbs', 'fat'];
+    const missing = rows.filter(([, f]) => !f.values.carbs && !f.values.fat).length;
+
+    modal.innerHTML = `
+      <div class="modal-title">Saved foods <span class="modal-close">✕</span></div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">
+        Per-serving macros. Edit any value; tap <b>Estimate missing C/F</b> to seed blanks
+        (estimates — review before saving). ${rows.length} foods${missing ? ` · ${missing} missing carbs/fat` : ''}.
+      </div>
+      ${missing ? `<button class="btn" id="fm-estimate" style="width:100%;font-size:11px;margin-bottom:12px;border-color:var(--accent)">⚗ Estimate missing C/F (${missing})</button>` : ''}
+      <div style="display:flex;gap:6px;font-size:8px;letter-spacing:1px;color:var(--text3);text-transform:uppercase;padding:0 2px 4px">
+        <span style="flex:1">food</span><span style="width:46px;text-align:right">kcal</span>
+        <span style="width:34px;text-align:right">P</span><span style="width:34px;text-align:right">C</span><span style="width:34px;text-align:right">F</span>
+      </div>
+      <div id="fm-rows" style="max-height:50vh;overflow-y:auto"></div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn btn-primary" id="fm-save" style="flex:1">Save changes</button>
+        <button class="btn btn-ghost" id="fm-cancel">Cancel</button>
+      </div>`;
+
+    const rowsEl = modal.querySelector('#fm-rows');
+    rows.forEach(([key, f]) => {
+      const r = document.createElement('div');
+      r.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px';
+      r.dataset.key = key;
+      r.dataset.name = f.name;   // for the estimator
+      r.innerHTML = `
+        <span style="flex:1;min-width:0;font-size:11px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(f.name)}</span>
+        ${F.map(fk => {
+          const w = fk === 'calories' ? 46 : 34;
+          return `<input type="number" class="log-input fm-${fk}" data-base="${f.values[fk] || ''}"
+            style="width:${w}px;padding:5px;font-size:11px;text-align:right" min="0" autocomplete="off"
+            value="${f.values[fk] || ''}" placeholder="—">`;
+        }).join('')}`;
+      rowsEl.appendChild(r);
+    });
+
+    const estBtn = modal.querySelector('#fm-estimate');
+    if (estBtn) estBtn.onclick = () => {
+      rowsEl.querySelectorAll('[data-key]').forEach(r => {
+        const cEl = r.querySelector('.fm-carbs'), fEl = r.querySelector('.fm-fat');
+        if (cEl.value || fEl.value) return;   // already has macros — leave it
+        const cal = parseFloat(r.querySelector('.fm-calories').value) || 0;
+        const prot = parseFloat(r.querySelector('.fm-protein').value) || 0;
+        const est = window.estimateMacros(r.dataset.name, cal, prot);
+        cEl.value = est.carbs; fEl.value = est.fat;
+        cEl.style.color = 'var(--accent)'; fEl.style.color = 'var(--accent)';   // mark as estimate
+      });
+      notify('Estimates filled — review, then Save.');
+    };
+
+    modal.querySelector('#fm-cancel').onclick = () => overlay.remove();
+    modal.querySelector('.modal-close').onclick = () => overlay.remove();
+    modal.querySelector('#fm-save').onclick = () => {
+      let changed = 0;
+      rowsEl.querySelectorAll('[data-key]').forEach(r => {
+        const vals = {}; let diff = false;
+        F.forEach(fk => {
+          const el = r.querySelector('.fm-' + fk);
+          vals[fk] = el.value;
+          if ((el.value || '') !== (el.dataset.base || '')) diff = true;
+        });
+        if (diff && updateFoodMacros(r.dataset.key, vals)) changed++;
+      });
+      bank = null; ensureBank();          // rebuild derived index from edited logs
+      saveData();
+      overlay.remove();
+      if (typeof renderQuests === 'function') renderQuests();
+      notify(changed ? `Updated ${changed} food${changed !== 1 ? 's' : ''}.` : 'No changes.');
+    };
+
+    document.body.appendChild(overlay);
   };
 
   // Render the Intake domain widget.
@@ -339,8 +514,8 @@
     el.innerHTML = `
       ${batchGlyph}
       <div class="domain-widget" style="border-color:${domain.color}">
-        <!-- oz · kcal · protein -->
-        <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
+        <!-- oz · kcal · protein (primary); carbs · fat (secondary) -->
+        <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${(nutritionTotals.carbs || nutritionTotals.fat) ? '4px' : (allEntries.length > 0 ? '12px' : '0')}">
           <div>
             <div style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.oz || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">oz</div>
@@ -356,6 +531,10 @@
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">g protein</div>
           </div>
         </div>
+        ${(nutritionTotals.carbs || nutritionTotals.fat) ? `
+          <div style="text-align:center;font-size:11px;color:var(--text3);letter-spacing:0.5px;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
+            ${nutritionTotals.carbs || 0}g carbs · ${nutritionTotals.fat || 0}g fat
+          </div>` : ''}
         <!-- Merged entry log -->
         ${allEntries.length > 0 ? `
           <div style="border-top:1px solid var(--border);padding-top:8px">
@@ -371,15 +550,20 @@
                     <span style="color:var(--text2)">${parts.join(' · ')}</span>
                   </div>`;
               } else {
+                const macroTail = (e.carbs || e.fat) ? ` · ${e.carbs || 0}c/${e.fat || 0}f` : '';
                 return `
                   <div style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
                     <span>${time}${e.note ? ' — ' + e.note : ''}</span>
-                    <span style="color:var(--text2)">${e.calories || 0} kcal · ${e.protein || 0}g</span>
+                    <span style="color:var(--text2)">${e.calories || 0} kcal · ${e.protein || 0}g${macroTail}</span>
                   </div>`;
               }
             }).join('')}
           </div>
         ` : ''}
+        <div style="text-align:center;margin-top:10px">
+          <button onclick="openFoodManager()"
+            style="background:none;border:none;color:var(--text3);font-size:9px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;text-decoration:underline">✎ Edit saved foods</button>
+        </div>
       </div>
     `;
   };

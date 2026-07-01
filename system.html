@@ -1074,7 +1074,7 @@
 <div class="notify" id="notify"></div>
 
 <script>
-  ['sigils.js','themes.js','sensei.js','strength.js','intake.js','finance.js'].forEach(function(src) {
+  ['sigils.js','themes.js','sensei.js','strength.js','intake.js','finance.js','intellect.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
@@ -1302,7 +1302,7 @@ async function setupGitHubDataStore(token, repo, path = 'CSS/CSS_DATA.json') {
 
 
 // ── DATA ──────────────────────────────────────────────────────────────
-const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","dailyLogs":{},"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending \u2014 what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}},"accountBalances":[],"batches":[],"unlockedDomains":["geburah","malkuth","chesed"]};
+const DEFAULT_DATA = {"_meta":{"system":"Cybernetic Self System v3.0 // Pantheon Build","character":"Karl Schneider","created":"2026-03-30","lastUpdated":"2026-04-01","version":"1.1","initializationNotes":"System initialized with real baseline: dissertation at 0% across all milestones, fitness rebuilding at 2-3x/week, silver stack goal replaced with full financial module (DCA, budget, income), starting signal: scattered across domains.","baselineContext":{"weightLbs":"197-202 morning (hydration dependent), as of 2026-03-30","sleepChange":"Stopped edible gummies ~week of 2026-03-23. Now waking 6-6:30am with girlfriend. Sleep architecture likely still recalibrating.","labStatusAtInit":"DNA isolated from transfections for ddPCR (in progress, not milestone-complete). SKOV3 protein samples collected for western blots. Western blot protocol updated. ddPCR milestone active but not closed.","gymLoggingGap":"Initiation week: 3 sessions completed (legs Mon, push Wed, pull Sun) but evidence capture was 1/3. Monday logged fully in Strong. Wednesday logged 1 set then abandoned. Sunday not opened at all. Milestone fit_3w marked done based on confirmed completion, but harvest would have only confirmed Monday under evidence rules.","nutritionAtInit":"Not tracking. Weight stable. Protein intake unknown."}},"rank":"E","xp":0,"todayXp":0,"streak":0,"lastDate":"2026-03-30","dailyLogs":{},"lastTransmission":{"date":"2026-03-30","archetype":"The System","body":"System initialized. Behavioral history begins now. You are E-rank. The Tree is dark. Every action is signal. Begin."},"domainWeights":{"hod":1.3,"geburah":1.0,"malkuth":0.9,"yesod":0.7,"chesed":0.8,"binah":0.8,"netzach":1.0,"pillar":1.1,"chokmah":0.8},"questDefinitions":{"hod":{"name":"Intellect","anchor":"Lab work, writing, PhD research","color":"#d85a30","quests":{"h1":{"name":"Lab session","xp":30,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you work on?","role":"floor"},"h2":{"name":"Writing session","xp":35,"tier":"high","stat":"lab","type":"confirm","inputType":"text","placeholder":"What did you write?","role":"reach"}}},"geburah":{"name":"Strength","anchor":"Physical conditioning","color":"#e05555","quests":{"g1":{"name":"Workout","xp":30,"tier":"high","stat":"gym","type":"confirm","inputType":"strong-paste","placeholder":"Paste Strong export or describe workout...","role":"floor"},"g3":{"name":"Active recovery","xp":15,"tier":"low","stat":"gym","type":"confirm","inputType":"confirm","role":"reach"}}},"malkuth":{"name":"Intake","anchor":"Food, water, supplements","color":"#8b6914","quests":{"m1":{"name":"Hydration","xp":10,"tier":"low","stat":"hydration","type":"confirm","inputType":"accumulator","role":"floor","accumFields":[{"label":"Fluid","units":"oz","key":"oz"}],"notePrompt":"What did you drink? (optional)"},"g2":{"name":"Nutrition log","xp":20,"tier":"mid","stat":"nutrition","type":"confirm","inputType":"accumulator","role":"reach","accumFields":[{"label":"Calories","units":"kcal","key":"calories"},{"label":"Protein","units":"g","key":"protein"},{"label":"Carbs","units":"g","key":"carbs"},{"label":"Fat","units":"g","key":"fat"}],"notePrompt":"What did you eat? (optional)"}}},"yesod":{"name":"Recovery","anchor":"Sleep + body hygiene","color":"#9b5de5","quests":{"y1":{"name":"Sleep hours","xp":20,"tier":"mid","stat":"sleep","type":"confirm","inputType":"dual-number","retrospective":true,"fields":[{"label":"Hours","units":"hr","min":0,"max":24},{"label":"Minutes","units":"min","min":0,"max":59}],"role":"floor"},"y2":{"name":"Lights out by midnight","xp":15,"tier":"mid","stat":"sleep","type":"confirm","inputType":"confirm","retrospective":true,"role":"reach"},"y3":{"name":"Morning hygiene","xp":10,"tier":"low","stat":"hygiene","type":"confirm","inputType":"confirm","role":"floor"}}},"chesed":{"name":"Finance","anchor":"Budget, income, spending \u2014 what flows in and out","color":"#2dd4bf","quests":{"f1":{"name":"Log a transaction","xp":10,"tier":"low","stat":"finance","type":"confirm","inputType":"transaction","role":"floor"},"f2":{"name":"Positive financial action","xp":20,"tier":"mid","stat":"finance","type":"confirm","inputType":"text","placeholder":"DCA, budget review, paid something off...","role":"reach"}}},"binah":{"name":"Structure","anchor":"Physical space, planning, organization","color":"#5b6fff","quests":{"b1":{"name":"Check & respond","xp":10,"tier":"low","stat":"lab","type":"confirm","inputType":"confirm","role":"floor"},"m2":{"name":"Tend the space","xp":15,"tier":"mid","stat":"hygiene","type":"confirm","inputType":"confirm","role":"reach"}}},"netzach":{"name":"Creation","anchor":"Art, music, craft \u2014 output that isn't the PhD","color":"#e8b4b8","quests":{"n1":{"name":"Did you create something?","xp":20,"tier":"mid","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you make?","role":"floor"},"n2":{"name":"Did you finish something?","xp":30,"tier":"high","stat":"art","type":"confirm","inputType":"text","placeholder":"What did you complete?","role":"reach"}}},"pillar":{"name":"Attunement","anchor":"Ritual, practice, cybernetic reflection","color":"#c9a84c","quests":{"p1":{"name":"Read today's transmission","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"p2":{"name":"Write a reflection","xp":20,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"What's on your mind?","role":"reach"}}},"chokmah":{"name":"Social","anchor":"Relationships, interpersonal development","color":"#10b981","quests":{"c1":{"name":"Connected today","xp":10,"tier":"low","stat":"practice","type":"confirm","inputType":"confirm","role":"floor"},"b2":{"name":"Reach out","xp":15,"tier":"mid","stat":"practice","type":"confirm","inputType":"text","placeholder":"Who did you reach out to?","role":"reach"}}}},"accountBalances":[],"batches":[],"unlockedDomains":["geburah","malkuth","chesed"]};
 
 // ── STATE ─────────────────────────────────────────────────────────────
 let data = {};
@@ -1606,6 +1606,7 @@ function renderFocusQuests() {
 function buildQuestCard(qid, quest, domain, options = {}) {
   const done = !!todayLog[qid];
   const isAccum = quest.inputType === 'accumulator';
+  const isStrong = quest.inputType === 'strong-paste';   // multi-workout; stays open after logging
   const accumTotals = isAccum && done ? todayLog[qid]?.totals || {} : {};
   const accumSummary = isAccum && done
     ? quest.accumFields.map(f => `${accumTotals[f.key] || 0} ${f.units}`).join(' · ')
@@ -1622,7 +1623,7 @@ function buildQuestCard(qid, quest, domain, options = {}) {
     : '';
 
   const card = document.createElement('div');
-  card.className = 'quest-card' + (done && !isAccum ? ' completed' : '') + (deferred ? ' reach-deferred' : '');
+  card.className = 'quest-card' + (done && !isAccum && !isStrong ? ' completed' : '') + (deferred ? ' reach-deferred' : '');
   card.innerHTML = `
     <div class="quest-header" onclick="toggleQuestLog('${qid}')">
       <div class="domain-pip" style="background:${domain.color}"></div>
@@ -1644,6 +1645,10 @@ function buildQuestCard(qid, quest, domain, options = {}) {
           : quest.inputType === 'transaction'
           ? `<button class="btn btn-primary" onclick="logTransaction('${qid}', ${quest.xp})">
               ${done ? 'Add' : 'Log +' + quest.xp + ' XP'}
+            </button>`
+          : isStrong
+          ? `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})">
+              ${done ? '+ Add workout' : 'Log +' + quest.xp + ' XP'}
             </button>`
           : `<button class="btn btn-primary" onclick="logQuest('${qid}', ${quest.xp})" ${done ? 'disabled style="opacity:0.4"' : ''}>
               ${done ? 'Logged' : 'Complete +' + quest.xp + ' XP'}
@@ -1791,6 +1796,13 @@ const DOMAIN_WIDGETS = {
 
   chesed: function(el, dk, domain) {
     window.renderFinanceWidget(el, dk, domain);
+  },
+
+  // Intellect is a read-only mirror of the LOCKED PhD project (no in-app
+  // logging). Registered here so the gate reads "locked" (built, earnable),
+  // not "unbuilt" — it stays sealed until hod enters data.unlockedDomains.
+  hod: function(el, dk, domain) {
+    window.renderIntellectWidget(el, dk, domain);
   }
 };
 
@@ -1994,24 +2006,30 @@ function buildQuestInput(qid, quest, done) {
     }
 
     case 'strong-paste': {
-      if (done && logged?.workout) {
-        const w = logged.workout;
-        const groups = Object.entries(w.muscleGroupSets).sort((a,b) => b[1] - a[1]);
-        return `<div style="margin:8px 0">
-          <div style="font-size:11px;color:var(--green);margin-bottom:6px">✓ ${w.name || 'Workout'} — ${w.exercises.length} exercises · ${w.totalSets} working sets</div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px">${groups.map(([g, sets]) =>
-            `<span style="font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:2px;color:var(--text2)">${g} ${sets}s</span>`
-          ).join('')}</div>
-        </div>`;
-      }
-      if (done) {
-        return `<div style="margin:8px 0">
+      // Summarize every workout already logged today (multi-entry), then ALWAYS
+      // offer the textarea so another can be added (the whole point of this case).
+      const workouts = window.g1Workouts ? window.g1Workouts(logged) : (logged?.workout ? [logged.workout] : []);
+      let summary = '';
+      if (done && workouts.length) {
+        summary = `<div style="margin:8px 0;display:flex;flex-direction:column;gap:8px">` +
+          workouts.map(w => {
+            const groups = Object.entries(w.muscleGroupSets || {}).sort((a,b) => b[1] - a[1]);
+            return `<div>
+              <div style="font-size:11px;color:var(--green);margin-bottom:4px">✓ ${w.name || 'Workout'} — ${(w.exercises||[]).length} exercises · ${w.totalSets || 0} working sets</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">${groups.map(([g, sets]) =>
+                `<span style="font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:2px;color:var(--text2)">${g} ${sets}s</span>`
+              ).join('')}</div>
+            </div>`;
+          }).join('') + `</div>`;
+      } else if (done && logged) {
+        // Logged but no parsed workout (freeform text, or a retro stub)
+        summary = `<div style="margin:8px 0">
           <div style="font-size:11px;color:var(--green)">✓ Logged${logged?.note ? ' — ' + logged.note.substring(0, 50) : ''}</div>
         </div>`;
       }
-      return `<textarea class="log-input" id="note-${qid}" rows="4"
-        placeholder="${quest.placeholder || 'Paste Strong export or describe workout...'}"
-        style="font-size:11px;line-height:1.4">${''}</textarea>`;
+      return summary + `<textarea class="log-input" id="note-${qid}" rows="4"
+        placeholder="${done ? 'Paste another workout to add it…' : (quest.placeholder || 'Paste Strong export or describe workout...')}"
+        style="font-size:11px;line-height:1.4"></textarea>`;
     }
 
     case 'file':
@@ -2126,8 +2144,6 @@ function logAccumulator(qid, xp) {
 }
 
 function logQuest(qid, xp) {
-  if (todayLog[qid]) { notify('Already logged today.'); return; }
-
   // Find quest def
   let quest = null;
   let domainKey = null;
@@ -2135,6 +2151,10 @@ function logQuest(qid, xp) {
     if (domain.quests[qid]) { quest = domain.quests[qid]; domainKey = dk; break; }
   }
   const inputType = quest?.inputType || 'text';
+
+  // strong-paste is multi-entry (add a second workout, or a late one from
+  // yesterday); every other quest type is once-per-day.
+  if (todayLog[qid] && inputType !== 'strong-paste') { notify('Already logged today.'); return; }
   let note = '';
   let extraData = {};
 
@@ -2200,12 +2220,80 @@ function logQuest(qid, xp) {
 }
 
 function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) {
+  const today = getTodayStr();
+  if (!data.dailyLogs) data.dailyLogs = {};
+
+  // ── strong-paste: multiple workouts per day ──────────────────────────
+  // Each parsed workout is appended to g1.workouts. Only the FIRST workout of
+  // a given day awards XP + rolls a reward; later adds just stack data (same
+  // first-of-day semantics as the finance/intake accumulators). A late workout
+  // (targetDate in the past) is filed on its OWN day and does NOT mark today
+  // done — so today's quest stays open for today's session.
+  if (extraData && extraData.workout) {
+    const writeDate = (targetDate && targetDate !== today) ? targetDate : today;
+    if (!data.dailyLogs[writeDate]) data.dailyLogs[writeDate] = {};
+    let dayLog = data.dailyLogs[writeDate][qid];
+    // migrate a legacy single-workout day to the array shape in place
+    if (dayLog && dayLog.workout && !dayLog.workouts) {
+      dayLog.workouts = [dayLog.workout];
+      delete dayLog.workout;
+    }
+    const isFirst = !dayLog;
+    if (isFirst) {
+      dayLog = { xp, workouts: [], time: new Date().toISOString(), source: extraData.source || 'manual' };
+      data.dailyLogs[writeDate][qid] = dayLog;
+      data.xp = (data.xp || 0) + xp;
+      if (writeDate === today) todayXpEarned += xp;
+    }
+    if (!Array.isArray(dayLog.workouts)) dayLog.workouts = [];
+    dayLog.workouts.push(extraData.workout);
+    dayLog.note = `${dayLog.workouts.length} workout${dayLog.workouts.length !== 1 ? 's' : ''}`;
+    if (writeDate === today) todayLog[qid] = dayLog;   // past-date log leaves today open
+
+    // sigil flash (same effect as the shared block below)
+    const domGroup = document.querySelector(`#domain-quests-${domainKey}`)?.parentElement;
+    const sigil = domGroup?.querySelector('.domain-sigil');
+    if (sigil) {
+      sigil.classList.remove('sigil-flash');
+      void sigil.offsetWidth;
+      sigil.classList.add('sigil-flash');
+      sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
+    }
+
+    let reward = null;
+    if (isFirst && writeDate === today) {
+      reward = rollQuestReward(qid, xp);
+      if (reward && reward.type === 'xp_multiplier') {
+        const bonus = xp * (reward.multiplier - 1);
+        todayXpEarned += bonus;
+        data.xp = (data.xp || 0) + bonus;
+      }
+    }
+
+    saveData();
+    renderHeader();
+    renderQuests();
+
+    const n = dayLog.workouts.length;
+    if (writeDate !== today) {
+      notify(`Workout logged to ${writeDate}. Today's workout is still open.`, 5000);
+    } else if (!isFirst) {
+      notify(`Workout added — ${n} today.`);
+    } else if (reward && reward.type === 'sensei') {
+      notify(reward.text, 6000);
+    } else if (reward && reward.type === 'xp_multiplier') {
+      notify(reward.text + ' +' + (xp * reward.multiplier) + ' XP total.', 5000);
+    } else if (reward) {
+      notify(reward.text, 7000);
+    } else {
+      notify('Workout logged. +' + xp + ' XP gained.');
+    }
+    return;
+  }
+
   const logEntry = { xp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
   todayXpEarned += xp;
   data.xp = (data.xp || 0) + xp;
-
-  const today = getTodayStr();
-  if (!data.dailyLogs) data.dailyLogs = {};
 
   if (targetDate && targetDate !== today) {
     // Retro log: write workout to past date; stub todayLog so quest shows done
@@ -2270,6 +2358,22 @@ function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) 
 function unlogQuest(qid) {
   const entry = todayLog[qid];
   if (!entry) return;
+  const todayStr = getTodayStr();
+
+  // strong-paste multi-workout: undo pops the most-recent workout. Only when
+  // the last one is removed do we fall through to reverse XP + clear the log.
+  const workouts = window.g1Workouts ? window.g1Workouts(entry) : [];
+  if (workouts.length > 1) {
+    workouts.pop();
+    entry.workouts = workouts;   // entry is the live dailyLogs object (same ref)
+    entry.note = `${workouts.length} workout${workouts.length !== 1 ? 's' : ''}`;
+    if (data.dailyLogs?.[todayStr]) data.dailyLogs[todayStr][qid] = entry;
+    saveData();
+    renderHeader();
+    renderQuests();
+    notify(`Removed last workout — ${workouts.length} left today.`);
+    return;
+  }
 
   // Reverse XP
   const xpLost = entry.xp || 0;
