@@ -1488,7 +1488,7 @@ function calcDomainScores() {
   const today = getTodayStr();
   const days = [];
   for (let i = 0; i < 7; i++) {
-    const d = new Date(today);
+    const d = new Date(today + 'T12:00:00');   // local-noon anchor — avoids UTC date-shift
     d.setDate(d.getDate() - i);
     days.push(d.toLocaleDateString('en-CA'));
   }
