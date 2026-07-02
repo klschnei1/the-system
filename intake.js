@@ -67,6 +67,7 @@
   // If the bank is built lazily right now, the scan already includes this
   // entry — learning it again would double-count.
   window.captureAccumEntry = function(qid, entry) {
+    if (BANK_QUESTS.includes(qid)) pendingJuice = { qid, entry, at: Date.now() };
     const fresh = !bank;
     ensureBank();
     if (!fresh) learnEntry(qid, entry);
@@ -480,10 +481,109 @@
     document.body.appendChild(overlay);
   };
 
+  // ── JUICE — entry-landing choreography ──────────────────────────────
+  // One-shot feedback the moment an intake entry lands: the totals the
+  // entry moved count up and pop, the widget frame glows (blue for fluid,
+  // domain gold for food), and the new log row slides in under a colored
+  // bar. captureAccumEntry sets pendingJuice on EVERY intake entry path
+  // (manual log, bank chip, batch serving); the next renderIntakeWidget
+  // consumes it. A stale flag (>2s — the entry was logged from the
+  // overview tab, where the widget isn't mounted) is dropped so opening
+  // the domain page later doesn't replay the show.
+  // Ported July 2 from the phone session's deploy-repo branch
+  // (claude/juice-intake-widget-gi7ncf); this repo is the source of truth.
+  // Tier-2 intake moment per cold_harbor/juice.md — no reward roll here, so
+  // no conflict with the reveal-first rule. Fold countUp into juice.rollup
+  // when juice.js lands.
+  const FLUID_JUICE = '#57a7e0';
+  let pendingJuice = null;
+
+  function ensureJuiceCss() {
+    if (document.getElementById('intake-juice-css')) return;
+    const s = document.createElement('style');
+    s.id = 'intake-juice-css';
+    s.textContent = `
+      @keyframes intakeStatPop {
+        0% { transform: scale(1); }
+        30% { transform: scale(1.22); color: var(--juice-color, var(--accent));
+              text-shadow: 0 0 14px var(--juice-color, var(--accent)); }
+        100% { transform: scale(1); }
+      }
+      .intake-stat-pop { animation: intakeStatPop 0.6s cubic-bezier(.22,1.2,.36,1); }
+      @keyframes intakeWidgetGlow {
+        0%, 100% { box-shadow: none; }
+        25% { box-shadow: 0 0 18px -2px var(--juice-color, var(--accent)); }
+      }
+      .intake-widget-juice { animation: intakeWidgetGlow 0.9s ease-out; }
+      @keyframes intakeEntryIn {
+        0% { opacity: 0; transform: translateY(-4px); }
+        100% { opacity: 1; transform: none; }
+      }
+      @keyframes intakeEntryBar {
+        0%, 55% { box-shadow: inset 3px 0 0 var(--juice-color, var(--accent)); }
+        100% { box-shadow: inset 3px 0 0 transparent; }
+      }
+      .intake-entry-new { animation: intakeEntryIn 0.35s ease-out, intakeEntryBar 1.6s ease-out; }`;
+    document.head.appendChild(s);
+  }
+
+  function countUp(el, from, to, ms) {
+    from = Math.max(0, from);
+    if (from === to) return;
+    const t0 = performance.now();
+    (function frame(t) {
+      const p = Math.min(1, (t - t0) / ms);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(from + (to - from) * eased);
+      if (p < 1) requestAnimationFrame(frame);
+    })(t0);
+  }
+
+  // Fresh-DOM assumption: renderIntakeWidget just rebuilt el.innerHTML, so
+  // every animated node is new — classes are added, never removed (the next
+  // render wipes them). No animationend bookkeeping needed.
+  function applyIntakeJuice(el, domain) {
+    const j = pendingJuice;
+    pendingJuice = null;
+    if (!j || Date.now() - j.at > 2000) return;
+    // black_iron kills CSS animation globally; also skip the JS count-up
+    // there and under an OS reduced-motion preference.
+    if (document.body.dataset.theme === 'black_iron') return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const widget = el.querySelector('.domain-widget');
+    if (!widget) return;
+    widget.style.setProperty('--juice-color', j.qid === 'm1' ? FLUID_JUICE : domain.color);
+    widget.classList.add('intake-widget-juice');
+
+    // Count up + pop each headline stat the entry moved. The widget already
+    // shows the NEW total; roll in from (total − what this entry added).
+    const gains = j.qid === 'm1'
+      ? { oz: j.entry.oz }
+      : { calories: j.entry.calories, protein: j.entry.protein };
+    Object.entries(gains).forEach(([key, gained]) => {
+      if (!(gained > 0)) return;
+      const stat = el.querySelector(`.intake-stat[data-stat="${key}"]`);
+      if (!stat) return;
+      const to = parseFloat(stat.textContent) || 0;
+      countUp(stat, to - gained, to, 600);
+      stat.classList.add('intake-stat-pop');
+    });
+    if (j.qid === 'g2' && (j.entry.carbs || j.entry.fat)) {
+      const line = el.querySelector('.intake-macro-line');
+      if (line) line.classList.add('intake-stat-pop');
+    }
+
+    // The new entry is the newest timestamp → last row of the merged log.
+    const rows = el.querySelectorAll('.intake-entry');
+    if (rows.length) rows[rows.length - 1].classList.add('intake-entry-new');
+  }
+
   // Render the Intake domain widget.
   // Called from system.html's DOMAIN_WIDGETS.malkuth.
   // Depends on globals: todayLog (from system.html inline script).
   window.renderIntakeWidget = function(el, dk, domain) {
+    ensureJuiceCss();
     const waterLog = todayLog['m1'];
     const nutritionLog = todayLog['g2'];
 
@@ -517,22 +617,22 @@
         <!-- oz · kcal · protein (primary); carbs · fat (secondary) -->
         <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:${(nutritionTotals.carbs || nutritionTotals.fat) ? '4px' : (allEntries.length > 0 ? '12px' : '0')}">
           <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.oz || 0}</div>
+            <div class="intake-stat" data-stat="oz" style="font-size:28px;font-weight:bold;color:var(--text)">${waterTotals.oz || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">oz</div>
           </div>
           <div style="width:1px;background:var(--border)"></div>
           <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.calories || 0}</div>
+            <div class="intake-stat" data-stat="calories" style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.calories || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">kcal</div>
           </div>
           <div style="width:1px;background:var(--border)"></div>
           <div>
-            <div style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.protein || 0}</div>
+            <div class="intake-stat" data-stat="protein" style="font-size:28px;font-weight:bold;color:var(--text)">${nutritionTotals.protein || 0}</div>
             <div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase">g protein</div>
           </div>
         </div>
         ${(nutritionTotals.carbs || nutritionTotals.fat) ? `
-          <div style="text-align:center;font-size:11px;color:var(--text3);letter-spacing:0.5px;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
+          <div class="intake-macro-line" style="text-align:center;font-size:11px;color:var(--text3);letter-spacing:0.5px;margin-bottom:${allEntries.length > 0 ? '12px' : '0'}">
             ${nutritionTotals.carbs || 0}g carbs · ${nutritionTotals.fat || 0}g fat
           </div>` : ''}
         <!-- Merged entry log -->
@@ -542,17 +642,18 @@
               const time = new Date(e.time).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
               if (e.kind === 'fluid') {
                 const parts = [];
+                if (e.oz) parts.push(`${e.oz}oz`);
                 if (e.water) parts.push(`${e.water}oz water`);
                 if (e.other) parts.push(`${e.other}oz other`);
                 return `
-                  <div style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
+                  <div class="intake-entry" style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
                     <span>${time}${e.note ? ' — ' + e.note : ''}</span>
                     <span style="color:var(--text2)">${parts.join(' · ')}</span>
                   </div>`;
               } else {
                 const macroTail = (e.carbs || e.fat) ? ` · ${e.carbs || 0}c/${e.fat || 0}f` : '';
                 return `
-                  <div style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
+                  <div class="intake-entry" style="font-size:10px;color:var(--text3);padding:3px 0;display:flex;justify-content:space-between">
                     <span>${time}${e.note ? ' — ' + e.note : ''}</span>
                     <span style="color:var(--text2)">${e.calories || 0} kcal · ${e.protein || 0}g${macroTail}</span>
                   </div>`;
@@ -566,5 +667,7 @@
         </div>
       </div>
     `;
+
+    applyIntakeJuice(el, domain);
   };
 })();
