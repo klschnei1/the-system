@@ -2712,10 +2712,11 @@ function openModal() {
   overlay.classList.add('open');
   // Build quick quest selector
   const sel = document.getElementById('quickQuestSelect');
-  sel.innerHTML = '<div class="modal-label" style="margin-top:12px">Or select a quest:</div>';
+  sel.innerHTML = '<div class="modal-label" style="margin-top:12px">Jump to a quest:</div>';
   const grid = document.createElement('div');
   grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;';
   Object.entries(data.questDefinitions).forEach(([dk, domain]) => {
+    if (domainGate(dk) !== 'open') return;   // locked domains are dead everywhere
     Object.entries(domain.quests).forEach(([qid, q]) => {
       if (todayLog[qid]) return;
       const btn = document.createElement('button');
