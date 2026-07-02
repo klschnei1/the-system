@@ -546,9 +546,9 @@
     const j = pendingJuice;
     pendingJuice = null;
     if (!j || Date.now() - j.at > 2000) return;
-    // black_iron kills CSS animation globally; also skip the JS count-up
-    // there and under an OS reduced-motion preference.
-    if (document.body.dataset.theme === 'black_iron') return;
+    // Even the prison gets juice (Karl, July 2 — the black_iron skip felt
+    // like a bug, not atmosphere). Only an OS reduced-motion preference
+    // suppresses it now.
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const widget = el.querySelector('.domain-widget');
