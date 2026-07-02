@@ -1,0 +1,239 @@
+<!doctype html>
+<!-- Standalone calibration mockup — chain-lock-key unlock juice. Shown to Karl June 16, 2026.
+     NOT wired into the app. Open in a browser, tap "use key".
+     REV 2 (June 17): chain rebuilt HEAVY — thick interlocked stadium links, layered
+     strokes (dark silhouette + metal gradient body + top sheen), dark hole cores,
+     alternating flat/edge links to read as interlocking, fewer + chunkier, wrapping
+     corner-to-corner. iPhone = no haptics; impact rides on screenshake + squash +
+     Web Audio only. -->
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unlock juice — chain · lock · key</title>
+<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#05050a;font-family:system-ui,sans-serif}</style>
+</head>
+<body>
+<div style="display:flex;justify-content:center;padding:1rem 0;min-height:580px">
+  <div id="phone" style="position:relative;width:320px;height:548px;background:#0a0a12;border:1px solid #20202e;border-radius:22px;overflow:hidden;box-sizing:border-box;font-family:system-ui,sans-serif">
+
+    <div style="padding:16px 16px 8px;color:#5a5a72;font-size:10px;letter-spacing:3px;text-transform:uppercase">Strength · Tree of Life</div>
+
+    <div id="widget" style="position:absolute;left:20px;right:20px;top:54px;height:280px;background:#11111c;border:1px solid #2a1518;border-radius:12px;padding:16px;box-sizing:border-box;filter:grayscale(1) brightness(.42);transition:filter .9s ease, box-shadow .9s ease">
+      <div style="font-size:9px;letter-spacing:2px;color:#7a4a4a;text-transform:uppercase;margin-bottom:12px">7-day volume · 4 sessions</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;height:150px">
+        <div style="flex:1;background:#c8372d;height:62%;border-radius:3px 3px 0 0"></div>
+        <div style="flex:1;background:#c8372d;height:88%;border-radius:3px 3px 0 0"></div>
+        <div style="flex:1;background:#c8372d;height:44%;border-radius:3px 3px 0 0"></div>
+        <div style="flex:1;background:#c8372d;height:73%;border-radius:3px 3px 0 0"></div>
+        <div style="flex:1;background:#c8372d;height:55%;border-radius:3px 3px 0 0"></div>
+        <div style="flex:1;background:#c8372d;height:96%;border-radius:3px 3px 0 0"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:9px;letter-spacing:1px;color:#6a3a3a;text-transform:uppercase"><span>chest</span><span>back</span><span>legs</span><span>arms</span><span>delts</span><span>core</span></div>
+      <div id="reveal" style="opacity:0;transition:opacity .8s ease;margin-top:14px;text-align:center;font-size:10px;letter-spacing:3px;color:#e8b04a;text-transform:uppercase">◈ domain unlocked</div>
+    </div>
+
+    <div id="assembly" style="position:absolute;left:20px;right:20px;top:54px;height:280px;transform:translateY(0) rotate(0deg) scale(1);transform-origin:50% 50%;will-change:transform">
+      <svg id="asvg" viewBox="0 0 280 280" width="100%" height="100%" style="overflow:visible">
+        <defs>
+          <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#d4d5e0"/>
+            <stop offset="0.34" stop-color="#9092a0"/>
+            <stop offset="0.63" stop-color="#54545f"/>
+            <stop offset="1" stop-color="#23232c"/>
+          </linearGradient>
+          <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4dc8c"/>
+            <stop offset="0.42" stop-color="#cba94e"/>
+            <stop offset="1" stop-color="#6a5620"/>
+          </linearGradient>
+        </defs>
+        <g id="chains"></g>
+        <g id="lock" transform="translate(140 140) scale(1.18)">
+          <ellipse cx="2" cy="40" rx="30" ry="7" fill="#000" opacity="0.4"/>
+          <g id="shackle" style="transform-origin:0px -18px"><path d="M-21 -6 V-27 a21 21 0 0 1 42 0 V-6" fill="none" stroke="url(#brass)" stroke-width="11" stroke-linecap="round"/><path d="M-21 -6 V-27 a21 21 0 0 1 42 0" fill="none" stroke="#fbe6a8" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/></g>
+          <rect x="-28" y="-12" width="56" height="50" rx="9" fill="url(#brass)" stroke="#4a3c14" stroke-width="2.5"/>
+          <rect x="-24" y="-9" width="48" height="14" rx="6" fill="#fbe6a8" opacity="0.28"/>
+          <circle cx="0" cy="10" r="6.5" fill="#3a2e0e"/>
+          <rect x="-2.8" y="12" width="5.6" height="15" rx="2.4" fill="#3a2e0e"/>
+        </g>
+      </svg>
+    </div>
+
+    <canvas id="ash" width="320" height="548" style="position:absolute;inset:0;pointer-events:none"></canvas>
+
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 16px 18px;background:linear-gradient(0deg,#0a0a12 60%,transparent);box-sizing:border-box">
+      <div style="font-size:8px;letter-spacing:3px;color:#4a4a60;text-transform:uppercase;margin-bottom:8px">Inventory</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="keyslot" style="width:52px;height:52px;border:1px dashed #3a3a4e;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg id="keyel" width="34" height="34" viewBox="0 0 34 34" style="transform-origin:50% 50%;filter:drop-shadow(0 0 6px rgba(201,168,76,.5))">
+            <circle cx="9" cy="9" r="6.4" fill="none" stroke="#e8c860" stroke-width="3"/>
+            <rect x="8.2" y="13" width="3.2" height="17" fill="#e8c860"/>
+            <rect x="11.4" y="24" width="6" height="3" fill="#e8c860"/>
+            <rect x="11.4" y="29" width="4.5" height="3" fill="#e8c860"/>
+          </svg>
+        </div>
+        <button id="go" style="flex:1;background:#c9a84c;color:#2a2208;border:none;border-radius:8px;padding:13px;font-family:inherit;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer">use key</button>
+      </div>
+      <div id="status" style="text-align:center;font-size:9px;letter-spacing:2px;color:#5a5a72;text-transform:uppercase;margin-top:10px">1 key · strength sealed</div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes shake{10%{transform:translate(-5px,3px)}20%{transform:translate(6px,-4px)}30%{transform:translate(-6px,3px)}40%{transform:translate(5px,2px)}50%{transform:translate(-4px,-3px)}60%{transform:translate(4px,2px)}70%{transform:translate(-3px,1px)}85%{transform:translate(2px,-1px)}100%{transform:translate(0,0)}}
+.shaking{animation:shake .36s cubic-bezier(.36,.07,.19,.97)}
+@keyframes glowpulse{0%{box-shadow:0 0 0 rgba(232,176,74,0)}40%{box-shadow:0 0 34px rgba(232,176,74,.55)}100%{box-shadow:0 0 16px rgba(232,176,74,.18)}}
+.lit{filter:none !important;animation:glowpulse 1s ease forwards}
+</style>
+
+<script>
+(function(){
+  var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms)})};
+  var $=function(id){return document.getElementById(id)};
+  var phone=$('phone'),assembly=$('assembly'),lock=$('lock'),shackle=$('shackle'),
+      keyel=$('keyel'),keyslot=$('keyslot'),widget=$('widget'),reveal=$('reveal'),
+      go=$('go'),status=$('status'),cv=$('ash'),ctx=cv.getContext('2d');
+
+  (function(){
+    var NS='http://www.w3.org/2000/svg', g=$('chains');
+    // One link: a heavy stadium ring built from layered strokes —
+    // dark silhouette (mass) → metal-gradient body → top sheen glint.
+    // The unfilled centre lets the dark card show through = solid dark core.
+    // Alternating flat (tall) / edge-on (narrow) links read as interlocking.
+    function link(x,y,ang,edge){
+      var L=36, H=edge?12:24;
+      var lg=document.createElementNS(NS,'g');
+      lg.setAttribute('transform','translate('+x+' '+y+') rotate('+ang+')');
+      function ring(w,stroke,opts){
+        var r=document.createElementNS(NS,'rect');
+        r.setAttribute('x',-L/2); r.setAttribute('y',-H/2);
+        r.setAttribute('width',L); r.setAttribute('height',H);
+        r.setAttribute('rx',H/2); r.setAttribute('ry',H/2);
+        r.setAttribute('fill','none'); r.setAttribute('stroke',stroke);
+        r.setAttribute('stroke-width',w);
+        if(opts) for(var k in opts) r.setAttribute(k,opts[k]);
+        lg.appendChild(r);
+      }
+      ring(edge?12:16, '#07070c');                                   // silhouette / heft
+      ring(edge?8:11,  'url(#metal)');                                // metal body
+      ring(2.4, '#eceefc', {opacity:0.5,'stroke-dasharray':'12 90','stroke-linecap':'round'}); // sheen glint
+      return lg;
+    }
+    function chain(x1,y1,x2,y2){
+      var dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy),
+          a=Math.atan2(dy,dx)*180/Math.PI, pitch=15,
+          n=Math.round(len/pitch);
+      for(var i=0;i<=n;i++){
+        var t=i/n;
+        g.appendChild(link(x1+dx*t, y1+dy*t, a, i%2));
+      }
+    }
+    chain(2,8,278,272); chain(278,8,2,272);
+  })();
+
+  var AC=null;
+  function ac(){ if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}} return AC; }
+  function tone(f0,f1,dur,type,peak){
+    var c=ac(); if(!c)return; var t=c.currentTime;
+    var o=c.createOscillator(),g=c.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(f0,t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(peak||0.3,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+0.02);
+  }
+  function noise(dur,cut,peak,hp){
+    var c=ac(); if(!c)return; var t=c.currentTime;
+    var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
+    var s=c.createBufferSource();s.buffer=b;
+    var f=c.createBiquadFilter();f.type=hp?'highpass':'lowpass';f.frequency.value=cut;
+    var g=c.createGain();g.gain.value=peak||0.2;
+    s.connect(f);f.connect(g);g.connect(c.destination);s.start(t);
+  }
+  var kachunk=function(){ noise(0.05,3200,0.18,true); tone(150,70,0.12,'square',0.28); };
+  var thud=function(){ tone(90,38,0.28,'sine',0.6); noise(0.13,420,0.32,false); };
+
+  var parts=[],raf=null;
+  function spawnAsh(cx,cy){
+    for(var i=0;i<150;i++){
+      var ang=-Math.PI/2+(Math.random()-0.5)*2.4, sp=0.5+Math.random()*2.6, ember=Math.random()<0.18;
+      parts.push({x:cx+(Math.random()-0.5)*120,y:cy+(Math.random()-0.5)*26,
+        vx:Math.cos(ang)*sp+(Math.random()-0.5)*1.2, vy:Math.sin(ang)*sp-0.4,
+        life:1,decay:0.006+Math.random()*0.012,sz:1+Math.random()*3,
+        col:ember?[232,104,60]:[140,140,150]});
+    }
+    if(!raf) raf=requestAnimationFrame(step);
+  }
+  function step(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    var alive=0;
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i]; if(p.life<=0)continue; alive++;
+      p.vy+=0.018; p.vx*=0.99; p.x+=p.vx; p.y+=p.vy; p.life-=p.decay;
+      ctx.globalAlpha=Math.max(0,p.life);
+      ctx.fillStyle='rgb('+p.col[0]+','+p.col[1]+','+p.col[2]+')';
+      ctx.fillRect(p.x,p.y,p.sz,p.sz);
+    }
+    ctx.globalAlpha=1;
+    if(alive>0){raf=requestAnimationFrame(step);} else {raf=null;parts=[];ctx.clearRect(0,0,cv.width,cv.height);}
+  }
+
+  function set(t,tf,tr){ t.style.transition=tf; requestAnimationFrame(function(){t.style.transform=tr;}); }
+
+  var busy=false;
+  go.addEventListener('click',async function(){
+    if(busy)return; busy=true; ac(); go.disabled=true; go.style.opacity=.5;
+
+    status.textContent='inserting key…';
+    keyel.style.transition='transform .5s cubic-bezier(.34,1.56,.64,1)';
+    keyel.style.transform='translate(118px,-150px) rotate(-8deg) scale(1.15)';
+    await sleep(520);
+
+    await sleep(160);
+    keyel.style.transition='transform .34s cubic-bezier(.34,1.56,.64,1)';
+    keyel.style.transform='translate(118px,-150px) rotate(82deg) scale(1.15)';
+    await sleep(150);
+
+    kachunk();
+    set(shackle,'transform .26s cubic-bezier(.34,1.7,.5,1)','translateY(-13px) rotate(34deg)');
+    set(assembly,'transform .12s ease','translateY(-5px) rotate(0deg) scale(1.015)');
+    await sleep(140);
+    set(assembly,'transform .1s ease','translateY(0) rotate(0deg) scale(1)');
+    status.textContent='lock open';
+    await sleep(230);
+
+    keyel.style.transition='transform .42s cubic-bezier(.5,0,.9,.4)';
+    keyel.style.transform='translate(126px,40px) rotate(180deg) scale(.9)';
+    set(assembly,'transform .12s ease','translateY(6px) rotate(2deg) scale(1)');
+    await sleep(120);
+    set(assembly,'transform .44s cubic-bezier(.55,0,.85,.42)','translateY(250px) rotate(15deg) scale(1)');
+    await sleep(430);
+
+    thud();
+    phone.classList.add('shaking');
+    set(assembly,'transform .09s ease-out','translateY(258px) rotate(15deg) scale(1.12,.8)');
+    await sleep(95);
+    set(assembly,'transform .12s ease-in','translateY(250px) rotate(15deg) scale(1)');
+    await sleep(220);
+    phone.classList.remove('shaking');
+
+    var r=assembly.getBoundingClientRect(),pr=phone.getBoundingClientRect();
+    assembly.style.transition='opacity .18s ease'; assembly.style.opacity='0';
+    spawnAsh((r.left-pr.left)+r.width/2, (r.top-pr.top)+r.height*0.66);
+    keyel.style.transition='opacity .3s'; keyel.style.opacity='0';
+    keyslot.style.borderColor='#26263400';
+    await sleep(360);
+
+    widget.classList.add('lit');
+    reveal.style.opacity='1';
+    status.textContent='strength · unlocked';
+    await sleep(900);
+
+    go.textContent='replay'; go.disabled=false; go.style.opacity=1; busy=false;
+    go.onclick=function(){location.reload();};
+  });
+})();
+</script>
+</body>
+</html>

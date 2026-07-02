@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>LOG JUICE // calibration</title>
+<style>
+  /* Standalone feel-tuning mockup for the Tier-1 log moment (cold_harbor/juice.md).
+     Nothing here touches real data. Judge on phone; tune constants in JUICE_TUNING. */
+  :root {
+    --bg: #08080e; --panel: #0e0e18; --border: #23233a;
+    --text: #e8e8f0; --text2: #9a9ab0; --text3: #5a5a72;
+    --accent: #7c5cff; --green: #4ade80; --red: #e05555; --gold: #f4dc8c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg); color: var(--text); min-height: 100vh;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    padding: 20px 16px 60px; max-width: 480px; margin: 0 auto;
+  }
+  body.shake { animation: shake 0.22s linear; }
+  @keyframes shake {
+    0%,100% { transform: translate(0,0); } 20% { transform: translate(-5px,2px); }
+    40% { transform: translate(4px,-3px); } 60% { transform: translate(-3px,-2px); }
+    80% { transform: translate(3px,2px); }
+  }
+  #flash {
+    position: fixed; inset: 0; background: var(--gold); opacity: 0;
+    pointer-events: none; z-index: 50;
+  }
+  #flash.go { animation: flashFade 0.45s ease-out; }
+  @keyframes flashFade { 0% { opacity: 0.35; } 100% { opacity: 0; } }
+
+  h1 { font-size: 12px; letter-spacing: 4px; color: var(--text3); text-transform: uppercase; margin-bottom: 4px; }
+  .sub { font-size: 10px; color: var(--text3); margin-bottom: 20px; line-height: 1.5; }
+
+  /* header tally — the roll-up target */
+  .tally {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border: 1px solid var(--border); background: var(--panel);
+    padding: 12px 14px; margin-bottom: 24px;
+  }
+  .tally .label { font-size: 9px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; }
+  #xpNum { font-size: 26px; font-weight: bold; display: inline-block; }
+  #xpNum.punch { animation: punch 0.25s ease-out; }
+  @keyframes punch { 30% { transform: scale(1.35); color: var(--green); } 100% { transform: scale(1); } }
+
+  /* quest card */
+  .quest {
+    border: 1px solid var(--border); border-left: 3px solid var(--red);
+    background: var(--panel); padding: 14px; margin-bottom: 14px;
+  }
+  .quest .qname { font-size: 13px; margin-bottom: 2px; }
+  .quest .qmeta { font-size: 9px; letter-spacing: 1px; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; }
+  .btn {
+    width: 100%; padding: 12px; font-family: inherit; font-size: 12px;
+    letter-spacing: 1px; background: transparent; color: var(--accent);
+    border: 1px solid var(--accent); cursor: pointer;
+    transition: transform 0.08s ease-out;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn.pressed { animation: btnSquash 0.18s ease-out; }
+  @keyframes btnSquash { 40% { transform: scale(0.93, 0.85); } 100% { transform: scale(1); } }
+
+  /* the +XP ghost */
+  .ghost {
+    position: fixed; z-index: 40; font-size: 14px; font-weight: bold;
+    color: var(--green); pointer-events: none; will-change: transform, opacity;
+  }
+
+  /* reveal reel */
+  #reelWrap {
+    height: 64px; margin-top: 12px; display: none; align-items: center; gap: 14px;
+  }
+  #reelWindow {
+    width: 52px; height: 52px; overflow: hidden; border: 1px solid var(--border);
+    background: #05050a; position: relative; flex-shrink: 0;
+  }
+  #reelWindow::after {  /* center-line markers */
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(#05050a 0%, transparent 30%, transparent 70%, #05050a 100%);
+    pointer-events: none;
+  }
+  #reel { will-change: transform; }
+  .sym { height: 52px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .sym.nothing { color: var(--text3); }
+  .sym.sensei { color: var(--accent); }
+  .sym.rare { color: var(--gold); }
+  #reelCaption { font-size: 10px; color: var(--text3); line-height: 1.5; flex: 1; }
+  #reelCaption b { color: var(--text); font-weight: normal; }
+  #reelCaption .rare-stamp {
+    display: inline-block; color: var(--gold); font-size: 12px; font-weight: bold;
+    animation: stamp 0.3s ease-out;
+  }
+  @keyframes stamp { 0% { transform: scale(2.4); opacity: 0; } 60% { transform: scale(0.9); opacity: 1; } 100% { transform: scale(1); } }
+
+  /* controls */
+  .controls { margin-top: 28px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .controls .label { font-size: 9px; letter-spacing: 2px; color: var(--text3); text-transform: uppercase; margin-bottom: 10px; }
+  .force { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .force button {
+    padding: 10px 6px; font-family: inherit; font-size: 10px; background: transparent;
+    color: var(--text2); border: 1px solid var(--border); cursor: pointer;
+  }
+  .force button:active { transform: scale(0.96); }
+  .toggle { font-size: 11px; color: var(--text2); display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+<div id="flash"></div>
+
+<h1>Log Juice // Calibration</h1>
+<div class="sub">Tier-1 moment: press squash → reveal settles → +XP ghost carries the
+<b>revealed</b> amount → counter roll-up. The reveal owns the thunder; the counter
+never moves before it (Karl, July 1). Outcomes below are FORCED so each variant can
+be felt repeatedly. The live roll is pre-seeded per day (scratch-ticket, not slot) —
+see cold_harbor/juice.md.</div>
+
+<div class="tally">
+  <span class="label">Today</span>
+  <span><span id="xpNum">0</span> <span style="font-size:11px;color:var(--text2)">XP</span></span>
+</div>
+
+<div class="quest">
+  <div class="qname">Workout</div>
+  <div class="qmeta">Strength · floor · +30 XP</div>
+  <button class="btn" id="logBtn">COMPLETE +30 XP</button>
+  <div id="reelWrap">
+    <div id="reelWindow"><div id="reel"></div></div>
+    <div id="reelCaption"></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="label">Force next outcome</div>
+  <div class="force">
+    <button data-force="nothing">nothing (clean)</button>
+    <button data-force="nearmiss">nothing (near-miss ◈)</button>
+    <button data-force="sensei">sensei line ∴</button>
+    <button data-force="rare">rare drop ◈ ×2</button>
+  </div>
+  <label class="toggle"><input type="checkbox" id="sound" checked> sound</label>
+</div>
+
+<script>
+'use strict';
+
+// ── TUNING — every felt constant in one place ─────────────────────────
+const JUICE_TUNING = {
+  rollupMs: 600,        // counter roll-up duration
+  ghostMs: 550,         // +XP ghost flight time
+  reelClean: 500,       // reel settle when nothing is there
+  reelHit: 1400,        // reel settle on sensei/rare/near-miss
+  masterGain: 0.15,
+};
+
+// ── AUDIO — all synthesized, lazy-init on first gesture (iOS) ─────────
+let AC = null;
+function ctx() {
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+document.addEventListener('pointerdown', ctx, { once: true });
+const soundOn = () => document.getElementById('sound').checked;
+
+function voice(fn) { if (soundOn()) { try { fn(ctx()); } catch (e) {} } }
+function env(a, gain, t0, dur) {
+  const g = a.createGain();
+  g.gain.setValueAtTime(gain * JUICE_TUNING.masterGain, t0);
+  g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+  g.connect(a.destination);
+  return g;
+}
+function tick(i) {           // rising square blip per counted step
+  voice(a => {
+    const o = a.createOscillator(); o.type = 'square';
+    o.frequency.value = 700 + i * 55;
+    o.connect(env(a, 0.35, a.currentTime, 0.05));
+    o.start(); o.stop(a.currentTime + 0.05);
+  });
+}
+function thud() {            // low sine drop — reel settles
+  voice(a => {
+    const o = a.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(150, a.currentTime);
+    o.frequency.exponentialRampToValueAtTime(55, a.currentTime + 0.12);
+    o.connect(env(a, 1.6, a.currentTime, 0.16));
+    o.start(); o.stop(a.currentTime + 0.16);
+  });
+}
+function chime() {           // sensei — two soft sines a fifth apart
+  voice(a => {
+    [660, 990].forEach((f, i) => {
+      const o = a.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      o.connect(env(a, 0.5, a.currentTime + i * 0.07, 0.35));
+      o.start(a.currentTime + i * 0.07); o.stop(a.currentTime + i * 0.07 + 0.35);
+    });
+  });
+}
+function rareHit() {         // detuned saw chord + noise burst
+  voice(a => {
+    [110, 165, 221.5].forEach(f => {
+      const o = a.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f;
+      o.connect(env(a, 0.7, a.currentTime, 0.5));
+      o.start(); o.stop(a.currentTime + 0.5);
+    });
+    const buf = a.createBuffer(1, a.sampleRate * 0.15, a.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+    const n = a.createBufferSource(); n.buffer = buf;
+    n.connect(env(a, 0.9, a.currentTime, 0.15));
+    n.start();
+  });
+}
+
+// ── COUNTER ROLL-UP ───────────────────────────────────────────────────
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function rollup(el, from, to, done) {
+  if (reduceMotion) { el.textContent = to; if (done) done(); return; }
+  const t0 = performance.now(); let lastShown = from, steps = 0;
+  (function frame(t) {
+    const p = Math.min(1, (t - t0) / JUICE_TUNING.rollupMs);
+    const eased = 1 - Math.pow(1 - p, 3);          // ease-out cubic
+    const v = Math.round(from + (to - from) * eased);
+    if (v !== lastShown) { lastShown = v; el.textContent = v; tick(steps++); }
+    if (p < 1) requestAnimationFrame(frame);
+    else {
+      el.classList.remove('punch'); void el.offsetWidth; el.classList.add('punch');
+      if (done) done();
+    }
+  })(t0);
+}
+
+// ── +XP GHOST ─────────────────────────────────────────────────────────
+function spawnGhost(fromEl, toEl, text, done) {
+  if (reduceMotion) { if (done) done(); return; }
+  const f = fromEl.getBoundingClientRect(), t = toEl.getBoundingClientRect();
+  const g = document.createElement('div');
+  g.className = 'ghost'; g.textContent = text;
+  g.style.left = (f.left + f.width / 2) + 'px';
+  g.style.top = (f.top) + 'px';
+  document.body.appendChild(g);
+  const dx = (t.left + t.width / 2) - (f.left + f.width / 2);
+  const dy = t.top - f.top;
+  const t0 = performance.now();
+  (function frame(now) {
+    const p = Math.min(1, (now - t0) / JUICE_TUNING.ghostMs);
+    const e = 1 - Math.pow(1 - p, 2);
+    // slight arc: lift early, then home in
+    g.style.transform = `translate(${dx * e}px, ${dy * e - Math.sin(p * Math.PI) * 30}px)`;
+    g.style.opacity = p > 0.75 ? String(1 - (p - 0.75) / 0.25) : '1';
+    if (p < 1) requestAnimationFrame(frame);
+    else { g.remove(); if (done) done(); }
+  })(t0);
+}
+
+// ── REVEAL REEL ───────────────────────────────────────────────────────
+// Symbol strip; the reel decelerates onto the outcome. Near-miss = the rare
+// glyph sits one slot above the landing position, so it visibly slides past.
+const SYMS = { nothing: ['◇', 'nothing'], sensei: ['∴', 'sensei'], rare: ['◈', 'rare'] };
+function runReveal(outcome, done) {
+  const wrap = document.getElementById('reelWrap');
+  const reel = document.getElementById('reel');
+  const cap = document.getElementById('reelCaption');
+  wrap.style.display = 'flex'; cap.innerHTML = '';
+
+  // build strip: filler + (near-miss glyph) + landing symbol
+  const strip = [];
+  for (let i = 0; i < 14; i++) strip.push(['nothing', 'sensei', 'rare'][i % 3]);
+  if (outcome.type === 'nearmiss') strip.push('rare', 'nothing');
+  else strip.push('nothing', outcome.type === 'nothing' ? 'nothing' : outcome.type);
+  reel.innerHTML = strip.map(k => `<div class="sym ${SYMS[k][1]}">${SYMS[k][0]}</div>`).join('');
+
+  const H = 52, landIdx = strip.length - 1, dist = landIdx * H;
+  const dur = (outcome.type === 'nothing') ? JUICE_TUNING.reelClean : JUICE_TUNING.reelHit;
+  if (reduceMotion) { reel.style.transform = `translateY(${-dist}px)`; settle(); return; }
+  const t0 = performance.now();
+  let lastRow = 0;
+  (function frame(t) {
+    const p = Math.min(1, (t - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 4);              // hard deceleration
+    reel.style.transform = `translateY(${-dist * e}px)`;
+    const row = Math.floor(dist * e / H);
+    if (row !== lastRow) { lastRow = row; if (row % 2 === 0) tick(4); }
+    if (p < 1) requestAnimationFrame(frame);
+    else settle();
+  })(t0);
+
+  function settle() {
+    thud();
+    switch (outcome.type) {
+      case 'nothing':
+        cap.innerHTML = 'no drop.';
+        break;
+      case 'nearmiss':
+        cap.innerHTML = 'no drop. <b>◈ was 2 away.</b>';
+        break;
+      case 'sensei':
+        chime();
+        typewrite(cap, '∴ The map is not the territory. But you just changed the territory.');
+        break;
+      case 'rare':
+        rareHit();
+        document.body.classList.remove('shake'); void document.body.offsetWidth;
+        document.body.classList.add('shake');
+        const fl = document.getElementById('flash');
+        fl.classList.remove('go'); void fl.offsetWidth; fl.classList.add('go');
+        cap.innerHTML = '<span class="rare-stamp">◈ ANOMALY — XP DOUBLED</span>';
+        break;
+    }
+    if (done) done();
+  }
+}
+function typewrite(el, text) {
+  el.textContent = ''; let i = 0;
+  (function step() {
+    el.textContent = text.slice(0, ++i);
+    if (i < text.length) setTimeout(step, 16);
+  })();
+}
+
+// ── WIRE-UP ───────────────────────────────────────────────────────────
+let xp = 0, forced = 'nothing';
+document.querySelectorAll('.force button').forEach(b => {
+  b.onclick = () => {
+    forced = b.dataset.force;
+    document.querySelectorAll('.force button').forEach(x => x.style.borderColor = 'var(--border)');
+    b.style.borderColor = 'var(--accent)';
+  };
+});
+document.querySelector('[data-force="nothing"]').style.borderColor = 'var(--accent)';
+
+// Order matters (Karl, July 1): the ROLL decides the payout, so the reveal
+// settles FIRST, then the ghost carries the revealed amount to the counter.
+// The counter never moves before the reveal — the reveal owns the thunder.
+document.getElementById('logBtn').onclick = function() {
+  const btn = this, xpEl = document.getElementById('xpNum');
+  btn.classList.remove('pressed'); void btn.offsetWidth; btn.classList.add('pressed');
+  btn.disabled = true;
+  runReveal({ type: forced }, () => {
+    const gained = forced === 'rare' ? 60 : 30;   // ×2 revealed by the roll
+    spawnGhost(btn, xpEl, '+' + gained + ' XP', () => {
+      rollup(xpEl, xp, xp + gained, () => { btn.disabled = false; });
+      xp += gained;
+    });
+  });
+};
+</script>
+</body>
+</html>
