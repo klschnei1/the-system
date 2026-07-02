@@ -1054,17 +1054,13 @@
 <!-- FAB: Quick Log -->
 <button class="fab" onclick="fabAction()" title="Quick Log">＋</button>
 
-<!-- CHECK-IN MODAL -->
+<!-- QUICK LOG MODAL — a jump-to-quest picker. The old freeform textarea was
+     a facsimile (submitQuickLog discarded the text); removed July 2. -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">Quick Log <span class="modal-close" onclick="closeModal()">✕</span></div>
-    <div class="modal-section">
-      <div class="modal-label">What did you complete?</div>
-      <textarea class="modal-textarea" id="quickLogInput" rows="3" placeholder="e.g. 'Gym — legs, 4 sets squats 185lb, hit protein at 210g'"></textarea>
-    </div>
     <div id="quickQuestSelect"></div>
     <div style="display:flex; gap:8px; margin-top:12px">
-      <button class="btn btn-primary" onclick="submitQuickLog()">Log It</button>
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
     </div>
   </div>
