@@ -12,26 +12,6 @@
 <style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#05050a;font-family:system-ui,sans-serif}</style>
 </head>
 <body>
-<script>
-// Diagnostic trap (July 3): buttons reported dead on iPhone, fine on desktop.
-// Any script error becomes a visible red banner; a green "js ✓" chip appears
-// only if the main script wires up completely. Remove once diagnosed.
-window.addEventListener('error', function(e){ __diagBar('JS ERROR: ' + e.message + ' @ line ' + (e.lineno||'?')); });
-window.addEventListener('unhandledrejection', function(e){ __diagBar('PROMISE ERROR: ' + ((e.reason && e.reason.message) || e.reason)); });
-function __diagBar(msg){
-  var d = document.getElementById('diagbar');
-  if(!d){ d = document.createElement('div'); d.id = 'diagbar';
-    d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:999;background:#7a1020;color:#fff;font:11px/1.4 monospace;padding:6px 10px;white-space:pre-wrap';
-    document.body.appendChild(d); }
-  d.textContent += (d.textContent ? '\n' : '') + msg;
-}
-function __diagReady(){
-  var c = document.createElement('div');
-  c.textContent = 'js ✓';
-  c.style.cssText = 'position:fixed;right:8px;bottom:8px;z-index:998;color:#4ade80;font:10px monospace;border:1px solid #234;padding:2px 6px;background:#0a0a12';
-  document.body.appendChild(c);
-}
-</script>
 <div style="display:flex;justify-content:center;padding:1rem 0;min-height:580px">
   <div id="phone" style="position:relative;width:320px;height:548px;background:#0a0a12;border:1px solid #20202e;border-radius:22px;overflow:hidden;box-sizing:border-box;font-family:system-ui,sans-serif">
 
