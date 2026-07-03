@@ -253,6 +253,8 @@ function __diagReady(){
     go.textContent='replay'; go.disabled=false; go.style.opacity=1; busy=false;
     go.onclick=function(){location.reload();};
   });
+
+  __diagReady();   // wiring completed — green chip confirms handlers are live
 })();
 </script>
 </body>
