@@ -160,6 +160,8 @@
     .juice-punch { animation: juicePunch 0.25s ease-out; }
     @keyframes juicePunch { 30% { transform: scale(1.35); color: var(--green, #4ade80); }
       100% { transform: scale(1); } }
+    .juice-card-squash { animation: juiceCardSquash 0.18s ease-out; }
+    @keyframes juiceCardSquash { 40% { transform: scale(0.965, 0.93); } 100% { transform: scale(1); } }
     #juiceSeal { position: fixed; inset: 0; z-index: 200; background: rgba(3,3,8,0.94);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       opacity: 0; transition: opacity 0.3s ease; }
@@ -316,6 +318,13 @@
     if (!anchor || !visualsOn()) {           // no visible card (edge path) — pay out directly
       if (tallyEl) tallyEl.textContent = fmt(args.newToday);
       return;
+    }
+    // Press-squash beat (mockup fidelity): the card absorbs the press as the
+    // reveal opens. The original button is gone by now (re-render), so the
+    // card is the persistent body that takes the impact.
+    if (!reduceMotion) {
+      anchor.classList.remove('juice-card-squash'); void anchor.offsetWidth;
+      anchor.classList.add('juice-card-squash');
     }
     reveal(args.reward, anchor, finish);
   }

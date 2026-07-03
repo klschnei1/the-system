@@ -130,6 +130,7 @@
     transition: all 0.2s;
   }
   .quest-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .quest-card .btn:active { transform: scale(0.96); }
   .quest-card.completed { opacity: 0.4; }
   .quest-card.completed .quest-name { text-decoration: line-through; }
   .quest-card.reach-deferred { opacity: 0.45; }
@@ -1852,7 +1853,9 @@ function checkSeals() {
     data.unlockedDomains.push(dk);
     saveData();
     const domain = data.questDefinitions[dk] || {};
-    const after = () => { renderHeader(); renderQuests(); };
+    // Peak-end: the dismissal tap lands INSIDE the newly unlocked domain —
+    // walk through the door the ceremony just opened.
+    const after = () => { renderHeader(); openDomainPage(dk, 'quests'); };
     if (window.juice) juice.sealBreak(domain.name || dk, domain.color || 'var(--accent)', after);
     else { notify('◈ ' + (domain.name || dk).toUpperCase() + ' — SEAL BROKEN.', 8000); after(); }
   });
