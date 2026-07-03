@@ -189,18 +189,20 @@ function rollQuestReward(qid, baseXp) {
   const seed = Math.abs((getDailySeed() ^ (qid.charCodeAt(0) * 7919 + qid.charCodeAt(1) * 104729)) >>> 0);
   const roll = seed % 100;
 
-  if (roll < 70) return null; // 70% — nothing
+  // The raw roll rides along in every branch (juice.md honesty rule): the
+  // near-miss display must DERIVE from the real number, never be injected.
+  if (roll < 70) return { type: 'nothing', roll }; // 70% — nothing
 
   if (roll < 90) {
     // 20% — sensei one-liner from the oracle bank
     const senseiKey = getTodaySensei();
     const bank = ORACLE_BANK[senseiKey] || ORACLE_BANK.system;
-    return { type: 'sensei', text: bank[seed % bank.length], senseiKey };
+    return { type: 'sensei', text: bank[seed % bank.length], senseiKey, roll };
   }
 
   // 10% — rare drop
   const drop = RARE_DROPS[seed % RARE_DROPS.length];
-  return { ...drop };
+  return { ...drop, roll };
 }
 
 function queryOracle(input) {

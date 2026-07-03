@@ -1070,7 +1070,7 @@
 <div class="notify" id="notify"></div>
 
 <script>
-  ['sigils.js','themes.js','sensei.js','strength.js','intake.js','finance.js','intellect.js'].forEach(function(src) {
+  ['sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
@@ -1415,6 +1415,16 @@ async function initDataStore() {
     const saved = localStorage.getItem('css_v3_data');
     data = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
   }
+  // Seal-start anchors (runs on BOTH remote and cache paths): record current
+  // XP the first time a milestone exists for a still-locked domain — seal
+  // progress counts forward from here, never credits history.
+  if (!data.sealStart) data.sealStart = {};
+  Object.keys(UNLOCK_MILESTONES).forEach(dk => {
+    if (data.sealStart[dk] === undefined && !(data.unlockedDomains || []).includes(dk)) {
+      data.sealStart[dk] = data.xp || 0;
+    }
+  });
+
   const todaySaved = localStorage.getItem('css_v3_today_' + getTodayStr());
   todayLog = todaySaved ? JSON.parse(todaySaved) : {};
   todayXpEarned = Object.values(todayLog).reduce((s, v) => s + (v.xp || 0), 0);
@@ -1812,11 +1822,41 @@ const DOMAIN_WIDGETS = {
 //   unlocked — the player has EARNED access via in-app progress (data.unlockedDomains)
 // Building is a PREREQUISITE for unlocking, never the unlock itself. A freshly
 // forged instrument stays sealed until its milestone is met.
+// XP is the seal-breaking currency (juice.md, decided July 1; calibrated with
+// real pace data July 2). Cost is measured from data.sealStart[dk] — recorded
+// the first time the milestone exists — so it's FORWARD progress, never
+// credit for history. First seal errs generous (~1 week at 2-3 quests/day,
+// ~4-5 weeks at June's pace); later seals can climb.
 const UNLOCK_MILESTONES = {
-  // domainKey: { label, check(data) }  — defined when a built domain ships locked.
-  // Empty today: the 3 built domains are grandfathered-unlocked (daily drivers),
-  // the 6 unbuilt domains have no path until they're forged.
+  hod: { label: 'Forge 500 XP', cost: 500 },
 };
+
+function sealProgress(dk) {
+  const ms = UNLOCK_MILESTONES[dk];
+  if (!ms) return null;
+  const start = (data.sealStart || {})[dk];
+  if (start === undefined) return { earned: 0, cost: ms.cost, pct: 0 };
+  // floor, not round: a 499/500 bar must not read 100% while still sealed
+  const earned = Math.max(0, (data.xp || 0) - start);
+  return { earned, cost: ms.cost, pct: Math.min(100, Math.floor(earned / ms.cost * 100)) };
+}
+
+// Called after every XP-earning write (data is already saved — the unlock
+// write happens here too, BEFORE the ceremony; animation never gates data).
+function checkSeals() {
+  Object.keys(UNLOCK_MILESTONES).forEach(dk => {
+    if (domainGate(dk) !== 'locked') return;
+    const p = sealProgress(dk);
+    if (!p || p.earned < p.cost) return;
+    if (!data.unlockedDomains) data.unlockedDomains = [];
+    data.unlockedDomains.push(dk);
+    saveData();
+    const domain = data.questDefinitions[dk] || {};
+    const after = () => { renderHeader(); renderQuests(); };
+    if (window.juice) juice.sealBreak(domain.name || dk, domain.color || 'var(--accent)', after);
+    else { notify('◈ ' + (domain.name || dk).toUpperCase() + ' — SEAL BROKEN.', 8000); after(); }
+  });
+}
 
 function domainGate(dk) {
   if (!DOMAIN_WIDGETS[dk]) return 'unbuilt';                    // not forged — sealed, no path yet
@@ -1880,10 +1920,18 @@ function buildTeaserCard(dk, domain) {
   card.className = 'domain-card teaser-card';
   card.style.borderLeftColor = domain.color;
   card.style.borderLeftWidth = '3px';
+  // Milestone progress: the chain shows how close the seal is to breaking.
+  const p = sealProgress(dk);
+  const progressHtml = p ? `
+    <div style="margin:10px 14px 0;height:4px;background:var(--border);overflow:hidden">
+      <div style="width:${p.pct}%;height:100%;background:${domain.color};transition:width 0.6s ease"></div>
+    </div>
+    <div class="teaser-tag">${p.earned} / ${p.cost} XP forged</div>`
+    : `<div class="teaser-tag">Sealed · keep going to break it</div>`;
   card.innerHTML = `
     <div class="teaser-name" style="color:${domain.color}">${domain.name}</div>
     ${buildSealedChainSvg()}
-    <div class="teaser-tag">Sealed · keep going to break it</div>`;
+    ${progressHtml}`;
   card.onclick = () => { card.classList.remove('lock-shake'); void card.offsetWidth; card.classList.add('lock-shake'); };
   return card;
 }
@@ -1902,6 +1950,14 @@ function renderLockedDomainPage(page, dk, domain, gate) {
       ${buildSealedChainSvg()}
       <div class="sealed-tag">Sealed</div>
       <div class="sealed-sub">${tagline}</div>
+      ${(function(){
+        const p = gate === 'locked' ? sealProgress(dk) : null;
+        return p ? `
+          <div style="margin:14px auto 0;max-width:220px;height:4px;background:var(--border);overflow:hidden">
+            <div style="width:${p.pct}%;height:100%;background:${domain.color}"></div>
+          </div>
+          <div class="sealed-sub" style="margin-top:6px">${p.earned} / ${p.cost} XP forged</div>` : '';
+      })()}
     </div>`;
 }
 
@@ -2081,12 +2137,18 @@ function addAccumEntry(qid, values, note, extra) {
   entry.note = (note || '').trim();
   if (extra) Object.assign(entry, extra);   // e.g. { batchId } — excluded from the derived bank
 
-  // First entry awards XP; subsequent entries just add data
+  // First entry awards XP + rolls the reward (juice.md: accumulators roll
+  // only on their FIRST entry of the day — matches the XP semantics).
+  // The roll decides the payout; multiplier totals fold into the entry's xp.
   const isFirst = !todayLog[qid];
+  const reward = isFirst ? rollQuestReward(qid, quest.xp) : null;
+  const totalXp = (reward && reward.type === 'xp_multiplier') ? quest.xp * reward.multiplier : quest.xp;
+  const prevToday = todayXpEarned;
   if (isFirst) {
-    todayLog[qid] = { xp: quest.xp, entries: [], time: entry.time, source: 'manual' };
-    todayXpEarned += quest.xp;
-    data.xp = (data.xp || 0) + quest.xp;
+    todayLog[qid] = { xp: totalXp, entries: [], time: entry.time, source: 'manual' };
+    if (reward && reward.roll !== undefined) todayLog[qid].roll = reward.roll;
+    todayXpEarned += totalXp;
+    data.xp = (data.xp || 0) + totalXp;
   }
   todayLog[qid].entries.push(entry);
 
@@ -2109,15 +2171,18 @@ function addAccumEntry(qid, values, note, extra) {
   if (window.captureAccumEntry) window.captureAccumEntry(qid, entry);
 
   saveData();
-  renderHeader();
   renderQuests();
+  renderHeader();
 
-  if (isFirst) {
-    notify(`${quest.name} logged. +${quest.xp} XP. Keep adding entries throughout the day.`);
+  if (isFirst && window.juice) {
+    juice.playLogMoment({ qid, reward, total: totalXp, prevToday, newToday: todayXpEarned });
+  } else if (isFirst) {
+    notify(`${quest.name} logged. +${totalXp} XP. Keep adding entries throughout the day.`);
   } else {
     const summary = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' · ');
     notify(`Updated: ${summary}`);
   }
+  checkSeals();
   return true;
 }
 
@@ -2239,20 +2304,31 @@ function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) 
       delete dayLog.workout;
     }
     const isFirst = !dayLog;
+    // First-of-today rolls the reward; the roll decides the payout, and the
+    // full amount (incl. any multiplier) is folded into dayLog.xp so undo and
+    // reload see the truth (July 3 audit fix).
+    const reward = (isFirst && writeDate === today) ? rollQuestReward(qid, xp) : null;
+    const totalXp = (reward && reward.type === 'xp_multiplier') ? xp * reward.multiplier : xp;
+    const prevToday = todayXpEarned;
     if (isFirst) {
-      dayLog = { xp, workouts: [], time: new Date().toISOString(), source: extraData.source || 'manual' };
+      dayLog = { xp: totalXp, workouts: [], time: new Date().toISOString(), source: extraData.source || 'manual' };
+      if (reward && reward.roll !== undefined) dayLog.roll = reward.roll;
       data.dailyLogs[writeDate][qid] = dayLog;
-      data.xp = (data.xp || 0) + xp;
-      if (writeDate === today) todayXpEarned += xp;
+      data.xp = (data.xp || 0) + totalXp;
+      if (writeDate === today) todayXpEarned += totalXp;
     }
     if (!Array.isArray(dayLog.workouts)) dayLog.workouts = [];
     dayLog.workouts.push(extraData.workout);
     dayLog.note = `${dayLog.workouts.length} workout${dayLog.workouts.length !== 1 ? 's' : ''}`;
     if (writeDate === today) todayLog[qid] = dayLog;   // past-date log leaves today open
 
-    // sigil flash (same effect as the shared block below)
-    const domGroup = document.querySelector(`#domain-quests-${domainKey}`)?.parentElement;
-    const sigil = domGroup?.querySelector('.domain-sigil');
+    saveData();
+    renderQuests();
+    renderHeader();
+
+    // sigil flash (selector repointed July 3 — the old #domain-quests-<dk>
+    // matched nothing since the domain-page refactor; flash was dead juice)
+    const sigil = document.querySelector('.domain-page-sigil');
     if (sigil) {
       sigil.classList.remove('sigil-flash');
       void sigil.offsetWidth;
@@ -2260,47 +2336,38 @@ function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) 
       sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
     }
 
-    let reward = null;
-    if (isFirst && writeDate === today) {
-      reward = rollQuestReward(qid, xp);
-      if (reward && reward.type === 'xp_multiplier') {
-        const bonus = xp * (reward.multiplier - 1);
-        todayXpEarned += bonus;
-        data.xp = (data.xp || 0) + bonus;
-      }
-    }
-
-    saveData();
-    renderHeader();
-    renderQuests();
-
     const n = dayLog.workouts.length;
     if (writeDate !== today) {
       notify(`Workout logged to ${writeDate}. Today's workout is still open.`, 5000);
     } else if (!isFirst) {
       notify(`Workout added — ${n} today.`);
-    } else if (reward && reward.type === 'sensei') {
-      notify(reward.text, 6000);
-    } else if (reward && reward.type === 'xp_multiplier') {
-      notify(reward.text + ' +' + (xp * reward.multiplier) + ' XP total.', 5000);
-    } else if (reward) {
-      notify(reward.text, 7000);
+    } else if (window.juice) {
+      juice.playLogMoment({ qid, reward, total: totalXp, prevToday, newToday: todayXpEarned });
     } else {
-      notify('Workout logged. +' + xp + ' XP gained.');
+      notify('Workout logged. +' + totalXp + ' XP gained.');
     }
+    checkSeals();
     return;
   }
 
-  const logEntry = { xp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
-  todayXpEarned += xp;
-  data.xp = (data.xp || 0) + xp;
+  // Roll BEFORE payout (juice.md sequence rule): the roll DECIDES the amount,
+  // so multiplier bonuses fold into the entry's xp — undo and reload now see
+  // the true total (fixes the July 3 audit's phantom-XP leak).
+  const reward = rollQuestReward(qid, xp);
+  const totalXp = (reward && reward.type === 'xp_multiplier') ? xp * reward.multiplier : xp;
+
+  const logEntry = { xp: totalXp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
+  if (reward && reward.roll !== undefined) logEntry.roll = reward.roll;
+  const prevToday = todayXpEarned;
+  todayXpEarned += totalXp;
+  data.xp = (data.xp || 0) + totalXp;
 
   if (targetDate && targetDate !== today) {
     // Retro log: write workout to past date; stub todayLog so quest shows done
     if (!data.dailyLogs[targetDate]) data.dailyLogs[targetDate] = {};
     data.dailyLogs[targetDate][qid] = logEntry;
     // Stub has no .workout so the strength widget doesn't double-count it for today
-    todayLog[qid] = { xp, note: `logged to ${targetDate}`, time: logEntry.time, source: 'retro', retroDate: targetDate };
+    todayLog[qid] = { xp: totalXp, note: `logged to ${targetDate}`, time: logEntry.time, source: 'retro', retroDate: targetDate };
   } else {
     todayLog[qid] = logEntry;
     if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
@@ -2320,39 +2387,30 @@ function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) 
     }
   }
 
-  // Sigil flash on quest completion
-  if (domainKey) {
-    const domGroup = document.querySelector(`#domain-quests-${domainKey}`)?.parentElement;
-    const sigil = domGroup?.querySelector('.domain-sigil');
-    if (sigil) {
-      sigil.classList.remove('sigil-flash');
-      void sigil.offsetWidth;
-      sigil.classList.add('sigil-flash');
-      sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
-    }
+  // Sigil flash on quest completion — repointed July 3 (the old
+  // #domain-quests-<dk> selector matched nothing since the domain-page
+  // refactor; the flash had been dead juice).
+  const sigil = document.querySelector('.domain-page-sigil');
+  if (domainKey && sigil) {
+    sigil.classList.remove('sigil-flash');
+    void sigil.offsetWidth;
+    sigil.classList.add('sigil-flash');
+    sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
   }
 
-  // Variable reward roll
-  const reward = rollQuestReward(qid, xp);
-  if (reward && reward.type === 'xp_multiplier') {
-    const bonus = xp * (reward.multiplier - 1);
-    todayXpEarned += bonus;
-    data.xp = (data.xp || 0) + bonus;
-  }
-
+  // Data first, ceremony second (never gate the write on the animation).
   saveData();
-  renderHeader();
   renderQuests();
+  renderHeader();
 
-  if (!reward) {
-    notify('Quest logged. +' + xp + ' XP gained.');
-  } else if (reward.type === 'sensei') {
-    notify(reward.text, 6000);
-  } else if (reward.type === 'xp_multiplier') {
-    notify(reward.text + ' +' + (xp * reward.multiplier) + ' XP total.', 5000);
+  // Tier-1 log moment: reveal settles → ghost carries revealed amount →
+  // tally rolls up. juice.js handles the tally holdback.
+  if (window.juice) {
+    juice.playLogMoment({ qid, reward, total: totalXp, prevToday, newToday: todayXpEarned });
   } else {
-    notify(reward.text, 7000);
+    notify('Quest logged. +' + totalXp + ' XP gained.');
   }
+  checkSeals();
 }
 
 function unlogQuest(qid) {

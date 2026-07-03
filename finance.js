@@ -65,6 +65,9 @@ window.logTransaction = function(qid, xp) {
   const sign = direction === 'in' ? '+' : '-';
   const label = isFirst ? `Logged. +${xp} XP.` : `Added.`;
   notify(`${label} ${sign}$${amount.toFixed(2)}${note ? ' — ' + note : ''}`);
+
+  // Finance XP counts toward seals too (reveal/coin-drop juice is Tier 2).
+  if (typeof checkSeals === 'function') checkSeals();
 };
 
 // ── ACCOUNT BALANCES ──────────────────────────────────────────────────
