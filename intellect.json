@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T16:41:02-04:00",
+  "generatedAt": "2026-07-02T22:39:16-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -223,9 +223,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-01",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-07-02",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-07-02 (Thu)",
+        "contexts": [
+          "ddPCR run executed (as run) + team bench work"
+        ]
+      },
       {
         "date": "2026-07-01 (Wed)",
         "contexts": [
@@ -235,13 +241,7 @@
       {
         "date": "2026-07-01 (Wed)",
         "contexts": [
-          "CRISPR ddPCR (drop-off) run loaded + team bench work"
-        ]
-      },
-      {
-        "date": "2026-06-30 (Tue)",
-        "contexts": [
-          "ExoRNA alignment done; gDNA contamination QC finding"
+          "CRISPR ddPCR (drop-off) rare-event run: plate design + prep"
         ]
       }
     ]

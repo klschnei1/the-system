@@ -1590,6 +1590,10 @@ function renderDispatchBanner() {
 // ── FOCUS QUESTS (check-in nudge output) ────────────────────────────
 function renderFocusQuests() {
   const el = document.getElementById('focusQuests');
+  // Check-in engine retired June 16 — but remote CSS_DATA.json still carries a
+  // stale currentWeekQuests entry, so this surface must stay hard-disabled
+  // until the engine is rebuilt (it would otherwise resurface an April nudge).
+  el.style.display = 'none'; return;
   const quests = data.currentWeekQuests;
   // During re-entry the week-focus list is stale context — floors are the only assignment
   if (data.reentry || !quests || !quests.length) { el.style.display = 'none'; return; }
@@ -2580,7 +2584,7 @@ ROLE: ${sensei.role}
 VOICE: ${SENSEI_VOICE_INSTRUCTIONS[senseiKey] || ''}
 
 SYSTEM STATE (${today}):
-Rank: ${data.rank || 'E'} | XP: ${(data.xp || 0).toLocaleString()} | Streak: ${data.streak || 0} days | Coherence: ${Math.round(coherence)}%
+Rank: ${getRank(data.xp || 0).rank} | XP: ${(data.xp || 0).toLocaleString()} | Streak: ${data.streak || 0} days | Coherence: ${Math.round(coherence)}%
 
 DOMAIN SIGNAL (7-day rolling — days active / 7):
 ${domainStatsStr}
