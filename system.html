@@ -93,6 +93,10 @@
     border: 1px solid #3a2d00; padding: 2px 8px; border-radius: 20px;
   }
   .coherence-label { font-size: 11px; color: var(--text2); }
+  /* Vault sync state: ∴ synced (quiet) / ◌ pending / ⚠ unreached */
+  .sync-glyph { font-size: 12px; color: var(--text2); margin-left: auto; cursor: default; }
+  .sync-glyph.sync-pending { color: var(--gold); }
+  .sync-glyph.sync-failed { color: var(--red); }
 
   /* ── TABS ── */
   .tabs {
@@ -896,6 +900,7 @@
     <div class="streak-pill" id="streakPill">◈ 0-day streak</div>
     <div class="coherence-label" id="coherenceLabel">signal: scattered</div>
     <div class="signal-row" id="signalRow"></div>
+    <div class="sync-glyph" id="syncGlyph" title="vault: synced">∴</div>
   </div>
 </div>
 
@@ -1129,6 +1134,12 @@ const DataStore = {
     return this._driver?.status?.() || { driver: 'none', ready: this._ready };
   },
 
+  // Immediate push of any pending save (bypasses the debounce). Safe no-op
+  // when the driver has none or doesn't support it.
+  flush() {
+    return this._driver?.flush?.();
+  },
+
   // Simple event bus for UI reactivity
   on(event, fn) { this._listeners.push({ event, fn }); },
   _emit(event, payload) {
@@ -1206,21 +1217,42 @@ const GitHubDriver = {
     localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
     this._cache = data;
 
-    // Push to GitHub async — don't block UI
-    this._schedulePush(data);
+    // The push always sends whatever was saved LAST, not the data captured
+    // when the debounce started — saves landing mid-debounce are never dropped.
+    this._pendingData = data;
+    this._dirty = true;
+    this._schedulePush();
   },
 
-  _schedulePush(data) {
-    if (this._pushPending) return; // debounce — one push per cycle
-    this._pushPending = true;
-    setTimeout(async () => {
-      try {
-        await this._pushToGitHub(data);
-      } catch (e) {
-        console.warn('GitHubDriver: push failed, will retry on next save.', e.message);
-      }
-      this._pushPending = false;
-    }, 1500); // 1.5s debounce
+  _schedulePush() {
+    if (this._pushTimer) clearTimeout(this._pushTimer);
+    this._pushTimer = setTimeout(() => this.flush(), 1500); // 1.5s debounce
+    this._setSync('pending');
+  },
+
+  // Push now, skipping the debounce. Called by the timer, and directly on
+  // visibilitychange→hidden so iOS suspending the PWA can't strand a save.
+  async flush() {
+    if (this._pushTimer) { clearTimeout(this._pushTimer); this._pushTimer = null; }
+    if (this._pushing) return;           // in-flight push will re-check _dirty
+    if (!this._dirty) return;
+    this._pushing = true;
+    const payload = this._pendingData;
+    this._dirty = false;
+    try {
+      await this._pushToGitHub(payload);
+      this._lastPushError = null;
+      this._setSync(this._dirty ? 'pending' : 'synced');
+    } catch (e) {
+      this._dirty = true;                // keep the payload for the next attempt
+      this._lastPushError = e.message;
+      this._setSync('failed');
+      console.warn('GitHubDriver: push failed, will retry on next save.', e.message);
+    } finally {
+      this._pushing = false;             // NEVER wedge the state machine
+    }
+    // A save arrived while this push was in flight — send it too.
+    if (this._dirty && !this._pushTimer && !this._lastPushError) this._schedulePush();
   },
 
   async _pushToGitHub(data) {
@@ -1232,11 +1264,28 @@ const GitHubDriver = {
       ...(this._sha ? { sha: this._sha } : {})
     };
 
-    const res = await fetch(url, {
+    let res = await fetch(url, {
       method: 'PUT',
       headers: this._headers(),
       body: JSON.stringify(body)
     });
+
+    // Stale SHA (409 conflict / 422 mismatch) used to fail every push forever.
+    // Refetch the current SHA and retry once — last writer wins, same policy
+    // as remote-wins on load.
+    if (!res.ok && (res.status === 409 || res.status === 422)) {
+      const fresh = await fetch(url, { headers: this._headers() });
+      if (fresh.ok) {
+        const fj = await fresh.json();
+        this._sha = fj.sha;
+        localStorage.setItem(this.SHA_KEY, this._sha);
+        res = await fetch(url, {
+          method: 'PUT',
+          headers: this._headers(),
+          body: JSON.stringify({ ...body, sha: this._sha })
+        });
+      }
+    }
 
     if (!res.ok) {
       const err = await res.json();
@@ -1246,6 +1295,14 @@ const GitHubDriver = {
     const json = await res.json();
     this._sha = json.content.sha;
     localStorage.setItem(this.SHA_KEY, this._sha);
+  },
+
+  _setSync(state) {
+    this._syncState = state;
+    // The glyph is chrome; a UI error must never break the sync machinery.
+    try {
+      if (typeof window !== 'undefined' && window.updateSyncGlyph) window.updateSyncGlyph(state, this._lastPushError);
+    } catch (e) { /* glyph render failed — sync continues */ }
   },
 
   _loadFromCache() {
@@ -1270,7 +1327,9 @@ const GitHubDriver = {
       path: this._path,
       sha: this._sha,
       hasCachedData: !!localStorage.getItem(this.CACHE_KEY),
-      pushPending: this._pushPending
+      syncState: this._syncState || 'synced',   // synced | pending | failed
+      pushPending: !!(this._dirty || this._pushing),
+      lastPushError: this._lastPushError || null
     };
   }
 };
@@ -1392,8 +1451,25 @@ async function initDataStore() {
   const akey  = localStorage.getItem('css_anthropic_key');
   if (!token || !repo || !akey) { showSetupModal(); return false; }
   try {
+    // Snapshot the local cache BEFORE load() — the driver overwrites it with
+    // remote content, and we need it to reconcile.
+    let localCache = null;
+    try { const raw = localStorage.getItem('css_v3_data'); localCache = raw ? JSON.parse(raw) : null; } catch (e) {}
+
     await DataStore.use(GitHubDriver).init();
-    const remote = await DataStore.load();
+    let remote = await DataStore.load();
+
+    // Reconcile: if the local cache is NEWER than remote (a push never landed
+    // before iOS suspended the PWA), remote-wins would roll XP backwards while
+    // todayLog still shows the quests done. Keep the newer local state and
+    // re-push it. lastUpdated is stamped by saveData() on every write.
+    if (remote && localCache &&
+        (localCache.lastUpdated || 0) > (remote.lastUpdated || 0)) {
+      console.warn('DataStore: local cache newer than remote — keeping local, re-pushing.');
+      remote = localCache;
+      DataStore.save(localCache).catch(e => console.warn('GitHub re-push failed:', e.message));
+    }
+
     if (remote) {
       data = remote;
       // Always use current quest definitions from code — schema lives here, not in data
@@ -1448,6 +1524,9 @@ function getWeeklyCompletionCount(qid) {
 }
 
 function saveData() {
+  // Stamp every write — initDataStore uses this to reconcile local vs remote
+  // instead of blind remote-wins (which could roll XP backwards).
+  data.lastUpdated = Date.now();
   // Write to localStorage immediately (fast, works offline)
   localStorage.setItem('css_v3_data', JSON.stringify(data));
   localStorage.setItem('css_v3_today_' + getTodayStr(), JSON.stringify(todayLog));
@@ -1467,6 +1546,112 @@ function getTodayStr() {
     return yesterday.toLocaleDateString('en-CA'); // YYYY-MM-DD
   }
   return now.toLocaleDateString('en-CA'); // YYYY-MM-DD
+}
+
+// ── DAY ROLLOVER ──────────────────────────────────────────────────────
+// The day key the in-memory todayLog belongs to. iOS keeps the PWA resident
+// across the 3:30 AM boundary, so "the day at load time" and "the day now"
+// diverge — every write path and every resume must call ensureToday() first,
+// or yesterday's todayLog gets filed under today's key.
+let _activeDayKey = null;
+
+// Streak / re-entry / miss detection when the stored lastDate is behind
+// today. Idempotent: the lastDate guard makes repeat calls no-ops.
+function runDayRollover() {
+  const today = getTodayStr();
+  if (!data.lastDate || data.lastDate === today) return;
+
+  // Derive yesterday using the same 3:30 AM boundary as getTodayStr()
+  const todayDate = new Date(today + 'T12:00:00');
+  todayDate.setDate(todayDate.getDate() - 1);
+  const yStr = todayDate.toLocaleDateString('en-CA');
+
+  // Was anything logged yesterday? (localStorage may have entries not yet in dailyLogs)
+  const yLocal = localStorage.getItem('css_v3_today_' + yStr);
+  const yLoggedCount = (yLocal ? Object.keys(JSON.parse(yLocal)).length : 0)
+    + Object.keys(data.dailyLogs?.[yStr] || {}).length;
+
+  if (data.lastDate === yStr) {
+    data.streak = yLoggedCount > 0 ? (data.streak || 0) + 1 : 0;
+  } else {
+    // Skipped at least one day — streak breaks
+    data.streak = 0;
+  }
+
+  // ── Re-entry protocol: a regulator must handle dormancy ──
+  // Gap ≥ 7 days enters re-entry: floors only, reach quests dimmed,
+  // graduates after 3 consecutive logged days. A missed day resets the hold.
+  const gapDays = Math.round((new Date(today + 'T12:00:00') - new Date(data.lastDate + 'T12:00:00')) / 86400000);
+  if (gapDays >= 7) {
+    data.reentry = { startedOn: today, gapDays: gapDays, daysHeld: 0 };
+    const tx = buildReentryTransmission(gapDays, today);
+    data.lastTransmission = tx;
+    if (!data.transmissionLog) data.transmissionLog = [];
+    data.transmissionLog.push(tx);
+  } else if (data.reentry) {
+    data.reentry.daysHeld = yLoggedCount > 0 ? (data.reentry.daysHeld || 0) + 1 : 0;
+    if (data.reentry.daysHeld >= 3) {
+      delete data.reentry;
+      const tx = { date: today, archetype: 'The System',
+        body: 'Three days held. Re-entry complete — the full system is open again. The gap is history now, not weather.' };
+      data.lastTransmission = tx;
+      if (!data.transmissionLog) data.transmissionLog = [];
+      data.transmissionLog.push(tx);
+    }
+  }
+
+  // ── Miss detection: which quests were missed yesterday? ──
+  const yLog = data.dailyLogs?.[yStr] || {};
+  const missed = [];
+  const domainMisses = {};
+  Object.entries(data.questDefinitions || {}).forEach(([domKey, dom]) => {
+    let domainTotal = 0, domainDone = 0;
+    Object.entries(dom.quests || {}).forEach(([qid, q]) => {
+      domainTotal++;
+      if (yLog[qid]) { domainDone++; }
+      else { missed.push({ qid, domain: domKey, name: q.name, tier: q.tier }); }
+    });
+    if (domainTotal > 0 && domainDone === 0) {
+      domainMisses[domKey] = { total: domainTotal, name: dom.name };
+    }
+  });
+
+  // Store for UI/harvest consumption
+  if (!data.missDetection) data.missDetection = {};
+  data.missDetection[yStr] = {
+    missedQuests: missed,
+    domainGaps: domainMisses,
+    streakHeld: (data.streak || 0) > 0,
+    totalMissed: missed.length
+  };
+
+  data.lastDate = today;
+  saveData();
+}
+
+// Re-sync the in-memory day with the clock. Returns true when the day
+// flipped. rerender=false is for write paths that re-render themselves —
+// they call this BEFORE reading todayLog so a stale ✓ can't block a fresh
+// log and a save can't corrupt the new day.
+function ensureToday(rerender) {
+  const today = getTodayStr();
+  if (_activeDayKey === today) return false;
+
+  // Reload todayLog BEFORE rollover: yesterday's entries are already
+  // persisted under yesterday's key, and rollover's saveData() writes
+  // todayLog under TODAY's key — it must hold today's (empty) log by then.
+  const saved = localStorage.getItem('css_v3_today_' + today);
+  todayLog = saved ? JSON.parse(saved) : {};
+  todayXpEarned = Object.values(todayLog).reduce((s, v) => s + (v.xp || 0), 0);
+  _activeDayKey = today;
+  runDayRollover();
+
+  if (rerender !== false) {
+    renderHeader();
+    renderDispatchBanner();
+    renderQuests();
+  }
+  return true;
 }
 
 // ── RANK LOGIC ────────────────────────────────────────────────────────
@@ -1553,6 +1738,30 @@ function renderHeader() {
     bars.appendChild(b);
   }
 }
+
+// ── SYNC GLYPH ────────────────────────────────────────────────────────
+// The system's one signal about itself: did the log reach the vault.
+// Driven by GitHubDriver._setSync on every push transition.
+window.updateSyncGlyph = function(state, error) {
+  const el = document.getElementById('syncGlyph');
+  if (!el) return;
+  const glyphs = { synced: '∴', pending: '◌', failed: '⚠' };
+  const titles = {
+    synced: 'vault: synced',
+    pending: 'vault: push pending',
+    failed: 'vault: unreached — logs held locally' + (error ? ' · ' + error : '')
+  };
+  el.textContent = glyphs[state] || '∴';
+  el.title = titles[state] || 'vault: synced';
+  el.classList.toggle('sync-pending', state === 'pending');
+  el.classList.toggle('sync-failed', state === 'failed');
+  // One in-voice notice per transition INTO failure; the glyph carries it after.
+  if (state === 'failed' && !window._syncFailNotified) {
+    window._syncFailNotified = true;
+    if (typeof notify === 'function') notify('The vault is unreachable. Logs held locally — nothing is lost.', 5000);
+  }
+  if (state === 'synced') window._syncFailNotified = false;
+};
 
 // ── RE-ENTRY TRANSMISSION ─────────────────────────────────────────────
 // Local bank, deterministic by gap length. No API call — this must fire
@@ -2124,6 +2333,7 @@ function toggleQuestLog(qid) {
 // Programmatic core — called by the quest card button (via logAccumulator)
 // and by domain quick-logs (e.g. intake food bank chips).
 function addAccumEntry(qid, values, note, extra) {
+  ensureToday(false);   // day may have rolled while the PWA stayed resident
   let quest = null;
   for (const domain of Object.values(data.questDefinitions)) {
     if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
@@ -2212,6 +2422,7 @@ function logAccumulator(qid, xp) {
 }
 
 function logQuest(qid, xp) {
+  ensureToday(false);   // day may have rolled while the PWA stayed resident
   // Find quest def
   let quest = null;
   let domainKey = null;
@@ -2416,7 +2627,37 @@ function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) 
   checkSeals();
 }
 
+// Rebuild an entry-list quest's totals + note after undo pops an entry.
+// Mirrors the forward math: addAccumEntry for accumFields quests,
+// logTransaction for finance.
+function recomputeEntryTotals(qid, entry) {
+  let quest = null;
+  for (const domain of Object.values(data.questDefinitions)) {
+    if (domain.quests[qid]) { quest = domain.quests[qid]; break; }
+  }
+  if (quest && quest.accumFields) {
+    const totals = {};
+    quest.accumFields.forEach(f => {
+      totals[f.key] = entry.entries.reduce((sum, e) => sum + (e[f.key] || 0), 0);
+    });
+    entry.totals = totals;
+    entry.note = quest.accumFields.map(f => `${totals[f.key]} ${f.units}`).join(' | ');
+  } else {
+    // Transaction quest (f1)
+    let income = 0, expenses = 0;
+    entry.entries.forEach(e => {
+      if (e.direction === 'in') income += e.amount;
+      else expenses += e.amount;
+    });
+    entry.totals = { net: income - expenses, income, expenses };
+    entry.note = `+$${income.toFixed(2)} in · -$${expenses.toFixed(2)} out`;
+  }
+}
+
 function unlogQuest(qid) {
+  // Day may have rolled since render: the tapped "undo" belongs to a quest
+  // from the old day. ensureToday re-renders and the stale undo disappears.
+  if (ensureToday()) return;
   const entry = todayLog[qid];
   if (!entry) return;
   const todayStr = getTodayStr();
@@ -2434,6 +2675,34 @@ function unlogQuest(qid) {
     renderQuests();
     notify(`Removed last workout — ${workouts.length} left today.`);
     return;
+  }
+
+  // Accumulator/transaction quests (hydration, nutrition, finance): undo pops
+  // the most-recent ENTRY — it never erases a whole day of logging. Finance
+  // entries also reverse the account mutation they applied, so "Where it
+  // lives" stays true. Only the final entry falls through to full unlog.
+  if (Array.isArray(entry.entries) && entry.entries.length > 0) {
+    const removed = entry.entries.pop();
+
+    // Reverse the primary-account adjustment this transaction made
+    if (removed && removed.direction !== undefined && removed.amount !== undefined) {
+      const accts = data.accountBalances || [];
+      const primary = accts.find(a => a.primary) || accts[0];
+      if (primary) {
+        primary.amount = (primary.amount || 0) - (removed.direction === 'in' ? removed.amount : -removed.amount);
+      }
+    }
+
+    if (entry.entries.length > 0) {
+      recomputeEntryTotals(qid, entry);
+      if (data.dailyLogs?.[todayStr]) data.dailyLogs[todayStr][qid] = entry;
+      saveData();
+      renderHeader();
+      renderQuests();
+      notify(`Removed last entry — ${entry.entries.length} left today.`);
+      return;
+    }
+    // That was the only entry — fall through: reverse XP + clear the day log.
   }
 
   // Reverse XP
@@ -3015,76 +3284,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.classList.add('arcade-mode');
   }
 
-  // Check if new day
-  const today = getTodayStr();
-  if (data.lastDate && data.lastDate !== today) {
-    // Derive yesterday using the same 3:30 AM boundary as getTodayStr()
-    const todayDate = new Date(today + 'T12:00:00');
-    todayDate.setDate(todayDate.getDate() - 1);
-    const yStr = todayDate.toLocaleDateString('en-CA');
+  // Day rollover (streak / re-entry / miss detection). todayLog was already
+  // loaded for the current key by initDataStore, so anchor the day and run.
+  _activeDayKey = getTodayStr();
+  runDayRollover();
 
-    // Was anything logged yesterday? (localStorage may have entries not yet in dailyLogs)
-    const yLocal = localStorage.getItem('css_v3_today_' + yStr);
-    const yLoggedCount = (yLocal ? Object.keys(JSON.parse(yLocal)).length : 0)
-      + Object.keys(data.dailyLogs?.[yStr] || {}).length;
-
-    if (data.lastDate === yStr) {
-      data.streak = yLoggedCount > 0 ? (data.streak || 0) + 1 : 0;
+  // iOS keeps the PWA resident for days — re-check the day on every resume,
+  // and flush any pending GitHub push before the OS suspends us.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      ensureToday();
     } else {
-      // Skipped at least one day — streak breaks
-      data.streak = 0;
+      DataStore.flush();
     }
-
-    // ── Re-entry protocol: a regulator must handle dormancy ──
-    // Gap ≥ 7 days enters re-entry: floors only, reach quests dimmed,
-    // graduates after 3 consecutive logged days. A missed day resets the hold.
-    const gapDays = Math.round((new Date(today + 'T12:00:00') - new Date(data.lastDate + 'T12:00:00')) / 86400000);
-    if (gapDays >= 7) {
-      data.reentry = { startedOn: today, gapDays: gapDays, daysHeld: 0 };
-      const tx = buildReentryTransmission(gapDays, today);
-      data.lastTransmission = tx;
-      if (!data.transmissionLog) data.transmissionLog = [];
-      data.transmissionLog.push(tx);
-    } else if (data.reentry) {
-      data.reentry.daysHeld = yLoggedCount > 0 ? (data.reentry.daysHeld || 0) + 1 : 0;
-      if (data.reentry.daysHeld >= 3) {
-        delete data.reentry;
-        const tx = { date: today, archetype: 'The System',
-          body: 'Three days held. Re-entry complete — the full system is open again. The gap is history now, not weather.' };
-        data.lastTransmission = tx;
-        if (!data.transmissionLog) data.transmissionLog = [];
-        data.transmissionLog.push(tx);
-      }
-    }
-
-    // ── Miss detection: which quests were missed yesterday? ──
-    const yLog = data.dailyLogs?.[yStr] || {};
-    const missed = [];
-    const domainMisses = {};
-    Object.entries(data.questDefinitions || {}).forEach(([domKey, dom]) => {
-      let domainTotal = 0, domainDone = 0;
-      Object.entries(dom.quests || {}).forEach(([qid, q]) => {
-        domainTotal++;
-        if (yLog[qid]) { domainDone++; }
-        else { missed.push({ qid, domain: domKey, name: q.name, tier: q.tier }); }
-      });
-      if (domainTotal > 0 && domainDone === 0) {
-        domainMisses[domKey] = { total: domainTotal, name: dom.name };
-      }
-    });
-
-    // Store for UI/harvest consumption
-    if (!data.missDetection) data.missDetection = {};
-    data.missDetection[yStr] = {
-      missedQuests: missed,
-      domainGaps: domainMisses,
-      streakHeld: (data.streak || 0) > 0,
-      totalMissed: missed.length
-    };
-
-    data.lastDate = today;
-    saveData();
-  }
+  });
+  window.addEventListener('pageshow', (e) => { if (e.persisted) ensureToday(); });
+  window.addEventListener('pagehide', () => { DataStore.flush(); });
 
   // Init collapse state (requires questDefinitions to be loaded)
   initCollapseState();

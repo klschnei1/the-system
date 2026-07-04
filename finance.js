@@ -6,6 +6,7 @@
 // Called from buildQuestInput's transaction case via onclick.
 // Reads #finance-direction (hidden input), #finance-amount, #finance-note.
 window.logTransaction = function(qid, xp) {
+  if (typeof ensureToday === 'function') ensureToday(false);   // day may have rolled while resident
   const directionEl = document.getElementById('finance-direction');
   const amountEl = document.getElementById('finance-amount');
   const noteEl = document.getElementById('finance-note');
