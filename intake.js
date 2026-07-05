@@ -152,6 +152,37 @@
     return Math.max(0, Math.round((b - a) / 86400000));
   }
 
+  // ── INGREDIENT POOL (batch calculator typeahead) ─────────────────────
+  // Suggestion source for batch ingredient lines: the g2 food bank merged
+  // with every ingredient line ever saved on a batch (batches persist their
+  // recipe in b.ingredients since July 2026; older batches contribute
+  // nothing). Derived on demand — no separate schema field, no migration.
+  // Batch lines override bank foods on name collision, and later batches
+  // override earlier ones, so values refine over time.
+  // Shape: { normalizedName: { name, calories, protein, carbs, fat } }
+  function buildIngredientPool() {
+    ensureBank();
+    const pool = {};
+    Object.entries(bank.g2 || {}).forEach(([key, f]) => {
+      pool[key] = {
+        name: f.name,
+        calories: f.values.calories || 0, protein: f.values.protein || 0,
+        carbs: f.values.carbs || 0, fat: f.values.fat || 0
+      };
+    });
+    ensureBatches().forEach(b => (b.ingredients || []).forEach(ing => {
+      const key = (ing.name || '').trim().toLowerCase().replace(/\s+/g, ' ');
+      if (!key) return;
+      pool[key] = {
+        name: ing.name.trim(),
+        calories: ing.calories || 0, protein: ing.protein || 0,
+        carbs: ing.carbs || 0, fat: ing.fat || 0
+      };
+    }));
+    return pool;
+  }
+  window.buildIngredientPool = buildIngredientPool;   // exposed for the jsc suite
+
   // Tap a batch chip: log one serving to g2, then decrement the batch.
   window.logBatchServing = function(batchId) {
     const b = ensureBatches().find(x => x.id === batchId);
@@ -178,7 +209,10 @@
     modal.className = 'modal';
     overlay.appendChild(modal);
 
-    const bankNames = Object.values(bank.g2 || {});
+    // iOS renders <datalist> as a near-invisible keyboard bar, so suggestions
+    // are a real dropdown (.bl-suggest) instead — same live-search pattern as
+    // the quest note field's chip strip.
+    const pool = buildIngredientPool();
     modal.innerHTML = `
       <div class="modal-title">Batch prep <span class="modal-close">✕</span></div>
       <div class="modal-section">
@@ -188,9 +222,6 @@
       </div>
       <div class="modal-section">
         <div class="modal-label">Ingredient · qty · kcal · protein</div>
-        <datalist id="batch-bank-list">
-          ${bankNames.map(f => `<option value="${escapeHtml(f.name)}">`).join('')}
-        </datalist>
         <div id="batch-lines"></div>
         <button class="btn" id="batch-add-line" style="font-size:10px;padding:4px 10px;margin-top:4px">+ ingredient</button>
       </div>
@@ -215,8 +246,11 @@
       // autocomplete="off" on every input: without it the browser refills a
       // freshly-added line with the previous line's values (the "doubling" bug).
       row.innerHTML = `
-        <input type="text" class="bl-name log-input" list="batch-bank-list"
-          style="flex:1;min-width:90px;padding:6px 8px;font-size:12px" placeholder="ingredient" autocomplete="off">
+        <div style="position:relative;flex:1;min-width:90px">
+          <input type="text" class="bl-name log-input"
+            style="width:100%;box-sizing:border-box;padding:6px 8px;font-size:12px" placeholder="ingredient" autocomplete="off">
+          <div class="bl-suggest" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:20;background:var(--bg3);border:1px solid var(--border);border-radius:2px;max-height:150px;overflow-y:auto"></div>
+        </div>
         <input type="number" class="bl-qty log-input"
           style="width:38px;padding:6px;font-size:12px;text-align:right" placeholder="1" min="0" step="any" autocomplete="off">
         <input type="number" class="bl-kcal log-input"
@@ -242,17 +276,48 @@
         if (prefill.carbs) carbI.value = prefill.carbs;
         if (prefill.fat) fatI.value = prefill.fat;
       }
-      // Pull from the bank: choosing a known food fills its macros.
+      // Live-search dropdown over the ingredient pool; tap fills all four macros.
+      const sugEl = row.querySelector('.bl-suggest');
+      function hideSuggest() { sugEl.style.display = 'none'; sugEl.innerHTML = ''; }
+      function fillFrom(hit) {
+        nameI.value = hit.name;
+        if (hit.calories) kcalI.value = hit.calories;
+        if (hit.protein) protI.value = hit.protein;
+        if (hit.carbs) carbI.value = hit.carbs;
+        if (hit.fat) fatI.value = hit.fat;
+        hideSuggest();
+        recompute();
+      }
+      function showSuggest() {
+        const q = nameI.value.trim().toLowerCase().replace(/\s+/g, ' ');
+        if (!q) { hideSuggest(); return; }
+        const hits = Object.entries(pool).filter(([key]) => key.includes(q)).slice(0, 6);
+        if (!hits.length) { hideSuggest(); return; }
+        sugEl.innerHTML = hits.map(([key, p]) => {
+          const macros = [p.calories ? p.calories + 'kcal' : '', p.protein ? p.protein + 'P' : '',
+                          p.carbs ? p.carbs + 'C' : '', p.fat ? p.fat + 'F' : ''].filter(Boolean).join(' · ');
+          return `<div class="bl-suggest-row" data-key="${escapeHtml(key)}"
+            style="padding:8px;font-size:12px;cursor:pointer;border-bottom:1px solid var(--border)">
+            ${escapeHtml(p.name)}${macros ? ' <span style="color:var(--text3)">' + macros + '</span>' : ''}</div>`;
+        }).join('');
+        sugEl.style.display = 'block';
+        // pointerdown, not click: it fires BEFORE the input's blur on iOS, so
+        // the tap can't lose the race against the keyboard dismissing.
+        sugEl.querySelectorAll('.bl-suggest-row').forEach(el => {
+          el.addEventListener('pointerdown', e => {
+            e.preventDefault();
+            const hit = pool[el.dataset.key];
+            if (hit) fillFrom(hit);
+          });
+        });
+      }
+      nameI.addEventListener('input', showSuggest);
+      nameI.addEventListener('focus', showSuggest);
+      nameI.addEventListener('blur', () => setTimeout(hideSuggest, 150));
+      // Fallback for a fully typed exact name (no tap): still autofills.
       nameI.addEventListener('change', () => {
-        const key = nameI.value.trim().toLowerCase().replace(/\s+/g, ' ');
-        const hit = bank.g2 && bank.g2[key];
-        if (hit) {
-          if (hit.values.calories) kcalI.value = hit.values.calories;
-          if (hit.values.protein) protI.value = hit.values.protein;
-          if (hit.values.carbs) carbI.value = hit.values.carbs;
-          if (hit.values.fat) fatI.value = hit.values.fat;
-          recompute();
-        }
+        const hit = pool[nameI.value.trim().toLowerCase().replace(/\s+/g, ' ')];
+        if (hit) fillFrom(hit);
       });
       qtyI.addEventListener('input', recompute);
       kcalI.addEventListener('input', recompute);
@@ -306,10 +371,26 @@
       const t = totals();
       if (s < 1) { notify('Set servings made (1 or more).'); return; }
       if (t.kcal <= 0 && t.protein <= 0) { notify('Add at least one ingredient with values.'); return; }
+      // Persist the recipe: these lines are the ingredient pool's memory
+      // (per-unit macros as typed — qty multiplies them, so don't bake it in).
+      const ingredients = [];
+      linesEl.querySelectorAll('.batch-line').forEach(r => {
+        const nm = r.querySelector('.bl-name').value.trim();
+        if (!nm) return;
+        ingredients.push({
+          name: nm,
+          qty: parseFloat(r.querySelector('.bl-qty').value) || 0,
+          calories: parseFloat(r.querySelector('.bl-kcal').value) || 0,
+          protein: parseFloat(r.querySelector('.bl-protein').value) || 0,
+          carbs: parseFloat(r.querySelector('.bl-carbs').value) || 0,
+          fat: parseFloat(r.querySelector('.bl-fat').value) || 0
+        });
+      });
       ensureBatches().push({
         id: 'b' + Date.now(),
         name: name,
         createdOn: today(),
+        ingredients: ingredients,
         servingsMade: s,
         servingsLogged: 0,
         perServing: {
