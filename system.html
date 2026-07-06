@@ -1076,7 +1076,7 @@
 <div class="notify" id="notify"></div>
 
 <script>
-  ['sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js'].forEach(function(src) {
+  ['sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
@@ -1625,6 +1625,10 @@ function runDayRollover() {
     totalMissed: missed.length
   };
 
+  // Score pending forecasts + settle the forecast streak (forecast.js).
+  // Must run before lastDate flips: it needs yLoggedCount's day identity.
+  if (window.forecastRollover) window.forecastRollover(yStr, yLoggedCount);
+
   data.lastDate = today;
   saveData();
 }
@@ -1885,6 +1889,9 @@ function buildQuestCard(qid, quest, domain, options = {}) {
 function renderQuestsOverview() {
   const container = document.getElementById('questList');
   container.innerHTML = '';
+  // The Forecast rides above the domains: predictions are the day's opening
+  // move, and yesterday's results are the reason to come back (forecast.js).
+  if (window.renderForecastCard) window.renderForecastCard(container);
   const defs = data.questDefinitions;
   const scores = calcDomainScores();
   let totalCompleted = 0;

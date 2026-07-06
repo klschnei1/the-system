@@ -1,5 +1,5 @@
-const CACHE = 'css-v8';
-const STATIC = ['datastore.js','finance.js','intake.js','intellect.js','juice.js','sensei.js','sigils.js','strength.js','themes.js','icon.svg','manifest.json'];
+const CACHE = 'css-v9';
+const STATIC = ['datastore.js','finance.js','forecast.js','intake.js','intellect.js','juice.js','sensei.js','sigils.js','strength.js','themes.js','icon.svg','manifest.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(STATIC)));
