@@ -380,6 +380,48 @@
   }
   .notify.show { transform: translateY(0); opacity: 1; }
 
+  /* ── THE WORKSHOP — unmarked door (triple-tap the header title) ── */
+  .workshop {
+    display: none; position: fixed; inset: 0; z-index: 8000;
+    background: var(--bg); flex-direction: column;
+  }
+  .workshop.open { display: flex; }
+  .workshop-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    padding-top: max(10px, env(safe-area-inset-top));
+  }
+  .workshop-title {
+    flex: 1; font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text2);
+  }
+  .workshop-btn {
+    font-family: inherit; font-size: 14px; color: var(--text2);
+    background: none; border: 1px solid var(--border); border-radius: 4px;
+    padding: 10px 16px; cursor: pointer;
+  }
+  .workshop-back { display: none; }
+  .workshop.viewing .workshop-back { display: block; }
+  .workshop-index { padding: 16px; overflow-y: auto; }
+  .workshop-note {
+    font-size: 10px; color: var(--text2); letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .workshop-item {
+    display: block; width: 100%; text-align: left; font-family: inherit;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 4px;
+    color: var(--text); font-size: 12px; letter-spacing: 1px;
+    padding: 14px 12px; margin-bottom: 8px; cursor: pointer;
+  }
+  .workshop-item small { display: block; color: var(--text2); font-size: 10px; margin-top: 4px; }
+  .workshop-frame-wrap {
+    flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; display: none;
+  }
+  .workshop.viewing .workshop-frame-wrap { display: block; }
+  .workshop.viewing .workshop-index { display: none; }
+  .workshop-frame { width: 100%; height: 100%; border: none; }
+
   /* ── SIGNAL METER ── */
   .signal-row { display: flex; gap: 3px; align-items: center; }
   .signal-bar { width: 8px; border-radius: 1px; }
@@ -883,7 +925,7 @@
 <div class="header">
   <div class="header-top">
     <div>
-      <div class="system-title">Cybernetica // v3.1</div>
+      <div class="system-title" onclick="workshopTap()">Cybernetica // v3.1</div>
     </div>
     <div class="hunter-badge">
       <div class="rank-badge" id="rankBadge">E</div>
@@ -1074,6 +1116,17 @@
 
 <!-- NOTIFY -->
 <div class="notify" id="notify"></div>
+
+<!-- THE WORKSHOP — prototype viewer behind an unmarked door -->
+<div class="workshop" id="workshop">
+  <div class="workshop-bar">
+    <button class="workshop-btn workshop-back" onclick="workshopBack()">←</button>
+    <div class="workshop-title">The Workshop</div>
+    <button class="workshop-btn" onclick="closeWorkshop()">✕</button>
+  </div>
+  <div class="workshop-index" id="workshopIndex"></div>
+  <div class="workshop-frame-wrap"><iframe class="workshop-frame" id="workshopFrame" title="prototype"></iframe></div>
+</div>
 
 <script>
   ['sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
@@ -3125,6 +3178,53 @@ function notify(msg, duration = 3000) {
   n.textContent = msg;
   n.classList.add('show');
   setTimeout(() => n.classList.remove('show'), duration);
+}
+
+// ── THE WORKSHOP ─────────────────────────────────────────────────────
+// Prototype viewer behind an unmarked door: three quick taps on the
+// header title. Hardcoded index — no directory listing. Pure viewer;
+// nothing in here touches DataStore.
+const WORKSHOP_PROTOTYPES = [
+  { file: 'strength-art-mockup.html', name: 'Strength // art ground',
+    note: 'the climber as the page itself — Night/Paper toggle at the bottom' },
+  { file: 'log-juice-mockup.html', name: 'Log moment',
+    note: 'reveal reel + XP ghost feel calibration' },
+  { file: 'unlock-juice-mockup.html', name: 'Seal-break',
+    note: 'unlock ceremony feel calibration' },
+];
+let _workshopTaps = [];
+
+function workshopTap() {
+  const now = Date.now();
+  _workshopTaps = _workshopTaps.filter(t => now - t < 1200);
+  _workshopTaps.push(now);
+  if (_workshopTaps.length >= 3) { _workshopTaps = []; openWorkshop(); }
+}
+
+function openWorkshop() {
+  const el = document.getElementById('workshop');
+  el.classList.add('open');
+  el.classList.remove('viewing');
+  document.getElementById('workshopIndex').innerHTML =
+    '<div class="workshop-note">Nothing in here is the system. Nothing in here is saved.</div>' +
+    WORKSHOP_PROTOTYPES.map((p, i) =>
+      `<button class="workshop-item" onclick="workshopView(${i})">${p.name}<small>${p.note}</small></button>`
+    ).join('');
+}
+
+function workshopView(i) {
+  document.getElementById('workshopFrame').src = 'prototypes/' + WORKSHOP_PROTOTYPES[i].file;
+  document.getElementById('workshop').classList.add('viewing');
+}
+
+function workshopBack() {
+  document.getElementById('workshop').classList.remove('viewing');
+  document.getElementById('workshopFrame').src = 'about:blank';
+}
+
+function closeWorkshop() {
+  workshopBack();
+  document.getElementById('workshop').classList.remove('open');
 }
 
 // ── WEEKLY RHYTHM ────────────────────────────────────────────────────
