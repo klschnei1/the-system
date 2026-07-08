@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- Standalone calibration mockup — Recovered Fragments artifact card
+     (Session C v1, July 7 2026). NOT wired into the app; loads the REAL
+     art.js against stubbed data. Open in Safari on the phone, tap
+     "log workout" to walk the erosion stages, "reset" to start over.
+     Judge: occlusion at stage 0, erosion feel, the stage-5 moment. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARTIFACT — calibration</title>
+<style>
+  :root{--bg:#07070f;--bg2:#0d0d1a;--bg3:#111128;--border:#1e1e3a;--accent:#5b6fff;--accent2:#9b5de5;--gold:#c9a84c;--red:#e05555;--green:#4ade80;--text:#d8d8f0;--text2:#7878aa;--text3:#4444aa;--geburah:#e05555;--font-family:'Courier New',monospace;--border-radius:4px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-family);background:var(--bg);color:var(--text);max-width:390px;margin:0 auto;padding:16px}
+  h1{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--text2);margin-bottom:12px}
+  .domain-widget{background:var(--bg2);border:1px solid var(--border);border-radius:var(--border-radius);padding:12px}
+  .controls{display:flex;gap:8px;margin:14px 0}
+  .btn{padding:12px 16px;font-family:inherit;font-size:11px;letter-spacing:1px;border:none;border-radius:var(--border-radius);cursor:pointer;text-transform:uppercase}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}
+  .meter{font-size:10px;color:var(--text2);margin-bottom:12px}
+</style>
+</head>
+<body>
+  <h1>Artifact calibration</h1>
+  <div class="meter" id="meter"></div>
+  <div id="mount"></div>
+  <div class="controls">
+    <button class="btn btn-primary" id="log">Log workout</button>
+    <button class="btn btn-ghost" id="reset">Reset</button>
+  </div>
+
+<script>
+  // ── stubs: the real app globals art.js depends on ──
+  let workoutCount = 0;
+  window.data = { artifacts: null, dailyLogs: {} };
+  window.getTodayStr = () => '2026-07-07';
+  window.saveData = () => {};                      // no persistence in mockup
+  window.g1Workouts = g1 => (g1 && g1.workouts) || [];
+  // minimal juice shim: audible ticks/thud via the same synth approach
+  window.juice = (() => {
+    let AC = null;
+    function beep(f, dur, gain) {
+      try {
+        AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+        const o = AC.createOscillator(), g = AC.createGain();
+        o.frequency.value = f; g.gain.value = gain;
+        o.connect(g); g.connect(AC.destination);
+        o.start(); g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + dur);
+        o.stop(AC.currentTime + dur);
+      } catch (e) {}
+    }
+    return {
+      tick: p => beep(600 + 500 * (p || 0), 0.05, 0.05),
+      thud: () => beep(70, 0.25, 0.12),
+      chime: () => { beep(880, 0.4, 0.06); setTimeout(() => beep(1320, 0.5, 0.05), 120); }
+    };
+  })();
+
+  function rebuild() {
+    // fabricate N workouts spread over dates from activation
+    window.data.dailyLogs = {};
+    for (let i = 0; i < workoutCount; i++) {
+      const d = new Date('2026-07-07T12:00:00');
+      d.setDate(d.getDate() + Math.floor(i / 2));
+      const ds = d.toLocaleDateString('en-CA');
+      window.data.dailyLogs[ds] = window.data.dailyLogs[ds] || { g1: { workouts: [] } };
+      window.data.dailyLogs[ds].g1.workouts.push({ totalSets: 12 });
+    }
+    const mount = document.getElementById('mount');
+    mount.innerHTML = '';
+    window.renderArtifactCard(mount, 'geburah', { color: 'var(--geburah)' });
+    const T = window.__artCore.ARTIFACTS.climber.thresholds;
+    const stage = window.__artCore.artifactStage(workoutCount, T);
+    document.getElementById('meter').textContent =
+      workoutCount + ' workouts · stage ' + stage + '/5 · thresholds ' + T.join(' / ');
+  }
+
+  document.getElementById('log').onclick = () => { workoutCount++; rebuild(); };
+  document.getElementById('reset').onclick = () => {
+    workoutCount = 0;
+    window.data.artifacts = null;   // re-activates fresh
+    rebuild();
+  };
+</script>
+<script src="../art.js"></script>
+<script>rebuild();</script>
+</body>
+</html>

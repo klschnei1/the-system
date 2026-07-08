@@ -5,7 +5,7 @@
 //
 // Contract (juice.md):
 //   window.juice = { rollup, reveal, ghost, playLogMoment, sealBreak,
-//                    tick, thud, chime, rare, setMode }
+//                    tick, thud, chime, rare, setMode, mode }
 // - All audio synthesized, zero assets. Master gain ~0.15 — textures, not
 //   notifications.
 // - Mode from data.settings.juice ('full'|'quiet'|'off') via DataStore.
@@ -26,12 +26,16 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // `data` is a top-level `let` in system.html — NOT window.data. Guard by
+  // bare identifier (same pattern as art.js renderArtifactCard); a
+  // window.data check is always undefined and dead-guarded both fns until
+  // July 7, 2026 (mode stuck 'full', setMode a no-op).
   function mode() {
-    try { return (window.data && data.settings && data.settings.juice) || 'full'; }
+    try { return (typeof data !== 'undefined' && data && data.settings && data.settings.juice) || 'full'; }
     catch (e) { return 'full'; }
   }
   function setMode(m) {
-    if (!window.data) return;
+    if (typeof data === 'undefined' || !data) return;
     if (!data.settings) data.settings = {};
     data.settings.juice = m;
     if (typeof saveData === 'function') saveData();
@@ -439,5 +443,5 @@
     })();
   }
 
-  window.juice = { rollup, reveal, ghost, playLogMoment, sealBreak, tick, thud, chime, rare, setMode };
+  window.juice = { rollup, reveal, ghost, playLogMoment, sealBreak, tick, thud, chime, rare, setMode, mode };
 })();
