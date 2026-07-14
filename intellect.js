@@ -109,7 +109,15 @@
       <div style="font-size:11px;color:var(--text3);padding:6px 0">Pulling dissertation feed…</div></div>`;
     fetch('intellect.json?t=' + Date.now(), { cache: 'no-store' })
       .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
-      .then(d => { el.innerHTML = renderIntellectHTML(d, color); })
+      .then(d => {
+        el.innerHTML = renderIntellectHTML(d, color);
+        // Collect panel (defined in system.html — it owns DataStore + XP writes):
+        // banks XP minted from real LOCKED work. Sits above the read-only mirror.
+        if (window.buildIntellectCollect) {
+          const panel = window.buildIntellectCollect(d.ledger || [], color);
+          if (panel) el.insertBefore(panel, el.firstChild);
+        }
+      })
       .catch(err => {
         el.innerHTML = `<div class="domain-widget" style="border-color:${color}">
           <div style="font-size:11px;color:var(--text3);line-height:1.4;padding:6px 0">

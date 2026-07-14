@@ -2144,6 +2144,101 @@ function currentTeaser() {
   return LOCKED_ORDER.find(dk => domainGate(dk) !== 'open') || null;
 }
 
+// ── INTELLECT LEDGER — collect XP earned by real LOCKED work ───────────────
+// The Intellect domain is a read-only mirror of the PhD repo. intellect.json
+// now also carries a `ledger` of discrete, stably-id'd events (git commits,
+// lab-notebook entries, met deliverables) minted from work done ENTIRELY in
+// LOCKED — no Cybernetica logging. Karl taps Collect to bank the accrued XP.
+// Idempotent: every id is paid at most once, tracked in data.intellectClaimed.
+function intellectClaimed() {
+  if (!data.intellectClaimed) data.intellectClaimed = {};
+  return data.intellectClaimed;
+}
+function intellectPending(ledger) {
+  if (!Array.isArray(ledger)) return [];
+  const claimed = intellectClaimed();
+  // First run anchors: mark all existing events claimed so git/notebook HISTORY
+  // is never dumped as an instant windfall — only work after this point counts
+  // (mirrors sealStart's "forward progress, never credit for history").
+  if (!data.intellectAnchored && ledger.length) {
+    ledger.forEach(e => { if (e && e.id) claimed[e.id] = true; });
+    data.intellectAnchored = true;
+    saveData();
+  }
+  return ledger.filter(e => e && e.id && !claimed[e.id]);
+}
+function intellectCollectInner(pending, color) {
+  const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const lab = t => `<div style="font-size:9px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:6px">${t}</div>`;
+  if (!pending.length) {
+    return `${lab('Lab ledger')}<div style="font-size:11px;color:var(--text3);line-height:1.4;padding:2px 0">Synced with LOCKED · nothing to collect yet.<br>Do the work — commits, notebook entries and deliverables accrue here on their own.</div>`;
+  }
+  const total = pending.reduce((s, e) => s + (e.xp || 0), 0);
+  const c = { commit: 0, lab: 0, deliverable: 0 };
+  pending.forEach(e => { if (c[e.kind] != null) c[e.kind]++; });
+  const bits = [];
+  if (c.commit) bits.push(c.commit + ' commit' + (c.commit > 1 ? 's' : ''));
+  if (c.lab) bits.push(c.lab + ' entr' + (c.lab > 1 ? 'ies' : 'y'));
+  if (c.deliverable) bits.push(c.deliverable + ' deliverable' + (c.deliverable > 1 ? 's' : ''));
+  const preview = pending.slice(0, 3).map(e =>
+    `<div style="font-size:10px;color:var(--text3);display:flex;gap:8px;padding:1px 0">
+       <span style="color:${color};white-space:nowrap">+${e.xp}</span>
+       <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e.label)}</span></div>`).join('');
+  return `${lab('Lab ledger · uncollected')}
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+      <div style="font-size:26px;font-weight:bold;color:${color};line-height:1">+${total}<span style="font-size:11px;color:var(--text3);font-weight:normal"> XP ready</span></div>
+      <div style="font-size:10px;color:var(--text3);text-align:right">${bits.join(' · ')}</div>
+    </div>
+    <div style="margin:8px 0 10px">${preview}</div>
+    <button class="intellect-collect-btn" style="width:100%;padding:10px;border:1px solid ${color};background:transparent;color:${color};font-size:12px;letter-spacing:2px;text-transform:uppercase;border-radius:4px;cursor:pointer">Collect +${total} XP</button>`;
+}
+function buildIntellectCollect(ledger, color) {
+  color = color || 'var(--hod)';
+  const box = document.createElement('div');
+  box.className = 'domain-widget';
+  box.style.borderColor = color;
+  box.style.marginBottom = '12px';
+  const wire = () => {
+    const btn = box.querySelector('.intellect-collect-btn');
+    if (btn) btn.addEventListener('click', () => collectIntellect(ledger, box, color));
+  };
+  box.innerHTML = intellectCollectInner(intellectPending(ledger), color);
+  wire();
+  box._rewire = wire;
+  return box;
+}
+window.buildIntellectCollect = buildIntellectCollect;
+
+function collectIntellect(ledger, box, color) {
+  const pending = intellectPending(ledger);
+  const total = pending.reduce((s, e) => s + (e.xp || 0), 0);
+  if (!total) return;
+  const claimed = intellectClaimed();
+  pending.forEach(e => { claimed[e.id] = true; });
+  // Real earn: same write shape as a quest log (data saved BEFORE any ceremony).
+  const prevToday = todayXpEarned;
+  todayXpEarned += total;
+  data.xp = (data.xp || 0) + total;
+  saveData();
+  renderHeader();
+  // Payoff — mirror playLogMoment: hold the tally at prev, fly the sum in, roll up.
+  const tallyEl = document.getElementById('todayXp');
+  if (window.juice && tallyEl) {
+    tallyEl.textContent = '+' + prevToday + ' today';
+    const btn = box.querySelector('.intellect-collect-btn');
+    juice.ghost(btn || box, tallyEl, '+' + total + ' XP', () => {
+      juice.rollup(tallyEl, prevToday, todayXpEarned, null, { format: v => '+' + v + ' today' });
+    });
+    if (total >= 80 && juice.rare) juice.rare();
+    else if (juice.chime) juice.chime();
+  } else {
+    notify('Collected +' + total + ' XP from the lab.');
+  }
+  box.innerHTML = intellectCollectInner(intellectPending(ledger), color);
+  if (box._rewire) box._rewire();
+  checkSeals();   // banked XP may break the next domain's seal
+}
+
 // ── SEALED INSTRUMENT ─────────────────────────────────────────────────
 // Honest placeholder for a gated domain. Heavy chain + brass padlock
 // (ported from prototypes/unlock-juice-mockup.html). Static for now;

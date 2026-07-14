@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-03T00:54:40-04:00",
+  "generatedAt": "2026-07-14T09:50:10-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-15",
-    "daysRemaining": 74
+    "daysRemaining": 63
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
@@ -175,8 +175,8 @@
             "text": "Send Paul the CSHL Epigenetics & Chromatin abstract draft (finalize voice; decide recast vs cut the 6 h-release sentence)"
           },
           {
-            "done": false,
-            "text": "Make fresh 500 mL DMEM stock before thawing new cells (cell thaw paused until after the wedding)"
+            "done": true,
+            "text": "Make fresh 500 mL DMEM stock before thawing new cells — done (stock made; cell thaw unblocked)"
           },
           {
             "done": false,
@@ -187,17 +187,109 @@
             "text": "(FYI) Draft-to-committee target moved Aug 28 → Sept 15; intermediary milestones now in SCHEDULE.md"
           }
         ],
-        "done": 0,
+        "done": 1,
         "total": 4,
+        "backlog": false
+      },
+      {
+        "heading": "Added 7/5",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Installed Homebrew + Node 26.4.0 (global) — unblocks npx/node tooling"
+          },
+          {
+            "done": true,
+            "text": "Wired the `impeccable` design skill into LOCKED (symlinked from The System, gitignored)"
+          },
+          {
+            "done": true,
+            "text": "Dashboard delight: gamified lock-in streak + **daily kickoff checklist** (goals before leaving campus → \"go home / write\" banner + auto lock-in). Edited `code/dashboard.template.html`, rebuilt."
+          },
+          {
+            "done": false,
+            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\" on the `file://` path; PROVISO: point at the real file, not the temporary preview server. Fuller PWA (local server) available as a later upgrade."
+          },
+          {
+            "done": false,
+            "text": "(optional) `/impeccable polish` pass; carry over yesterday's unfinished kickoff goals"
+          }
+        ],
+        "done": 3,
+        "total": 5,
+        "backlog": false
+      },
+      {
+        "heading": "Added 7/12",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Installed + authed BaseSpace CLI on HRI (`klschnei/bin/bs`); pulled Run 018 (PG018A–R, 18 libs) → `PAR/raw/run018/`"
+          },
+          {
+            "done": true,
+            "text": "Built ChIP pipeline (`code/chipseq/`): bowtie2 index (job 37487) + `02_align` (job 37488) → **12 filtered BAMs** (PG018A–L)"
+          },
+          {
+            "done": true,
+            "text": "Built ovarian RNA pipeline (`code/rnaseq_ovarian/`): `01_align` (job 37496) → **33 STAR count tables**; strandedness confirmed **reverse = col 4**"
+          },
+          {
+            "done": true,
+            "text": "Fill the Run-019 ChIP fastq path (found: `…/H.sapiens_Tier2ChIPseq_and_ExoRNAseq/260614_VH01016_96_AAHLVV7M5/Analysis/1/Data/fastq`) → aligned PG019A–L (job 37533) → 12 more filtered BAMs"
+          },
+          {
+            "done": false,
+            "text": "ChIP QC: SPP `-out` gives per-IP NSC/RSC; still eyeball bowtie2 align/dup rates + FRiP before finalizing peaks"
+          }
+        ],
+        "done": 4,
+        "total": 5,
+        "backlog": false
+      },
+      {
+        "heading": "Added 7/13",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Pivoted ChIP peak-calling MACS3 → SPP+IDR; built `spp` env; merged pooled Inputs (HEYA8 PG018E+F, SKOV3 PG018K+L); Karl authored `03_spp_peakcalling.sbatch`; SPP test job 37646 running"
+          },
+          {
+            "done": false,
+            "text": "Read SPP test (37646) outputs → grab the real regionPeak name; confirm `ls $BAM/PG019*.final.bam`=12; run full `--array=0-23`"
+          },
+          {
+            "done": false,
+            "text": "Build stage 04 `04_idr.sbatch` (rep1-vs-rep2 per target/line + pseudoreplicates)"
+          },
+          {
+            "done": true,
+            "text": "Pulled 33 ovarian STAR counts local; made `02_deseq2.R` paths absolute"
+          },
+          {
+            "done": false,
+            "text": "Write `02_deseq2.R` Blocks 3–5,7 in RStudio (Karl-led)"
+          },
+          {
+            "done": true,
+            "text": "Resubmitted exoRNA MDA231_rep1 SortMeRNA (job 37647, 8h/16cpu) → closes Stage 1"
+          },
+          {
+            "done": false,
+            "text": "exoRNA Stages 2–3 (tRNA/miRNA refs + explicit gDNA bin for MCF10a) — parked"
+          }
+        ],
+        "done": 3,
+        "total": 7,
         "backlog": false
       }
     ],
-    "focusDone": 5,
-    "focusTotal": 17,
-    "doneTotal": 9,
-    "taskTotal": 33,
+    "focusDone": 16,
+    "focusTotal": 34,
+    "doneTotal": 20,
+    "taskTotal": 50,
     "blockers": [
-      "Make fresh 500 mL DMEM stock before thawing cells — contamination (6/25) was contained (cultures lost but resolved); fresh stock still needed."
+      "None active — fresh 500 mL DMEM stock made; cell thaw unblocked. (6/25 contamination was contained + resolved.)"
     ]
   },
   "projects": [
@@ -223,27 +315,333 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-02",
+    "lastEntryDate": "2026-07-13",
     "daysSinceLastEntry": 1,
     "recentEntries": [
       {
-        "date": "2026-07-02 (Thu)",
+        "date": "2026-07-13 (Mon)",
         "contexts": [
-          "ddPCR run executed (as run) + team bench work"
+          "ChIP peak-calling pivoted to SPP+IDR (test running); ovarian RNA counts local; exoRNA rep1 resubmitted",
+          "Ovarian ChIP peak-calling (Fig 3–4), ovarian RNA DE setup, closing exosome Stage 1. Draft-first workflow — Karl authored the SPP script himself."
         ]
       },
       {
-        "date": "2026-07-01 (Wed)",
+        "date": "2026-07-13 (Mon)",
         "contexts": [
-          "Exploratory DESeq2 confirms gDNA confound; DE not the deliverable"
+          "Exosome Stage-1 (rRNA) results in: MDA231 is rRNA-dominated",
+          "Bianca exosome RNA-seq (Fig 1 composition). Confirming SortMeRNA rRNA pass (job 37297, the MDA231 resubmit)."
         ]
       },
       {
-        "date": "2026-07-01 (Wed)",
+        "date": "2026-07-12 (Sun)",
         "contexts": [
-          "CRISPR ddPCR (drop-off) rare-event run: plate design + prep"
+          "BaseSpace CLI live on HRI; Run 018 pull staged + ChIP pipeline scaffolded",
+          "Ovarian paper in-house analysis — unblocking the Run 018 pull and building the ChIP-seq pipeline (Fig 3–4)."
         ]
       }
     ]
-  }
+  },
+  "ledger": [
+    {
+      "id": "commit:d17577f48a74",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Add positive-framing lint hook for memory writes",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:0a133e89b8fd",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Add memory: check the clock before stating any time of day",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:431b6cb904bf",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Log 2026-07-10 CRISPR HDR transfection (HEPG2 + HT1080)",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:82ea6dafa861",
+      "kind": "commit",
+      "xp": 12,
+      "label": "LOCK/index: wire next-session continuity to the Run 018 pull",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:b81ab8e0ca86",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Decode ovarian sample sheet -> full sample manifest (runs 015-019)",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:b00952b68fad",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Correct data-location plan: ovarian RNA-seq + Tier-2 ChIP already on HRI",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:836a96acd952",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Ovarian paper: take analysis in-house; figure toolchain + validated theme",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "commit:260321fa5113",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Memory: consolidate + reframe rules as positive targets",
+      "date": "2026-07-07"
+    },
+    {
+      "id": "commit:490fb3ee8cd3",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Session: toolchain + gamified dashboard; flush pending docs/memory",
+      "date": "2026-07-06"
+    },
+    {
+      "id": "commit:fc2b38407117",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Move draft deadline Aug 28 -> Sept 15; INTELLECT parser now date-generic",
+      "date": "2026-07-01"
+    },
+    {
+      "id": "commit:bb77e6cff251",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Lab notebook: in-session render + SessionStart reminder hook",
+      "date": "2026-07-01"
+    },
+    {
+      "id": "commit:4ad2e978be3b",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Add markdown-driven LOCKED dashboard + correct stale blockers",
+      "date": "2026-06-30"
+    },
+    {
+      "id": "commit:574dcb27f106",
+      "kind": "commit",
+      "xp": 19,
+      "label": "Document exosome RNA-seq pipeline (code/rnaseq/README.md)",
+      "date": "2026-06-30"
+    },
+    {
+      "id": "commit:ac5f9d143160",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Add exosome RNA-seq STAR pipeline scripts (refs, index, align)",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "commit:79b2df930975",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Consolidate memory into repo, refresh LOCK.md to 6/25, point CLAUDE.md at memory/",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "commit:b1e669450870",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Resume operational repo: backfill notebook 6/22–6/25, commit pending scaffold",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "commit:4fd644b89d09",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Initial commit: migrate LOCKED operational layer from Google Drive",
+      "date": "2026-06-18"
+    },
+    {
+      "id": "lab:8b3330f06521",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Journal club — Lin et al. 2014 (Doudna lab), eLife 04766 — with undergrads",
+      "date": "2026-06-02"
+    },
+    {
+      "id": "lab:2b323ebd8cf8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ddPCR sample organization + storage",
+      "date": "2026-06-01"
+    },
+    {
+      "id": "lab:3de0e1faa4c8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "lab notebook entry",
+      "date": "2026-06-15"
+    },
+    {
+      "id": "lab:da3e97d2d03e",
+      "kind": "lab",
+      "xp": 20,
+      "label": "HRI landing spot created; ovarian RNA-seq data located",
+      "date": "2026-06-17"
+    },
+    {
+      "id": "lab:80d318d8f2f2",
+      "kind": "lab",
+      "xp": 20,
+      "label": "NextSeq run copied to HRI and verified",
+      "date": "2026-06-17"
+    },
+    {
+      "id": "lab:c4ea934b6e51",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Cell culture upkeep, T7 result (HEYA8 gRNA-only), westerns prep",
+      "date": "2026-06-18"
+    },
+    {
+      "id": "lab:1ec7628e032a",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Cell culture upkeep, ddPCR aliquot prep, Friday westerns",
+      "date": "2026-06-22"
+    },
+    {
+      "id": "lab:eb8fed92572d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "HRI RNA-seq env + ExoRNA fastp; TotalStain Q westerns",
+      "date": "2026-06-24"
+    },
+    {
+      "id": "lab:27261330e40c",
+      "kind": "lab",
+      "xp": 20,
+      "label": "HT1080 v4 CRISPR transfection; phospho/total-Rb blots developed",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "lab:08104de447ed",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Operational: notebook system, deadline restructure, INTELLECT fix, CSHL abstract draft",
+      "date": "2026-06-26"
+    },
+    {
+      "id": "lab:f23dc795e388",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ExoRNA STAR index: checked for shared refs, building v46",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "lab:1d576d389028",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ExoRNA STAR index built; alignment queued",
+      "date": "2026-06-30"
+    },
+    {
+      "id": "lab:a8553d81e6ca",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ExoRNA alignment done; gDNA contamination QC finding",
+      "date": "2026-06-30"
+    },
+    {
+      "id": "lab:70138c2d1834",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR ddPCR (drop-off) rare-event run: plate design + prep",
+      "date": "2026-07-01"
+    },
+    {
+      "id": "lab:f1c5ac184a4b",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Exploratory DESeq2 confirms gDNA confound; DE not the deliverable",
+      "date": "2026-07-01"
+    },
+    {
+      "id": "lab:ee71eae836ce",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ddPCR run executed (as run) + team bench work",
+      "date": "2026-07-02"
+    },
+    {
+      "id": "lab:6ccfae900a88",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Tooling: Homebrew/Node, impeccable skill, gamified dashboard",
+      "date": "2026-07-05"
+    },
+    {
+      "id": "lab:4c9231795e2b",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Systematic review: v4 PROSPERO docs (scope expanded to two aims)",
+      "date": "2026-07-07"
+    },
+    {
+      "id": "lab:7aedfce9d5c6",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Memory spring-clean: rules reframed as positive targets",
+      "date": "2026-07-07"
+    },
+    {
+      "id": "lab:66212b4c166d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Exosome SortMeRNA deployment; ovarian RNA-seq mockup figures; PROSPERO sourcing",
+      "date": "2026-07-09"
+    },
+    {
+      "id": "lab:bd737d0c6fca",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Ovarian paper: draft is data-blocked, not writing-blocked → taking the RNA-seq + ChIP-seq analysis in-house",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "lab:05cbb3405814",
+      "kind": "lab",
+      "xp": 20,
+      "label": "HEPG2 + HT1080 CRISPR HDR transfection (v4, short + long arms)",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "lab:2f0d79216541",
+      "kind": "lab",
+      "xp": 20,
+      "label": "BaseSpace CLI live on HRI; Run 018 pull staged + ChIP pipeline scaffolded",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "lab:b6d134ce15b9",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Exosome Stage-1 (rRNA) results in: MDA231 is rRNA-dominated",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "lab:447a6a9c695b",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ChIP peak-calling pivoted to SPP+IDR (test running); ovarian RNA counts local; exoRNA rep1 resubmitted",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "deliverable:9b03b2f5bb2a",
+      "kind": "deliverable",
+      "xp": 60,
+      "label": "Deliverable met · (Jun 15–19) — Week 2 of June",
+      "date": null
+    }
+  ]
 }
