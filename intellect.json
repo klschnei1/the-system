@@ -1,86 +1,74 @@
 {
-  "generatedAt": "2026-07-14T09:50:10-04:00",
+  "generatedAt": "2026-07-16T12:22:38-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-15",
-    "daysRemaining": 63
+    "daysRemaining": 61
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
-    "label": "(Jun 15–19) — Week 2 of June",
-    "deliverable": "Get the NextSeq run safely off the instrument and onto the HRI cluster, ready for analysis — **✓ met June 17** (run copied + verified; original untouched; BaseSpace backup exists). Next focus this week: demultiplex the run, sort samples by project, begin DESeq2.",
+    "label": "(Jul 13–17) — Week 3 of July",
+    "deliverable": "*Not yet set — Karl to fill in.*",
     "groups": [
       {
-        "heading": "Data extraction",
+        "heading": "Ovarian — ChIP",
         "tasks": [
           {
-            "done": true,
-            "text": "Sequencing run completed locally on NextSeq 2000"
+            "done": false,
+            "text": "Read SPP test outputs (job 37646) → grab the real regionPeak filename"
           },
           {
-            "done": true,
-            "text": "rsync workflow practiced, then real extraction run directly"
+            "done": false,
+            "text": "Pre-check `ls $BAM/PG019*.final.bam | wc -l` = 12"
           },
           {
-            "done": true,
-            "text": "Confirmed NextSeq could reach cluster; SSH'd to `seq-login.sabu.mtu.edu`"
+            "done": false,
+            "text": "Run full `03_spp_peakcalling.sbatch --array=0-23` (20 IPs)"
           },
           {
-            "done": true,
-            "text": "Picked HRI storage path (`/mnt/hri/goetsch_lab/Illumina/...`); run ~126 GB"
+            "done": false,
+            "text": "Build stage 04 `04_idr.sbatch` (rep1-vs-rep2 per target/line + pseudoreplicates)"
           },
           {
-            "done": true,
-            "text": "rsync run folder → HRI (inside tmux, dry-run first), verified intact before touching original"
+            "done": false,
+            "text": "ChIP QC: eyeball bowtie2 align/dup rates + FRiP before finalizing peaks (SPP `-out` gives per-IP NSC/RSC)"
           }
         ],
-        "done": 5,
+        "done": 0,
         "total": 5,
         "backlog": false
       },
       {
-        "heading": "Schedule milestones (Week 2 of June) — data now on HRI, these are active",
+        "heading": "Ovarian — RNA",
         "tasks": [
           {
             "done": false,
-            "text": "Demultiplex the new run + sort samples by project"
+            "text": "Write `02_deseq2.R` Block 3 (count load, **column 4** — reverse-stranded) — Karl-led, in RStudio"
           },
           {
             "done": false,
-            "text": "FlowJo — flow analysis workflow set up / flow data worked up"
+            "text": "Write Blocks 4, 5, 7 (colData + reference levels; DESeqDataSet + `~ cell_line + condition` + prefilter; contrasts)"
           },
           {
             "done": false,
-            "text": "RNA-seq DESeq2 run"
-          },
-          {
-            "done": false,
-            "text": "First volcano plot"
-          },
-          {
-            "done": false,
-            "text": "PCA plot"
-          },
-          {
-            "done": false,
-            "text": "MA plot"
+            "text": "Fig 2 from the DE results: PCA / volcano / MA"
           }
         ],
         "done": 0,
-        "total": 6,
+        "total": 3,
         "backlog": false
       },
       {
-        "heading": "Upcoming hard deadlines",
+        "heading": "CRISPR — this week",
         "tasks": [
           {
             "done": false,
-            "text": "Cold Spring Harbor \"Epigenetics & Chromatin\" abstract — submit by Jun 26"
+            "text": "⚠ Export ddPCR results off the droplet-reader laptop — data-loss risk, do it while at the machine"
           },
           {
             "done": false,
-            "text": "Bianca's exosome RNA-seq — basic visualizations to her by Fri Jun 26 (she defends Aug; true deadline ~mid-July)"
+            "text": "7/15 short-HDR ddPCR plate: HEPG2 / HT1080 / MDA, plus 1 HEYA8 rep as a cross-run bridge; reserve freed wells for NTC + WT-unedited negative + HDR-positive control (oligo at 2–6 fM in-reaction)"
           }
         ],
         "done": 0,
@@ -88,63 +76,31 @@
         "backlog": false
       },
       {
-        "heading": "Carried forward from last week",
+        "heading": "exoRNA — close and park",
         "tasks": [
           {
             "done": false,
-            "text": "Western blot — another attempt tomorrow (6/19), this round with total-protein (Q) normalization (Paul requested; Zach learning). ~15 prior attempts failed with varied modes; then FIJI quantification → figure draft."
-          },
-          {
-            "done": true,
-            "text": "Bianca's exosomal RNA isolation — library prep (sequenced in the June run)"
-          },
-          {
-            "done": true,
-            "text": "RNA isolation"
-          },
-          {
-            "done": false,
-            "text": "CRISPR transfection round 2 — confirm pellets frozen"
-          },
-          {
-            "done": true,
-            "text": "ddPCR consumables/plasticware — ample supplies now for the new auto droplet generator"
-          },
-          {
-            "done": false,
-            "text": "PROSPERO — submit portal with updated (v2) scope"
-          },
-          {
-            "done": false,
-            "text": "Dallas — send inclusion/exclusion criteria + Covidence access"
-          },
-          {
-            "done": false,
-            "text": "Methods draft: ovarian paper"
-          },
-          {
-            "done": false,
-            "text": "Ovarian paper rough full draft (last week's deliverable — confirm shipped)"
-          },
-          {
-            "done": true,
-            "text": "Finishing Fellowship — submitted (Karl's materials in; was the Jun 8–12 deliverable). Paul's rec letter is his separate process."
+            "text": "Confirm MDA231_rep1 rRNA fraction (job 37647) → closes Stage 1 → park (Stages 2–3 unbuilt)"
           }
         ],
-        "done": 4,
-        "total": 10,
-        "backlog": true
+        "done": 0,
+        "total": 1,
+        "backlog": false
       },
       {
-        "heading": "CRISPR paper — remaining wet lab",
+        "heading": "Carried forward — CRISPR wet lab",
         "tasks": [
           {
             "done": false,
-            "text": "Long HDR transfections: HT1080 and HEPG2 — harvest 72–96h post-transfection"
+            "text": "HEPG2 long-HDR transfection (still not done)"
           },
           {
             "done": false,
-            "text": "Run remaining ddPCR samples (most still unrun; HEYA8 partially done)"
+            "text": "Full-dose long-arm repeat once fresh mScarlet-PCNA fragment is made — the 7/10 long arm was half-dosed (donor shortage), diagnostic only"
+          },
+          {
+            "done": false,
+            "text": "Run the remaining ddPCR backlog (HEYA8 partially done)"
           },
           {
             "done": false,
@@ -152,15 +108,11 @@
           },
           {
             "done": false,
-            "text": "T7 endonuclease cleavage: gRNA-only controls. HEYA8 done 6/18 (David, IDT kit) — inconclusive: PCR worked, controls cut, but no clear cleavage on TapeStation (likely low DSB rate). Remaining lines pending."
+            "text": "T7 endonuclease: remaining lines (HEYA8 done 6/18 — inconclusive, likely low DSB rate)"
           },
           {
             "done": false,
             "text": "Review MDA FlowJo viability data (anomalous results)"
-          },
-          {
-            "done": false,
-            "text": "Try premixed RNP protocol (Paix 2019) — bump Cas9 to ~12 pmol per 24-well"
           }
         ],
         "done": 0,
@@ -168,128 +120,96 @@
         "backlog": true
       },
       {
-        "heading": "Added 6/26",
+        "heading": "Carried forward — figures and writing",
         "tasks": [
           {
             "done": false,
-            "text": "Send Paul the CSHL Epigenetics & Chromatin abstract draft (finalize voice; decide recast vs cut the 6 h-release sentence)"
-          },
-          {
-            "done": true,
-            "text": "Make fresh 500 mL DMEM stock before thawing new cells — done (stock made; cell thaw unblocked)"
+            "text": "Westerns: FIJI quantification of the 6/25 TotalStain-Q repeat images (Fig 1)"
           },
           {
             "done": false,
-            "text": "Install the lab-notebook launchd job (bootstrap in `code/lab_notebook/README.md`)"
+            "text": "Flow cytometry: most data still unanalyzed (Fig 1 material, incl. reversibility)"
           },
           {
             "done": false,
-            "text": "(FYI) Draft-to-committee target moved Aug 28 → Sept 15; intermediary milestones now in SCHEDULE.md"
+            "text": "Ovarian paper: full chapter draft"
+          },
+          {
+            "done": false,
+            "text": "ASBMB abstract — due **Sept 4** for oral/poster eligibility (repurpose the 6/26 CSHL draft; ≤300 char title, 800–3000 char body)"
           }
         ],
-        "done": 1,
+        "done": 0,
         "total": 4,
-        "backlog": false
+        "backlog": true
       },
       {
-        "heading": "Added 7/5",
+        "heading": "Carried forward — review",
+        "tasks": [
+          {
+            "done": false,
+            "text": "PROSPERO v2 amendment (title, outcomes, drop cytoprotection) — unblocks Dallas"
+          },
+          {
+            "done": false,
+            "text": "Give Dallas the v2 search-strategy docx + Covidence access"
+          },
+          {
+            "done": false,
+            "text": "Decide cytoprotection handling (discussion paragraph vs. sub-search)"
+          },
+          {
+            "done": false,
+            "text": "Archive `Review Resources/`"
+          }
+        ],
+        "done": 0,
+        "total": 4,
+        "backlog": true
+      },
+      {
+        "heading": "Carried forward — system",
         "tasks": [
           {
             "done": true,
-            "text": "Installed Homebrew + Node 26.4.0 (global) — unblocks npx/node tooling"
+            "text": "Lab notebook auto-renders on session end (`render_pending.py` on Stop hook); backfilled 11 entries, notebook current"
           },
           {
             "done": true,
-            "text": "Wired the `impeccable` design skill into LOCKED (symlinked from The System, gitignored)"
-          },
-          {
-            "done": true,
-            "text": "Dashboard delight: gamified lock-in streak + **daily kickoff checklist** (goals before leaving campus → \"go home / write\" banner + auto lock-in). Edited `code/dashboard.template.html`, rebuilt."
+            "text": "Dashboard auto-rebuilds on session end (`build_dashboard.py` on Stop hook)"
           },
           {
             "done": false,
-            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\" on the `file://` path; PROVISO: point at the real file, not the temporary preview server. Fuller PWA (local server) available as a later upgrade."
+            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\"; point at the real `file://` path, not the temporary preview server"
           },
           {
             "done": false,
-            "text": "(optional) `/impeccable polish` pass; carry over yesterday's unfinished kickoff goals"
+            "text": "(optional) Entry-shape lint hook — flag missing required sections + images-mentioned-but-absent"
+          },
+          {
+            "done": false,
+            "text": "(optional) Start `protocols/`; distill `ddPCR drop-off v1` from the 7/1 + 7/2 entries (Karl corrects chemistry)"
+          },
+          {
+            "done": false,
+            "text": "Dissolve `code/dashboard_state.md` — `build_dashboard.py` reads it in two places (`parse_papers`, `parse_hard_deadlines`); papers status/next should derive from LOCK.md + TASKS.md, hard deadlines from SCHEDULE.md"
+          },
+          {
+            "done": false,
+            "text": "LOCK.md `## Projects` statuses are stale and contradict LOCK.md's own Current phase (ovarian bullet still says \"urgent next step: figure drafts\"); the bridge feeds that text to the INTELLECT widget"
           }
         ],
-        "done": 3,
-        "total": 5,
-        "backlog": false
-      },
-      {
-        "heading": "Added 7/12",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Installed + authed BaseSpace CLI on HRI (`klschnei/bin/bs`); pulled Run 018 (PG018A–R, 18 libs) → `PAR/raw/run018/`"
-          },
-          {
-            "done": true,
-            "text": "Built ChIP pipeline (`code/chipseq/`): bowtie2 index (job 37487) + `02_align` (job 37488) → **12 filtered BAMs** (PG018A–L)"
-          },
-          {
-            "done": true,
-            "text": "Built ovarian RNA pipeline (`code/rnaseq_ovarian/`): `01_align` (job 37496) → **33 STAR count tables**; strandedness confirmed **reverse = col 4**"
-          },
-          {
-            "done": true,
-            "text": "Fill the Run-019 ChIP fastq path (found: `…/H.sapiens_Tier2ChIPseq_and_ExoRNAseq/260614_VH01016_96_AAHLVV7M5/Analysis/1/Data/fastq`) → aligned PG019A–L (job 37533) → 12 more filtered BAMs"
-          },
-          {
-            "done": false,
-            "text": "ChIP QC: SPP `-out` gives per-IP NSC/RSC; still eyeball bowtie2 align/dup rates + FRiP before finalizing peaks"
-          }
-        ],
-        "done": 4,
-        "total": 5,
-        "backlog": false
-      },
-      {
-        "heading": "Added 7/13",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Pivoted ChIP peak-calling MACS3 → SPP+IDR; built `spp` env; merged pooled Inputs (HEYA8 PG018E+F, SKOV3 PG018K+L); Karl authored `03_spp_peakcalling.sbatch`; SPP test job 37646 running"
-          },
-          {
-            "done": false,
-            "text": "Read SPP test (37646) outputs → grab the real regionPeak name; confirm `ls $BAM/PG019*.final.bam`=12; run full `--array=0-23`"
-          },
-          {
-            "done": false,
-            "text": "Build stage 04 `04_idr.sbatch` (rep1-vs-rep2 per target/line + pseudoreplicates)"
-          },
-          {
-            "done": true,
-            "text": "Pulled 33 ovarian STAR counts local; made `02_deseq2.R` paths absolute"
-          },
-          {
-            "done": false,
-            "text": "Write `02_deseq2.R` Blocks 3–5,7 in RStudio (Karl-led)"
-          },
-          {
-            "done": true,
-            "text": "Resubmitted exoRNA MDA231_rep1 SortMeRNA (job 37647, 8h/16cpu) → closes Stage 1"
-          },
-          {
-            "done": false,
-            "text": "exoRNA Stages 2–3 (tRNA/miRNA refs + explicit gDNA bin for MCF10a) — parked"
-          }
-        ],
-        "done": 3,
+        "done": 2,
         "total": 7,
-        "backlog": false
+        "backlog": true
       }
     ],
-    "focusDone": 16,
-    "focusTotal": 34,
-    "doneTotal": 20,
-    "taskTotal": 50,
+    "focusDone": 0,
+    "focusTotal": 11,
+    "doneTotal": 2,
+    "taskTotal": 32,
     "blockers": [
-      "None active — fresh 500 mL DMEM stock made; cell thaw unblocked. (6/25 contamination was contained + resolved.)"
+      "None active."
     ]
   },
   "projects": [
@@ -315,33 +235,68 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-13",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-07-16",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-07-13 (Mon)",
+        "date": "2026-07-16 (Thu)",
         "contexts": [
-          "ChIP peak-calling pivoted to SPP+IDR (test running); ovarian RNA counts local; exoRNA rep1 resubmitted",
-          "Ovarian ChIP peak-calling (Fig 3–4), ovarian RNA DE setup, closing exosome Stage 1. Draft-first workflow — Karl authored the SPP script himself."
+          "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
+          "LOCKED system — making the Goetsch Lab .docx notebook actually stay current."
         ]
       },
       {
-        "date": "2026-07-13 (Mon)",
+        "date": "2026-07-15 (Wed)",
         "contexts": [
-          "Exosome Stage-1 (rRNA) results in: MDA231 is rRNA-dominated",
-          "Bianca exosome RNA-seq (Fig 1 composition). Confirming SortMeRNA rRNA pass (job 37297, the MDA231 resubmit)."
+          "Short-HDR ddPCR: plate design + master mix (setup of record)",
+          "Short-HDR arm of the CRISPR paper. Rare-event detection assay (not drop-off). Master mix made and loaded; run in progress at time of writing. Long-HDR arm not included — sHDR only."
         ]
       },
       {
-        "date": "2026-07-12 (Sun)",
+        "date": "2026-07-15 (Wed)",
         "contexts": [
-          "BaseSpace CLI live on HRI; Run 018 pull staged + ChIP pipeline scaffolded",
-          "Ovarian paper in-house analysis — unblocking the Run 018 pull and building the ChIP-seq pipeline (Fig 3–4)."
+          "Restructured the three live files; fixed a silently-broken INTELLECT feed",
+          "LOCKED system work — executing the `next-session-fix-three-files` memory. No wet/dry lab runs."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:760f1b14b9c8",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Add memory: code folder architecture (name by project, nest by assay)",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "commit:fcac6253d745",
+      "kind": "commit",
+      "xp": 30,
+      "label": "LOCKED upkeep: restructure the three files + make maintenance event-driven",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "commit:fb87ab4fd320",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Add ovarian ChIP + RNA pipelines, BaseSpace pull script, HRI cheatsheet",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "commit:b65700dfc0e1",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Karl's manual pass over the markdown: fix cadence rules, prune confabulations",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "commit:95b2d1af2942",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Dashboard: stop reporting stale state as truth; add blocker primitive",
+      "date": "2026-07-14"
+    },
     {
       "id": "commit:d17577f48a74",
       "kind": "commit",
@@ -460,34 +415,6 @@
       "xp": 30,
       "label": "Initial commit: migrate LOCKED operational layer from Google Drive",
       "date": "2026-06-18"
-    },
-    {
-      "id": "lab:8b3330f06521",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Journal club — Lin et al. 2014 (Doudna lab), eLife 04766 — with undergrads",
-      "date": "2026-06-02"
-    },
-    {
-      "id": "lab:2b323ebd8cf8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ddPCR sample organization + storage",
-      "date": "2026-06-01"
-    },
-    {
-      "id": "lab:3de0e1faa4c8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "lab notebook entry",
-      "date": "2026-06-15"
-    },
-    {
-      "id": "lab:da3e97d2d03e",
-      "kind": "lab",
-      "xp": 20,
-      "label": "HRI landing spot created; ovarian RNA-seq data located",
-      "date": "2026-06-17"
     },
     {
       "id": "lab:80d318d8f2f2",
@@ -637,11 +564,32 @@
       "date": "2026-07-13"
     },
     {
-      "id": "deliverable:9b03b2f5bb2a",
-      "kind": "deliverable",
-      "xp": 60,
-      "label": "Deliverable met · (Jun 15–19) — Week 2 of June",
-      "date": null
+      "id": "lab:04a8cc8f4e7c",
+      "kind": "lab",
+      "xp": 20,
+      "label": "State-of-play inventory + tomorrow's short-HDR ddPCR plan",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "lab:3e95e38ee383",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Restructured the three live files; fixed a silently-broken INTELLECT feed",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "lab:831f373e38fb",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Short-HDR ddPCR: plate design + master mix (setup of record)",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "lab:d86591be2c36",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
+      "date": "2026-07-16"
     }
   ]
 }
