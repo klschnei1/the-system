@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T16:38:18-04:00",
+  "generatedAt": "2026-07-16T16:38:20-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -266,6 +266,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:754f1e6f4a73",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Docs: refresh LOCK/TASKS + quiescence-rnaseq memory; add post-commit hook",
+      "date": "2026-07-16"
+    },
     {
       "id": "commit:666ea5f062c7",
       "kind": "commit",
