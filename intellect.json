@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T16:38:13-04:00",
+  "generatedAt": "2026-07-16T16:38:16-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -266,6 +266,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:2c344fc3d101",
+      "kind": "commit",
+      "xp": 26,
+      "label": "ChIP stage-04: add true-rep + self-pseudorep IDR sbatch scripts",
+      "date": "2026-07-16"
+    },
     {
       "id": "commit:29bb887e4b6f",
       "kind": "commit",
