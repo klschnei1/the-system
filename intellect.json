@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T12:33:33-04:00",
+  "generatedAt": "2026-07-16T16:38:13-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -15,28 +15,32 @@
         "heading": "Ovarian — ChIP",
         "tasks": [
           {
-            "done": false,
-            "text": "Read SPP test outputs (job 37646) → grab the real regionPeak filename"
+            "done": true,
+            "text": "Run full `03_spp_peakcalling.sbatch` (job 38394) → 20 IP peak sets; QC (NSC/RSC + counts) pulled"
+          },
+          {
+            "done": true,
+            "text": "Diagnose results: 2 failure modes (shallow SKOV3 Tier-2 reps; dead HEYA8 Rb/p130 IPs); usable = SKOV3 Rb/p130 + HEYA8 E2F1/E2F4/LIN54"
+          },
+          {
+            "done": true,
+            "text": "`04b_idr_pseudorep.sbatch` built (self-pseudorep rescue: SKOV3 E2F1 + LIN54; SPP caller, PE-aware split)"
           },
           {
             "done": false,
-            "text": "Pre-check `ls $BAM/PG019*.final.bam | wc -l` = 12"
+            "text": "Finish `04a_truerepidr.sbatch` (Karl — option B: derive pairs from `samples.tsv` + non-empty guard)"
           },
           {
             "done": false,
-            "text": "Run full `03_spp_peakcalling.sbatch --array=0-23` (20 IPs)"
+            "text": "Sync 04a + 04b to HRI → run both"
           },
           {
             "done": false,
-            "text": "Build stage 04 `04_idr.sbatch` (rep1-vs-rep2 per target/line + pseudoreplicates)"
-          },
-          {
-            "done": false,
-            "text": "ChIP QC: eyeball bowtie2 align/dup rates + FRiP before finalizing peaks (SPP `-out` gives per-IP NSC/RSC)"
+            "text": "Stage 05: deepTools supervised signal at reference regions (salvage HEYA8 Rb/p130) + annotate reproducible peaks → intersect RNA-seq DE genes"
           }
         ],
-        "done": 0,
-        "total": 5,
+        "done": 3,
+        "total": 6,
         "backlog": false
       },
       {
@@ -204,10 +208,10 @@
         "backlog": true
       }
     ],
-    "focusDone": 0,
-    "focusTotal": 11,
-    "doneTotal": 2,
-    "taskTotal": 32,
+    "focusDone": 3,
+    "focusTotal": 12,
+    "doneTotal": 5,
+    "taskTotal": 33,
     "blockers": [
       "None active."
     ]
@@ -241,6 +245,13 @@
       {
         "date": "2026-07-16 (Thu)",
         "contexts": [
+          "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
+          "Stage-03 SPP peak-calling (job 38394, `--array=0-23%6`, `-npeak=300000`, each IP vs pooled same-line input) ran overnight. This session = read the results, diagnose the failures, and design stage 04 (IDR)."
+        ]
+      },
+      {
+        "date": "2026-07-16 (Thu)",
+        "contexts": [
           "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
           "LOCKED system — making the Goetsch Lab .docx notebook actually stay current."
         ]
@@ -251,17 +262,17 @@
           "Short-HDR ddPCR: plate design + master mix (setup of record)",
           "Short-HDR arm of the CRISPR paper. Rare-event detection assay (not drop-off). Master mix made and loaded; run in progress at time of writing. Long-HDR arm not included — sHDR only."
         ]
-      },
-      {
-        "date": "2026-07-15 (Wed)",
-        "contexts": [
-          "Restructured the three live files; fixed a silently-broken INTELLECT feed",
-          "LOCKED system work — executing the `next-session-fix-three-files` memory. No wet/dry lab runs."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:29bb887e4b6f",
+      "kind": "commit",
+      "xp": 21,
+      "label": "Log 7/15 short-HDR ddPCR run: design → failed-run analysis + condition plate map",
+      "date": "2026-07-16"
+    },
     {
       "id": "commit:760f1b14b9c8",
       "kind": "commit",
@@ -415,13 +426,6 @@
       "xp": 30,
       "label": "Initial commit: migrate LOCKED operational layer from Google Drive",
       "date": "2026-06-18"
-    },
-    {
-      "id": "lab:80d318d8f2f2",
-      "kind": "lab",
-      "xp": 20,
-      "label": "NextSeq run copied to HRI and verified",
-      "date": "2026-06-17"
     },
     {
       "id": "lab:c4ea934b6e51",
@@ -589,6 +593,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "lab:d8d9c8f1b340",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
       "date": "2026-07-16"
     }
   ]
