@@ -339,7 +339,10 @@
     --gold: #7d621c; --green: #3d6b34; --red: #a63030; --geburah: #a63030;
   }
 
-  .art-window { height: 30vh; min-height: 200px; }
+  /* Sized so the opening viewport holds the drawing + the volume widget with
+     the identity panel just cresting the fold — the rest scrolls up over the
+     fixed ground. 410px ≈ chrome + back + widget + a panel-lip of peek. */
+  .art-window { height: calc(100svh - 410px); min-height: 240px; }
 
   body[data-art-domain="geburah"] #domainPage .domain-page-identity,
   body[data-art-domain="geburah"] #domainPage .domain-widget,
@@ -2130,9 +2133,8 @@ function renderDomainPage(domainKey) {
   const hasArt = domainKey === 'geburah';
   const artTreatment = document.body.dataset.artTreatment || 'night';
 
-  page.innerHTML = `
-    <div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>
-    ${hasArt ? '<div class="art-window"></div>' : ''}
+  const backHtml = `<div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>`;
+  const identityHtml = `
     <div class="domain-page-identity">
       <div class="domain-page-sigil">${sigilSvg}</div>
       <div>
@@ -2140,14 +2142,26 @@ function renderDomainPage(domainKey) {
         <div class="domain-page-anchor">${domain.anchor}</div>
         <div class="domain-page-score">${score.daysActive}/7 days active · ${completedCount}/${questIds.length} today</div>
       </div>
-    </div>
-    <div class="domain-page-quests" id="domainQuestCards"></div>
+    </div>`;
+
+  // Art pages open on the drawing + the volume widget alone; identity, quests
+  // and the treatment toggle wait below the fold, peeking, and scroll up over
+  // the fixed ground (Karl, July 16 — "from behind the cliff edge").
+  page.innerHTML = hasArt ? `
+    ${backHtml}
+    <div class="art-window"></div>
     <div id="domainWidget"></div>
-    ${hasArt ? `
+    ${identityHtml}
+    <div class="domain-page-quests" id="domainQuestCards"></div>
     <div class="art-treatments">
       <button id="artBtnNight" class="${artTreatment === 'night' ? 'on' : ''}" onclick="setArtTreatment('night')">Night</button>
       <button id="artBtnPaper" class="${artTreatment === 'paper' ? 'on' : ''}" onclick="setArtTreatment('paper')">Paper</button>
-    </div>` : ''}
+    </div>
+  ` : `
+    ${backHtml}
+    ${identityHtml}
+    <div class="domain-page-quests" id="domainQuestCards"></div>
+    <div id="domainWidget"></div>
   `;
 
   if (fromArcade) page.classList.add('arcade-mode');
@@ -3364,6 +3378,7 @@ function switchTab(id) {
 function openDomainPage(domainKey, source) {
   currentDomain = domainKey;
   domainPageSource = source || 'quests';
+  window.scrollTo(0, 0);   // art pages stage their opening view from the top
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-domain').classList.add('active');
   // Keep source tab visually active
