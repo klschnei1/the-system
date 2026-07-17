@@ -388,10 +388,31 @@
     color: var(--text);
   }
 
-  /* Sized so the opening viewport holds the drawing + the volume widget with
-     the identity panel just cresting the fold — the rest scrolls up over the
-     fixed ground. 410px ≈ chrome + back + widget + a panel-lip of peek. */
-  .art-window { height: calc(100svh - 410px); min-height: 240px; }
+  /* The resting band: drawing + volume widget + toggle fill the viewport
+     (360px ≈ header + widget + toggle + margins). Quest inputs sit ABOVE
+     this band in page flow, tucked behind the rock — they pull down from
+     behind the cliff edge when you scroll up. */
+  .art-window { height: calc(100svh - 360px); min-height: 240px; }
+
+  /* Reveal staging: the gap drops the cards low enough to land in the
+     valley (the clear lower-right of the cliff diagonal) at full reveal,
+     and the right shift rides them along the rock edge. */
+  .art-reveal-gap { height: 34svh; }
+  body[data-art-domain="geburah"] #domainPage .domain-page-quests {
+    margin-left: 15%;
+  }
+
+  /* Back stays reachable at every scroll depth: pinned under the header,
+     above the rock slice (z 7 > fg 5/6, < header 100). */
+  body[data-art-domain="geburah"] #domainPage .domain-page-back {
+    position: sticky; top: 96px; z-index: 7;
+    background: rgba(13,13,26,0.72);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    padding: 4px 10px; border-radius: 3px; color: var(--text);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .domain-page-back {
+    background: rgba(250,247,240,0.72);
+  }
 
   body[data-art-domain="geburah"] #domainPage .domain-page-identity,
   body[data-art-domain="geburah"] #domainPage .domain-widget,
@@ -2195,15 +2216,17 @@ function renderDomainPage(domainKey) {
       </div>
     </div>`;
 
-  // Art pages open on the drawing + the volume widget alone; identity, quests
-  // and the treatment toggle wait below the fold, peeking, and scroll up over
-  // the fixed ground (Karl, July 16 — "from behind the cliff edge").
+  // Art pages REST on the data view: the drawing + volume widget fill the
+  // viewport, while identity + quest inputs sit above it, tucked behind the
+  // rock — scroll up and they pull DOWN from behind the cliff edge (Karl,
+  // July 16). openDomainPage stages the scroll to the art window.
   page.innerHTML = hasArt ? `
     ${backHtml}
+    <div class="art-reveal-gap"></div>
+    <div class="domain-page-quests" id="domainQuestCards"></div>
     <div class="art-window"></div>
     <div id="domainWidget"></div>
     ${identityHtml}
-    <div class="domain-page-quests" id="domainQuestCards"></div>
     <div class="art-treatments">
       <button id="artBtnNight" class="${artTreatment === 'night' ? 'on' : ''}" onclick="setArtTreatment('night')">Night</button>
       <button id="artBtnPaper" class="${artTreatment === 'paper' ? 'on' : ''}" onclick="setArtTreatment('paper')">Paper</button>
@@ -2228,6 +2251,9 @@ function renderDomainPage(domainKey) {
   if (hour < 10) {
     questEntries.sort((a, b) => (b[1].retrospective ? 1 : 0) - (a[1].retrospective ? 1 : 0));
   }
+  // Art pages: cards reveal downward from behind the rock, so the last card
+  // sits lowest = clearest of the cliff diagonal. Put the primary input there.
+  if (hasArt) questEntries.reverse();
   questEntries.forEach(([qid, quest]) => {
     const card = buildQuestCard(qid, quest, domain);
     cardsEl.appendChild(card);
@@ -3429,7 +3455,7 @@ function switchTab(id) {
 function openDomainPage(domainKey, source) {
   currentDomain = domainKey;
   domainPageSource = source || 'quests';
-  window.scrollTo(0, 0);   // art pages stage their opening view from the top
+  window.scrollTo(0, 0);
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-domain').classList.add('active');
   // Keep source tab visually active
@@ -3438,6 +3464,13 @@ function openDomainPage(domainKey, source) {
     t.classList.toggle('active', !!(match && match[1] === domainPageSource));
   });
   renderDomainPage(domainKey);
+  // Art pages rest with inputs tucked behind the drawing: stage the scroll so
+  // the art window tops the view and the quests wait above, behind the rock.
+  const artWin = document.querySelector('#domainPage .art-window');
+  if (artWin) {
+    const headerH = document.querySelector('.header')?.offsetHeight || 0;
+    window.scrollTo(0, Math.max(0, artWin.getBoundingClientRect().top + window.scrollY - headerH - 8));
+  }
   history.pushState({ domain: domainKey, source: domainPageSource }, '', '#' + domainKey);
 }
 
