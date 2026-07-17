@@ -331,12 +331,61 @@
       rgba(246,242,234,0.30) 82%, rgba(246,242,234,0.48) 100%);
   }
 
+  /* Occlusion layer (Karl's red-line trace, July 16): the cliff-foreground
+     slice of the drawing sits ABOVE the panels, so scrolling content tucks
+     behind the rock. Same cover geometry as .art-ground → pixel-aligned.
+     Taps pass through (pointer-events: none). z 5-6: over panels, under
+     sticky header (100) and FAB (150). */
+  .art-fg {
+    position: fixed; inset: 0; z-index: 5;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 6%;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.45s ease, filter 0.45s ease;
+  }
+  /* The scrim veil re-applied on the slice (the base scrim is behind the
+     panels), masked to the slice's own alpha so it lands only on the rock. */
+  .art-fg-scrim {
+    position: fixed; inset: 0; z-index: 6;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.45s ease;
+    -webkit-mask-image: url('art/climber_fg.webp'); mask-image: url('art/climber_fg.webp');
+    -webkit-mask-size: cover; mask-size: cover;
+    -webkit-mask-position: 50% 6%; mask-position: 50% 6%;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  body[data-art-domain="geburah"] .art-fg,
+  body[data-art-domain="geburah"] .art-fg-scrim { opacity: 1; }
+
+  body[data-art-domain="geburah"][data-art-treatment="night"] .art-fg {
+    filter: invert(0.93) hue-rotate(180deg) contrast(1.07) saturate(1.55) brightness(0.96);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="night"] .art-fg-scrim {
+    background: linear-gradient(180deg,
+      rgba(7,7,15,0.72) 0%, rgba(7,7,15,0.28) 16%,
+      rgba(7,7,15,0.06) 34%, rgba(7,7,15,0.10) 55%,
+      rgba(7,7,15,0.42) 82%, rgba(7,7,15,0.62) 100%);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] .art-fg {
+    filter: brightness(1.04) contrast(1.02) saturate(1.05);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] .art-fg-scrim {
+    background: linear-gradient(180deg,
+      rgba(246,242,234,0.62) 0%, rgba(246,242,234,0.18) 16%,
+      rgba(246,242,234,0.02) 34%, rgba(246,242,234,0.06) 55%,
+      rgba(246,242,234,0.30) 82%, rgba(246,242,234,0.48) 100%);
+  }
+
   /* Paper re-inks the Strength page's own chrome (text/accents/borders) —
      header and tabs are left alone; they're shared across every tab. */
   body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage {
     --text: #211b12; --text2: #5a5142; --text3: #7d621c;
     --border: rgba(33,27,18,0.26); --accent: #a63030; --accent2: #c25454;
     --gold: #7d621c; --green: #3d6b34; --red: #a63030; --geburah: #a63030;
+    /* color inherits from body as a RESOLVED value, so descendants without
+       their own color rule would keep the dark theme's pale text — re-resolve
+       the ink var at page scope. */
+    color: var(--text);
   }
 
   /* Sized so the opening viewport holds the drawing + the volume widget with
@@ -1014,6 +1063,8 @@
      matches a domain with shipped art (currently geburah only). -->
 <img class="art-ground" id="artGround" src="art/climber.jpg" alt="">
 <div class="art-scrim" id="artScrim"></div>
+<img class="art-fg" id="artGroundFg" src="art/climber_fg.webp" alt="" aria-hidden="true">
+<div class="art-fg-scrim" id="artFgScrim"></div>
 
 <!-- HEADER -->
 <div class="header">
