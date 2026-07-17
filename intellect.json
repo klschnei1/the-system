@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T20:01:22-04:00",
+  "generatedAt": "2026-07-16T21:51:40-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,15 +80,19 @@
         "backlog": false
       },
       {
-        "heading": "exoRNA — close and park",
+        "heading": "exoRNA — Stage 2 refs + park",
         "tasks": [
           {
             "done": false,
             "text": "Confirm MDA231_rep1 rRNA fraction (job 37647) → closes Stage 1 → park (Stages 2–3 unbuilt)"
+          },
+          {
+            "done": false,
+            "text": "Fix stale download URLs in `code/exorna/02_build_smallrna_indices.sbatch` — index job submitted 7/16, **failed instantly** on bad GtRNAdb + miRBase URLs; re-confirm current GtRNAdb hg38-mature-tRNAs + miRBase hsa hairpin paths, then re-submit (genome index already exists, reused)"
           }
         ],
         "done": 0,
-        "total": 1,
+        "total": 2,
         "backlog": false
       },
       {
@@ -209,9 +213,9 @@
       }
     ],
     "focusDone": 3,
-    "focusTotal": 12,
+    "focusTotal": 13,
     "doneTotal": 5,
-    "taskTotal": 33,
+    "taskTotal": 34,
     "blockers": [
       "None active."
     ]
@@ -245,6 +249,13 @@
       {
         "date": "2026-07-16 (Thu)",
         "contexts": [
+          "RNA-seq dose-response (PAR 1x vs 5x): DREAM/E2F program, senescence + degradation ruled out",
+          "Ovarian paper (quiescence/EOC), RNA-seq Fig 2. Exploring the DESeq2 contrasts (PAR1x_P0 and PAR5x, each vs Untreated; design `~ cell_line + condition`, reverse-stranded col 4; lfcShrink apeglm). PAR = 24 h abema/palbo/ribo cocktail, 1× (330/330/667 nM) vs 5×."
+        ]
+      },
+      {
+        "date": "2026-07-16 (Thu)",
+        "contexts": [
           "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
           "Ovarian paper (quiescence/EOC), ChIP-seq. Stage-04 IDR follow-up to the 7/16 SPP peak-calling run (job 38394)."
         ]
@@ -255,17 +266,17 @@
           "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
           "Stage-03 SPP peak-calling (job 38394, `--array=0-23%6`, `-npeak=300000`, each IP vs pooled same-line input) ran overnight. This session = read the results, diagnose the failures, and design stage 04 (IDR)."
         ]
-      },
-      {
-        "date": "2026-07-16 (Thu)",
-        "contexts": [
-          "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
-          "LOCKED system — making the Goetsch Lab .docx notebook actually stay current."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4f270bf94c3f",
+      "kind": "commit",
+      "xp": 21,
+      "label": "RNA-seq 1x-vs-5x dose-response finding + exoRNA index scaffold + RNA reorg",
+      "date": "2026-07-16"
+    },
     {
       "id": "commit:453c30cf4a66",
       "kind": "commit",
@@ -456,13 +467,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:1ec7628e032a",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Cell culture upkeep, ddPCR aliquot prep, Friday westerns",
-      "date": "2026-06-22"
-    },
-    {
       "id": "lab:eb8fed92572d",
       "kind": "lab",
       "xp": 20,
@@ -628,6 +632,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "lab:d7b82aef09ef",
+      "kind": "lab",
+      "xp": 20,
+      "label": "RNA-seq dose-response (PAR 1x vs 5x): DREAM/E2F program, senescence + degradation ruled out",
       "date": "2026-07-16"
     }
   ]
