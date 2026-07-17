@@ -3635,6 +3635,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await loadSigilManifest();
   applyDailyTheme();
+  applyAppearance((data.settings && data.settings.appearance) || 'night');
 
   // ── ARCADE MODE: inject pixel stylesheet + font ───────────────────────
   if (fromArcade) {
