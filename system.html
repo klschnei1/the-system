@@ -2219,7 +2219,8 @@ function renderDomainPage(domainKey) {
   // Art ground (cold_harbor/art.md): only geburah has shipped art so far.
   // Setting this unconditionally is harmless — CSS only reacts to "geburah".
   document.body.dataset.artDomain = domainKey;
-  document.body.dataset.artTreatment = (data.settings && data.settings.artTreatment) || 'night';
+  // Art ground follows the GLOBAL night/paper switch (no separate toggle).
+  document.body.dataset.artTreatment = document.body.dataset.appearance || 'night';
 
   // Locked/unbuilt domains are DEAD everywhere — no quests, no widget, no score.
   const gate = domainGate(domainKey);
