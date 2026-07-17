@@ -2241,7 +2241,6 @@ function renderDomainPage(domainKey) {
   const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
 
   const hasArt = domainKey === 'geburah';
-  const artTreatment = document.body.dataset.artTreatment || 'night';
 
   const backHtml = `<div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>`;
   const identityHtml = `
