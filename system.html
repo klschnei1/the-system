@@ -45,6 +45,34 @@
     --border-width: 1px;
     --border-radius: 4px;
   }
+  /* ── GLOBAL LIGHT MODE (Paper) — a base-palette swap that sits UNDER the
+     [data-theme] mood states (surveillance/laboratory/…). Set on
+     <body data-appearance="paper">; re-inks the whole shell incl. header +
+     tabs via the same vars. Domain accent hues (--hod etc.) are left alone
+     — they're identity colors; tune per-domain later if any read poorly on
+     cream. Warm cream keeps the "paper" feel; accent stays in the system's
+     indigo family (darkened for contrast), not the sketchbook orange. ── */
+  body[data-appearance="paper"] {
+    --bg: #f4efe4;
+    --bg2: #ede6d7;
+    --bg3: #e6ddcc;
+    --header-top: #e8decb;
+    --border: rgba(40,28,16,0.24);
+    --streak-border: rgba(125,98,28,0.38);
+    --accent: #4b40c4;
+    --accent2: #7a4fc0;
+    --gold: #8a6a12;
+    --teal: #178073;
+    --red: #b23b3b;
+    --green: #3d6b34;
+    --text: #241a10;
+    --text2: #5e5140;
+    --text3: #8a7358;
+    --glow: 0 1px 10px rgba(70,42,16,0.12);
+    --glow-accent: 0 2px 14px rgba(75,64,196,0.20);
+    background: var(--bg);
+    color: var(--text);
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: var(--font-family);
