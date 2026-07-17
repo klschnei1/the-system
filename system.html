@@ -3808,7 +3808,7 @@ async function completeSetup() {
   localStorage.setItem('css_anthropic_key', akey);
   document.getElementById('setupModal').style.display = 'none';
   const ready = await initDataStore();
-  if (ready) { await loadSigilManifest(); applyDailyTheme(); applyAppearance((data.settings && data.settings.appearance) || 'night'); renderHeader(); renderQuests(); }
+  if (ready) { await loadSigilManifest(); applyAppearance((data.settings && data.settings.appearance) || 'night'); applyDailyTheme(); renderHeader(); renderQuests(); }
 }
 </script>
 
