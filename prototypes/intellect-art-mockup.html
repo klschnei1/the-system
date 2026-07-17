@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!-- Art-as-UI-material calibration mockup — INTELLECT (hod).
+     The domain's GROUND is a real EVOS FL auto-scope capture: an R/G/B
+     fluorescence overlay of a viability assay at 80x (Karl's own lab data,
+     last semester). Not a drawing — the actual output of the work Intellect
+     measures. Static visual: stubbed data, no DataStore.
+
+     THE TREATMENTS INVERT OPPOSITELY vs the climber. The climber is
+     graphite-on-paper (light ground), so Night inverts it. This image is
+     glow-on-black (already "night"), so:
+       NIGHT — the LIVE MICROSCOPE: the capture as-is, glowing cells on
+               slate, panels smoked glass. Protocol-native.
+       PAPER — the PUBLISHED FIGURE: inverted to ink-on-cream, the way the
+               assay looks printed in a manuscript. The domain becomes the
+               thesis it's feeding.
+     Intellect has no manual quests — its face is the autopull COLLECT-XP
+     ledger (commits / notebook / deliverables, read-only mirror).
+
+     Open in Safari on the phone. Judge on device. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>INTELLECT // ART GROUND — mockup</title>
+<style>
+  :root {
+    --bg: #07070f;
+    --bg2: #0d0d1a;
+    --bg3: #111128;
+    --border: #1e1e3a;
+    --accent: #5b6fff;
+    --accent2: #9b5de5;
+    --gold: #c9a84c;
+    --green: #4ade80;
+    --text: #d8d8f0;
+    --text2: #8a8ac0;
+    --domain: #d85a30;         /* hod / Intellect accent */
+    --glow: 0 0 20px rgba(216,90,48,0.16);
+    --glow-accent: 0 0 30px rgba(216,90,48,0.32);
+    --panel: rgba(13,13,26,0.84);
+    --panel-input: rgba(17,17,40,0.85);
+    --header-bg: rgba(9,9,25,0.72);
+    --panel-shadow: 0 4px 24px rgba(0,0,0,0.45);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── THE GROUND — the capture is the page ── */
+  .ground {
+    position: fixed; inset: 0; z-index: -2;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 42%;
+    image-orientation: from-image;
+    transition: filter 0.45s ease, opacity 0.45s ease;
+  }
+  /* NIGHT: the live scope. Already dark-ground, so DON'T invert — just
+     lift the glow off the slate a touch. */
+  body.night .ground {
+    filter: contrast(1.10) saturate(1.18) brightness(1.03);
+  }
+  /* PAPER: the published figure. Invert glow-on-black → ink-on-cream, warm
+     it toward paper. Cells become dark stipple on a manuscript field. */
+  body.paper .ground {
+    filter: invert(0.92) hue-rotate(180deg) sepia(0.32) saturate(1.15) contrast(1.06) brightness(1.02);
+  }
+  .ground-scrim {
+    position: fixed; inset: 0; z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+  body.night .ground-scrim {
+    background: linear-gradient(180deg,
+      rgba(7,7,15,0.74) 0%, rgba(7,7,15,0.30) 16%,
+      rgba(7,7,15,0.06) 34%, rgba(7,7,15,0.12) 55%,
+      rgba(7,7,15,0.44) 82%, rgba(7,7,15,0.64) 100%);
+  }
+  body.paper .ground-scrim {
+    background: linear-gradient(180deg,
+      rgba(246,242,234,0.64) 0%, rgba(246,242,234,0.20) 16%,
+      rgba(246,242,234,0.02) 34%, rgba(246,242,234,0.06) 55%,
+      rgba(246,242,234,0.32) 82%, rgba(246,242,234,0.50) 100%);
+  }
+
+  /* ── PAPER re-inks the whole chrome ── */
+  body.paper {
+    --bg: #f4efe4;
+    --bg2: #ede6d7;
+    --bg3: #e6ddcc;
+    --border: rgba(40,28,16,0.26);
+    --accent: #9a4a1e;
+    --accent2: #c06a2c;
+    --gold: #7d621c;
+    --green: #3d6b34;
+    --text: #241a10;
+    --text2: #5e5140;
+    --domain: #9a4a1e;
+    --glow: 0 1px 10px rgba(70,42,16,0.14);
+    --glow-accent: 0 2px 14px rgba(154,74,30,0.25);
+    --panel: rgba(250,246,238,0.80);
+    --panel-input: rgba(255,252,246,0.75);
+    --header-bg: rgba(246,241,232,0.74);
+    --panel-shadow: 0 2px 16px rgba(70,42,16,0.14);
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* ── HEADER (faithful) ── */
+  .header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 12px;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.45s ease;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: center; }
+  .system-title { font-size: 11px; letter-spacing: 4px; color: var(--text2); text-transform: uppercase; }
+  .hunter-badge { display: flex; align-items: center; gap: 8px; }
+  .rank-badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; font-size: 13px; font-weight: bold;
+    padding: 3px 10px; border-radius: 2px; letter-spacing: 2px;
+    box-shadow: var(--glow-accent);
+  }
+  .xp-display { font-size: 12px; color: var(--gold); }
+  .xp-bar-wrap { margin-top: 8px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .xp-bar { height: 100%; width: 61%; background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 8px var(--accent); }
+  .header-status { display: flex; gap: 16px; margin-top: 10px; align-items: center; }
+  .streak-pill { font-size: 11px; color: var(--gold); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; }
+  .sync-glyph { font-size: 12px; color: var(--text2); margin-left: auto; }
+
+  /* ── TABS (faithful) ── */
+  .tabs {
+    display: flex; background: transparent;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 73px; z-index: 99;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: var(--header-bg);
+    transition: background 0.45s ease;
+  }
+  .tab {
+    flex: 1; min-width: 70px; padding: 12px 8px;
+    text-align: center; font-size: 10px; letter-spacing: 2px;
+    color: var(--text2); text-transform: uppercase; white-space: nowrap;
+    border-bottom: 2px solid transparent; opacity: 0.65;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); opacity: 1; }
+
+  /* ── VIEW ── */
+  .view { padding: 16px; max-width: 600px; margin: 0 auto; }
+
+  .domain-page-back {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text); display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 4px;
+    padding: 4px 8px; border-radius: 3px;
+    background: var(--panel);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* The window: the capture owns this band. Nothing sits on it. The
+     microscope is the domain's face — the page yields to it. */
+  .art-window { height: 34vh; min-height: 220px; }
+
+  .domain-page-identity {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px;
+    background: var(--panel);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: 4px;
+    box-shadow: var(--panel-shadow);
+    margin-bottom: 12px;
+    transition: background 0.45s ease;
+  }
+  .domain-page-sigil { width: 48px; height: 48px; opacity: 0.9; flex-shrink: 0; }
+  .domain-page-sigil svg { width: 100%; height: 100%; }
+  .domain-page-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--domain); }
+  .domain-page-anchor { font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .domain-page-score { font-size: 10px; color: var(--text2); margin-top: 4px; letter-spacing: 1px; opacity: 0.8; }
+
+  /* ── COLLECT-XP LEDGER (Intellect's face — read-only autopull mirror) ── */
+  .domain-widget {
+    background: var(--panel);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--domain);
+    border-radius: 4px; padding: 14px; margin-bottom: 12px;
+    box-shadow: var(--panel-shadow);
+    transition: background 0.45s ease;
+  }
+  .widget-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .widget-label { font-size: 9px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; }
+  .mirror-tag { font-size: 9px; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; opacity: 0.85; }
+  .ledger-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .ledger-row:last-of-type { border-bottom: none; }
+  .ledger-glyph { color: var(--domain); font-size: 13px; width: 16px; text-align: center; }
+  .ledger-name { flex: 1; font-size: 12px; color: var(--text); }
+  .ledger-sub { font-size: 10px; color: var(--text2); }
+  .ledger-xp { font-size: 11px; color: var(--gold); white-space: nowrap; }
+  .ledger-mint {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border);
+  }
+  .ledger-mint-label { font-size: 10px; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; }
+  .ledger-mint-val { font-size: 15px; font-weight: bold; color: var(--domain); }
+
+  /* one manual seam: reflection (the only thing Intellect asks you to type) */
+  .quest-card {
+    background: var(--panel);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 4px; margin-bottom: 10px; overflow: hidden;
+    box-shadow: var(--panel-shadow);
+    transition: background 0.45s ease;
+  }
+  .quest-header { display: flex; align-items: center; padding: 10px 12px; gap: 10px; }
+  .domain-pip { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--domain); }
+  .quest-name { flex: 1; font-size: 13px; line-height: 1.3; }
+  .quest-xp { font-size: 11px; color: var(--gold); white-space: nowrap; }
+  .quest-log-area { padding: 0 12px 12px; }
+  .log-input {
+    width: 100%; background: var(--panel-input);
+    border: 1px solid var(--border);
+    color: var(--text); font-family: inherit; font-size: 12px;
+    padding: 8px 10px; border-radius: 4px; resize: none;
+    outline: none; min-height: 48px;
+  }
+  .log-input::placeholder { color: var(--text2); opacity: 0.8; }
+  .log-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .btn {
+    padding: 7px 14px; font-family: inherit; font-size: 11px;
+    letter-spacing: 1px; border: none; border-radius: 4px;
+    text-transform: uppercase; cursor: pointer;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+
+  /* Room to scroll — feel the ground slide under the glass */
+  .tail { height: 26vh; }
+
+  /* ── MOCKUP CHROME (not app UI): treatment toggle ── */
+  .treatments {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 0; z-index: 300;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(140,140,180,0.4);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(20,20,34,0.66);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .treatments button {
+    font-family: inherit; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    padding: 10px 18px; background: transparent; color: #9a9ac4;
+  }
+  .treatments button.on { background: rgba(216,90,48,0.30); color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ground, .ground-scrim, .header, .tabs, .quest-card,
+    .domain-page-identity, .domain-widget { transition: none !important; }
+  }
+</style>
+</head>
+<body class="night">
+
+<img class="ground" src="../art/fluor.jpg" alt="">
+<div class="ground-scrim"></div>
+
+<div class="header">
+  <div class="header-top">
+    <div class="system-title">Cybernetica // v3</div>
+    <div class="hunter-badge">
+      <span class="xp-display">610 XP</span>
+      <span class="rank-badge">E</span>
+    </div>
+  </div>
+  <div class="xp-bar-wrap"><div class="xp-bar"></div></div>
+  <div class="header-status">
+    <span class="streak-pill">⟐ 6 day streak</span>
+    <span class="sync-glyph">∴</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active">Quests</div>
+  <div class="tab">Tree</div>
+  <div class="tab">Signal</div>
+</div>
+
+<div class="view">
+  <div class="domain-page-back">← back</div>
+
+  <!-- the capture owns this band; the microscope is the domain's face -->
+  <div class="art-window"></div>
+
+  <div class="domain-page-identity">
+    <div class="domain-page-sigil">
+      <!-- objective lens / field of view — the microscope as sigil -->
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="20" stroke="var(--domain)" stroke-width="1.2" opacity="0.7"/>
+        <circle cx="24" cy="24" r="12.5" stroke="var(--domain)" stroke-width="1.2"/>
+        <circle cx="24" cy="24" r="4" stroke="var(--domain)" stroke-width="1.2"/>
+        <path d="M24 4 L24 10 M24 38 L24 44 M4 24 L10 24 M38 24 L44 24" stroke="var(--domain)" stroke-width="0.9" opacity="0.8"/>
+      </svg>
+    </div>
+    <div>
+      <div class="domain-page-title">Intellect</div>
+      <div class="domain-page-anchor">Lab work, writing, PhD research</div>
+      <div class="domain-page-score">7/7 days active · mirror synced 2h ago</div>
+    </div>
+  </div>
+
+  <div class="domain-widget">
+    <div class="widget-head">
+      <div class="widget-label">Collect-XP · last 7 days</div>
+      <div class="mirror-tag">⟠ read-only mirror</div>
+    </div>
+    <div class="ledger-row">
+      <div class="ledger-glyph">◈</div>
+      <div class="ledger-name">Commits<div class="ledger-sub">3 repos · CRISPR-screen, ngs-pipe, thesis</div></div>
+      <div class="ledger-xp">23 · +115</div>
+    </div>
+    <div class="ledger-row">
+      <div class="ledger-glyph">▤</div>
+      <div class="ledger-name">Notebook entries<div class="ledger-sub">ddPCR run · western blot · SKOV3 prep</div></div>
+      <div class="ledger-xp">4 · +40</div>
+    </div>
+    <div class="ledger-row">
+      <div class="ledger-glyph">✦</div>
+      <div class="ledger-name">Deliverables<div class="ledger-sub">figure draft shipped to committee</div></div>
+      <div class="ledger-xp">1 · +25</div>
+    </div>
+    <div class="ledger-mint">
+      <div class="ledger-mint-label">Minted · zero taps</div>
+      <div class="ledger-mint-val">+180 XP</div>
+    </div>
+  </div>
+
+  <div class="quest-card">
+    <div class="quest-header">
+      <div class="domain-pip"></div>
+      <div class="quest-name">Note the work</div>
+      <div class="quest-xp">+15 XP</div>
+    </div>
+    <div class="quest-log-area">
+      <textarea class="log-input" placeholder="What moved today? (optional — the mirror already counted it)"></textarea>
+      <div class="log-actions">
+        <button class="btn btn-primary">Log it</button>
+        <button class="btn btn-ghost">Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tail"></div>
+</div>
+
+<div class="treatments">
+  <button id="btnNight" class="on" onclick="setTreatment('night')">Night</button>
+  <button id="btnPaper" onclick="setTreatment('paper')">Paper</button>
+</div>
+
+<script>
+  function setTreatment(t) {
+    document.body.className = t;
+    document.getElementById('btnNight').classList.toggle('on', t === 'night');
+    document.getElementById('btnPaper').classList.toggle('on', t === 'paper');
+  }
+  // deep-link a treatment: ...intellect-art-mockup.html#paper
+  if (location.hash === '#paper') setTreatment('paper');
+</script>
+
+</body>
+</html>

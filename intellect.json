@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-16T22:05:40-04:00",
+  "generatedAt": "2026-07-17T13:39:12-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-15",
-    "daysRemaining": 61
+    "daysRemaining": 60
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
@@ -85,14 +85,10 @@
           {
             "done": false,
             "text": "Confirm MDA231_rep1 rRNA fraction (job 37647) → closes Stage 1 → park (Stages 2–3 unbuilt)"
-          },
-          {
-            "done": false,
-            "text": "Fix stale download URLs in `code/exorna/02_build_smallrna_indices.sbatch` — index job submitted 7/16, **failed instantly** on bad GtRNAdb + miRBase URLs; re-confirm current GtRNAdb hg38-mature-tRNAs + miRBase hsa hairpin paths, then re-submit (genome index already exists, reused)"
           }
         ],
         "done": 0,
-        "total": 2,
+        "total": 1,
         "backlog": false
       },
       {
@@ -126,6 +122,26 @@
         "done": 0,
         "total": 6,
         "backlog": true
+      },
+      {
+        "heading": "Methods citations",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Started **per-paper** methods bibliographies (7/17): `code/ovarian/methods_citations.md` (ChIP+RNA, one file), `code/exorna/methods_citations.md`, `code/crispr/methods_citations.md` (stub). 10 core tools (Bowtie2, SAMtools, SPP, fastp, STAR, DESeq2, apeglm, SortMeRNA, SPORTS1.0, exceRpt) **PubMed-verified**"
+          },
+          {
+            "done": false,
+            "text": "Verify the ⚠ rows (IDR/Landt/deepTools/ChIPseeker; miRBase/GtRNAdb/GENCODE; org.Hs.eg.db; CRISPR stub tools) + fill pinned versions from `conda list` / `sessionInfo()`"
+          },
+          {
+            "done": false,
+            "text": "(proposed) Citation-coverage lint hook — flag tools invoked in `code/<paper>/` that lack a row in that paper's `methods_citations.md` (**detector only** — cannot auto-write citations; those need PubMed + judgment)"
+          }
+        ],
+        "done": 1,
+        "total": 3,
+        "backlog": false
       },
       {
         "heading": "Carried forward — figures and writing",
@@ -212,10 +228,10 @@
         "backlog": true
       }
     ],
-    "focusDone": 3,
-    "focusTotal": 13,
-    "doneTotal": 5,
-    "taskTotal": 34,
+    "focusDone": 4,
+    "focusTotal": 15,
+    "doneTotal": 6,
+    "taskTotal": 36,
     "blockers": [
       "None active."
     ]
@@ -244,7 +260,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-07-16",
-    "daysSinceLastEntry": 0,
+    "daysSinceLastEntry": 1,
     "recentEntries": [
       {
         "date": "2026-07-16 (Thu)",
