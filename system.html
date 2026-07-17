@@ -2264,10 +2264,6 @@ function renderDomainPage(domainKey) {
     <div class="art-window"></div>
     <div id="domainWidget"></div>
     ${identityHtml}
-    <div class="art-treatments">
-      <button id="artBtnNight" class="${artTreatment === 'night' ? 'on' : ''}" onclick="setArtTreatment('night')">Night</button>
-      <button id="artBtnPaper" class="${artTreatment === 'paper' ? 'on' : ''}" onclick="setArtTreatment('paper')">Paper</button>
-    </div>
   ` : `
     ${backHtml}
     ${identityHtml}
