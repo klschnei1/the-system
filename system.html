@@ -127,6 +127,12 @@
   .sync-glyph { font-size: 12px; color: var(--text2); margin-left: auto; cursor: default; }
   .sync-glyph.sync-pending { color: var(--gold); }
   .sync-glyph.sync-failed { color: var(--red); }
+  .appearance-toggle {
+    font-size: 13px; color: var(--text2); cursor: pointer;
+    user-select: none; -webkit-user-select: none; margin-left: 4px;
+    line-height: 1; transition: color 0.2s;
+  }
+  .appearance-toggle:hover { color: var(--accent); }
 
   /* ── TABS ── */
   .tabs {
