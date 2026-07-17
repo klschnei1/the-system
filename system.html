@@ -293,6 +293,91 @@
   .domain-page-quests .quest-card.completed { opacity: 0.7; }
   .domain-page-quests .quest-card.completed .quest-name { text-decoration: none; }
 
+  /* ── ART GROUND (Strength/geburah — cold_harbor/art.md, approved July 8) ──
+     The drawing IS the page: a fixed full-bleed ground + scrim, panels go
+     smoked glass over it. Two treatments (Night/Paper), earned-per-domain,
+     scoped entirely to #domainPage so it never touches other tabs/domains. */
+  .art-ground {
+    position: fixed; inset: 0; z-index: -2;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 6%;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.45s ease, filter 0.45s ease;
+  }
+  .art-scrim {
+    position: fixed; inset: 0; z-index: -1;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+  body[data-art-domain="geburah"] .art-ground,
+  body[data-art-domain="geburah"] .art-scrim { opacity: 1; }
+
+  body[data-art-domain="geburah"][data-art-treatment="night"] .art-ground {
+    filter: invert(0.93) hue-rotate(180deg) contrast(1.07) saturate(1.55) brightness(0.96);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="night"] .art-scrim {
+    background: linear-gradient(180deg,
+      rgba(7,7,15,0.72) 0%, rgba(7,7,15,0.28) 16%,
+      rgba(7,7,15,0.06) 34%, rgba(7,7,15,0.10) 55%,
+      rgba(7,7,15,0.42) 82%, rgba(7,7,15,0.62) 100%);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] .art-ground {
+    filter: brightness(1.04) contrast(1.02) saturate(1.05);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] .art-scrim {
+    background: linear-gradient(180deg,
+      rgba(246,242,234,0.62) 0%, rgba(246,242,234,0.18) 16%,
+      rgba(246,242,234,0.02) 34%, rgba(246,242,234,0.06) 55%,
+      rgba(246,242,234,0.30) 82%, rgba(246,242,234,0.48) 100%);
+  }
+
+  /* Paper re-inks the Strength page's own chrome (text/accents/borders) —
+     header and tabs are left alone; they're shared across every tab. */
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage {
+    --text: #211b12; --text2: #5a5142; --text3: #7d621c;
+    --border: rgba(33,27,18,0.26); --accent: #a63030; --accent2: #c25454;
+    --gold: #7d621c; --green: #3d6b34; --red: #a63030; --geburah: #a63030;
+  }
+
+  .art-window { height: 30vh; min-height: 200px; }
+
+  body[data-art-domain="geburah"] #domainPage .domain-page-identity,
+  body[data-art-domain="geburah"] #domainPage .domain-widget,
+  body[data-art-domain="geburah"] #domainPage .quest-card,
+  body[data-art-domain="geburah"] #domainPage .log-input {
+    background: rgba(13,13,26,0.84);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+    transition: background 0.45s ease;
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .domain-page-identity,
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .domain-widget,
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .quest-card,
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .log-input {
+    background: rgba(250,247,240,0.80);
+    box-shadow: 0 2px 16px rgba(60,45,20,0.14);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .tier-high {
+    background: rgba(166,48,48,0.10); border: 1px solid rgba(166,48,48,0.35);
+  }
+  body[data-art-domain="geburah"][data-art-treatment="paper"] #domainPage .tier-low {
+    background: rgba(61,107,52,0.10); border: 1px solid rgba(61,107,52,0.35);
+  }
+
+  .art-treatments {
+    display: flex; gap: 0; width: fit-content; margin: 18px auto 4px;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(140,140,180,0.4);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(20,20,34,0.66);
+  }
+  .art-treatments button {
+    font-family: inherit; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    padding: 8px 18px; background: transparent; color: #9a9ac4;
+  }
+  .art-treatments button.on { background: rgba(91,111,255,0.28); color: #fff; }
+
   /* ── SEPHIRA DETAIL ── */
   .sephira-detail {
     background: var(--bg2); border: var(--border-width) var(--border-style) var(--accent);
@@ -920,6 +1005,12 @@
 </style>
 </head>
 <body>
+
+<!-- ART GROUND — Strength domain page material (cold_harbor/art.md, approved
+     July 8). Fixed + hidden by default; shown only while body[data-art-domain]
+     matches a domain with shipped art (currently geburah only). -->
+<img class="art-ground" id="artGround" src="art/climber.jpg" alt="">
+<div class="art-scrim" id="artScrim"></div>
 
 <!-- HEADER -->
 <div class="header">
@@ -2013,6 +2104,11 @@ function renderDomainPage(domainKey) {
   if (!domain) return;
   const page = document.getElementById('domainPage');
 
+  // Art ground (cold_harbor/art.md): only geburah has shipped art so far.
+  // Setting this unconditionally is harmless — CSS only reacts to "geburah".
+  document.body.dataset.artDomain = domainKey;
+  document.body.dataset.artTreatment = (data.settings && data.settings.artTreatment) || 'night';
+
   // Locked/unbuilt domains are DEAD everywhere — no quests, no widget, no score.
   const gate = domainGate(domainKey);
   if (gate !== 'open') {
@@ -2031,8 +2127,12 @@ function renderDomainPage(domainKey) {
   const questIds = Object.keys(domain.quests);
   const completedCount = questIds.filter(qid => !!todayLog[qid]).length;
 
+  const hasArt = domainKey === 'geburah';
+  const artTreatment = document.body.dataset.artTreatment || 'night';
+
   page.innerHTML = `
     <div class="domain-page-back" onclick="${fromArcade ? "window.location.href='sleeves/arcade.html'" : "switchTab('" + domainPageSource + "')"}">← back</div>
+    ${hasArt ? '<div class="art-window"></div>' : ''}
     <div class="domain-page-identity">
       <div class="domain-page-sigil">${sigilSvg}</div>
       <div>
@@ -2043,6 +2143,11 @@ function renderDomainPage(domainKey) {
     </div>
     <div class="domain-page-quests" id="domainQuestCards"></div>
     <div id="domainWidget"></div>
+    ${hasArt ? `
+    <div class="art-treatments">
+      <button id="artBtnNight" class="${artTreatment === 'night' ? 'on' : ''}" onclick="setArtTreatment('night')">Night</button>
+      <button id="artBtnPaper" class="${artTreatment === 'paper' ? 'on' : ''}" onclick="setArtTreatment('paper')">Paper</button>
+    </div>` : ''}
   `;
 
   if (fromArcade) page.classList.add('arcade-mode');
@@ -3230,9 +3335,20 @@ function openModal() {
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 
+// ── ART TREATMENT (Strength/geburah — cold_harbor/art.md) ──────────────
+window.setArtTreatment = function(t) {
+  data.settings = data.settings || {};
+  data.settings.artTreatment = t;
+  document.body.dataset.artTreatment = t;
+  document.getElementById('artBtnNight')?.classList.toggle('on', t === 'night');
+  document.getElementById('artBtnPaper')?.classList.toggle('on', t === 'paper');
+  saveData();
+};
+
 // ── TABS & NAVIGATION ─────────────────────────────────────────────────
 function switchTab(id) {
   currentDomain = null;
+  document.body.dataset.artDomain = '';
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
