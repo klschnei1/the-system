@@ -3473,6 +3473,25 @@ window.setArtTreatment = function(t) {
   saveData();
 };
 
+// ── GLOBAL APPEARANCE (night/paper) — base light/dark palette for the whole
+// shell. Sits under the [data-theme] mood states. Persists like artTreatment.
+function applyAppearance(mode) {
+  mode = (mode === 'paper') ? 'paper' : 'night';
+  document.body.dataset.appearance = mode;
+  const btn = document.getElementById('appearanceToggle');
+  if (btn) {
+    btn.textContent = mode === 'paper' ? '☀' : '☾';
+    btn.title = mode === 'paper' ? 'paper — tap for night' : 'night — tap for paper';
+  }
+}
+window.toggleAppearance = function() {
+  const next = (document.body.dataset.appearance === 'paper') ? 'night' : 'paper';
+  data.settings = data.settings || {};
+  data.settings.appearance = next;
+  applyAppearance(next);
+  saveData();
+};
+
 // ── TABS & NAVIGATION ─────────────────────────────────────────────────
 function switchTab(id) {
   currentDomain = null;
