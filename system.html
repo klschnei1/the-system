@@ -3624,8 +3624,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!ready) return; // setup modal is showing
 
   await loadSigilManifest();
-  applyDailyTheme();
   applyAppearance((data.settings && data.settings.appearance) || 'night');
+  applyDailyTheme();
 
   // ── ARCADE MODE: inject pixel stylesheet + font ───────────────────────
   if (fromArcade) {
