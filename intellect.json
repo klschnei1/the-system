@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T16:38:20-04:00",
+  "generatedAt": "2026-07-16T20:01:22-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -245,6 +245,13 @@
       {
         "date": "2026-07-16 (Thu)",
         "contexts": [
+          "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
+          "Ovarian paper (quiescence/EOC), ChIP-seq. Stage-04 IDR follow-up to the 7/16 SPP peak-calling run (job 38394)."
+        ]
+      },
+      {
+        "date": "2026-07-16 (Thu)",
+        "contexts": [
           "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
           "Stage-03 SPP peak-calling (job 38394, `--array=0-23%6`, `-npeak=300000`, each IP vs pooled same-line input) ran overnight. This session = read the results, diagnose the failures, and design stage 04 (IDR)."
         ]
@@ -255,17 +262,17 @@
           "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
           "LOCKED system — making the Goetsch Lab .docx notebook actually stay current."
         ]
-      },
-      {
-        "date": "2026-07-15 (Wed)",
-        "contexts": [
-          "Short-HDR ddPCR: plate design + master mix (setup of record)",
-          "Short-HDR arm of the CRISPR paper. Rare-event detection assay (not drop-off). Master mix made and loaded; run in progress at time of writing. Long-HDR arm not included — sHDR only."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:453c30cf4a66",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Log 7/16 ChIP IDR results + Rb/DREAM/E2F arm interpretation",
+      "date": "2026-07-16"
+    },
     {
       "id": "commit:754f1e6f4a73",
       "kind": "commit",
@@ -449,13 +456,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:c4ea934b6e51",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Cell culture upkeep, T7 result (HEYA8 gRNA-only), westerns prep",
-      "date": "2026-06-18"
-    },
-    {
       "id": "lab:1ec7628e032a",
       "kind": "lab",
       "xp": 20,
@@ -621,6 +621,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "lab:66d32846d053",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
       "date": "2026-07-16"
     }
   ]
