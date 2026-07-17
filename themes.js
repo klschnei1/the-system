@@ -266,16 +266,24 @@ function applyDailyTheme() {
   root.style.setProperty('--border-width', theme.container.borderWidth);
   root.style.setProperty('--border-radius', theme.container.borderRadius);
 
-  // Body dataset for CSS selectors
-  document.body.dataset.theme = theme.id;
-
   // Store for other functions
   window._currentTheme = theme;
 
-  // Helpers
-  applyThemeBackground(theme);
-  applyThemeAnimations(theme);
-  applyThemeMutations(theme);
+  // Global PAPER (light mode) suppresses the daily mood theme's DARK shell:
+  // no [data-theme] component hardcodes, no dark body filter/overlay. The day's
+  // accent + typography still apply; surfaces come from the paper palette
+  // (system.html body[data-appearance="paper"]). Night = the full mood theme.
+  if (document.body.dataset.appearance === 'paper') {
+    delete document.body.dataset.theme;
+    document.body.style.filter = '';
+    const overlay = document.getElementById('theme-overlay');
+    if (overlay) overlay.remove();
+  } else {
+    document.body.dataset.theme = theme.id;   // activate [data-theme] CSS
+    applyThemeBackground(theme);
+    applyThemeAnimations(theme);
+    applyThemeMutations(theme);
+  }
   applyWatermarkSigil(seed);
 
   return mood;
