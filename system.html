@@ -3459,21 +3459,14 @@ function openModal() {
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 
-// ── ART TREATMENT (Strength/geburah — cold_harbor/art.md) ──────────────
-window.setArtTreatment = function(t) {
-  data.settings = data.settings || {};
-  data.settings.artTreatment = t;
-  document.body.dataset.artTreatment = t;
-  document.getElementById('artBtnNight')?.classList.toggle('on', t === 'night');
-  document.getElementById('artBtnPaper')?.classList.toggle('on', t === 'paper');
-  saveData();
-};
-
-// ── GLOBAL APPEARANCE (night/paper) — base light/dark palette for the whole
-// shell. Sits under the [data-theme] mood states. Persists like artTreatment.
+// ── GLOBAL APPEARANCE (night/paper) — the one light/dark switch for the whole
+// app. Drives the base palette AND the art ground (cold_harbor/art.md); the old
+// per-domain art toggle is gone. Paper suppresses the daily mood theme's dark
+// shell (see applyDailyTheme in themes.js). Persists in data.settings.appearance.
 function applyAppearance(mode) {
   mode = (mode === 'paper') ? 'paper' : 'night';
   document.body.dataset.appearance = mode;
+  document.body.dataset.artTreatment = mode;  // art ground follows the global switch
   const btn = document.getElementById('appearanceToggle');
   if (btn) {
     btn.textContent = mode === 'paper' ? '☀' : '☾';
@@ -3485,6 +3478,7 @@ window.toggleAppearance = function() {
   data.settings = data.settings || {};
   data.settings.appearance = next;
   applyAppearance(next);
+  applyDailyTheme();  // re-skin live: paper strips the mood shell, night restores it
   saveData();
 };
 
