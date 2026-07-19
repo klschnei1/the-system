@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T13:56:18-04:00",
+  "generatedAt": "2026-07-19T14:00:40-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -286,6 +286,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:28fd38840cff",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Add CAREER.md — job-hunt & career-transition tracker",
+      "date": "2026-07-19"
+    },
     {
       "id": "commit:4baa008ccf13",
       "kind": "commit",
