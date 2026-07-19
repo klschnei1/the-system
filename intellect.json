@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-17T14:18:59-04:00",
+  "generatedAt": "2026-07-19T13:56:18-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-15",
-    "daysRemaining": 60
+    "daysRemaining": 58
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
@@ -260,7 +260,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-07-16",
-    "daysSinceLastEntry": 1,
+    "daysSinceLastEntry": 3,
     "recentEntries": [
       {
         "date": "2026-07-16 (Thu)",
@@ -286,6 +286,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4baa008ccf13",
+      "kind": "commit",
+      "xp": 26,
+      "label": "Methods citation bibs (per-paper) + exoRNA classify scaffold + miRBase URL fix",
+      "date": "2026-07-19"
+    },
     {
       "id": "commit:4f270bf94c3f",
       "kind": "commit",
