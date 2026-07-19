@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T14:00:40-04:00",
+  "generatedAt": "2026-07-19T15:28:12-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -192,6 +192,18 @@
         "backlog": true
       },
       {
+        "heading": "Carried forward — career",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Apply to Anthropic **Research Scientist, Life Sciences (Experimental Biology)** — the bench-first RS variant (best-fit reach: molecular biology / biochem / functional screens, soft ML bar). JD: greenhouse.io/anthropic/jobs/5285250008. Light-tailor résumé to foreground wet-lab before submitting."
+          }
+        ],
+        "done": 0,
+        "total": 1,
+        "backlog": true
+      },
+      {
         "heading": "Carried forward — system",
         "tasks": [
           {
@@ -231,7 +243,7 @@
     "focusDone": 4,
     "focusTotal": 15,
     "doneTotal": 6,
-    "taskTotal": 36,
+    "taskTotal": 37,
     "blockers": [
       "None active."
     ]
@@ -286,6 +298,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6793e3cdcaf4",
+      "kind": "commit",
+      "xp": 12,
+      "label": "CAREER: log Anthropic RS + RA submitted; add bench-first RS (Experimental Biology) to TASKS",
+      "date": "2026-07-19"
+    },
     {
       "id": "commit:28fd38840cff",
       "kind": "commit",
