@@ -1332,7 +1332,9 @@
 </div>
 
 <script>
-  ['sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
+  // datastore.js FIRST: document.write emits synchronous <script> tags, so
+  // these run in order and DataStore exists before the inline script below.
+  ['datastore.js','sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
