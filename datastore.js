@@ -1,14 +1,22 @@
 // ═══════════════════════════════════════════════════════════════════════
 // CSS DataStore — pluggable data backend
-// v1.0 | Driver: GitHub API + localStorage cache
+// v2.0 | Driver: GitHub API + localStorage cache
 //
-// Architecture: three-driver progression
-//   Phase 1 (now)      GitHubDriver     — GitHub API + localStorage cache
-//   Phase 2 (Electron) FileSystemDriver — direct filesystem read/write
-//   Phase 3 (CRDT)     AutomergeDriver  — conflict-free replicated sync
+// THE SINGLE WRITER. Every sleeve loads this file; nothing else touches
+// localStorage or CSS_DATA.json directly (NARSIL "don't bypass DataStore").
 //
-// Nothing above this layer should care which driver is active.
-// Swap the driver, the rest of the system is unchanged.
+// Promoted July 19, 2026 out of system.html's inline copy, which had been
+// the live implementation while THIS file sat unloaded and stale. The v1
+// file lacked: UTF-8 safe decode, the pending/dirty/pushing push machine,
+// flush() on pagehide, stale-SHA retry, and the sync-glyph states. Loading
+// v1 as-written would have regressed all five. Keep the consumer pointed
+// here so the two can never fork again.
+//
+// Architecture: driver-shaped so the backend can change without any caller
+// changing. GitHubDriver is the only one implemented; Electron/CRDT stubs
+// were removed (rebuild from scratch if those phases arrive).
+//
+// Contract: DataStore.use(driver).init() → load() → save(data) → flush()
 // ═══════════════════════════════════════════════════════════════════════
 
 // ── DATASTORE INTERFACE ─────────────────────────────────────────────────
@@ -48,6 +56,12 @@ const DataStore = {
 
   status() {
     return this._driver?.status?.() || { driver: 'none', ready: this._ready };
+  },
+
+  // Immediate push of any pending save (bypasses the debounce). Safe no-op
+  // when the driver has none or doesn't support it.
+  flush() {
+    return this._driver?.flush?.();
   },
 
   // Simple event bus for UI reactivity
@@ -110,7 +124,7 @@ const GitHubDriver = {
       this._sha = json.sha;
       localStorage.setItem(this.SHA_KEY, this._sha);
 
-      const data = JSON.parse(atob(json.content.replace(/\n/g, '')));
+      const data = JSON.parse(decodeURIComponent(escape(atob(json.content.replace(/\n/g, '')))));
       // Update local cache
       localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
       this._cache = data;
@@ -127,21 +141,42 @@ const GitHubDriver = {
     localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
     this._cache = data;
 
-    // Push to GitHub async — don't block UI
-    this._schedulePush(data);
+    // The push always sends whatever was saved LAST, not the data captured
+    // when the debounce started — saves landing mid-debounce are never dropped.
+    this._pendingData = data;
+    this._dirty = true;
+    this._schedulePush();
   },
 
-  _schedulePush(data) {
-    if (this._pushPending) return; // debounce — one push per cycle
-    this._pushPending = true;
-    setTimeout(async () => {
-      try {
-        await this._pushToGitHub(data);
-      } catch (e) {
-        console.warn('GitHubDriver: push failed, will retry on next save.', e.message);
-      }
-      this._pushPending = false;
-    }, 1500); // 1.5s debounce
+  _schedulePush() {
+    if (this._pushTimer) clearTimeout(this._pushTimer);
+    this._pushTimer = setTimeout(() => this.flush(), 1500); // 1.5s debounce
+    this._setSync('pending');
+  },
+
+  // Push now, skipping the debounce. Called by the timer, and directly on
+  // visibilitychange→hidden so iOS suspending the PWA can't strand a save.
+  async flush() {
+    if (this._pushTimer) { clearTimeout(this._pushTimer); this._pushTimer = null; }
+    if (this._pushing) return;           // in-flight push will re-check _dirty
+    if (!this._dirty) return;
+    this._pushing = true;
+    const payload = this._pendingData;
+    this._dirty = false;
+    try {
+      await this._pushToGitHub(payload);
+      this._lastPushError = null;
+      this._setSync(this._dirty ? 'pending' : 'synced');
+    } catch (e) {
+      this._dirty = true;                // keep the payload for the next attempt
+      this._lastPushError = e.message;
+      this._setSync('failed');
+      console.warn('GitHubDriver: push failed, will retry on next save.', e.message);
+    } finally {
+      this._pushing = false;             // NEVER wedge the state machine
+    }
+    // A save arrived while this push was in flight — send it too.
+    if (this._dirty && !this._pushTimer && !this._lastPushError) this._schedulePush();
   },
 
   async _pushToGitHub(data) {
@@ -153,11 +188,28 @@ const GitHubDriver = {
       ...(this._sha ? { sha: this._sha } : {})
     };
 
-    const res = await fetch(url, {
+    let res = await fetch(url, {
       method: 'PUT',
       headers: this._headers(),
       body: JSON.stringify(body)
     });
+
+    // Stale SHA (409 conflict / 422 mismatch) used to fail every push forever.
+    // Refetch the current SHA and retry once — last writer wins, same policy
+    // as remote-wins on load.
+    if (!res.ok && (res.status === 409 || res.status === 422)) {
+      const fresh = await fetch(url, { headers: this._headers() });
+      if (fresh.ok) {
+        const fj = await fresh.json();
+        this._sha = fj.sha;
+        localStorage.setItem(this.SHA_KEY, this._sha);
+        res = await fetch(url, {
+          method: 'PUT',
+          headers: this._headers(),
+          body: JSON.stringify({ ...body, sha: this._sha })
+        });
+      }
+    }
 
     if (!res.ok) {
       const err = await res.json();
@@ -167,6 +219,14 @@ const GitHubDriver = {
     const json = await res.json();
     this._sha = json.content.sha;
     localStorage.setItem(this.SHA_KEY, this._sha);
+  },
+
+  _setSync(state) {
+    this._syncState = state;
+    // The glyph is chrome; a UI error must never break the sync machinery.
+    try {
+      if (typeof window !== 'undefined' && window.updateSyncGlyph) window.updateSyncGlyph(state, this._lastPushError);
+    } catch (e) { /* glyph render failed — sync continues */ }
   },
 
   _loadFromCache() {
@@ -191,76 +251,16 @@ const GitHubDriver = {
       path: this._path,
       sha: this._sha,
       hasCachedData: !!localStorage.getItem(this.CACHE_KEY),
-      pushPending: this._pushPending
+      syncState: this._syncState || 'synced',   // synced | pending | failed
+      pushPending: !!(this._dirty || this._pushing),
+      lastPushError: this._lastPushError || null
     };
   }
 };
 
 
-// ── PHASE 2: FILESYSTEM DRIVER (Electron — stub) ────────────────────────
-// When system.html is packaged as an Electron app, swap this driver in.
-// Electron exposes `window.electronAPI` via preload script.
-// No changes needed anywhere else in the codebase.
-
-const FileSystemDriver = {
-  _path: null,
-  _cache: null,
-
-  async init() {
-    // Electron preload exposes the file path from app config
-    this._path = window.electronAPI?.dataPath || './CSS_DATA.json';
-    console.log('FileSystemDriver: initialized. Path:', this._path);
-  },
-
-  async load() {
-    // window.electronAPI.readFile() exposed via Electron's contextBridge
-    const raw = await window.electronAPI.readFile(this._path);
-    this._cache = JSON.parse(raw);
-    return this._cache;
-  },
-
-  async save(data) {
-    this._cache = data;
-    await window.electronAPI.writeFile(this._path, JSON.stringify(data, null, 2));
-  },
-
-  status() {
-    return { driver: 'FileSystem (Electron)', path: this._path };
-  }
-};
-
-
-// ── PHASE 3: CRDT DRIVER (Automerge — stub) ─────────────────────────────
-// When multi-device sync and conflict-free editing is needed.
-// Automerge documents are CRDTs — any two versions can be merged without conflict.
-// Sync happens via a relay (could be GitHub, a local relay server, or P2P).
-// The document's change history IS the evolution log.
-
-const AutomergeDriver = {
-  _doc: null,
-  _repo: null, // Automerge.Repo instance
-
-  async init() {
-    // import * as Automerge from '@automerge/automerge'
-    // this._repo = new Automerge.Repo({ ... sync config ... })
-    // this._doc = await this._repo.find(docId)
-    console.log('AutomergeDriver: stub — implement when ready for Phase 3.');
-  },
-
-  async load() {
-    // return Automerge.toJS(this._doc)
-    return null;
-  },
-
-  async save(data) {
-    // this._doc = Automerge.change(this._doc, doc => { Object.assign(doc, data) })
-    // sync happens automatically via Repo
-  },
-
-  status() {
-    return { driver: 'Automerge (CRDT)', ready: false, note: 'Phase 3 — not yet implemented' };
-  }
-};
+// Phase 2 (FileSystemDriver) and Phase 3 (AutomergeDriver) stubs removed.
+// Rebuild from scratch when those phases are actually needed.
 
 
 // ── SETUP HELPER ────────────────────────────────────────────────────────
@@ -277,5 +277,7 @@ async function setupGitHubDataStore(token, repo, path = 'CSS/CSS_DATA.json') {
 
 
 // ── EXPORT ──────────────────────────────────────────────────────────────
-// In a module environment: export { DataStore, GitHubDriver, FileSystemDriver, AutomergeDriver }
-// In the current inline-script environment: these are available as globals.
+// Loaded as a classic script by every sleeve (system.html's loader array),
+// so DataStore / GitHubDriver / setupGitHubDataStore are globals. Becomes a
+// real module export if sleeves ever move to type="module".
+
