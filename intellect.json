@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T16:08:15-04:00",
+  "generatedAt": "2026-07-19T20:16:36-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,15 +80,27 @@
         "backlog": false
       },
       {
-        "heading": "exoRNA — Stage 2 refs + park",
+        "heading": "exoRNA — run Stage 3 → Fig 1 composition",
         "tasks": [
           {
+            "done": true,
+            "text": "Stage 2 indices BUILT (7/17, job `idx_38894`): `hg38_tRNA.*.bt2` + `hsa_hairpin.*.bt2` both complete on HRI. miRBase URL fix confirmed working (full 6.1 MB `hairpin.fa` pulled; `idx_38668` had died on the stale URL the day before)."
+          },
+          {
             "done": false,
-            "text": "Confirm MDA231_rep1 rRNA fraction (job 37647) → closes Stage 1 → park (Stages 2–3 unbuilt)"
+            "text": "**NEXT: run `03_classify_smallrna.sbatch`** (array 0–5) → per-sample `classify/<sample>.class_counts.tsv` = the Fig-1 composition breakdown. Pre-flight: confirm SortMeRNA `--other` suffix matches (`_non_rRNA_fwd/_rev.fq.gz`) + all 6 samples present incl. MDA231_rep1. Draft-figure pass runs the scaffold as-is; the open `DECISION` blocks (esp. PE merge-vs-concordant-pair, line 63) get revisited before the numbers go in the paper."
+          },
+          {
+            "done": false,
+            "text": "Confirm MDA231_rep1 rRNA fraction → closes Stage 1 (pull `passing E-value` from `sortmerna/MDA231_rep1/*_rRNA.log`; also feeds the rRNA-burden figure)"
+          },
+          {
+            "done": false,
+            "text": "Build `theme_exo.R` (ACS specs) + stacked-composition figure for the Bianca meeting"
           }
         ],
-        "done": 0,
-        "total": 1,
+        "done": 1,
+        "total": 4,
         "backlog": false
       },
       {
@@ -240,10 +252,10 @@
         "backlog": true
       }
     ],
-    "focusDone": 4,
-    "focusTotal": 15,
-    "doneTotal": 6,
-    "taskTotal": 37,
+    "focusDone": 5,
+    "focusTotal": 18,
+    "doneTotal": 7,
+    "taskTotal": 40,
     "blockers": [
       "None active."
     ]
@@ -271,9 +283,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-16",
-    "daysSinceLastEntry": 3,
+    "lastEntryDate": "2026-07-19",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-07-19 (Sat)",
+        "contexts": [
+          "Cell passage: HEYA8, SKOV3, HT1080, HEPG2 (T25 → 10 cm)"
+        ]
+      },
       {
         "date": "2026-07-16 (Thu)",
         "contexts": [
@@ -286,13 +304,6 @@
         "contexts": [
           "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
           "Ovarian paper (quiescence/EOC), ChIP-seq. Stage-04 IDR follow-up to the 7/16 SPP peak-calling run (job 38394)."
-        ]
-      },
-      {
-        "date": "2026-07-16 (Thu)",
-        "contexts": [
-          "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
-          "Stage-03 SPP peak-calling (job 38394, `--array=0-23%6`, `-npeak=300000`, each IP vs pooled same-line input) ran overnight. This session = read the results, diagnose the failures, and design stage 04 (IDR)."
         ]
       }
     ]
@@ -530,13 +541,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:eb8fed92572d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "HRI RNA-seq env + ExoRNA fastp; TotalStain Q westerns",
-      "date": "2026-06-24"
-    },
-    {
       "id": "lab:27261330e40c",
       "kind": "lab",
       "xp": 20,
@@ -703,6 +707,13 @@
       "xp": 20,
       "label": "RNA-seq dose-response (PAR 1x vs 5x): DREAM/E2F program, senescence + degradation ruled out",
       "date": "2026-07-16"
+    },
+    {
+      "id": "lab:7e895d1803e2",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Cell passage: HEYA8, SKOV3, HT1080, HEPG2 (T25 → 10 cm)",
+      "date": "2026-07-19"
     }
   ]
 }

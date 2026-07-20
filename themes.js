@@ -270,20 +270,24 @@ function applyDailyTheme() {
   window._currentTheme = theme;
 
   // Global PAPER (light mode) suppresses the daily mood theme's DARK shell:
-  // no [data-theme] component hardcodes, no dark body filter/overlay. The day's
-  // accent + typography still apply; surfaces come from the paper palette
-  // (system.html body[data-appearance="paper"]). Night = the full mood theme.
+  // no [data-theme] component hardcodes, no dark body filter/overlay/keyframes.
+  // The day's accent + typography still apply; surfaces come from the paper
+  // palette (system.html body[data-appearance="paper"]). Night = the full shell.
   if (document.body.dataset.appearance === 'paper') {
     delete document.body.dataset.theme;
     document.body.style.filter = '';
-    const overlay = document.getElementById('theme-overlay');
-    if (overlay) overlay.remove();
+    document.getElementById('theme-overlay')?.remove();
+    document.getElementById('theme-keyframes')?.remove();
   } else {
     document.body.dataset.theme = theme.id;   // activate [data-theme] CSS
     applyThemeBackground(theme);
     applyThemeAnimations(theme);
-    applyThemeMutations(theme);
   }
+  // Mutations run in BOTH appearances. They are the theme's paradigm layer
+  // (tab order/labels, hidden anchors/tiers/tally/names) — identity, not dark
+  // shell — and the function is self-restoring: skipping it doesn't neutralize
+  // the day's mutations, it FREEZES whichever ones were last applied.
+  applyThemeMutations(theme);
   applyWatermarkSigil(seed);
 
   return mood;
