@@ -14,16 +14,35 @@
 //
 // ── STATE OWNERSHIP (the honest caveat) ────────────────────────────────
 // system.html holds `data`, `todayLog`, `todayXpEarned` as bare top-level
-// `let`s — NOT on window, so this file cannot see them. Rather than fake
-// independence, verbs take an explicit ctx:
+// `let`s. A top-level `let` lives in the global DECLARATIVE record: shared
+// across every classic script on the page, but NOT a property of window.
+// So `window.data` is undefined (the bug that wedged juice's mode()), while
+// a bare `data` reference from this file WOULD resolve — which is exactly
+// how intake.js / finance.js / forecast.js reach it today.
+//
+// This file deliberately does not do that. Reaching for a binding that
+// another file happened to declare is invisible coupling: it makes this
+// module look self-contained while silently requiring system.html to have
+// loaded first (drop it in a page without system.html and every bare `data`
+// throws ReferenceError). That is the same cosmetic independence that let
+// datastore.js rot. So verbs take an explicit ctx instead:
 //
 //   ctx = { data, todayLog, todayXpEarned }
 //
 // `data` and `todayLog` are object references, so in-place mutation is
 // visible to the caller. `todayXpEarned` is a number (copied), so the
-// Result carries `newToday` back and the caller assigns it. When the core
-// eventually OWNS the state, ctx disappears and this comment with it —
-// that's the Phase 2 endgame, not today's slice.
+// Result carries `newToday` back and the caller MUST assign it — a verb
+// that forgets loses XP silently. That asymmetry is a bug farm and is the
+// clearest argument for the core owning state outright.
+//
+// This is a seam, not a finished boundary: the core borrows state, so a
+// second sleeve still can't stand alone (it would have to produce `data`
+// itself, duplicating initDataStore + rollover + re-entry). Closing it =
+// moving ownership here and rewriting ~316 reference sites in system.html.
+// Deliberately NOT bundled with this extraction: mixing a semantic change
+// with a vast mechanical rename destroys bisectability if XP math breaks.
+// That is also the exact reasoning that deferred this work for four months,
+// so it is logged as a named open gap in spine.md, not as prose.
 //
 // Depends on globals from other files: getTodayStr() + saveData()
 // (system.html), rollQuestReward() (sensei.js).
