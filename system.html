@@ -1334,7 +1334,7 @@
 <script>
   // datastore.js FIRST: document.write emits synchronous <script> tags, so
   // these run in order and DataStore exists before the inline script below.
-  ['datastore.js','sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
+  ['datastore.js','sleeve-core.js','sigils.js','themes.js','sensei.js','juice.js','strength.js','intake.js','finance.js','intellect.js','forecast.js'].forEach(function(src) {
     document.write('<scr'+'ipt src="' + src + '?v=' + Date.now() + '"><\/scr'+'ipt>');
   });
 </script>
@@ -2609,131 +2609,61 @@ function logQuest(qid, xp) {
   finishLogQuest(qid, xp, quest, domainKey, note, extraData);
 }
 
+// DOM adapter over SleeveCore.finishLog (spine.md Phase 2). The core owns the
+// data (XP math, reward roll, dailyLogs writes, retro dates, persistence) and
+// hands back a Result; everything below this line is system.html's own look —
+// render, sigil flash, notify, juice. Another sleeve calls the same verb and
+// animates however it likes. Keep this function free of data decisions.
 function finishLogQuest(qid, xp, quest, domainKey, note, extraData, targetDate) {
   const today = getTodayStr();
-  if (!data.dailyLogs) data.dailyLogs = {};
+  const r = SleeveCore.finishLog(
+    { data, todayLog, todayXpEarned },
+    { qid, xp, quest, domainKey, note, extraData, targetDate }
+  );
+  todayXpEarned = r.newToday;   // ctx copies the number; the Result carries it back
 
-  // ── strong-paste: multiple workouts per day ──────────────────────────
-  // Each parsed workout is appended to g1.workouts. Only the FIRST workout of
-  // a given day awards XP + rolls a reward; later adds just stack data (same
-  // first-of-day semantics as the finance/intake accumulators). A late workout
-  // (targetDate in the past) is filed on its OWN day and does NOT mark today
-  // done — so today's quest stays open for today's session.
-  if (extraData && extraData.workout) {
-    const writeDate = (targetDate && targetDate !== today) ? targetDate : today;
-    if (!data.dailyLogs[writeDate]) data.dailyLogs[writeDate] = {};
-    let dayLog = data.dailyLogs[writeDate][qid];
-    // migrate a legacy single-workout day to the array shape in place
-    if (dayLog && dayLog.workout && !dayLog.workouts) {
-      dayLog.workouts = [dayLog.workout];
-      delete dayLog.workout;
-    }
-    const isFirst = !dayLog;
-    // First-of-today rolls the reward; the roll decides the payout, and the
-    // full amount (incl. any multiplier) is folded into dayLog.xp so undo and
-    // reload see the truth (July 3 audit fix).
-    const reward = (isFirst && writeDate === today) ? rollQuestReward(qid, xp) : null;
-    const totalXp = (reward && reward.type === 'xp_multiplier') ? xp * reward.multiplier : xp;
-    const prevToday = todayXpEarned;
-    if (isFirst) {
-      dayLog = { xp: totalXp, workouts: [], time: new Date().toISOString(), source: extraData.source || 'manual' };
-      if (reward && reward.roll !== undefined) dayLog.roll = reward.roll;
-      data.dailyLogs[writeDate][qid] = dayLog;
-      data.xp = (data.xp || 0) + totalXp;
-      if (writeDate === today) todayXpEarned += totalXp;
-    }
-    if (!Array.isArray(dayLog.workouts)) dayLog.workouts = [];
-    dayLog.workouts.push(extraData.workout);
-    dayLog.note = `${dayLog.workouts.length} workout${dayLog.workouts.length !== 1 ? 's' : ''}`;
-    if (writeDate === today) todayLog[qid] = dayLog;   // past-date log leaves today open
+  renderQuests();
+  renderHeader();
 
-    saveData();
-    renderQuests();
-    renderHeader();
-
-    // sigil flash (selector repointed July 3 — the old #domain-quests-<dk>
-    // matched nothing since the domain-page refactor; flash was dead juice)
-    const sigil = document.querySelector('.domain-page-sigil');
-    if (sigil) {
-      sigil.classList.remove('sigil-flash');
-      void sigil.offsetWidth;
-      sigil.classList.add('sigil-flash');
-      sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
-    }
-
-    const n = dayLog.workouts.length;
-    if (writeDate !== today) {
-      notify(`Workout logged to ${writeDate}. Today's workout is still open.`, 5000);
-    } else if (!isFirst) {
-      notify(`Workout added — ${n} today.`);
-    } else if (window.juice) {
-      juice.playLogMoment({ qid, reward, total: totalXp, prevToday, newToday: todayXpEarned });
-    } else {
-      notify('Workout logged. +' + totalXp + ' XP gained.');
-    }
-    checkSeals();
-    return;
-  }
-
-  // Roll BEFORE payout (juice.md sequence rule): the roll DECIDES the amount,
-  // so multiplier bonuses fold into the entry's xp — undo and reload now see
-  // the true total (fixes the July 3 audit's phantom-XP leak).
-  const reward = rollQuestReward(qid, xp);
-  const totalXp = (reward && reward.type === 'xp_multiplier') ? xp * reward.multiplier : xp;
-
-  const logEntry = { xp: totalXp, note, time: new Date().toISOString(), source: 'manual', ...extraData };
-  if (reward && reward.roll !== undefined) logEntry.roll = reward.roll;
-  const prevToday = todayXpEarned;
-  todayXpEarned += totalXp;
-  data.xp = (data.xp || 0) + totalXp;
-
-  if (targetDate && targetDate !== today) {
-    // Retro log: write workout to past date; stub todayLog so quest shows done
-    if (!data.dailyLogs[targetDate]) data.dailyLogs[targetDate] = {};
-    data.dailyLogs[targetDate][qid] = logEntry;
-    // Stub has no .workout so the strength widget doesn't double-count it for today
-    todayLog[qid] = { xp: totalXp, note: `logged to ${targetDate}`, time: logEntry.time, source: 'retro', retroDate: targetDate };
-  } else {
-    todayLog[qid] = logEntry;
-    if (!data.dailyLogs[today]) data.dailyLogs[today] = {};
-    data.dailyLogs[today][qid] = logEntry;
-  }
-
-  // Auto-collapse domain if all its quests are now done
-  if (domainKey) {
-    const domain = data.questDefinitions[domainKey];
-    const allDone = Object.keys(domain.quests).every(q => !!(q === qid ? true : todayLog[q]));
-    if (allDone && !collapsedDomains.has(domainKey)) {
-      setTimeout(() => {
-        collapsedDomains.add(domainKey);
-        saveCollapseState();
-        renderQuests();
-      }, 800);
-    }
-  }
-
-  // Sigil flash on quest completion — repointed July 3 (the old
-  // #domain-quests-<dk> selector matched nothing since the domain-page
-  // refactor; the flash had been dead juice).
+  // Sigil flash — repointed July 3 (the old #domain-quests-<dk> selector
+  // matched nothing since the domain-page refactor; the flash was dead juice).
   const sigil = document.querySelector('.domain-page-sigil');
-  if (domainKey && sigil) {
+  if (sigil && (r.kind === 'workout' || domainKey)) {
     sigil.classList.remove('sigil-flash');
     void sigil.offsetWidth;
     sigil.classList.add('sigil-flash');
     sigil.addEventListener('animationend', () => sigil.classList.remove('sigil-flash'), { once: true });
   }
 
-  // Data first, ceremony second (never gate the write on the animation).
-  saveData();
-  renderQuests();
-  renderHeader();
+  if (r.kind === 'workout') {
+    if (r.writeDate !== today) {
+      notify(`Workout logged to ${r.writeDate}. Today's workout is still open.`, 5000);
+    } else if (!r.isFirst) {
+      notify(`Workout added — ${r.workoutCount} today.`);
+    } else if (window.juice) {
+      juice.playLogMoment({ qid, reward: r.reward, total: r.total, prevToday: r.prevToday, newToday: r.newToday });
+    } else {
+      notify('Workout logged. +' + r.total + ' XP gained.');
+    }
+    checkSeals();
+    return;
+  }
+
+  // Auto-collapse the domain once the core reports every quest in it done.
+  if (r.allDoneDomain && domainKey && !collapsedDomains.has(domainKey)) {
+    setTimeout(() => {
+      collapsedDomains.add(domainKey);
+      saveCollapseState();
+      renderQuests();
+    }, 800);
+  }
 
   // Tier-1 log moment: reveal settles → ghost carries revealed amount →
   // tally rolls up. juice.js handles the tally holdback.
   if (window.juice) {
-    juice.playLogMoment({ qid, reward, total: totalXp, prevToday, newToday: todayXpEarned });
+    juice.playLogMoment({ qid, reward: r.reward, total: r.total, prevToday: r.prevToday, newToday: r.newToday });
   } else {
-    notify('Quest logged. +' + totalXp + ' XP gained.');
+    notify('Quest logged. +' + r.total + ' XP gained.');
   }
   checkSeals();
 }
