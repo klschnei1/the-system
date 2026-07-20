@@ -12,43 +12,45 @@
 // months while the inline fork carried every real fix. So: extract by
 // moving, and land the caller in the same commit. No orphan window.
 //
-// ── STATE OWNERSHIP (the honest caveat) ────────────────────────────────
-// system.html holds `data`, `todayLog`, `todayXpEarned` as bare top-level
-// `let`s. A top-level `let` lives in the global DECLARATIVE record: shared
-// across every classic script on the page, but NOT a property of window.
-// So `window.data` is undefined (the bug that wedged juice's mode()), while
-// a bare `data` reference from this file WOULD resolve — which is exactly
-// how intake.js / finance.js / forecast.js reach it today.
+// ── STATE OWNERSHIP — closed July 19, 2026 ─────────────────────────────
+// The core OWNS the state (SleeveCore.state) and publishes it as window
+// accessors at the bottom of this file. It no longer borrows it.
 //
-// This file deliberately does not do that. Reaching for a binding that
-// another file happened to declare is invisible coupling: it makes this
-// module look self-contained while silently requiring system.html to have
-// loaded first (drop it in a page without system.html and every bare `data`
-// throws ReferenceError). That is the same cosmetic independence that let
-// datastore.js rot. So verbs take an explicit ctx instead:
+// What it used to be: `data`, `todayLog`, `todayXpEarned` were bare
+// top-level `let`s in system.html. A top-level `let` lands in the global
+// DECLARATIVE record — reachable as a bare identifier from any classic
+// script, but absent from `window` (which is why `window.data` read
+// undefined and wedged juice's mode()). intake.js / finance.js /
+// forecast.js all reached `data` that way: invisible coupling that made
+// each look self-contained while silently requiring system.html first.
 //
-//   ctx = { data, todayLog, todayXpEarned }
+// The migration looked enormous and wasn't. ~300 of the reference sites are
+// READS, and reads never had to change — an accessor keeps every bare
+// reference working verbatim. Only 3 declarations and 12 assignments were
+// real work. Counting the reads is what made this look unaffordable for
+// four months; the estimate was the obstacle, not the code.
 //
-// `data` and `todayLog` are object references, so in-place mutation is
-// visible to the caller. `todayXpEarned` is a number (copied), so the
-// Result carries `newToday` back and the caller MUST assign it — a verb
-// that forgets loses XP silently. That asymmetry is a bug farm and is the
-// clearest argument for the core owning state outright.
-//
-// This is a seam, not a finished boundary: the core borrows state, so a
-// second sleeve still can't stand alone (it would have to produce `data`
-// itself, duplicating initDataStore + rollover + re-entry). Closing it =
-// moving ownership here and rewriting ~316 reference sites in system.html.
-// Deliberately NOT bundled with this extraction: mixing a semantic change
-// with a vast mechanical rename destroys bisectability if XP math breaks.
-// That is also the exact reasoning that deferred this work for four months,
-// so it is logged as a named open gap in spine.md, not as prose.
+// It also deletes a whole bug class. Under the old borrow-a-ctx design,
+// `data`/`todayLog` mutated in place (objects) but `todayXpEarned` copied
+// (primitive), so the Result had to carry `newToday` back and every caller
+// had to remember to assign it — forget once and XP vanishes silently.
+// With one owned copy that asymmetry does not exist.
 //
 // Depends on globals from other files: getTodayStr() + saveData()
 // (system.html), rollQuestReward() (sensei.js).
 // ═══════════════════════════════════════════════════════════════════════
 
 const SleeveCore = {
+
+  // ── THE STATE. The core owns it; sleeves borrow references. ──────────
+  // Previously three bare `let`s in system.html, which made every module
+  // that touched them a hidden fragment of that file. Now there is one
+  // owner and the identifiers below are views onto it.
+  state: {
+    data: {},          // the persisted document (CSS_DATA.json shape)
+    todayLog: {},      // questId -> entry, for the current 3:30am-boundary day
+    todayXpEarned: 0   // XP earned today; a PRIMITIVE, hence the accessor
+  },
 
   // ── logQuest's data half ─────────────────────────────────────────────
   // Everything finishLogQuest did EXCEPT rendering. Behavior must be
@@ -60,9 +62,9 @@ const SleeveCore = {
   //     ok, kind: 'workout'|'quest', total, prevToday, newToday, reward,
   //     writeDate, isFirst, domainKey, workoutCount?, allDoneDomain, error?
   //   }
-  finishLog(ctx, args) {
-    const { data, todayLog } = ctx;
-    let todayXpEarned = ctx.todayXpEarned;
+  finishLog(args) {
+    const { data, todayLog } = this.state;
+    let todayXpEarned = this.state.todayXpEarned;
     const { qid, xp, quest, domainKey, note, extraData, targetDate } = args;
 
     const today = getTodayStr();
@@ -102,6 +104,7 @@ const SleeveCore = {
       dayLog.note = `${dayLog.workouts.length} workout${dayLog.workouts.length !== 1 ? 's' : ''}`;
       if (writeDate === today) todayLog[qid] = dayLog;   // past-date log leaves today open
 
+      this.state.todayXpEarned = todayXpEarned;   // commit the primitive
       saveData();
 
       return {
@@ -149,6 +152,7 @@ const SleeveCore = {
     }
 
     // Data first, ceremony second (never gate the write on the animation).
+    this.state.todayXpEarned = todayXpEarned;   // commit the primitive
     saveData();
 
     return {
@@ -161,3 +165,27 @@ const SleeveCore = {
 };
 
 window.SleeveCore = SleeveCore;
+
+// ── PUBLISH THE STATE ──────────────────────────────────────────────────
+// `data`, `todayLog` and `todayXpEarned` used to be bare top-level `let`s in
+// system.html. A top-level `let` lands in the global DECLARATIVE record —
+// reachable as a bare identifier from any classic script, but absent from
+// `window`. That is how intake.js/finance.js/forecast.js read `data` today,
+// and it is invisible coupling: those files look self-contained while
+// silently requiring system.html to have loaded first.
+//
+// Defining them as accessors on `window` keeps every existing bare reference
+// working verbatim (~300 reads across system.html + the domain modules) while
+// routing all of them through the core's single owned copy. So the migration
+// touches declarations and assignments only — reads never had to change, and
+// the ownership question is settled rather than deferred again.
+//
+// Sleeves that don't load system.html read SleeveCore.state directly.
+['data', 'todayLog', 'todayXpEarned'].forEach(key => {
+  Object.defineProperty(window, key, {
+    get() { return SleeveCore.state[key]; },
+    set(v) { SleeveCore.state[key] = v; },
+    configurable: true,
+    enumerable: true
+  });
+});
