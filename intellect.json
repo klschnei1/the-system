@@ -1,46 +1,42 @@
 {
-  "generatedAt": "2026-07-19T20:25:30-04:00",
+  "generatedAt": "2026-07-22T15:19:36-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-15",
-    "daysRemaining": 58
+    "daysRemaining": 55
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
-    "label": "(Jul 13–17) — Week 3 of July",
-    "deliverable": "*Not yet set — Karl to fill in.*",
+    "label": "(Jul 20–24) — Week 4 of July",
+    "deliverable": "*Proposed — the Fig-1 exoRNA composition breakdown (nearest external commitment: Bianca, ~Aug 1). Karl to confirm or replace.*",
     "groups": [
       {
-        "heading": "Ovarian — ChIP",
+        "heading": "exoRNA — read the Stage-2/3 output → Fig 1 composition",
         "tasks": [
           {
-            "done": true,
-            "text": "Run full `03_spp_peakcalling.sbatch` (job 38394) → 20 IP peak sets; QC (NSC/RSC + counts) pulled"
-          },
-          {
-            "done": true,
-            "text": "Diagnose results: 2 failure modes (shallow SKOV3 Tier-2 reps; dead HEYA8 Rb/p130 IPs); usable = SKOV3 Rb/p130 + HEYA8 E2F1/E2F4/LIN54"
-          },
-          {
-            "done": true,
-            "text": "`04b_idr_pseudorep.sbatch` built (self-pseudorep rescue: SKOV3 E2F1 + LIN54; SPP caller, PE-aware split)"
+            "done": false,
+            "text": "**Inspect the slurm output from the tRNA / sRNA / gDNA indexing + alignment run** — stages 2 and 3 are built and have already run; this is the blocking step"
           },
           {
             "done": false,
-            "text": "Finish `04a_truerepidr.sbatch` (Karl — option B: derive pairs from `samples.tsv` + non-empty guard)"
+            "text": "Build the fractional-abundance / composition table → **send to Bianca ASAP** (she has already defended; this is a self-set priority, not an external deadline)"
           },
           {
             "done": false,
-            "text": "Sync 04a + 04b to HRI → run both"
+            "text": "Confirm MDA231_rep1 rRNA fraction → closes Stage 1 (pull `passing E-value` from `sortmerna/MDA231_rep1/*_rRNA.log`; also feeds the rRNA-burden figure)"
           },
           {
             "done": false,
-            "text": "Stage 05: deepTools supervised signal at reference regions (salvage HEYA8 Rb/p130) + annotate reproducible peaks → intersect RNA-seq DE genes"
+            "text": "Build `theme_exo.R` (ACS specs) + stacked-composition figure"
+          },
+          {
+            "done": false,
+            "text": "Revisit the open `DECISION` blocks in the Stage-3 scaffold (esp. PE merge-vs-concordant-pair, line 63) before any numbers go in the paper"
           }
         ],
-        "done": 3,
-        "total": 6,
+        "done": 0,
+        "total": 5,
         "backlog": false
       },
       {
@@ -56,16 +52,328 @@
           },
           {
             "done": false,
+            "text": "**Split the PAR 1× vs 5× dose-response by cell line** (separate DE runs, or `~ cell_line * condition`) — the pooled contrast cannot test the cross-line arm asymmetry the ChIP suggests"
+          },
+          {
+            "done": false,
             "text": "Fig 2 from the DE results: PCA / volcano / MA"
           }
         ],
         "done": 0,
-        "total": 3,
+        "total": 4,
         "backlog": false
       },
       {
-        "heading": "CRISPR — this week",
+        "heading": "Ovarian — ChIP",
         "tasks": [
+          {
+            "done": true,
+            "text": "**Sequencing forensics (7/21):** demux stats show all 12 ChIP libraries got 10.8–26M reads; the four low-yield SKOV3 Tier-2 IPs failed on **library complexity**, not depth. Re-sequencing recovers nothing → **re-ChIP is the remedy.** Pooling and run quality were both fine."
+          },
+          {
+            "done": false,
+            "text": "**Resolve the peak-count discrepancy vs Goetsch** (his counts are higher at `-npeak=40000` vs Karl's 300000). Two live candidates, both about method differences rather than a defect: (a) **ask Goetsch whether he deduplicates and blacklists** — Karl runs the full ENCODE cascade (`markdup -r`, `-f 2 -q 30 -F 1804`, blacklist) and retained 37%; skipping dedup on ~67%-duplicate libraries would give ~3× the reads into peak calling; (b) check whether PE BAMs went into SPP without tagAlign/R1 conversion — **SPP is a single-end tool** and estimates fragment length by strand cross-correlation"
+          },
+          {
+            "done": true,
+            "text": "~~ALT-contig hypothesis~~ — **excluded 7/21.** Index was built from `GRCh38.primary_assembly.genome.fa`, which carries no ALT contigs or patches. Re-aligning to `no_alt_analysis_set` would change nothing."
+          },
+          {
+            "done": false,
+            "text": "Truncating regionPeaks to 40k as a test — **rejected** (Karl): IDR is designed to consume a relaxed peak list and needs the noise tail to fit its irreproducible component; truncating adds stringency mid-pipeline and lowers the ceiling"
+          },
+          {
+            "done": false,
+            "text": "**Test the E2F4/E2F5 hypothesis from existing data** — pull `E2F4`, `E2F5`, `E2F1`, `E2F2`, `RBL1` normalized counts from the DESeq2 object; E2F5 ≫ E2F4 would convert the gap into a specific antibody order"
+          },
+          {
+            "done": false,
+            "text": "**Test E2F4 antibody cross-reactivity** — `bedtools jaccard` HEYA8 E2F4 pre-IDR peaks vs HEYA8 E2F1 peaks"
+          },
+          {
+            "done": false,
+            "text": "Motif analysis underneath the carrier peaks — E2F sites (`TTTSSCGC`/`GCGSSAAA`) under E2F1/Rb; CHR (`TTYGAA`) under LIN54/p130/E2F4. HOMER or MEME-ChIP/CentriMo"
+          },
+          {
+            "done": false,
+            "text": "Cross-factor overlap (`bedtools intersect`/`jaccard`, UpSet) — test the predicted LIN54/E2F4/p130 and E2F1/Rb groupings, and the partial-but-imperfect overlap between them"
+          },
+          {
+            "done": false,
+            "text": "deepTools promoter heatmap: proliferating RNA-seq then treated RNA-seq, ordered by ChIP signal"
+          },
+          {
+            "done": false,
+            "text": "Set up IGV for track-level peak inspection"
+          },
+          {
+            "done": false,
+            "text": "Load samtools on HRI → exact read counts + duplicate rates to replace the BAM-size estimates"
+          },
+          {
+            "done": false,
+            "text": "Confirm what the final-filter step drops on the low-complexity libraries (MAPQ vs proper-pair vs blacklist) — retention was 9–12% vs 37% on the good pair"
+          },
+          {
+            "done": false,
+            "text": "**Order/validate a new E2F4 antibody** — E2F4 produced nothing usable in either cell line across 4 libraries at good depth, and it is the subunit that defines DREAM. Consider adding E2F5 and p107."
+          },
+          {
+            "done": true,
+            "text": "**Inventoried what's on HRI (7/21).** RNA is **complete** — all 42 libraries present and trimmed in `PAR/RNA/fastp` (18 core DE + 6 reversibility + 9 FT282 + 9 prolif). ChIP runs 018 + 019 all present. **Only `PG015S–X` are missing** — the six run-15 ChIP pilots."
+          },
+          {
+            "done": false,
+            "text": "**Recover all six run-15 ChIP libraries — Karl wants the complete set.** `PG015W` HEYA8 pRb r1 (fills the biggest gap; run 018's HEYA8 Rb died) · `PG015V` SKOV3 E2F4 r1 (SKOV3 E2F4 has nothing) · `PG015U` SKOV3 E2F1 r1 (would restore a true-rep pair) · `PG015S/T` SKOV3 pRb r1/r2 · `PG015X` HEYA8 E2F1 r1. Route: check for run-15 SampleSheet + `Undetermined*.fastq.gz` on HRI → re-demux locally; otherwise `bs list runs` and pull from BaseSpace."
+          },
+          {
+            "done": false,
+            "text": "Verify the real `PG015U`/`PG015V` index pairs from the run-15 SampleSheet — the manifest records i709+i504 for both, which Karl believes is a transcription error rather than a true collision"
+          },
+          {
+            "done": false,
+            "text": "Check read structure of the run-15 pilots (SE vs PE, read length) before folding them into the 018/019 pipeline — SE would actually suit SPP better than the current PE libraries"
+          },
+          {
+            "done": false,
+            "text": "Confirm all 42 RNA libraries have STAR count tables (`ls PAR/RNA/star/*ReadsPerGene* | wc -l`) — fastqs present ≠ counts generated"
+          },
+          {
+            "done": false,
+            "text": "**Agree comparison criteria with Goetsch before parallel ChIP runs** — genome build, blacklist, input pooling scheme, IDR threshold. He has not run SPP or IDR yet."
+          },
+          {
+            "done": false,
+            "text": "Intersect the carrier IDR peaks (HEYA8 E2F1, SKOV3 p130, HEYA8 LIN54) with the DESeq2 DE results — ChIPseeker annotate to nearest TSS, then test against the dose-response gene sets"
+          },
+          {
+            "done": false,
+            "text": "Build the QC-discriminator table (per IP: reads · NSC · RSC · quality tag · NRF/PBC · median fragment size · IDR peaks) — separates technical failure from biological absence before any claim"
+          },
+          {
+            "done": false,
+            "text": "Reinvestigate reps that looked healthy but collapsed at IDR — esp. HEYA8_E2F4 (53,661 peaks in one rep, 0 surviving) and SKOV3_LIN54"
+          },
+          {
+            "done": false,
+            "text": "Stage 05: deepTools supervised signal at motif-anchored promoters (Rb+E2F1 at E2F sites; p130+E2F4+LIN54 at CHR/CDE) → annotate peaks → intersect RNA-seq DE"
+          },
+          {
+            "done": false,
+            "text": "Fix the cosmetic `04a` echo label (\"single-replicate tier\" copied from 04b)"
+          }
+        ],
+        "done": 3,
+        "total": 24,
+        "backlog": false
+      },
+      {
+        "heading": "Today's three",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Acquire the 6 remaining run-15 ChIP fastqs (`PG015S–X`)"
+          },
+          {
+            "done": true,
+            "text": "~~Generate counts for the remaining RNA samples~~ — **already complete: 42/42 `ReadsPerGene` present; job 38670 COMPLETED all tasks.** RNA is done through counts."
+          },
+          {
+            "done": true,
+            "text": "Visualize the exoRNA characterization results — `04_plot_composition.R` + a new `theme_exo.R` built; figures in `R_Projects/exorna/figures/`. **BUT the composition figure is premature — see the pipeline issues below. Don't send it yet.**"
+          },
+          {
+            "done": false,
+            "text": "**⚠ THE LOAD-BEARING FIX: the classify cascade runs PE-concordant on small-RNA inserts.** `03_classify_smallrna.sbatch` DECISION 1 (line ~59): inserts (~20–35 nt) are shorter than the 101 nt reads, so concordant PE alignment fails and dumps real small RNA into `--un-conc` → unassigned. This likely **deflates tRNA/miRNA AND inflates unassigned at the same time.** Fix = merge mates first (`fastp --merge`), run the cascade single-end, diff the composition. Do this before trusting any of the tRNA/miRNA/unassigned numbers."
+          },
+          {
+            "done": false,
+            "text": "rRNA numbers **already exist** — `code/exorna/figures/fig_rRNA_burden.R` has them from the 7/19 SortMeRNA logs: MDA231 95.0/89.5/80.0%, MCF10a 12.1/7.2/6.3%. No pull needed; feed these into the two-tier Fig 1 (Panel A = rRNA split, Panel B = non-rRNA breakdown)."
+          },
+          {
+            "done": false,
+            "text": "tRNA near-zero is **partly reference too**: index is genomic GtRNAdb (missing 3′ CCA) + end-to-end-ish alignment. Test whether tRNA is hiding in the `genome` bin (intersect the kept genome BAM with tRNA loci) — the QC block at the bottom of the classify script already logged \"rRNA reads also mapping tRNA\", so check those logs first."
+          },
+          {
+            "done": false,
+            "text": "miRNA may be **inflated**: index is miRBase `hsa_hairpin` (precursor, ~85 nt), not mature, with `--local -L 18` → permissive. Verify via read-length distribution of miRNA-assigned reads (real mature = ~22 nt) and whether they concentrate on MDA231-expressed miRNAs."
+          },
+          {
+            "done": false,
+            "text": "**Nothing in the exoRNA pipeline is deduped.** For small-RNA bins that's arguably correct (no UMIs; identical real molecules). For the mito/gDNA finding, measure duplication (`samtools markdup -s` on the genome BAM, as a readout not a removal) to pressure-test it."
+          },
+          {
+            "done": false,
+            "text": "**⚠ MDA231_rep1 chrM = a finding, not an artifact to discard** (Karl's reframe): MDA231 EVs are mito-enriched *consistently* (reps 2/3 at 2–4% = 15–30× MCF10a's 0.1%; rep1 at 47% = ~300×). Real EV-mtDNA biology (breast-cancer EV mtDNA transfer lit, e.g. Sansone PNAS ~2017 — verify). Show all three reps; the cargo-vs-co-purified question needs a DNase protection assay (future work), not exclusion."
+          },
+          {
+            "done": false,
+            "text": "**⚠ Duplicate `theme_exo.R` — reconcile before committing.** Two files, incompatible token names: `code/exorna/theme_exo.R` (new, `EXO_CLASS_COLORS`/`EXO_LINE_COLORS`) and `code/exorna/figures/theme_exo.R` (7/19, `pal_class`/`pal_cellline`/`ink_*`). `fig_rRNA_burden.R` sources the latter. Merge to one canonical theme."
+          },
+          {
+            "done": false,
+            "text": "Send Bianca the composition table + figure only after the PE-merge rerun; the rRNA split (Panel A) is solid now and could go earlier if she needs something."
+          }
+        ],
+        "done": 2,
+        "total": 11,
+        "backlog": false
+      },
+      {
+        "heading": "CT gene project — Goetsch wants it as Aim 3; Karl is given the data, not the pipeline",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Ask Goetsch what's needed for the **intro/background**, plus pipeline detail updates"
+          },
+          {
+            "done": false,
+            "text": "**Answer Goetsch's question:** which normal tissues have a stem compartment (feeds the UpSetR figure)"
+          },
+          {
+            "done": false,
+            "text": "Fig 1: body map + bar graph (GDC Data Portal style) — rebin normal-tissue groupings to cancer assignments; samples per tissue of origin; 2D static"
+          },
+          {
+            "done": false,
+            "text": "UpSetR: germ / stem / embryonic stem cells vs the CT gene list; find stem samples per major tissue-of-origin grouping"
+          },
+          {
+            "done": false,
+            "text": "Box/violin: cancer types vs CT gene list (+ tissue-specific stem data where available)"
+          },
+          {
+            "done": false,
+            "text": "Tumor vs testis Venn → break out by stage (violin of raw counts, does it rise by stage?) and by diagnosis. **No stats** — no real control"
+          },
+          {
+            "done": false,
+            "text": "Decide what to group and what to drop among normal tissues / cancers"
+          },
+          {
+            "done": false,
+            "text": "Color-code tissues so similar tissues get similar colors — decide the similarity axis (germ layer? disease similarity?)"
+          },
+          {
+            "done": false,
+            "text": "Metastasis gating — **solved: TCGA barcode field 4** (`01` primary, `02` recurrent, `06` metastatic, `11` normal); make primary-only vs primary+met an explicit shown comparison"
+          },
+          {
+            "done": false,
+            "text": "Open problem: how to summarize the many quick breakouts into one coherent result"
+          }
+        ],
+        "done": 0,
+        "total": 10,
+        "backlog": false
+      },
+      {
+        "heading": "Ovarian — visualization workflow",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Build the UCSC Genome Browser workflow. **Use input-normalized bigWigs, not raw BAMs** (`bamCompare --operation log2`) — Goetsch flagged that BAMs don't adjust for Input. Prefer a **track hub** over custom tracks: persists between sessions, groups by sample, avoids uploading whole BAMs"
+          },
+          {
+            "done": false,
+            "text": "Adopt the figure-output convention: **vector PDF + accompanying CSV of the raw numbers**"
+          }
+        ],
+        "done": 0,
+        "total": 2,
+        "backlog": false
+      },
+      {
+        "heading": "Wet lab — flow repeat this week",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Tue night: treat — **PAR** on SKOV3 + HEYA8; **P+N / P / N** on HT1080 + HEPG2"
+          },
+          {
+            "done": false,
+            "text": "Wed night: remove drug"
+          },
+          {
+            "done": false,
+            "text": "Thu morning: run flow"
+          },
+          {
+            "done": false,
+            "text": "Still unresolved: an effective viability assay — no method settled yet"
+          }
+        ],
+        "done": 0,
+        "total": 4,
+        "backlog": false
+      },
+      {
+        "heading": "CRISPR — narrow the ddPCR failure",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Three hypotheses live (overloading · cycling conditions · assay design). Test cheapest first: dilution series on one sample (λ 0.5→5) → Ta gradient + more cycles/longer extension → design last. Confirm HaeIII digest went to completion."
+          }
+        ],
+        "done": 0,
+        "total": 1,
+        "backlog": false
+      },
+      {
+        "heading": "Review — through August: register, screen, start writing",
+        "tasks": [
+          {
+            "done": true,
+            "text": "PROSPERO **v4** registration — full field pass and **submitted Jul 20**; status \"New (publishing)\", awaiting CRD editorial check. Unblocks Dallas."
+          },
+          {
+            "done": true,
+            "text": "Search Strategy v4.0 rebuilt as a standalone doc (`~/Downloads/SearchStrategy_v4.0.pdf` / `.docx`) — cytoprotection restored as Aim 2, English-only, RB–DREAM framing, librarian/PRESS references removed, strings unchanged from v3.0"
+          },
+          {
+            "done": false,
+            "text": "Troubleshoot the remaining database exports (incl. Cochrane CENTRAL RIS) — search strings themselves are working"
+          },
+          {
+            "done": false,
+            "text": "Ask Goetsch whether he wants to be listed as a PROSPERO review team member — registered with Karl + Dallas only; adding him later is a routine amendment"
+          },
+          {
+            "done": true,
+            "text": "Dallas has Covidence access and **has begun screening**"
+          },
+          {
+            "done": false,
+            "text": "Decide cytoprotection handling (discussion paragraph vs. sub-search)"
+          }
+        ],
+        "done": 3,
+        "total": 6,
+        "backlog": false
+      },
+      {
+        "heading": "CRISPR",
+        "tasks": [
+          {
+            "done": true,
+            "text": "Donor DNA PCR protocol v2 → Goetsch template .docx — built (`protocols/Donor DNA PCR Protocol v2.docx`) with the two-phase cycling logic. **3 blanks before PI signoff:** cycler ID, saved program name, confirm primer stock = 10 µM. Cycling section to be finalized from the test-run winner"
+          },
+          {
+            "done": false,
+            "text": "**Run the touchdown-vs-gradient PCR test** (6× 50 µL: 5 gradient 56–64 °C + 1 rebuilt touchdown, +NTC) → 1.5% gel → AMPure 0.8× on winners → Qubit. Setup logged 7/21. Pick winning program, then production prep at winning conditions (template → ~1 ng)"
+          },
+          {
+            "done": true,
+            "text": "Inspected `LongPhusionTD` — **it's been flattened from a touchdown** (14 cycles fixed-high + 16 fixed-low, name unchanged; someone edited the preset without renaming). Rebuild as real touchdown + save under owned name (`DONOR_2PHASE_KS`); still transcribe the current params before overwriting"
+          },
+          {
+            "done": false,
+            "text": "Find the 100 µM primer stock tubes (not in the expected freezer box) — needed to remake working aliquots; degraded aliquot is a suspect if on-temp lanes come in weak"
+          },
+          {
+            "done": false,
+            "text": "Ask Goetsch for the in-house SeraPure recipe: PEG-8000 % (w/v), NaCl molarity, whether the buffer was filtered, Sera-Mag cat #"
+          },
           {
             "done": false,
             "text": "⚠ Export ddPCR results off the droplet-reader laptop — data-loss risk, do it while at the machine"
@@ -75,36 +383,12 @@
             "text": "7/15 short-HDR ddPCR plate: HEPG2 / HT1080 / MDA, plus 1 HEYA8 rep as a cross-run bridge; reserve freed wells for NTC + WT-unedited negative + HDR-positive control (oligo at 2–6 fM in-reaction)"
           }
         ],
-        "done": 0,
-        "total": 2,
+        "done": 2,
+        "total": 7,
         "backlog": false
       },
       {
-        "heading": "exoRNA — run Stage 3 → Fig 1 composition",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Stage 2 indices BUILT (7/17, job `idx_38894`): `hg38_tRNA.*.bt2` + `hsa_hairpin.*.bt2` both complete on HRI. miRBase URL fix confirmed working (full 6.1 MB `hairpin.fa` pulled; `idx_38668` had died on the stale URL the day before)."
-          },
-          {
-            "done": false,
-            "text": "**NEXT: run `03_classify_smallrna.sbatch`** (array 0–5) → per-sample `classify/<sample>.class_counts.tsv` = the Fig-1 composition breakdown. Pre-flight: confirm SortMeRNA `--other` suffix matches (`_non_rRNA_fwd/_rev.fq.gz`) + all 6 samples present incl. MDA231_rep1. Draft-figure pass runs the scaffold as-is; the open `DECISION` blocks (esp. PE merge-vs-concordant-pair, line 63) get revisited before the numbers go in the paper."
-          },
-          {
-            "done": false,
-            "text": "Confirm MDA231_rep1 rRNA fraction → closes Stage 1 (pull `passing E-value` from `sortmerna/MDA231_rep1/*_rRNA.log`; also feeds the rRNA-burden figure)"
-          },
-          {
-            "done": false,
-            "text": "Build `theme_exo.R` (ACS specs) + stacked-composition figure for the Bianca meeting"
-          }
-        ],
-        "done": 1,
-        "total": 4,
-        "backlog": false
-      },
-      {
-        "heading": "Carried forward — CRISPR wet lab",
+        "heading": "Carried forward",
         "tasks": [
           {
             "done": false,
@@ -129,35 +413,7 @@
           {
             "done": false,
             "text": "Review MDA FlowJo viability data (anomalous results)"
-          }
-        ],
-        "done": 0,
-        "total": 6,
-        "backlog": true
-      },
-      {
-        "heading": "Methods citations",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Started **per-paper** methods bibliographies (7/17): `code/ovarian/methods_citations.md` (ChIP+RNA, one file), `code/exorna/methods_citations.md`, `code/crispr/methods_citations.md` (stub). 10 core tools (Bowtie2, SAMtools, SPP, fastp, STAR, DESeq2, apeglm, SortMeRNA, SPORTS1.0, exceRpt) **PubMed-verified**"
           },
-          {
-            "done": false,
-            "text": "Verify the ⚠ rows (IDR/Landt/deepTools/ChIPseeker; miRBase/GtRNAdb/GENCODE; org.Hs.eg.db; CRISPR stub tools) + fill pinned versions from `conda list` / `sessionInfo()`"
-          },
-          {
-            "done": false,
-            "text": "(proposed) Citation-coverage lint hook — flag tools invoked in `code/<paper>/` that lack a row in that paper's `methods_citations.md` (**detector only** — cannot auto-write citations; those need PubMed + judgment)"
-          }
-        ],
-        "done": 1,
-        "total": 3,
-        "backlog": false
-      },
-      {
-        "heading": "Carried forward — figures and writing",
-        "tasks": [
           {
             "done": false,
             "text": "Westerns: FIJI quantification of the 6/25 TotalStain-Q repeat images (Fig 1)"
@@ -173,89 +429,57 @@
           {
             "done": false,
             "text": "ASBMB abstract — due **Sept 4** for oral/poster eligibility (repurpose the 6/26 CSHL draft; ≤300 char title, 800–3000 char body)"
-          }
-        ],
-        "done": 0,
-        "total": 4,
-        "backlog": true
-      },
-      {
-        "heading": "Carried forward — review",
-        "tasks": [
-          {
-            "done": false,
-            "text": "PROSPERO v2 amendment (title, outcomes, drop cytoprotection) — unblocks Dallas"
           },
           {
             "done": false,
-            "text": "Give Dallas the v2 search-strategy docx + Covidence access"
-          },
-          {
-            "done": false,
-            "text": "Decide cytoprotection handling (discussion paragraph vs. sub-search)"
+            "text": "Verify the ⚠ methods-citation rows (IDR/Landt/deepTools/ChIPseeker; miRBase/GtRNAdb/GENCODE; org.Hs.eg.db; CRISPR stub tools) + fill pinned versions from `conda list` / `sessionInfo()`"
           },
           {
             "done": false,
             "text": "Archive `Review Resources/`"
-          }
-        ],
-        "done": 0,
-        "total": 4,
-        "backlog": true
-      },
-      {
-        "heading": "Carried forward — career",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Apply to Anthropic **Research Scientist, Life Sciences (Experimental Biology)** — the bench-first RS variant (best-fit reach: molecular biology / biochem / functional screens, soft ML bar). JD: greenhouse.io/anthropic/jobs/5285250008. Light-tailor résumé to foreground wet-lab before submitting."
-          }
-        ],
-        "done": 0,
-        "total": 1,
-        "backlog": true
-      },
-      {
-        "heading": "Carried forward — system",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Lab notebook auto-renders on session end (`render_pending.py` on Stop hook); backfilled 11 entries, notebook current"
-          },
-          {
-            "done": true,
-            "text": "Dashboard auto-rebuilds on session end (`build_dashboard.py` on Stop hook)"
           },
           {
             "done": false,
-            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\"; point at the real `file://` path, not the temporary preview server"
+            "text": "Career (cap ~2 hr/wk; PhD first): apply to Anthropic **Research Scientist, Life Sciences (Experimental Biology)** — bench-first RS variant. JD: greenhouse.io/anthropic/jobs/5285250008. Light-tailor résumé to foreground wet-lab first"
+          },
+          {
+            "done": false,
+            "text": "Chapter 3 decision: Goetsch favors the CT gene project, Casey and Dr. Rao were wary — settle with the committee in writing (see `SCHEDULE.md`)"
+          },
+          {
+            "done": false,
+            "text": "Finish dissolving `code/dashboard_state.md` — `parse_hard_deadlines` still reads it; move onto SCHEDULE.md's milestone table, then delete the file"
+          },
+          {
+            "done": false,
+            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\"; point at the real `file://` path"
+          },
+          {
+            "done": false,
+            "text": "(optional) Citation-coverage lint hook — flag tools invoked in `code/<paper>/` lacking a row in that paper's `methods_citations.md` (**detector only**)"
           },
           {
             "done": false,
             "text": "(optional) Entry-shape lint hook — flag missing required sections + images-mentioned-but-absent"
           },
           {
-            "done": false,
-            "text": "(optional) Start `protocols/`; distill `ddPCR drop-off v1` from the 7/1 + 7/2 entries (Karl corrects chemistry)"
+            "done": true,
+            "text": "(optional) Start `protocols/` — created 7/20, holds the Goetsch template + donor-DNA draft"
           },
           {
             "done": false,
-            "text": "Dissolve `code/dashboard_state.md` — `build_dashboard.py` reads it in two places (`parse_papers`, `parse_hard_deadlines`); papers status/next should derive from LOCK.md + TASKS.md, hard deadlines from SCHEDULE.md"
-          },
-          {
-            "done": false,
-            "text": "LOCK.md `## Projects` statuses are stale and contradict LOCK.md's own Current phase (ovarian bullet still says \"urgent next step: figure drafts\"); the bridge feeds that text to the INTELLECT widget"
+            "text": "(optional) Distill `ddPCR drop-off v1` into `protocols/` from the 7/1 + 7/2 entries (Karl corrects chemistry)"
           }
         ],
-        "done": 2,
-        "total": 7,
+        "done": 1,
+        "total": 20,
         "backlog": true
       }
     ],
-    "focusDone": 5,
-    "focusTotal": 18,
-    "doneTotal": 7,
-    "taskTotal": 40,
+    "focusDone": 10,
+    "focusTotal": 74,
+    "doneTotal": 11,
+    "taskTotal": 94,
     "blockers": [
       "None active."
     ]
@@ -263,52 +487,117 @@
   "projects": [
     {
       "name": "The ovarian paper",
-      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells. RNA-seq and ChIP-seq data now on HRI (June 17); processed ovarian RNA-seq (STAR, Oct 2024) located, pending confirmation it's the cocktail samples. Tier 2 ChIP sequenced in the June run; Tier 1 ChIP to pull from BaseSpace. Westerns being repeated again (Paul requested; Zach learning) — this round with total-protein (Q) normalization. Draft so far: outline + 2 intro drafts + methods draft; no full draft yet. Urgent next step: figure drafts (DESeq2/volcano/PCA/MA), even on incomplete data, to surface what needs repeating.",
-      "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells."
+      "status": "ChIP through stage-04 IDR. Carriers: HEYA8 E2F1 (2027 peaks), SKOV3 p130 (230), HEYA8 LIN54 (215). **Failure cause resolved 7/21:** the four low-yield SKOV3 Tier-2 IPs were sequenced normally (15–19M reads each) and failed on **library complexity** — re-sequencing recovers nothing, re-ChIP is the remedy. E2F4 unusable across both cell lines → antibody. RNA: 33 STAR counts local, DESeq2 design `~ cell_line + condition`; dose-response contrast still pools both lines. **Karl is ahead of Goetsch on ChIP analysis** (Goetsch has not run SPP or IDR); plan is parallel runs, then compare. Both RNA and ChIP are missing samples that live on other runs.",
+      "short": "ChIP through stage-04 IDR.",
+      "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition). Quiescence/EOC. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "next": "QC-discriminator table (separate technical failure from biological absence) → stage-05 deepTools supervised signal. Intersect carrier IDR peaks with DESeq2 DE. Split RNA dose-response by cell line. Recover the off-run samples. Karl writing DESeq2 Block 3."
     },
     {
       "name": "The CRISPR paper",
-      "status": "palbociclib + nocodazole synergy for CRISPR/HDR rates (enhancing CRISPR efficiency / HDR outcomes). **Data collection NOT complete:** ≥2 transfections remain (HT1080 + HEPG2 long HDR) and most ddPCR samples still need running. ddPCR so far (HEYA8 only): palbo alone and noc alone ~3–5 hits/µL; palbo+noc ~12–15 hits/µL — synergistic effect. ddPCR probes ordered; consumables/plasticware still needed. T7 on HEYA8 gRNA-only (June 18) inconclusive — likely low DSB rate (controls cut fine).",
-      "short": "palbociclib + nocodazole synergy for CRISPR/HDR rates (enhancing CRISPR efficiency / HDR outcomes)."
+      "status": "Data collection **incomplete**. HEPG2 long-HDR transfection remains; most ddPCR still to run. HEYA8 ddPCR shows palbo+noc synergy (~12–15 vs ~3–5 hits/µL). 7/15 sHDR plate failed; **three live hypotheses — overloading, cycling conditions, assay design — none excluded.** ~half the HDR probe stock consumed.",
+      "short": "Data collection **incomplete**.",
+      "identity": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency, read out by ddPCR and T7 endonuclease assay across HEYA8, HT1080, HEPG2. Dissertation Aim 2. First-author, methods paper.",
+      "next": "Narrow the ddPCR failure to one cause (dilution series → Ta gradient → design). HEPG2 transfection; work the backlog."
     },
     {
       "name": "The review",
-      "status": "systematic review with pooled analysis of CDK4/6 inhibitors in non-breast/non-haematological solid tumors. RB1 pathway integrity framing (see `review/strategic-reframe-napkin.md`). With Dallas (also her masters report). Dissertation Chapter 1. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary). Pipeline: Zotero (dedup) → Covidence (screening) → Elicit (AI-assisted extraction, verify manually) → R + metafor (meta-analysis). Risk of bias: Newcastle-Ottawa (observational) + RoB 2 (RCTs).",
-      "short": "systematic review with pooled analysis of CDK4/6 inhibitors in non-breast/non-haematological solid tumors."
+      "status": "**PROSPERO registration completed and submitted Jul 20 2026.** **v4 is expected to be final.** Search strings working across databases; **Dallas has begun screening in Covidence.** Scope: two aims (antitumor efficacy + myeloprotection), RB–DREAM as *exploratory* moderator, biomarker-reporting completeness as the confirmatory co-primary, breast + haematological excluded at screening, English-only. Open: troubleshooting some database exports (incl. Cochrane CENTRAL RIS). **Manuscript target: spring 2027.**",
+      "short": "**PROSPERO registration completed and submitted Jul 20 2026.** **v4 is expected to be final.** Search strings working across databases; **Dallas has begun screening in Covidence.** Scope: two aims (antitumor efficacy + myeloprotection), RB–DREAM as *exploratory* moderator, biomarker-reporting completeness as the confirmatory co-primary, breast + haematological excluded at screening, English-only.",
+      "identity": "systematic review + pooled analysis of CDK4/6 inhibitors in non-breast, non-haematological solid tumors, framed on the **RB–DREAM axis** (`review/strategic-reframe-napkin.md`). With Dallas, for whom it doubles as her masters report. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary).",
+      "next": "Finish the database exports → keep Dallas screening → start writing. Target through Aug: enough prose to feed the dissertation intro/background."
+    },
+    {
+      "name": "The exosome paper (Bianca's)",
+      "status": "**Stages 2 and 3 are built and have run** — indexing/alignment complete for tRNA, sRNA, and gDNA. Slurm output not yet inspected. **Bianca has already defended**; this paper was not gating her defense, so ~Aug 1 is a self-set priority, not an external hard deadline. Karl is 2nd/3rd author.",
+      "short": "**Stages 2 and 3 are built and have run** — indexing/alignment complete for tRNA, sRNA, and gDNA.",
+      "identity": "small-EV RNA characterization in MDA-MB-231 vs MCF10A (n=3 each). Bianca's paper; **Karl is 2nd or 3rd author**, a substantive slot rather than a courtesy one. His contribution spans bench and analysis: RNA isolation, library prep, and sequencing, then the Fig-1 composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. Co-authored publication, outside the dissertation.",
+      "next": "Read the slurm output → fractional-abundance / Fig-1 composition table to Bianca ASAP. Fastest available win."
+    },
+    {
+      "name": "The CT gene paper",
+      "status": "Newly logged (7/20). Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand. Karl's contribution is lit review + terminology/ontology + discussion.",
+      "short": "Newly logged (7/20).",
+      "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "next": "Begin the literature review."
     },
     {
       "name": "The dissertation",
-      "status": "three chapters from the three papers. Skeleton cleaned and scaffolded (all 3 chapters, full section headers). Full draft to committee by September 15, 2026.",
-      "short": "three chapters from the three papers."
+      "status": "Skeleton scaffolded, 3 chapters. **Chapter 3 contested:** Goetsch favors the CT gene project; Casey and Dr. Rao were wary. Unresolved.",
+      "short": "Skeleton scaffolded, 3 chapters.",
+      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers. **Chapter 3 is contested** (Goetsch favors the CT gene project; Casey and Dr. Rao were wary) — status and the path to resolving it are in `SCHEDULE.md`. Skeleton scaffolded with full section headers.",
+      "next": "Get Ch. 3 settled with the committee, in writing — it sets what gets written before Sep 15."
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-19",
-    "daysSinceLastEntry": 0,
+    "lastEntryDate": "2026-07-21",
+    "daysSinceLastEntry": 1,
     "recentEntries": [
       {
-        "date": "2026-07-19 (Sat)",
+        "date": "2026-07-21 (Tue)",
         "contexts": [
-          "Cell passage: HEYA8, SKOV3, HT1080, HEPG2 (T25 → 10 cm)"
+          "Donor DNA PCR: cycling-condition test, touchdown vs two-phase gradient (setup; gel pending)",
+          "CRISPR paper (Aim 2). Generating the mScarlet-PCNA HDR donor — the homology-arm PCR fragment for transfection. Setup + rationale logged now; gel result and photo to be appended when run."
         ]
       },
       {
-        "date": "2026-07-16 (Thu)",
+        "date": "2026-07-21 (Tue)",
         "contexts": [
-          "RNA-seq dose-response (PAR 1x vs 5x): DREAM/E2F program, senescence + degradation ruled out",
-          "Ovarian paper (quiescence/EOC), RNA-seq Fig 2. Exploring the DESeq2 contrasts (PAR1x_P0 and PAR5x, each vs Untreated; design `~ cell_line + condition`, reverse-stranded col 4; lfcShrink apeglm). PAR = 24 h abema/palbo/ribo cocktail, 1× (330/330/667 nM) vs 5×."
+          "exoRNA: read the classify script; the composition numbers are premature (three upstream issues) + chrM reframe",
+          "Exosome paper. Follow-up after reading `03_classify_smallrna.sbatch` and reconsidering the composition figure. Corrects framing in the earlier entries today."
         ]
       },
       {
-        "date": "2026-07-16 (Thu)",
+        "date": "2026-07-21 (Tue)",
         "contexts": [
-          "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
-          "Ovarian paper (quiescence/EOC), ChIP-seq. Stage-04 IDR follow-up to the 7/16 SPP peak-calling run (job 38394)."
+          "exoRNA Stage-3 results read; Fig-1 composition figures built; two QC flags",
+          "Exosome paper (Bianca's). Stages 2–3 had already run; this session read the output and built the composition figure."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:14993fb1fc87",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Session 7/21: ChIP forensics, exoRNA composition + pipeline audit, Goetsch 1:1",
+      "date": "2026-07-22"
+    },
+    {
+      "id": "commit:eb73a04239e4",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Memory: CT gene project, outside-lab contacts, build-before-documenting",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "commit:ebfcf4326d40",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Read project status from SCHEDULE; widen the deadline parser",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "commit:bfbc200b5417",
+      "kind": "commit",
+      "xp": 24,
+      "label": "Add staleness hooks for the week and the schedule; scope the log guard",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "commit:b8e97adb7c2c",
+      "kind": "commit",
+      "xp": 25,
+      "label": "Restructure the operating layer: one horizon and one trigger per file",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "commit:04288e35262b",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Carry in prior-session work: exoRNA Stage-3 tweak, figures, notebook + memory",
+      "date": "2026-07-20"
+    },
     {
       "id": "commit:94b240917a3a",
       "kind": "commit",
@@ -541,69 +830,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:27261330e40c",
-      "kind": "lab",
-      "xp": 20,
-      "label": "HT1080 v4 CRISPR transfection; phospho/total-Rb blots developed",
-      "date": "2026-06-25"
-    },
-    {
-      "id": "lab:08104de447ed",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Operational: notebook system, deadline restructure, INTELLECT fix, CSHL abstract draft",
-      "date": "2026-06-26"
-    },
-    {
-      "id": "lab:f23dc795e388",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ExoRNA STAR index: checked for shared refs, building v46",
-      "date": "2026-06-25"
-    },
-    {
-      "id": "lab:1d576d389028",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ExoRNA STAR index built; alignment queued",
-      "date": "2026-06-30"
-    },
-    {
-      "id": "lab:a8553d81e6ca",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ExoRNA alignment done; gDNA contamination QC finding",
-      "date": "2026-06-30"
-    },
-    {
-      "id": "lab:70138c2d1834",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR ddPCR (drop-off) rare-event run: plate design + prep",
-      "date": "2026-07-01"
-    },
-    {
-      "id": "lab:f1c5ac184a4b",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Exploratory DESeq2 confirms gDNA confound; DE not the deliverable",
-      "date": "2026-07-01"
-    },
-    {
-      "id": "lab:ee71eae836ce",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ddPCR run executed (as run) + team bench work",
-      "date": "2026-07-02"
-    },
-    {
-      "id": "lab:6ccfae900a88",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Tooling: Homebrew/Node, impeccable skill, gamified dashboard",
-      "date": "2026-07-05"
-    },
-    {
       "id": "lab:4c9231795e2b",
       "kind": "lab",
       "xp": 20,
@@ -714,6 +940,69 @@
       "xp": 20,
       "label": "Cell passage: HEYA8, SKOV3, HT1080, HEPG2 (T25 → 10 cm)",
       "date": "2026-07-19"
+    },
+    {
+      "id": "lab:f809ceca66ba",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Donor DNA PCR protocol v2: cycling conditions derived from primer structure; bead/sterility decisions recorded",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "lab:f4a61a7de0c8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "PROSPERO registration submitted; review scope settled at two aims",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "lab:1771ecb60fea",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Sequencing forensics: the four \"shallow\" SKOV3 Tier-2 IPs were sequenced fine; failure is library complexity",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:f4e67822f6be",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Corrections to project state from the Goetsch prep session",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:8bd18a608800",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Goetsch 1:1: ChIP direction, the peak-count discrepancy, and the \"quiescence program\" framing",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:306abf2d023b",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Goetsch 1:1 part 2: visualization workflow, and the CT gene project as Aim 3",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:9de923dc0e06",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA Stage-3 results read; Fig-1 composition figures built; two QC flags",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:7d9be13cc356",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA: read the classify script; the composition numbers are premature (three upstream issues) + chrM reframe",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "lab:dbfc591d20c4",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Donor DNA PCR: cycling-condition test, touchdown vs two-phase gradient (setup; gel pending)",
+      "date": "2026-07-21"
     }
   ]
 }
