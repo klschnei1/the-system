@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T15:19:36-04:00",
+  "generatedAt": "2026-07-22T20:34:57-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -447,12 +447,24 @@
             "text": "Chapter 3 decision: Goetsch favors the CT gene project, Casey and Dr. Rao were wary — settle with the committee in writing (see `SCHEDULE.md`)"
           },
           {
-            "done": false,
-            "text": "Finish dissolving `code/dashboard_state.md` — `parse_hard_deadlines` still reads it; move onto SCHEDULE.md's milestone table, then delete the file"
+            "done": true,
+            "text": "Dissolve `code/dashboard_state.md` — its last fact (Sep 4 ASBMB) already lived as a SCHEDULE milestone; removed `parse_hard_deadlines` + the file (2026-07-22)"
           },
           {
             "done": false,
             "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\"; point at the real `file://` path"
+          },
+          {
+            "done": false,
+            "text": "**`code/` cohesion pass — sticks tier** (low-risk subset; see [[straw-sticks-brick-maturity]]): `git mv code/chipseq → code/ovarian/chipseq`, `code/figures → code/ovarian/figures`; reconcile the **duplicate `theme_exo.R`** (`code/exorna/theme_exo.R` vs `code/exorna/figures/theme_exo.R`); refresh live-doc path mentions in `CLAUDE.md`/`SKILL.md`. Leaves the hooked tooling scripts + `.claude/settings.json` untouched. Claude maps, Karl runs the moves."
+          },
+          {
+            "done": false,
+            "text": "**Brick tier (later):** make tooling scripts depth-independent (anchor to repo root via a marker, not `parent.parent`), then the `system/` regroup + `settings.json` update becomes cheap; then build `check.py` (the \"compiler\") — static invariant checks that fail loud on SessionStart"
+          },
+          {
+            "done": false,
+            "text": "**Learning-engagement experiment:** build a spaced-repetition flashcard deck of the systems-design vocabulary from the 7/22 session (server/client/API/tool/MCP/skill/harness/runtime×2/cache/database/node×3/cohesion/coupling/cybernetics/polysemy). Active recall + dual-coding + light gamification; optional per-concept sigil for the \"strange\" layer"
           },
           {
             "done": false,
@@ -471,15 +483,15 @@
             "text": "(optional) Distill `ddPCR drop-off v1` into `protocols/` from the 7/1 + 7/2 entries (Karl corrects chemistry)"
           }
         ],
-        "done": 1,
-        "total": 20,
+        "done": 2,
+        "total": 23,
         "backlog": true
       }
     ],
     "focusDone": 10,
     "focusTotal": 74,
-    "doneTotal": 11,
-    "taskTotal": 94,
+    "doneTotal": 12,
+    "taskTotal": 97,
     "blockers": [
       "None active."
     ]
@@ -556,6 +568,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:fe163750a7cf",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Session 7/22: dissolve dashboard_state.md; systems-design session memory",
+      "date": "2026-07-22"
+    },
     {
       "id": "commit:14993fb1fc87",
       "kind": "commit",
