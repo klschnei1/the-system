@@ -1,500 +1,21 @@
 {
-  "generatedAt": "2026-07-22T20:34:57-04:00",
+  "generatedAt": "2026-07-31T18:00:04-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
-    "date": "2026-09-15",
-    "daysRemaining": 55
+    "date": "2026-09-26",
+    "daysRemaining": 57
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
-    "label": "(Jul 20–24) — Week 4 of July",
-    "deliverable": "*Proposed — the Fig-1 exoRNA composition breakdown (nearest external commitment: Bianca, ~Aug 1). Karl to confirm or replace.*",
-    "groups": [
-      {
-        "heading": "exoRNA — read the Stage-2/3 output → Fig 1 composition",
-        "tasks": [
-          {
-            "done": false,
-            "text": "**Inspect the slurm output from the tRNA / sRNA / gDNA indexing + alignment run** — stages 2 and 3 are built and have already run; this is the blocking step"
-          },
-          {
-            "done": false,
-            "text": "Build the fractional-abundance / composition table → **send to Bianca ASAP** (she has already defended; this is a self-set priority, not an external deadline)"
-          },
-          {
-            "done": false,
-            "text": "Confirm MDA231_rep1 rRNA fraction → closes Stage 1 (pull `passing E-value` from `sortmerna/MDA231_rep1/*_rRNA.log`; also feeds the rRNA-burden figure)"
-          },
-          {
-            "done": false,
-            "text": "Build `theme_exo.R` (ACS specs) + stacked-composition figure"
-          },
-          {
-            "done": false,
-            "text": "Revisit the open `DECISION` blocks in the Stage-3 scaffold (esp. PE merge-vs-concordant-pair, line 63) before any numbers go in the paper"
-          }
-        ],
-        "done": 0,
-        "total": 5,
-        "backlog": false
-      },
-      {
-        "heading": "Ovarian — RNA",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Write `02_deseq2.R` Block 3 (count load, **column 4** — reverse-stranded) — Karl-led, in RStudio"
-          },
-          {
-            "done": false,
-            "text": "Write Blocks 4, 5, 7 (colData + reference levels; DESeqDataSet + `~ cell_line + condition` + prefilter; contrasts)"
-          },
-          {
-            "done": false,
-            "text": "**Split the PAR 1× vs 5× dose-response by cell line** (separate DE runs, or `~ cell_line * condition`) — the pooled contrast cannot test the cross-line arm asymmetry the ChIP suggests"
-          },
-          {
-            "done": false,
-            "text": "Fig 2 from the DE results: PCA / volcano / MA"
-          }
-        ],
-        "done": 0,
-        "total": 4,
-        "backlog": false
-      },
-      {
-        "heading": "Ovarian — ChIP",
-        "tasks": [
-          {
-            "done": true,
-            "text": "**Sequencing forensics (7/21):** demux stats show all 12 ChIP libraries got 10.8–26M reads; the four low-yield SKOV3 Tier-2 IPs failed on **library complexity**, not depth. Re-sequencing recovers nothing → **re-ChIP is the remedy.** Pooling and run quality were both fine."
-          },
-          {
-            "done": false,
-            "text": "**Resolve the peak-count discrepancy vs Goetsch** (his counts are higher at `-npeak=40000` vs Karl's 300000). Two live candidates, both about method differences rather than a defect: (a) **ask Goetsch whether he deduplicates and blacklists** — Karl runs the full ENCODE cascade (`markdup -r`, `-f 2 -q 30 -F 1804`, blacklist) and retained 37%; skipping dedup on ~67%-duplicate libraries would give ~3× the reads into peak calling; (b) check whether PE BAMs went into SPP without tagAlign/R1 conversion — **SPP is a single-end tool** and estimates fragment length by strand cross-correlation"
-          },
-          {
-            "done": true,
-            "text": "~~ALT-contig hypothesis~~ — **excluded 7/21.** Index was built from `GRCh38.primary_assembly.genome.fa`, which carries no ALT contigs or patches. Re-aligning to `no_alt_analysis_set` would change nothing."
-          },
-          {
-            "done": false,
-            "text": "Truncating regionPeaks to 40k as a test — **rejected** (Karl): IDR is designed to consume a relaxed peak list and needs the noise tail to fit its irreproducible component; truncating adds stringency mid-pipeline and lowers the ceiling"
-          },
-          {
-            "done": false,
-            "text": "**Test the E2F4/E2F5 hypothesis from existing data** — pull `E2F4`, `E2F5`, `E2F1`, `E2F2`, `RBL1` normalized counts from the DESeq2 object; E2F5 ≫ E2F4 would convert the gap into a specific antibody order"
-          },
-          {
-            "done": false,
-            "text": "**Test E2F4 antibody cross-reactivity** — `bedtools jaccard` HEYA8 E2F4 pre-IDR peaks vs HEYA8 E2F1 peaks"
-          },
-          {
-            "done": false,
-            "text": "Motif analysis underneath the carrier peaks — E2F sites (`TTTSSCGC`/`GCGSSAAA`) under E2F1/Rb; CHR (`TTYGAA`) under LIN54/p130/E2F4. HOMER or MEME-ChIP/CentriMo"
-          },
-          {
-            "done": false,
-            "text": "Cross-factor overlap (`bedtools intersect`/`jaccard`, UpSet) — test the predicted LIN54/E2F4/p130 and E2F1/Rb groupings, and the partial-but-imperfect overlap between them"
-          },
-          {
-            "done": false,
-            "text": "deepTools promoter heatmap: proliferating RNA-seq then treated RNA-seq, ordered by ChIP signal"
-          },
-          {
-            "done": false,
-            "text": "Set up IGV for track-level peak inspection"
-          },
-          {
-            "done": false,
-            "text": "Load samtools on HRI → exact read counts + duplicate rates to replace the BAM-size estimates"
-          },
-          {
-            "done": false,
-            "text": "Confirm what the final-filter step drops on the low-complexity libraries (MAPQ vs proper-pair vs blacklist) — retention was 9–12% vs 37% on the good pair"
-          },
-          {
-            "done": false,
-            "text": "**Order/validate a new E2F4 antibody** — E2F4 produced nothing usable in either cell line across 4 libraries at good depth, and it is the subunit that defines DREAM. Consider adding E2F5 and p107."
-          },
-          {
-            "done": true,
-            "text": "**Inventoried what's on HRI (7/21).** RNA is **complete** — all 42 libraries present and trimmed in `PAR/RNA/fastp` (18 core DE + 6 reversibility + 9 FT282 + 9 prolif). ChIP runs 018 + 019 all present. **Only `PG015S–X` are missing** — the six run-15 ChIP pilots."
-          },
-          {
-            "done": false,
-            "text": "**Recover all six run-15 ChIP libraries — Karl wants the complete set.** `PG015W` HEYA8 pRb r1 (fills the biggest gap; run 018's HEYA8 Rb died) · `PG015V` SKOV3 E2F4 r1 (SKOV3 E2F4 has nothing) · `PG015U` SKOV3 E2F1 r1 (would restore a true-rep pair) · `PG015S/T` SKOV3 pRb r1/r2 · `PG015X` HEYA8 E2F1 r1. Route: check for run-15 SampleSheet + `Undetermined*.fastq.gz` on HRI → re-demux locally; otherwise `bs list runs` and pull from BaseSpace."
-          },
-          {
-            "done": false,
-            "text": "Verify the real `PG015U`/`PG015V` index pairs from the run-15 SampleSheet — the manifest records i709+i504 for both, which Karl believes is a transcription error rather than a true collision"
-          },
-          {
-            "done": false,
-            "text": "Check read structure of the run-15 pilots (SE vs PE, read length) before folding them into the 018/019 pipeline — SE would actually suit SPP better than the current PE libraries"
-          },
-          {
-            "done": false,
-            "text": "Confirm all 42 RNA libraries have STAR count tables (`ls PAR/RNA/star/*ReadsPerGene* | wc -l`) — fastqs present ≠ counts generated"
-          },
-          {
-            "done": false,
-            "text": "**Agree comparison criteria with Goetsch before parallel ChIP runs** — genome build, blacklist, input pooling scheme, IDR threshold. He has not run SPP or IDR yet."
-          },
-          {
-            "done": false,
-            "text": "Intersect the carrier IDR peaks (HEYA8 E2F1, SKOV3 p130, HEYA8 LIN54) with the DESeq2 DE results — ChIPseeker annotate to nearest TSS, then test against the dose-response gene sets"
-          },
-          {
-            "done": false,
-            "text": "Build the QC-discriminator table (per IP: reads · NSC · RSC · quality tag · NRF/PBC · median fragment size · IDR peaks) — separates technical failure from biological absence before any claim"
-          },
-          {
-            "done": false,
-            "text": "Reinvestigate reps that looked healthy but collapsed at IDR — esp. HEYA8_E2F4 (53,661 peaks in one rep, 0 surviving) and SKOV3_LIN54"
-          },
-          {
-            "done": false,
-            "text": "Stage 05: deepTools supervised signal at motif-anchored promoters (Rb+E2F1 at E2F sites; p130+E2F4+LIN54 at CHR/CDE) → annotate peaks → intersect RNA-seq DE"
-          },
-          {
-            "done": false,
-            "text": "Fix the cosmetic `04a` echo label (\"single-replicate tier\" copied from 04b)"
-          }
-        ],
-        "done": 3,
-        "total": 24,
-        "backlog": false
-      },
-      {
-        "heading": "Today's three",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Acquire the 6 remaining run-15 ChIP fastqs (`PG015S–X`)"
-          },
-          {
-            "done": true,
-            "text": "~~Generate counts for the remaining RNA samples~~ — **already complete: 42/42 `ReadsPerGene` present; job 38670 COMPLETED all tasks.** RNA is done through counts."
-          },
-          {
-            "done": true,
-            "text": "Visualize the exoRNA characterization results — `04_plot_composition.R` + a new `theme_exo.R` built; figures in `R_Projects/exorna/figures/`. **BUT the composition figure is premature — see the pipeline issues below. Don't send it yet.**"
-          },
-          {
-            "done": false,
-            "text": "**⚠ THE LOAD-BEARING FIX: the classify cascade runs PE-concordant on small-RNA inserts.** `03_classify_smallrna.sbatch` DECISION 1 (line ~59): inserts (~20–35 nt) are shorter than the 101 nt reads, so concordant PE alignment fails and dumps real small RNA into `--un-conc` → unassigned. This likely **deflates tRNA/miRNA AND inflates unassigned at the same time.** Fix = merge mates first (`fastp --merge`), run the cascade single-end, diff the composition. Do this before trusting any of the tRNA/miRNA/unassigned numbers."
-          },
-          {
-            "done": false,
-            "text": "rRNA numbers **already exist** — `code/exorna/figures/fig_rRNA_burden.R` has them from the 7/19 SortMeRNA logs: MDA231 95.0/89.5/80.0%, MCF10a 12.1/7.2/6.3%. No pull needed; feed these into the two-tier Fig 1 (Panel A = rRNA split, Panel B = non-rRNA breakdown)."
-          },
-          {
-            "done": false,
-            "text": "tRNA near-zero is **partly reference too**: index is genomic GtRNAdb (missing 3′ CCA) + end-to-end-ish alignment. Test whether tRNA is hiding in the `genome` bin (intersect the kept genome BAM with tRNA loci) — the QC block at the bottom of the classify script already logged \"rRNA reads also mapping tRNA\", so check those logs first."
-          },
-          {
-            "done": false,
-            "text": "miRNA may be **inflated**: index is miRBase `hsa_hairpin` (precursor, ~85 nt), not mature, with `--local -L 18` → permissive. Verify via read-length distribution of miRNA-assigned reads (real mature = ~22 nt) and whether they concentrate on MDA231-expressed miRNAs."
-          },
-          {
-            "done": false,
-            "text": "**Nothing in the exoRNA pipeline is deduped.** For small-RNA bins that's arguably correct (no UMIs; identical real molecules). For the mito/gDNA finding, measure duplication (`samtools markdup -s` on the genome BAM, as a readout not a removal) to pressure-test it."
-          },
-          {
-            "done": false,
-            "text": "**⚠ MDA231_rep1 chrM = a finding, not an artifact to discard** (Karl's reframe): MDA231 EVs are mito-enriched *consistently* (reps 2/3 at 2–4% = 15–30× MCF10a's 0.1%; rep1 at 47% = ~300×). Real EV-mtDNA biology (breast-cancer EV mtDNA transfer lit, e.g. Sansone PNAS ~2017 — verify). Show all three reps; the cargo-vs-co-purified question needs a DNase protection assay (future work), not exclusion."
-          },
-          {
-            "done": false,
-            "text": "**⚠ Duplicate `theme_exo.R` — reconcile before committing.** Two files, incompatible token names: `code/exorna/theme_exo.R` (new, `EXO_CLASS_COLORS`/`EXO_LINE_COLORS`) and `code/exorna/figures/theme_exo.R` (7/19, `pal_class`/`pal_cellline`/`ink_*`). `fig_rRNA_burden.R` sources the latter. Merge to one canonical theme."
-          },
-          {
-            "done": false,
-            "text": "Send Bianca the composition table + figure only after the PE-merge rerun; the rRNA split (Panel A) is solid now and could go earlier if she needs something."
-          }
-        ],
-        "done": 2,
-        "total": 11,
-        "backlog": false
-      },
-      {
-        "heading": "CT gene project — Goetsch wants it as Aim 3; Karl is given the data, not the pipeline",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Ask Goetsch what's needed for the **intro/background**, plus pipeline detail updates"
-          },
-          {
-            "done": false,
-            "text": "**Answer Goetsch's question:** which normal tissues have a stem compartment (feeds the UpSetR figure)"
-          },
-          {
-            "done": false,
-            "text": "Fig 1: body map + bar graph (GDC Data Portal style) — rebin normal-tissue groupings to cancer assignments; samples per tissue of origin; 2D static"
-          },
-          {
-            "done": false,
-            "text": "UpSetR: germ / stem / embryonic stem cells vs the CT gene list; find stem samples per major tissue-of-origin grouping"
-          },
-          {
-            "done": false,
-            "text": "Box/violin: cancer types vs CT gene list (+ tissue-specific stem data where available)"
-          },
-          {
-            "done": false,
-            "text": "Tumor vs testis Venn → break out by stage (violin of raw counts, does it rise by stage?) and by diagnosis. **No stats** — no real control"
-          },
-          {
-            "done": false,
-            "text": "Decide what to group and what to drop among normal tissues / cancers"
-          },
-          {
-            "done": false,
-            "text": "Color-code tissues so similar tissues get similar colors — decide the similarity axis (germ layer? disease similarity?)"
-          },
-          {
-            "done": false,
-            "text": "Metastasis gating — **solved: TCGA barcode field 4** (`01` primary, `02` recurrent, `06` metastatic, `11` normal); make primary-only vs primary+met an explicit shown comparison"
-          },
-          {
-            "done": false,
-            "text": "Open problem: how to summarize the many quick breakouts into one coherent result"
-          }
-        ],
-        "done": 0,
-        "total": 10,
-        "backlog": false
-      },
-      {
-        "heading": "Ovarian — visualization workflow",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Build the UCSC Genome Browser workflow. **Use input-normalized bigWigs, not raw BAMs** (`bamCompare --operation log2`) — Goetsch flagged that BAMs don't adjust for Input. Prefer a **track hub** over custom tracks: persists between sessions, groups by sample, avoids uploading whole BAMs"
-          },
-          {
-            "done": false,
-            "text": "Adopt the figure-output convention: **vector PDF + accompanying CSV of the raw numbers**"
-          }
-        ],
-        "done": 0,
-        "total": 2,
-        "backlog": false
-      },
-      {
-        "heading": "Wet lab — flow repeat this week",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Tue night: treat — **PAR** on SKOV3 + HEYA8; **P+N / P / N** on HT1080 + HEPG2"
-          },
-          {
-            "done": false,
-            "text": "Wed night: remove drug"
-          },
-          {
-            "done": false,
-            "text": "Thu morning: run flow"
-          },
-          {
-            "done": false,
-            "text": "Still unresolved: an effective viability assay — no method settled yet"
-          }
-        ],
-        "done": 0,
-        "total": 4,
-        "backlog": false
-      },
-      {
-        "heading": "CRISPR — narrow the ddPCR failure",
-        "tasks": [
-          {
-            "done": false,
-            "text": "Three hypotheses live (overloading · cycling conditions · assay design). Test cheapest first: dilution series on one sample (λ 0.5→5) → Ta gradient + more cycles/longer extension → design last. Confirm HaeIII digest went to completion."
-          }
-        ],
-        "done": 0,
-        "total": 1,
-        "backlog": false
-      },
-      {
-        "heading": "Review — through August: register, screen, start writing",
-        "tasks": [
-          {
-            "done": true,
-            "text": "PROSPERO **v4** registration — full field pass and **submitted Jul 20**; status \"New (publishing)\", awaiting CRD editorial check. Unblocks Dallas."
-          },
-          {
-            "done": true,
-            "text": "Search Strategy v4.0 rebuilt as a standalone doc (`~/Downloads/SearchStrategy_v4.0.pdf` / `.docx`) — cytoprotection restored as Aim 2, English-only, RB–DREAM framing, librarian/PRESS references removed, strings unchanged from v3.0"
-          },
-          {
-            "done": false,
-            "text": "Troubleshoot the remaining database exports (incl. Cochrane CENTRAL RIS) — search strings themselves are working"
-          },
-          {
-            "done": false,
-            "text": "Ask Goetsch whether he wants to be listed as a PROSPERO review team member — registered with Karl + Dallas only; adding him later is a routine amendment"
-          },
-          {
-            "done": true,
-            "text": "Dallas has Covidence access and **has begun screening**"
-          },
-          {
-            "done": false,
-            "text": "Decide cytoprotection handling (discussion paragraph vs. sub-search)"
-          }
-        ],
-        "done": 3,
-        "total": 6,
-        "backlog": false
-      },
-      {
-        "heading": "CRISPR",
-        "tasks": [
-          {
-            "done": true,
-            "text": "Donor DNA PCR protocol v2 → Goetsch template .docx — built (`protocols/Donor DNA PCR Protocol v2.docx`) with the two-phase cycling logic. **3 blanks before PI signoff:** cycler ID, saved program name, confirm primer stock = 10 µM. Cycling section to be finalized from the test-run winner"
-          },
-          {
-            "done": false,
-            "text": "**Run the touchdown-vs-gradient PCR test** (6× 50 µL: 5 gradient 56–64 °C + 1 rebuilt touchdown, +NTC) → 1.5% gel → AMPure 0.8× on winners → Qubit. Setup logged 7/21. Pick winning program, then production prep at winning conditions (template → ~1 ng)"
-          },
-          {
-            "done": true,
-            "text": "Inspected `LongPhusionTD` — **it's been flattened from a touchdown** (14 cycles fixed-high + 16 fixed-low, name unchanged; someone edited the preset without renaming). Rebuild as real touchdown + save under owned name (`DONOR_2PHASE_KS`); still transcribe the current params before overwriting"
-          },
-          {
-            "done": false,
-            "text": "Find the 100 µM primer stock tubes (not in the expected freezer box) — needed to remake working aliquots; degraded aliquot is a suspect if on-temp lanes come in weak"
-          },
-          {
-            "done": false,
-            "text": "Ask Goetsch for the in-house SeraPure recipe: PEG-8000 % (w/v), NaCl molarity, whether the buffer was filtered, Sera-Mag cat #"
-          },
-          {
-            "done": false,
-            "text": "⚠ Export ddPCR results off the droplet-reader laptop — data-loss risk, do it while at the machine"
-          },
-          {
-            "done": false,
-            "text": "7/15 short-HDR ddPCR plate: HEPG2 / HT1080 / MDA, plus 1 HEYA8 rep as a cross-run bridge; reserve freed wells for NTC + WT-unedited negative + HDR-positive control (oligo at 2–6 fM in-reaction)"
-          }
-        ],
-        "done": 2,
-        "total": 7,
-        "backlog": false
-      },
-      {
-        "heading": "Carried forward",
-        "tasks": [
-          {
-            "done": false,
-            "text": "HEPG2 long-HDR transfection (still not done)"
-          },
-          {
-            "done": false,
-            "text": "Full-dose long-arm repeat once fresh mScarlet-PCNA fragment is made — the 7/10 long arm was half-dosed (donor shortage), diagnostic only"
-          },
-          {
-            "done": false,
-            "text": "Run the remaining ddPCR backlog (HEYA8 partially done)"
-          },
-          {
-            "done": false,
-            "text": "Viability assay: all cell lines at experimental P+N doses"
-          },
-          {
-            "done": false,
-            "text": "T7 endonuclease: remaining lines (HEYA8 done 6/18 — inconclusive, likely low DSB rate)"
-          },
-          {
-            "done": false,
-            "text": "Review MDA FlowJo viability data (anomalous results)"
-          },
-          {
-            "done": false,
-            "text": "Westerns: FIJI quantification of the 6/25 TotalStain-Q repeat images (Fig 1)"
-          },
-          {
-            "done": false,
-            "text": "Flow cytometry: most data still unanalyzed (Fig 1 material, incl. reversibility)"
-          },
-          {
-            "done": false,
-            "text": "Ovarian paper: full chapter draft"
-          },
-          {
-            "done": false,
-            "text": "ASBMB abstract — due **Sept 4** for oral/poster eligibility (repurpose the 6/26 CSHL draft; ≤300 char title, 800–3000 char body)"
-          },
-          {
-            "done": false,
-            "text": "Verify the ⚠ methods-citation rows (IDR/Landt/deepTools/ChIPseeker; miRBase/GtRNAdb/GENCODE; org.Hs.eg.db; CRISPR stub tools) + fill pinned versions from `conda list` / `sessionInfo()`"
-          },
-          {
-            "done": false,
-            "text": "Archive `Review Resources/`"
-          },
-          {
-            "done": false,
-            "text": "Career (cap ~2 hr/wk; PhD first): apply to Anthropic **Research Scientist, Life Sciences (Experimental Biology)** — bench-first RS variant. JD: greenhouse.io/anthropic/jobs/5285250008. Light-tailor résumé to foreground wet-lab first"
-          },
-          {
-            "done": false,
-            "text": "Chapter 3 decision: Goetsch favors the CT gene project, Casey and Dr. Rao were wary — settle with the committee in writing (see `SCHEDULE.md`)"
-          },
-          {
-            "done": true,
-            "text": "Dissolve `code/dashboard_state.md` — its last fact (Sep 4 ASBMB) already lived as a SCHEDULE milestone; removed `parse_hard_deadlines` + the file (2026-07-22)"
-          },
-          {
-            "done": false,
-            "text": "Install the dashboard as a Dock app — Chrome \"Create Shortcut (open as window)\"; point at the real `file://` path"
-          },
-          {
-            "done": false,
-            "text": "**`code/` cohesion pass — sticks tier** (low-risk subset; see [[straw-sticks-brick-maturity]]): `git mv code/chipseq → code/ovarian/chipseq`, `code/figures → code/ovarian/figures`; reconcile the **duplicate `theme_exo.R`** (`code/exorna/theme_exo.R` vs `code/exorna/figures/theme_exo.R`); refresh live-doc path mentions in `CLAUDE.md`/`SKILL.md`. Leaves the hooked tooling scripts + `.claude/settings.json` untouched. Claude maps, Karl runs the moves."
-          },
-          {
-            "done": false,
-            "text": "**Brick tier (later):** make tooling scripts depth-independent (anchor to repo root via a marker, not `parent.parent`), then the `system/` regroup + `settings.json` update becomes cheap; then build `check.py` (the \"compiler\") — static invariant checks that fail loud on SessionStart"
-          },
-          {
-            "done": false,
-            "text": "**Learning-engagement experiment:** build a spaced-repetition flashcard deck of the systems-design vocabulary from the 7/22 session (server/client/API/tool/MCP/skill/harness/runtime×2/cache/database/node×3/cohesion/coupling/cybernetics/polysemy). Active recall + dual-coding + light gamification; optional per-concept sigil for the \"strange\" layer"
-          },
-          {
-            "done": false,
-            "text": "(optional) Citation-coverage lint hook — flag tools invoked in `code/<paper>/` lacking a row in that paper's `methods_citations.md` (**detector only**)"
-          },
-          {
-            "done": false,
-            "text": "(optional) Entry-shape lint hook — flag missing required sections + images-mentioned-but-absent"
-          },
-          {
-            "done": true,
-            "text": "(optional) Start `protocols/` — created 7/20, holds the Goetsch template + donor-DNA draft"
-          },
-          {
-            "done": false,
-            "text": "(optional) Distill `ddPCR drop-off v1` into `protocols/` from the 7/1 + 7/2 entries (Karl corrects chemistry)"
-          }
-        ],
-        "done": 2,
-        "total": 23,
-        "backlog": true
-      }
-    ],
-    "focusDone": 10,
-    "focusTotal": 74,
-    "doneTotal": 12,
-    "taskTotal": 97,
-    "blockers": [
-      "None active."
-    ]
+    "label": "(Jul 28 – Aug 1)",
+    "deliverable": "the Fig-1 exoRNA composition breakdown → Bianca (fastest available",
+    "groups": [],
+    "focusDone": 0,
+    "focusTotal": 0,
+    "doneTotal": 0,
+    "taskTotal": 0,
+    "blockers": []
   },
   "projects": [
     {
@@ -520,10 +41,10 @@
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "**Stages 2 and 3 are built and have run** — indexing/alignment complete for tRNA, sRNA, and gDNA. Slurm output not yet inspected. **Bianca has already defended**; this paper was not gating her defense, so ~Aug 1 is a self-set priority, not an external hard deadline. Karl is 2nd/3rd author.",
-      "short": "**Stages 2 and 3 are built and have run** — indexing/alignment complete for tRNA, sRNA, and gDNA.",
+      "status": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Karl 2nd/3rd author.",
+      "short": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it).",
       "identity": "small-EV RNA characterization in MDA-MB-231 vs MCF10A (n=3 each). Bianca's paper; **Karl is 2nd or 3rd author**, a substantive slot rather than a courtesy one. His contribution spans bench and analysis: RNA isolation, library prep, and sequencing, then the Fig-1 composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. Co-authored publication, outside the dissertation.",
-      "next": "Read the slurm output → fractional-abundance / Fig-1 composition table to Bianca ASAP. Fastest available win."
+      "next": "Eyeball figures → build Bianca's folder once she shares her draft (drives journal specs/layout). Optional bolder claims: `06` rRNA characterization, `07` unassigned dissection."
     },
     {
       "name": "The CT gene paper",
@@ -541,33 +62,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-21",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-07-31",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-07-21 (Tue)",
+        "date": "2026-07-31 (Fri, cont.)",
         "contexts": [
-          "Donor DNA PCR: cycling-condition test, touchdown vs two-phase gradient (setup; gel pending)",
-          "CRISPR paper (Aim 2). Generating the mScarlet-PCNA HDR donor — the homology-arm PCR fragment for transfection. Setup + rationale logged now; gel result and photo to be appended when run."
+          "exoRNA: length gate shipped + validated across all 6; `05` nuclear-biotype + mito; `04` composition figures built"
         ]
       },
       {
-        "date": "2026-07-21 (Tue)",
+        "date": "2026-07-31 (Fri)",
         "contexts": [
-          "exoRNA: read the classify script; the composition numbers are premature (three upstream issues) + chrM reframe",
-          "Exosome paper. Follow-up after reading `03_classify_smallrna.sbatch` and reconsidering the composition figure. Corrects framing in the earlier entries today."
+          "exoRNA: SE cascade inspected; \"miRNA\" bin is gDNA (length-gate needed); analysis reframed to between-line differential"
         ]
       },
       {
-        "date": "2026-07-21 (Tue)",
+        "date": "2026-07-29 (Wed)",
         "contexts": [
-          "exoRNA Stage-3 results read; Fig-1 composition figures built; two QC flags",
-          "Exosome paper (Bianca's). Stages 2–3 had already run; this session read the output and built the composition figure."
+          "exoRNA classify cascade: load-bearing PE→SE fix, resubmitted"
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d8adfc821368",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Session 7/31: exoRNA Fig-1 composition — length gate, biotype/mito, figures",
+      "date": "2026-07-31"
+    },
     {
       "id": "commit:fe163750a7cf",
       "kind": "commit",
@@ -849,34 +374,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:4c9231795e2b",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Systematic review: v4 PROSPERO docs (scope expanded to two aims)",
-      "date": "2026-07-07"
-    },
-    {
-      "id": "lab:7aedfce9d5c6",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Memory spring-clean: rules reframed as positive targets",
-      "date": "2026-07-07"
-    },
-    {
-      "id": "lab:66212b4c166d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Exosome SortMeRNA deployment; ovarian RNA-seq mockup figures; PROSPERO sourcing",
-      "date": "2026-07-09"
-    },
-    {
-      "id": "lab:bd737d0c6fca",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Ovarian paper: draft is data-blocked, not writing-blocked → taking the RNA-seq + ChIP-seq analysis in-house",
-      "date": "2026-07-10"
-    },
-    {
       "id": "lab:05cbb3405814",
       "kind": "lab",
       "xp": 20,
@@ -1022,6 +519,34 @@
       "xp": 20,
       "label": "Donor DNA PCR: cycling-condition test, touchdown vs two-phase gradient (setup; gel pending)",
       "date": "2026-07-21"
+    },
+    {
+      "id": "lab:4fdea82da236",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Flow harvest (PAR arrest/release); donor DNA cleanup (low recovery); IVT troubleshooting vs NEB docs",
+      "date": "2026-07-23"
+    },
+    {
+      "id": "lab:f1f5c156d314",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA classify cascade: load-bearing PE→SE fix, resubmitted",
+      "date": "2026-07-29"
+    },
+    {
+      "id": "lab:d1b9a6de9658",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA: SE cascade inspected; \"miRNA\" bin is gDNA (length-gate needed); analysis reframed to between-line differential",
+      "date": "2026-07-31"
+    },
+    {
+      "id": "lab:9b4a87d0d946",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA: length gate shipped + validated across all 6; 05 nuclear-biotype + mito; 04 composition figures built",
+      "date": "2026-07-31"
     }
   ]
 }
