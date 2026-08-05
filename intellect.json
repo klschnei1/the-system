@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-07-31T18:00:04-04:00",
+  "generatedAt": "2026-08-05T11:10:26-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-26",
-    "daysRemaining": 57
+    "daysRemaining": 52
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
-    "label": "(Jul 28 – Aug 1)",
-    "deliverable": "the Fig-1 exoRNA composition breakdown → Bianca (fastest available",
+    "label": "(Aug 3 – Aug 7)",
+    "deliverable": "*(proposed — set Monday)* **ddPCR data assessment** — gate/export the",
     "groups": [],
     "focusDone": 0,
     "focusTotal": 0,
@@ -41,51 +41,65 @@
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Karl 2nd/3rd author.",
+      "status": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Karl 2nd/3rd author. **Not done — journal confirmed ACS Biomacromolecules (Aug 3); the figure plan gets reworked around that journal** (methods/bioseparation-paper framing: purity/size/composition of what the separation recovers, not RNA-biology).",
       "short": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it).",
       "identity": "small-EV RNA characterization in MDA-MB-231 vs MCF10A (n=3 each). Bianca's paper; **Karl is 2nd or 3rd author**, a substantive slot rather than a courtesy one. His contribution spans bench and analysis: RNA isolation, library prep, and sequencing, then the Fig-1 composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. Co-authored publication, outside the dissertation.",
-      "next": "Eyeball figures → build Bianca's folder once she shares her draft (drives journal specs/layout). Optional bolder claims: `06` rRNA characterization, `07` unassigned dissection."
+      "next": "**Rework the figure plan for ACS Biomacromolecules** (with Bianca's draft + EV-isolation-method details driving layout). Then bolder claims: `06`/`07` rRNA + unassigned dissection."
     },
     {
       "name": "The CT gene paper",
-      "status": "Newly logged (7/20). Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand. Karl's contribution is lit review + terminology/ontology + discussion.",
-      "short": "Newly logged (7/20).",
+      "status": "**Decided as dissertation Aim 3 (Aug 3).** Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand. Karl's contribution is lit review + terminology/ontology + discussion, plus the Aim-3 figures. Scope for defense: far enough to *write the aim* with tables/visuals — **not** publication-ready.",
+      "short": "**Decided as dissertation Aim 3 (Aug 3).** Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand.",
       "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
-      "next": "Begin the literature review."
+      "next": "Assess normal-tissue→cancer-type groupings → build the body-map visual (target: better than existing body maps). Begin the literature review in parallel."
     },
     {
       "name": "The dissertation",
-      "status": "Skeleton scaffolded, 3 chapters. **Chapter 3 contested:** Goetsch favors the CT gene project; Casey and Dr. Rao were wary. Unresolved.",
+      "status": "Skeleton scaffolded, 3 chapters. **Chapter 3 resolved (Aug 3): CT gene = Aim 3.** Aims 1/2 = ovarian + CRISPR. Anchor: ovarian + CRISPR submission-ready + dissertation draft by early Oct.",
       "short": "Skeleton scaffolded, 3 chapters.",
-      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers. **Chapter 3 is contested** (Goetsch favors the CT gene project; Casey and Dr. Rao were wary) — status and the path to resolving it are in `SCHEDULE.md`. Skeleton scaffolded with full section headers.",
-      "next": "Get Ch. 3 settled with the committee, in writing — it sets what gets written before Sep 15."
+      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers.",
+      "next": "Send committee a heads-up (draft ~late Sept; CT gene as in-progress Aim 3). Then draft ovarian → CRISPR; build CT-gene Aim-3 visuals."
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-07-31",
+    "lastEntryDate": "2026-08-05",
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-07-31 (Fri, cont.)",
+        "date": "2026-08-05 (Wed, cont.)",
         "contexts": [
-          "exoRNA: length gate shipped + validated across all 6; `05` nuclear-biotype + mito; `04` composition figures built"
+          "session close: message to Paul, learning system stood up"
         ]
       },
       {
-        "date": "2026-07-31 (Fri)",
+        "date": "2026-08-05 (Wed)",
         "contexts": [
-          "exoRNA: SE cascade inspected; \"miRNA\" bin is gDNA (length-gate needed); analysis reframed to between-line differential"
+          "ChIP: Goetsch's QC read out; both blocking unknowns resolved; a retraction"
         ]
       },
       {
-        "date": "2026-07-29 (Wed)",
+        "date": "2026-08-04 (Tue, cont.)",
         "contexts": [
-          "exoRNA classify cascade: load-bearing PE→SE fix, resubmitted"
+          "ChIP: Goetsch pipeline pulled + diffed against `code/chipseq/`"
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:826c0691a6b8",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Memory index: active-learning contract",
+      "date": "2026-08-05"
+    },
+    {
+      "id": "commit:5c9412d5e393",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Session 8/4-8/5: Goetsch ChIP pipeline diffed; his QC settles E2F4/p130; learning deck",
+      "date": "2026-08-05"
+    },
     {
       "id": "commit:d8adfc821368",
       "kind": "commit",
@@ -374,48 +388,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:05cbb3405814",
-      "kind": "lab",
-      "xp": 20,
-      "label": "HEPG2 + HT1080 CRISPR HDR transfection (v4, short + long arms)",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "lab:2f0d79216541",
-      "kind": "lab",
-      "xp": 20,
-      "label": "BaseSpace CLI live on HRI; Run 018 pull staged + ChIP pipeline scaffolded",
-      "date": "2026-07-12"
-    },
-    {
-      "id": "lab:b6d134ce15b9",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Exosome Stage-1 (rRNA) results in: MDA231 is rRNA-dominated",
-      "date": "2026-07-13"
-    },
-    {
-      "id": "lab:447a6a9c695b",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ChIP peak-calling pivoted to SPP+IDR (test running); ovarian RNA counts local; exoRNA rep1 resubmitted",
-      "date": "2026-07-13"
-    },
-    {
-      "id": "lab:04a8cc8f4e7c",
-      "kind": "lab",
-      "xp": 20,
-      "label": "State-of-play inventory + tomorrow's short-HDR ddPCR plan",
-      "date": "2026-07-14"
-    },
-    {
-      "id": "lab:3e95e38ee383",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Restructured the three live files; fixed a silently-broken INTELLECT feed",
-      "date": "2026-07-15"
-    },
-    {
       "id": "lab:831f373e38fb",
       "kind": "lab",
       "xp": 20,
@@ -547,6 +519,48 @@
       "xp": 20,
       "label": "exoRNA: length gate shipped + validated across all 6; 05 nuclear-biotype + mito; 04 composition figures built",
       "date": "2026-07-31"
+    },
+    {
+      "id": "lab:677e8aa233f7",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA: figure strategy locked; journal/framing confirmed; fragment-length scripts written",
+      "date": "2026-07-31"
+    },
+    {
+      "id": "lab:426f588991f1",
+      "kind": "lab",
+      "xp": 20,
+      "label": "cell culture: SKOV3 western setup (underseeded), HEPG2 flow re-plate, passages; BSC swap",
+      "date": "2026-08-03"
+    },
+    {
+      "id": "lab:242773b0221f",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Goetsch meeting: his ChIP pipeline handed over; exoRNA framing + a DNase-protection idea",
+      "date": "2026-08-04"
+    },
+    {
+      "id": "lab:68a567436dc5",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ChIP: Goetsch pipeline pulled + diffed against code/chipseq/",
+      "date": "2026-08-04"
+    },
+    {
+      "id": "lab:de56a1fa3f9d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ChIP: Goetsch's QC read out; both blocking unknowns resolved; a retraction",
+      "date": "2026-08-05"
+    },
+    {
+      "id": "lab:e9cc3f12738a",
+      "kind": "lab",
+      "xp": 20,
+      "label": "session close: message to Paul, learning system stood up",
+      "date": "2026-08-05"
     }
   ]
 }
