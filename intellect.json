@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-05T22:55:45-04:00",
+  "generatedAt": "2026-08-05T23:06:07-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -15,8 +15,16 @@
         "heading": "The three",
         "tasks": [
           {
+            "done": true,
+            "text": "**ddPCR — assess → gate + export. DONE Aug 5.** All runs pulled off the QX Manager laptop to"
+          },
+          {
             "done": false,
-            "text": "**ddPCR — assess → gate + export.** Go upstairs to the QuantaLife laptop, do the manual"
+            "text": "**Re-run the sHDR arm at 4–8× dilution** — the one bench action falling out of the above."
+          },
+          {
+            "done": false,
+            "text": "**Run the 7/2 drop-off plate through `ddpcr_regate.R`** (no lab needed): fix the reader for the"
           },
           {
             "done": false,
@@ -27,15 +35,15 @@
             "text": "**SKOV3 western rescue + gRNA triage gel.** Decide the kept SKOV3 plate (top up vs re-plate)"
           }
         ],
-        "done": 0,
-        "total": 3,
+        "done": 1,
+        "total": 5,
         "backlog": false
       }
     ],
-    "focusDone": 0,
-    "focusTotal": 3,
-    "doneTotal": 0,
-    "taskTotal": 3,
+    "focusDone": 1,
+    "focusTotal": 5,
+    "doneTotal": 1,
+    "taskTotal": 5,
     "blockers": [
       "None hard-blocking. Watch: (1) \"CRISPR bench done ~Aug 15\" is the load-bearing assumption for Ch 2 — if it slips, Ch 2 goes lean and ~Sept 26 tightens. (2) gRNA quality could be gating editing across the board — triage gel resolves. (3) August = last wet-lab month (Karl+Paul, Jul 30): remaining bench scope = ddPCR → viability → flow → SKOV3 western; anything unfinished by end of Aug is dropped, not carried. Order reagents this month — assess ddPCR data first to know what to order."
     ]
@@ -89,6 +97,12 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-08-05 (Wed, cont. 3)",
+        "contexts": [
+          "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out"
+        ]
+      },
+      {
         "date": "2026-08-05 (Wed, cont. 2)",
         "contexts": [
           "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca"
@@ -99,16 +113,17 @@
         "contexts": [
           "session close: message to Paul, learning system stood up"
         ]
-      },
-      {
-        "date": "2026-08-05 (Wed)",
-        "contexts": [
-          "ChIP: Goetsch's QC read out; both blocking unknowns resolved; a retraction"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:5c6220ef3bbd",
+      "kind": "commit",
+      "xp": 16,
+      "label": "ddPCR 8/5: notebook entry + TASKS — assay usable, 7/16 was overloading",
+      "date": "2026-08-05"
+    },
     {
       "id": "commit:2f13501f9c73",
       "kind": "commit",
@@ -418,13 +433,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:d86591be2c36",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Lab notebook auto-renders; the real bug was a missing trigger, not schema drift",
-      "date": "2026-07-16"
-    },
-    {
       "id": "lab:d8d9c8f1b340",
       "kind": "lab",
       "xp": 20,
@@ -590,6 +598,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca",
+      "date": "2026-08-05"
+    },
+    {
+      "id": "lab:72b3a457c5b1",
+      "kind": "lab",
+      "xp": 20,
+      "label": "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out",
       "date": "2026-08-05"
     }
   ]
