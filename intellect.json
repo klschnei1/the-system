@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-05T11:10:26-04:00",
+  "generatedAt": "2026-08-05T22:55:45-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -10,12 +10,35 @@
   "week": {
     "label": "(Aug 3 – Aug 7)",
     "deliverable": "*(proposed — set Monday)* **ddPCR data assessment** — gate/export the",
-    "groups": [],
+    "groups": [
+      {
+        "heading": "The three",
+        "tasks": [
+          {
+            "done": false,
+            "text": "**ddPCR — assess → gate + export.** Go upstairs to the QuantaLife laptop, do the manual"
+          },
+          {
+            "done": false,
+            "text": "**DESeq2 Block 3** (count load, **column 4** = reverse-stranded) — the keystone dry task;"
+          },
+          {
+            "done": false,
+            "text": "**SKOV3 western rescue + gRNA triage gel.** Decide the kept SKOV3 plate (top up vs re-plate)"
+          }
+        ],
+        "done": 0,
+        "total": 3,
+        "backlog": false
+      }
+    ],
     "focusDone": 0,
-    "focusTotal": 0,
+    "focusTotal": 3,
     "doneTotal": 0,
-    "taskTotal": 0,
-    "blockers": []
+    "taskTotal": 3,
+    "blockers": [
+      "None hard-blocking. Watch: (1) \"CRISPR bench done ~Aug 15\" is the load-bearing assumption for Ch 2 — if it slips, Ch 2 goes lean and ~Sept 26 tightens. (2) gRNA quality could be gating editing across the board — triage gel resolves. (3) August = last wet-lab month (Karl+Paul, Jul 30): remaining bench scope = ddPCR → viability → flow → SKOV3 western; anything unfinished by end of Aug is dropped, not carried. Order reagents this month — assess ddPCR data first to know what to order."
+    ]
   },
   "projects": [
     {
@@ -41,10 +64,10 @@
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Karl 2nd/3rd author. **Not done — journal confirmed ACS Biomacromolecules (Aug 3); the figure plan gets reworked around that journal** (methods/bioseparation-paper framing: purity/size/composition of what the separation recovers, not RNA-biology).",
-      "short": "**Fig-1 composition figures built + validated (7/31).** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it).",
-      "identity": "small-EV RNA characterization in MDA-MB-231 vs MCF10A (n=3 each). Bianca's paper; **Karl is 2nd or 3rd author**, a substantive slot rather than a courtesy one. His contribution spans bench and analysis: RNA isolation, library prep, and sequencing, then the Fig-1 composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. Co-authored publication, outside the dissertation.",
-      "next": "**Rework the figure plan for ACS Biomacromolecules** (with Bianca's draft + EV-isolation-method details driving layout). Then bolder claims: `06`/`07` rRNA + unassigned dissection."
+      "status": "**PARKED Aug 5 pending role + materials.** Karl's **author position and figure allocation are undefined by everyone** — Goetsch asked *Karl* what his role was (Aug 4); authority runs through Bianca as first author and possibly Dr. Caryn Heldt. Also missing: Bianca's independent EV characterization (NTA/TEM/marker westerns) and the isolation protocol at methods-writing detail. Further analysis before these land risks being rebuilt. **Fig-1 composition figures built + validated (7/31);** job 43396 (fragment-length) verified complete Aug 5, TSVs unpulled (~10 min whenever the figure has a home). **Framing corrected Aug 5:** the prep destroyed the *size* axis but not the *composition* axis, so composition is the defensible main-text claim and fragment-length is a supplementary QC exhibit — the size distribution reads out Karl's extraction + library prep, **not** the bioseparation method. *(Prior 7/31 status:* **Fig-1 composition figures built + validated.** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Journal confirmed ACS Biomacromolecules (Aug 3); the figure plan gets reworked around that journal's scope.)*",
+      "short": "**PARKED Aug 5 pending role + materials.** Karl's **author position and figure allocation are undefined by everyone** — Goetsch asked *Karl* what his role was (Aug 4); authority runs through Bianca as first author and possibly Dr.",
+      "identity": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined as of Aug 5, 2026** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Karl's working guess is 2nd or 3rd author with a numbered figure plus a few paragraphs. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "next": "**Ask Bianca for named artifacts** — EV characterization (NTA/TEM/marker westerns), isolation protocol at methods detail, draft or figure list — and get the author position + figure slot settled through her (and Heldt), not by assertion. Then rework the figure plan. Only exoRNA analysis worth queuing meanwhile: **`07` rRNA fragment characterization** (subunit + positional; not gated on Bianca — identical prep across lines means a reproducible between-line difference survives)."
     },
     {
       "name": "The CT gene paper",
@@ -66,6 +89,12 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-08-05 (Wed, cont. 2)",
+        "contexts": [
+          "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca"
+        ]
+      },
+      {
         "date": "2026-08-05 (Wed, cont.)",
         "contexts": [
           "session close: message to Paul, learning system stood up"
@@ -76,16 +105,17 @@
         "contexts": [
           "ChIP: Goetsch's QC read out; both blocking unknowns resolved; a retraction"
         ]
-      },
-      {
-        "date": "2026-08-04 (Tue, cont.)",
-        "contexts": [
-          "ChIP: Goetsch pipeline pulled + diffed against `code/chipseq/`"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:2f13501f9c73",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Session 8/5: ddPCR export pipeline + runbook; TASKS prune; cross-file dedupe",
+      "date": "2026-08-05"
+    },
     {
       "id": "commit:826c0691a6b8",
       "kind": "commit",
@@ -388,13 +418,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:831f373e38fb",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Short-HDR ddPCR: plate design + master mix (setup of record)",
-      "date": "2026-07-15"
-    },
-    {
       "id": "lab:d86591be2c36",
       "kind": "lab",
       "xp": 20,
@@ -560,6 +583,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "session close: message to Paul, learning system stood up",
+      "date": "2026-08-05"
+    },
+    {
+      "id": "lab:63a1620b171f",
+      "kind": "lab",
+      "xp": 20,
+      "label": "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca",
       "date": "2026-08-05"
     }
   ]
