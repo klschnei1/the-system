@@ -1,95 +1,130 @@
 {
-  "generatedAt": "2026-08-08T14:13:58-04:00",
+  "generatedAt": "2026-08-08T18:29:03-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
-    "date": "2026-09-26",
-    "daysRemaining": 49
+    "date": null,
+    "daysRemaining": null
   },
-  "defenseTarget": "late October 2026 (before Halloween)",
+  "defenseTarget": "early November 2026 — committee polled Aug 8 over a Nov 3–20 window, preferring the earlier half. *(Was \"late October, before Halloween\" until Aug 8 2026; the date is now set by committee availability and by working backward from the Dec 7 Grad School submission wall, not by the Halloween aim.)*",
   "week": {
-    "label": "(Aug 3 – Aug 7)",
-    "deliverable": "*(proposed — set Monday)* **ddPCR data assessment** — gate/export the",
+    "label": "(Aug 10 – Aug 14)",
+    "deliverable": "*(set Monday — proposed)* **DESeq2 Block 3 → Fig 2.** Carried three weeks, it is the keystone dry task, and the ovarian chapter draft it gates is due Aug 28.",
     "groups": [
       {
         "heading": "The three",
         "tasks": [
           {
-            "done": true,
-            "text": "**ddPCR — assess → gate + export. DONE Aug 5.** All runs pulled off the QX Manager laptop to"
+            "done": false,
+            "text": "**DESeq2 Block 3** (count load, **column 4** = reverse-stranded), then Blocks 4/5/7 → Fig 2. Karl-led in RStudio. *Third week carried. Nothing in Aim 1 moves until this does.*"
           },
           {
             "done": false,
-            "text": "**Re-run the sHDR arm at 4–8× dilution** — the one bench action falling out of the above."
+            "text": "**Covidence screening — close the gap with Dallas.** ⏰ Bet lands **Mon Aug 10**: 1,000 screened or Karl owes an apple crisp; 2,000 → Dallas buys coffee. The WoS import added 8,825 to the queue"
           },
           {
             "done": false,
-            "text": "**Run the 7/2 drop-off plate through `ddpcr_regate.R`** (no lab needed): fix the reader for the"
-          },
-          {
-            "done": false,
-            "text": "**DESeq2 Block 3** (count load, **column 4** = reverse-stranded) — the keystone dry task;"
-          },
-          {
-            "done": false,
-            "text": "**SKOV3 western rescue + gRNA triage gel.** Decide the kept SKOV3 plate (top up vs re-plate)"
+            "text": "**Close CRISPR bench before the Aug 20 travel** — sHDR re-run at 4–8× dilution · HEPG2 long-HDR transfection · agarose triage gel on the cleaned IVT gRNA"
           }
         ],
-        "done": 1,
-        "total": 5,
+        "done": 0,
+        "total": 3,
         "backlog": false
+      },
+      {
+        "heading": "Also this week",
+        "tasks": [
+          {
+            "done": false,
+            "text": "**Fri Aug 14 — BMES funding + Goetsch conference decision.** Find the HRI/GSG travel-grant deadlines and forms *first*, then the three-part ask (fund BMES? how much does he want ASBMB? is BMES alone enough?). His answer decides whether the Sep 4 ASBMB abstract stays on the list"
+          },
+          {
+            "done": false,
+            "text": "**Run the 7/2 drop-off plate through `ddpcr_regate.R`** — no lab needed; fix the reader for the 3-line preamble + target-named columns"
+          },
+          {
+            "done": false,
+            "text": "**SKOV3 western rescue** — decide the kept plate (top up vs re-plate) before committing the treated/untreated split"
+          },
+          {
+            "done": false,
+            "text": "Send the committee the combined heads-up: draft lands ~Oct 15, CT gene enters as in-progress Aim 3"
+          }
+        ],
+        "done": 0,
+        "total": 4,
+        "backlog": false
+      },
+      {
+        "heading": "Carried forward",
+        "tasks": [
+          {
+            "done": false,
+            "text": "Draft the PROSPERO amendment once the database scope is final (search-as-executed; drop §7 reference-list mining + §11 cited-reference searching)"
+          },
+          {
+            "done": false,
+            "text": "Follow up with Bianca naming specific artifacts (EV characterization, isolation protocol, draft/figure list) — exoRNA stays parked until her reply"
+          }
+        ],
+        "done": 0,
+        "total": 2,
+        "backlog": true
       }
     ],
-    "focusDone": 1,
-    "focusTotal": 5,
-    "doneTotal": 1,
-    "taskTotal": 5,
+    "focusDone": 0,
+    "focusTotal": 7,
+    "doneTotal": 0,
+    "taskTotal": 9,
     "blockers": [
-      "None hard-blocking. Watch: (1) \"CRISPR bench done ~Aug 15\" is the load-bearing assumption for Ch 2 — if it slips, Ch 2 goes lean and ~Sept 26 tightens. (2) gRNA quality could be gating editing across the board — triage gel resolves. (3) August = last wet-lab month (Karl+Paul, Jul 30): remaining bench scope = ddPCR → viability → flow → SKOV3 western; anything unfinished by end of Aug is dropped, not carried. Order reagents this month — assess ddPCR data first to know what to order."
+      "August is the last wet-lab month. Anything unfinished by Aug 31 is dropped, not carried — and bench-dependent work has to finish before the Aug 20 travel, which makes this week and next the whole runway.",
+      "Order reagents now. The window is open this month; lead times make ordering a month out too late.",
+      "DESeq2 Block 3 is the single point of failure for Aim 1. Fig 2, the results section, and the Aug 28 chapter draft all sit behind it.",
+      "gRNA quality may be gating editing across the board — the triage gel resolves it."
     ]
   },
   "projects": [
     {
       "name": "The ovarian paper",
-      "status": "ChIP through stage-04 IDR. Carriers: HEYA8 E2F1 (2027 peaks), SKOV3 p130 (230), HEYA8 LIN54 (215). **Failure cause resolved 7/21:** the four low-yield SKOV3 Tier-2 IPs were sequenced normally (15–19M reads each) and failed on **library complexity** — re-sequencing recovers nothing, re-ChIP is the remedy. E2F4 unusable across both cell lines → antibody. RNA: 33 STAR counts local, DESeq2 design `~ cell_line + condition`; dose-response contrast still pools both lines. **Karl is ahead of Goetsch on ChIP analysis** (Goetsch has not run SPP or IDR); plan is parallel runs, then compare. Both RNA and ChIP are missing samples that live on other runs.",
-      "short": "ChIP through stage-04 IDR.",
+      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition). Quiescence/EOC. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition).",
       "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition). Quiescence/EOC. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
-      "next": "QC-discriminator table (separate technical failure from biological absence) → stage-05 deepTools supervised signal. Intersect carrier IDR peaks with DESeq2 DE. Split RNA dose-response by cell line. Recover the off-run samples. Karl writing DESeq2 Block 3."
+      "next": ""
     },
     {
       "name": "The CRISPR paper",
-      "status": "Data collection **incomplete**. HEPG2 long-HDR transfection remains; most ddPCR still to run. HEYA8 ddPCR shows palbo+noc synergy (~12–15 vs ~3–5 hits/µL). 7/15 sHDR plate failed; **three live hypotheses — overloading, cycling conditions, assay design — none excluded.** ~half the HDR probe stock consumed.",
-      "short": "Data collection **incomplete**.",
+      "status": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency, read out by ddPCR and T7 endonuclease assay across HEYA8, HT1080, HEPG2. Dissertation Aim 2. First-author, methods paper.",
+      "short": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates.",
       "identity": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency, read out by ddPCR and T7 endonuclease assay across HEYA8, HT1080, HEPG2. Dissertation Aim 2. First-author, methods paper.",
-      "next": "Narrow the ddPCR failure to one cause (dilution series → Ta gradient → design). HEPG2 transfection; work the backlog."
+      "next": ""
     },
     {
       "name": "The review",
-      "status": "**PROSPERO submitted Jul 20 2026 (v4).** **Aug 6: WoS Core Collection (SCI-Expanded only) searched → 8,825 records, 9 Full-Record RIS files verified + importing to Covidence.** **Database-scope decision (Karl + Goetsch + Dallas, Aug 6):** anything not in Covidence by ~Fri Aug 8 gets **amended off PROSPERO** — likely cuts **Embase** (no MTU access) + **Cochrane CENTRAL** (export friction); PubMed + ClinicalTrials.gov deemed sufficient. Also amending off: reference-list mining of reviews (§7) + cited-reference searching (§11). **Screening rule:** reviews without primary data excluded at title/abstract. Scope otherwise unchanged (two aims; RB–DREAM *exploratory* moderator; biomarker-reporting completeness confirmatory co-primary; breast+haem excluded at screening; English-only). **Manuscript target: spring 2027.** ⏰ Dallas bet: 1,000 screened by **Mon Aug 10** (else apple crisp; 2,000 → coffee).",
-      "short": "**PROSPERO submitted Jul 20 2026 (v4).** **Aug 6: WoS Core Collection (SCI-Expanded only) searched → 8,825 records, 9 Full-Record RIS files verified + importing to Covidence.** **Database-scope decision (Karl + Goetsch + Dallas, Aug 6):** anything not in Covidence by ~Fri Aug 8 gets **amended off PROSPERO** — likely cuts **Embase** (no MTU access) + **Cochrane CENTRAL** (export friction); PubMed + ClinicalTrials.gov deemed sufficient.",
+      "status": "systematic review + pooled analysis of CDK4/6 inhibitors in non-breast, non-haematological solid tumors, framed on the **RB–DREAM axis** (`review/strategic-reframe-napkin.md`). With Dallas, for whom it doubles as her masters report. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary).",
+      "short": "systematic review + pooled analysis of CDK4/6 inhibitors in non-breast, non-haematological solid tumors, framed on the **RB–DREAM axis** (`review/strategic-reframe-napkin.md`).",
       "identity": "systematic review + pooled analysis of CDK4/6 inhibitors in non-breast, non-haematological solid tumors, framed on the **RB–DREAM axis** (`review/strategic-reframe-napkin.md`). With Dallas, for whom it doubles as her masters report. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary).",
-      "next": "Finish Covidence upload → screen toward the Mon 1,000/2,000 target → draft the PROSPERO amendment (database scope + hand-search removals) once EOW scope is final → start writing (prose to feed dissertation intro/background)."
+      "next": ""
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "**PARKED Aug 5 pending role + materials.** Karl's **author position and figure allocation are undefined by everyone** — Goetsch asked *Karl* what his role was (Aug 4); authority runs through Bianca as first author and possibly Dr. Caryn Heldt. Also missing: Bianca's independent EV characterization (NTA/TEM/marker westerns) and the isolation protocol at methods-writing detail. Further analysis before these land risks being rebuilt. **Fig-1 composition figures built + validated (7/31);** job 43396 (fragment-length) verified complete Aug 5, TSVs unpulled (~10 min whenever the figure has a home). **Framing corrected Aug 5:** the prep destroyed the *size* axis but not the *composition* axis, so composition is the defensible main-text claim and fragment-length is a supplementary QC exhibit — the size distribution reads out Karl's extraction + library prep, **not** the bioseparation method. *(Prior 7/31 status:* **Fig-1 composition figures built + validated.** A length gate (15–45 nt, SPORTS) added to `03` fixed a load-bearing bug — the \"miRNA\" bin was long gDNA crossing hairpin loci (miRNA 40k–614k → 8–534 across all 6; genome absorbed it). `05` nuclear-biotype (exonic/gDNA) + mito; `04` → PDFs in `figures/exorna/`. **Story:** MDA231 EV-RNA 80–95% rRNA vs MCF10a 6–12%; non-rRNA mostly gDNA (56–71%) + unassigned (25–31%); exonic ~2–4× enriched over genomic background (possible real mRNA); small RNA absent (prep). Journal confirmed ACS Biomacromolecules (Aug 3); the figure plan gets reworked around that journal's scope.)*",
-      "short": "**PARKED Aug 5 pending role + materials.** Karl's **author position and figure allocation are undefined by everyone** — Goetsch asked *Karl* what his role was (Aug 4); authority runs through Bianca as first author and possibly Dr.",
+      "status": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined as of Aug 5, 2026** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Karl's working guess is 2nd or 3rd author with a numbered figure plus a few paragraphs. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "short": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model.",
       "identity": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined as of Aug 5, 2026** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Karl's working guess is 2nd or 3rd author with a numbered figure plus a few paragraphs. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
-      "next": "**Ask Bianca for named artifacts** — EV characterization (NTA/TEM/marker westerns), isolation protocol at methods detail, draft or figure list — and get the author position + figure slot settled through her (and Heldt), not by assertion. Then rework the figure plan. Only exoRNA analysis worth queuing meanwhile: **`07` rRNA fragment characterization** (subunit + positional; not gated on Bianca — identical prep across lines means a reproducible between-line difference survives)."
+      "next": ""
     },
     {
       "name": "The CT gene paper",
-      "status": "**Decided as dissertation Aim 3 (Aug 3).** Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand. Karl's contribution is lit review + terminology/ontology + discussion, plus the Aim-3 figures. Scope for defense: far enough to *write the aim* with tables/visuals — **not** publication-ready.",
-      "short": "**Decided as dissertation Aim 3 (Aug 3).** Two MS theses (Clara, Zayne) are the foundation; 28-gene shortlist in hand.",
+      "status": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "short": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise?",
       "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
-      "next": "Assess normal-tissue→cancer-type groupings → build the body-map visual (target: better than existing body maps). Begin the literature review in parallel."
+      "next": ""
     },
     {
       "name": "The dissertation",
-      "status": "Skeleton scaffolded, 3 chapters. **Chapter 3 resolved (Aug 3): CT gene = Aim 3.** Aims 1/2 = ovarian + CRISPR. Anchor: ovarian + CRISPR submission-ready + dissertation draft by early Oct.",
-      "short": "Skeleton scaffolded, 3 chapters.",
+      "status": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers.",
+      "short": "three chapters.",
       "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers.",
-      "next": "Send committee a heads-up (draft ~late Sept; CT gene as in-progress Aim 3). Then draft ovarian → CRISPR; build CT-gene Aim-3 visuals."
+      "next": ""
     }
   ],
   "lab": {
@@ -119,6 +154,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:edf60b574e8d",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Wave 2 Chunk 1: rebuild the live docs into single-role files",
+      "date": "2026-08-08"
+    },
     {
       "id": "commit:20a45a4ff337",
       "kind": "commit",
