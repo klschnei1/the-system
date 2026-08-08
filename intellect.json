@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-05T23:06:07-04:00",
+  "generatedAt": "2026-08-08T14:13:58-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": "2026-09-26",
-    "daysRemaining": 52
+    "daysRemaining": 49
   },
   "defenseTarget": "late October 2026 (before Halloween)",
   "week": {
@@ -65,10 +65,10 @@
     },
     {
       "name": "The review",
-      "status": "**PROSPERO registration completed and submitted Jul 20 2026.** **v4 is expected to be final.** Search strings working across databases; **Dallas has begun screening in Covidence.** Scope: two aims (antitumor efficacy + myeloprotection), RB–DREAM as *exploratory* moderator, biomarker-reporting completeness as the confirmatory co-primary, breast + haematological excluded at screening, English-only. Open: troubleshooting some database exports (incl. Cochrane CENTRAL RIS). **Manuscript target: spring 2027.**",
-      "short": "**PROSPERO registration completed and submitted Jul 20 2026.** **v4 is expected to be final.** Search strings working across databases; **Dallas has begun screening in Covidence.** Scope: two aims (antitumor efficacy + myeloprotection), RB–DREAM as *exploratory* moderator, biomarker-reporting completeness as the confirmatory co-primary, breast + haematological excluded at screening, English-only.",
+      "status": "**PROSPERO submitted Jul 20 2026 (v4).** **Aug 6: WoS Core Collection (SCI-Expanded only) searched → 8,825 records, 9 Full-Record RIS files verified + importing to Covidence.** **Database-scope decision (Karl + Goetsch + Dallas, Aug 6):** anything not in Covidence by ~Fri Aug 8 gets **amended off PROSPERO** — likely cuts **Embase** (no MTU access) + **Cochrane CENTRAL** (export friction); PubMed + ClinicalTrials.gov deemed sufficient. Also amending off: reference-list mining of reviews (§7) + cited-reference searching (§11). **Screening rule:** reviews without primary data excluded at title/abstract. Scope otherwise unchanged (two aims; RB–DREAM *exploratory* moderator; biomarker-reporting completeness confirmatory co-primary; breast+haem excluded at screening; English-only). **Manuscript target: spring 2027.** ⏰ Dallas bet: 1,000 screened by **Mon Aug 10** (else apple crisp; 2,000 → coffee).",
+      "short": "**PROSPERO submitted Jul 20 2026 (v4).** **Aug 6: WoS Core Collection (SCI-Expanded only) searched → 8,825 records, 9 Full-Record RIS files verified + importing to Covidence.** **Database-scope decision (Karl + Goetsch + Dallas, Aug 6):** anything not in Covidence by ~Fri Aug 8 gets **amended off PROSPERO** — likely cuts **Embase** (no MTU access) + **Cochrane CENTRAL** (export friction); PubMed + ClinicalTrials.gov deemed sufficient.",
       "identity": "systematic review + pooled analysis of CDK4/6 inhibitors in non-breast, non-haematological solid tumors, framed on the **RB–DREAM axis** (`review/strategic-reframe-napkin.md`). With Dallas, for whom it doubles as her masters report. Target journal: Cancer Treatment Reviews (primary), European Journal of Cancer (secondary).",
-      "next": "Finish the database exports → keep Dallas screening → start writing. Target through Aug: enough prose to feed the dissertation intro/background."
+      "next": "Finish Covidence upload → screen toward the Mon 1,000/2,000 target → draft the PROSPERO amendment (database scope + hand-search removals) once EOW scope is final → start writing (prose to feed dissertation intro/background)."
     },
     {
       "name": "The exosome paper (Bianca's)",
@@ -93,30 +93,39 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-05",
-    "daysSinceLastEntry": 0,
+    "lastEntryDate": "2026-08-06",
+    "daysSinceLastEntry": 2,
     "recentEntries": [
+      {
+        "date": "2026-08-06 (Thursday, cont.)",
+        "contexts": [
+          "WoS export complete + screening rules confirmed",
+          "Systematic review — WoS export finished; Covidence import; screening/scope decisions."
+        ]
+      },
+      {
+        "date": "2026-08-06 (Thursday)",
+        "contexts": [
+          "Systematic review: WoS search executed; database scope decision",
+          "Systematic review (CDK4/6i in non-breast solid tumors; diss Ch. 1 / Dallas's MS report)."
+        ]
+      },
       {
         "date": "2026-08-05 (Wed, cont. 3)",
         "contexts": [
           "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out"
         ]
-      },
-      {
-        "date": "2026-08-05 (Wed, cont. 2)",
-        "contexts": [
-          "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca"
-        ]
-      },
-      {
-        "date": "2026-08-05 (Wed, cont.)",
-        "contexts": [
-          "session close: message to Paul, learning system stood up"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:20a45a4ff337",
+      "kind": "commit",
+      "xp": 20,
+      "label": "Sessions 8/5-8/6: WoS export/import + screening rules; drift_guard hook (10 no-tool turns)",
+      "date": "2026-08-08"
+    },
     {
       "id": "commit:5c6220ef3bbd",
       "kind": "commit",
@@ -433,20 +442,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:d8d9c8f1b340",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ChIP SPP peak-calling run complete; IDR pipeline designed + split; salvage plan for failed IPs",
-      "date": "2026-07-16"
-    },
-    {
-      "id": "lab:66d32846d053",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ChIP IDR results: reproducible-peak counts + arm-level interpretation",
-      "date": "2026-07-16"
-    },
-    {
       "id": "lab:d7b82aef09ef",
       "kind": "lab",
       "xp": 20,
@@ -606,6 +601,20 @@
       "xp": 20,
       "label": "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out",
       "date": "2026-08-05"
+    },
+    {
+      "id": "lab:e283de905936",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Systematic review: WoS search executed; database scope decision",
+      "date": "2026-08-06"
+    },
+    {
+      "id": "lab:61a9a45e4371",
+      "kind": "lab",
+      "xp": 20,
+      "label": "WoS export complete + screening rules confirmed",
+      "date": "2026-08-06"
     }
   ]
 }
