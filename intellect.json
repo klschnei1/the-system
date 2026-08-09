@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T15:47:25-04:00",
+  "generatedAt": "2026-08-09T19:14:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -64,7 +64,7 @@
         "tasks": [
           {
             "done": false,
-            "text": "Draft the PROSPERO amendment once the database scope is final (search-as-executed; drop §7 reference-list mining + §11 cited-reference searching)"
+            "text": "Draft the PROSPERO amendment once the database scope is final (search-as-executed; drop §7 reference-list mining + §11 cited-reference searching). **Add: multiple-reports-of-one-study handling** — §7 covers bibliographic dedup but not linking companion reports (abstract → primary paper → follow-up → subgroup analysis) to a single study record with a designated primary reference. Load-bearing, not bookkeeping: the biomarker-completeness co-primary is a *per-study* proportion, and pooling two reports of one trial double-counts patients. Identify by NCT number; group at full text, never at title/abstract"
           },
           {
             "done": false,
@@ -136,6 +136,12 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-08-09 (Sunday, cont.)",
+        "contexts": [
+          "Screening session closed: 1,116, bet met"
+        ]
+      },
+      {
         "date": "2026-08-09 (Sunday)",
         "contexts": [
           "Review: screening scope questions settled",
@@ -147,17 +153,17 @@
         "contexts": [
           "SKOV3 western: sample plates collected"
         ]
-      },
-      {
-        "date": "2026-08-06 (Thursday, cont.)",
-        "contexts": [
-          "WoS export complete + screening rules confirmed",
-          "Systematic review — WoS export finished; Covidence import; screening/scope decisions."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ae607904f62a",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Dallas bet met at 1,116; companion-report linking added to the amendment",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:dc0f657c20c6",
       "kind": "commit",
@@ -516,13 +522,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:f809ceca66ba",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Donor DNA PCR protocol v2: cycling conditions derived from primer structure; bead/sterility decisions recorded",
-      "date": "2026-07-20"
-    },
-    {
       "id": "lab:f4a61a7de0c8",
       "kind": "lab",
       "xp": 20,
@@ -688,6 +687,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Review: screening scope questions settled",
+      "date": "2026-08-09"
+    },
+    {
+      "id": "lab:6578f5c299b2",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Screening session closed: 1,116, bet met",
       "date": "2026-08-09"
     }
   ]
