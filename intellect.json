@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T15:16:35-04:00",
+  "generatedAt": "2026-08-09T15:47:25-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -158,6 +158,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:dc0f657c20c6",
+      "kind": "commit",
+      "xp": 13,
+      "label": "SCHEDULE: weekly Friday chunks through the Oct 15 draft; bench scope narrowed",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:908ab9ed8356",
       "kind": "commit",
