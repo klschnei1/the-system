@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T20:29:43-04:00",
+  "generatedAt": "2026-08-09T11:12:53-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -132,9 +132,16 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-08",
+    "lastEntryDate": "2026-08-09",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-09 (Sunday)",
+        "contexts": [
+          "Review: screening scope questions settled",
+          "Systematic review — title/abstract screening against the Aug 10 Dallas bet. Scope"
+        ]
+      },
       {
         "date": "2026-08-08 (Saturday)",
         "contexts": [
@@ -147,17 +154,17 @@
           "WoS export complete + screening rules confirmed",
           "Systematic review — WoS export finished; Covidence import; screening/scope decisions."
         ]
-      },
-      {
-        "date": "2026-08-06 (Thursday)",
-        "contexts": [
-          "Systematic review: WoS search executed; database scope decision",
-          "Systematic review (CDK4/6i in non-breast solid tumors; diss Ch. 1 / Dallas's MS report)."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a467edddfbd1",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Review screening scope settled; BACKLOG reranked into cost-weighted tiers",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:ee492dd0e8f0",
       "kind": "commit",
@@ -495,13 +502,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:7e895d1803e2",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Cell passage: HEYA8, SKOV3, HT1080, HEPG2 (T25 → 10 cm)",
-      "date": "2026-07-19"
-    },
-    {
       "id": "lab:f809ceca66ba",
       "kind": "lab",
       "xp": 20,
@@ -668,6 +668,13 @@
       "xp": 20,
       "label": "SKOV3 western: sample plates collected",
       "date": "2026-08-08"
+    },
+    {
+      "id": "lab:567af2115b45",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Review: screening scope questions settled",
+      "date": "2026-08-09"
     }
   ]
 }
