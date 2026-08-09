@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T19:19:55-04:00",
+  "generatedAt": "2026-08-09T19:23:50-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -157,6 +157,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:96ab841cb074",
+      "kind": "commit",
+      "xp": 13,
+      "label": "SCHEDULE: chunk the Oct 15 -> defense stretch; drop chunk numbers; fix date order",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:8af90ea07b30",
       "kind": "commit",
