@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T18:29:03-04:00",
+  "generatedAt": "2026-08-08T20:29:43-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -20,7 +20,7 @@
           },
           {
             "done": false,
-            "text": "**Covidence screening — close the gap with Dallas.** ⏰ Bet lands **Mon Aug 10**: 1,000 screened or Karl owes an apple crisp; 2,000 → Dallas buys coffee. The WoS import added 8,825 to the queue"
+            "text": "**Covidence screening — close the gap with Dallas.** ⏰ Bet lands **Mon Aug 10**: 1,000 screened or Karl owes an apple crisp; 2,000 → Dallas buys coffee. *(WoS import done Aug 8 — 8,825 records in the queue, so screening is unblocked.)*"
           },
           {
             "done": false,
@@ -43,16 +43,20 @@
             "text": "**Run the 7/2 drop-off plate through `ddpcr_regate.R`** — no lab needed; fix the reader for the 3-line preamble + target-named columns"
           },
           {
-            "done": false,
-            "text": "**SKOV3 western rescue** — decide the kept plate (top up vs re-plate) before committing the treated/untreated split"
+            "done": true,
+            "text": "**SKOV3 pellets harvested for western (Aug 8)** — treated/untreated split, 5× PAR, at −20 °C"
           },
           {
             "done": false,
-            "text": "Send the committee the combined heads-up: draft lands ~Oct 15, CT gene enters as in-progress Aim 3"
+            "text": "**Mon Aug 10: protein isolation in RIPA** from the SKOV3 pellets → then run the western"
+          },
+          {
+            "done": false,
+            "text": "Send the committee the combined heads-up: draft lands ~Oct 15, CT gene enters as in-progress Aim 3. *(Separate from the Aug 8 scheduling poll — this is the Ch-3 framing note.)*"
           }
         ],
-        "done": 0,
-        "total": 4,
+        "done": 1,
+        "total": 5,
         "backlog": false
       },
       {
@@ -72,10 +76,10 @@
         "backlog": true
       }
     ],
-    "focusDone": 0,
-    "focusTotal": 7,
-    "doneTotal": 0,
-    "taskTotal": 9,
+    "focusDone": 1,
+    "focusTotal": 8,
+    "doneTotal": 1,
+    "taskTotal": 10,
     "blockers": [
       "August is the last wet-lab month. Anything unfinished by Aug 31 is dropped, not carried — and bench-dependent work has to finish before the Aug 20 travel, which makes this week and next the whole runway.",
       "Order reagents now. The window is open this month; lead times make ordering a month out too late.",
@@ -128,9 +132,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-06",
-    "daysSinceLastEntry": 2,
+    "lastEntryDate": "2026-08-08",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-08 (Saturday)",
+        "contexts": [
+          "SKOV3 western: sample plates collected"
+        ]
+      },
       {
         "date": "2026-08-06 (Thursday, cont.)",
         "contexts": [
@@ -144,16 +154,17 @@
           "Systematic review: WoS search executed; database scope decision",
           "Systematic review (CDK4/6i in non-breast solid tumors; diss Ch. 1 / Dallas's MS report)."
         ]
-      },
-      {
-        "date": "2026-08-05 (Wed, cont. 3)",
-        "contexts": [
-          "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ee492dd0e8f0",
+      "kind": "commit",
+      "xp": 25,
+      "label": "Docs are shared memory: SessionStart loads the ledger; fix milestone parser",
+      "date": "2026-08-08"
+    },
     {
       "id": "commit:edf60b574e8d",
       "kind": "commit",
@@ -484,13 +495,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:d7b82aef09ef",
-      "kind": "lab",
-      "xp": 20,
-      "label": "RNA-seq dose-response (PAR 1x vs 5x): DREAM/E2F program, senescence + degradation ruled out",
-      "date": "2026-07-16"
-    },
-    {
       "id": "lab:7e895d1803e2",
       "kind": "lab",
       "xp": 20,
@@ -657,6 +661,13 @@
       "xp": 20,
       "label": "WoS export complete + screening rules confirmed",
       "date": "2026-08-06"
+    },
+    {
+      "id": "lab:35d660e230e8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "SKOV3 western: sample plates collected",
+      "date": "2026-08-08"
     }
   ]
 }
