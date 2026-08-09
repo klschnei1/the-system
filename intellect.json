@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T19:17:23-04:00",
+  "generatedAt": "2026-08-09T19:19:55-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -157,6 +157,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8af90ea07b30",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Amendment item 1: keep Karl's resource-constraint rationale for dropping Embase/CENTRAL",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:19fea4e7faf6",
       "kind": "commit",
