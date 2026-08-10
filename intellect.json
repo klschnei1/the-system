@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T09:42:45-04:00",
+  "generatedAt": "2026-08-10T12:46:24-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -16,11 +16,31 @@
         "tasks": [
           {
             "done": true,
-            "text": "**Local count inventory done (Aug 10).** 33 STAR tables already on the Mac (`~/Documents/R_Projects/ovarian_rnaseq/star/`) — all 18 core-DE, all 9 FT282, all 6 P6_release. **Only PG017R–Z (9 Prolif batch controls, job 38670) are missing**; job completion unverified. Still worth one HRI pass to check whether Goetsch has RNA counts of his own under `/mnt/hri/goetsch_lab/Illumina/H.sapiens_OvarianCancerCell_RNAseq/`."
+            "text": "**Count inventory + QC forensics done (Aug 10).** All 42 STAR tables now local. PG017R–Z pulled (job 38670 had completed). See `LAB_NOTEBOOK.md` Aug 10 for the full QC read."
           },
           {
             "done": false,
-            "text": "**DESeq2 Block 3 → per-line Fig 2.** **Reframed Aug 10: the DE already ran.** `results/de_PAR1x_vs_Untreated.csv` + `de_PAR5x_vs_Untreated.csv` were written Jul 16 (17,500 genes, lfcShrink, column 4 confirmed by spot-check). What is missing is the **script** — `02_deseq2.R` Blocks 3/4/5/7 are still empty `TODO(karl)` stubs, so nothing is reproducible or re-runnable."
+            "text": "**Ovarian RNA-seq → Fig 2. Karl drafts, Claude repairs.** *Sequence agreed Aug 10: RNA-only first, then ChIP promoter peaks → gene list → back to RNA with it.*"
+          },
+          {
+            "done": false,
+            "text": "**Block 6 QC runs FIRST** — VST + sample-distance + PCA over all 24. It decides SKOV3 Untreated rep 1 **and** re-tests the withdrawn SKOV3 PAR5x flag with the proper instrument"
+          },
+          {
+            "done": false,
+            "text": "**Blocks 3/4/5/7** — Karl drafts in RStudio, broken is fine"
+          },
+          {
+            "done": false,
+            "text": "RNA-only panels: **PCA · volcano per line per contrast (Paul asked for volcanoes) · MA · cross-line L2FC concordance scatter · RB–DREAM heatmap + box-plot grid for named genes**"
+          },
+          {
+            "done": false,
+            "text": "**Determine the cause of the untreated-baseline non-exonic fraction** — RSeQC `read_distribution.py` or Qualimap on the BAMs. Intergenic-heavy ⇒ gDNA carryover (counts biased by gene length, needs a methods sentence); intron-heavy ⇒ pre-mRNA or degradation (benign). **Until this runs, write \"non-exonic fraction of undetermined origin,\" not a gDNA claim.**"
+          },
+          {
+            "done": false,
+            "text": "**Add an alignment QC gate to `01_align.sbatch`** — print assignment rate + splices/read per library from `Log.final.out` the moment alignment finishes. Ten lines. Would have surfaced this in 2024 rather than 2026"
           },
           {
             "done": true,
@@ -32,7 +52,7 @@
           }
         ],
         "done": 2,
-        "total": 4,
+        "total": 9,
         "backlog": false
       },
       {
@@ -81,9 +101,9 @@
       }
     ],
     "focusDone": 3,
-    "focusTotal": 9,
+    "focusTotal": 14,
     "doneTotal": 3,
-    "taskTotal": 11,
+    "taskTotal": 16,
     "blockers": [
       "September bench time is allowed, reserved for selective gap-filling (revised Aug 9). ddPCR is the must-finish item; viability and T7 are acceptable losses. Target 1–2 lab days a week, down from the usual 6.",
       "Order reagents now. The window is open this month; lead times make ordering a month out too late.",
@@ -140,6 +160,12 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-08-10 (Mon, cont. 2)",
+        "contexts": [
+          "Ovarian RNA-seq QC: the untreated baseline has a large non-exonic fraction; cause unresolved, pipeline exonerated"
+        ]
+      },
+      {
         "date": "2026-08-10 (Mon, cont.)",
         "contexts": [
           "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox"
@@ -150,16 +176,17 @@
         "contexts": [
           "Ovarian RNA-seq: the DE tables already exist; Block 3 is a reproducibility gap, not an analysis gap"
         ]
-      },
-      {
-        "date": "2026-08-09 (Sunday, cont.)",
-        "contexts": [
-          "Screening session closed: 1,116, bet met"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:71d5267d3b59",
+      "kind": "commit",
+      "xp": 21,
+      "label": "Ovarian RNA-seq QC: untreated baseline is compositionally compromised",
+      "date": "2026-08-10"
+    },
     {
       "id": "commit:5a9203f061bc",
       "kind": "commit",
@@ -616,13 +643,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:f4e67822f6be",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Corrections to project state from the Goetsch prep session",
-      "date": "2026-07-21"
-    },
-    {
       "id": "lab:8bd18a608800",
       "kind": "lab",
       "xp": 20,
@@ -788,6 +808,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox",
+      "date": "2026-08-10"
+    },
+    {
+      "id": "lab:1b615174e7dd",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Ovarian RNA-seq QC: the untreated baseline has a large non-exonic fraction; cause unresolved, pipeline exonerated",
       "date": "2026-08-10"
     }
   ]
