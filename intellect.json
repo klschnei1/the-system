@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T20:04:16-04:00",
+  "generatedAt": "2026-08-09T20:11:12-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -157,6 +157,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d5a139dc64c1",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Memory: Karl's working-time model; dashboard rebuild timestamp",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:da6fbfe775ad",
       "kind": "commit",
