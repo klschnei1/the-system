@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T12:46:24-04:00",
+  "generatedAt": "2026-08-10T12:55:39-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -180,6 +180,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4032eadee51e",
+      "kind": "commit",
+      "xp": 17,
+      "label": "QC job: locate the untreated-baseline non-exonic reads (exon vs gene-body vs intergenic)",
+      "date": "2026-08-10"
+    },
     {
       "id": "commit:71d5267d3b59",
       "kind": "commit",
