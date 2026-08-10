@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T20:23:57-04:00",
+  "generatedAt": "2026-08-09T20:26:54-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -161,6 +161,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:7c354002b21d",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Record the publication bar: two papers, venue open",
+      "date": "2026-08-09"
+    },
     {
       "id": "commit:def57cd04391",
       "kind": "commit",
