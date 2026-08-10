@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T20:44:35-04:00",
+  "generatedAt": "2026-08-10T09:42:45-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -15,12 +15,12 @@
         "heading": "The three",
         "tasks": [
           {
-            "done": false,
-            "text": "**First: check HRI for counts Goetsch has already generated** — if they exist, the pull-and-generate step disappears. The ChIP work sits under `/mnt/hri/goetsch_lab/Illumina/H.sapiens_OvarianCancerCell_ChIPseq/`, so look for the analogous RNA-seq directory before regenerating anything."
+            "done": true,
+            "text": "**Local count inventory done (Aug 10).** 33 STAR tables already on the Mac (`~/Documents/R_Projects/ovarian_rnaseq/star/`) — all 18 core-DE, all 9 FT282, all 6 P6_release. **Only PG017R–Z (9 Prolif batch controls, job 38670) are missing**; job completion unverified. Still worth one HRI pass to check whether Goetsch has RNA counts of his own under `/mnt/hri/goetsch_lab/Illumina/H.sapiens_OvarianCancerCell_RNAseq/`."
           },
           {
             "done": false,
-            "text": "**DESeq2 Block 3** (count load, **column 4** = reverse-stranded), then Blocks 4/5/7 → Fig 2. Karl-led in RStudio. *Third week carried. Nothing in Aim 1 moves until this does.*"
+            "text": "**DESeq2 Block 3 → per-line Fig 2.** **Reframed Aug 10: the DE already ran.** `results/de_PAR1x_vs_Untreated.csv` + `de_PAR5x_vs_Untreated.csv` were written Jul 16 (17,500 genes, lfcShrink, column 4 confirmed by spot-check). What is missing is the **script** — `02_deseq2.R` Blocks 3/4/5/7 are still empty `TODO(karl)` stubs, so nothing is reproducible or re-runnable."
           },
           {
             "done": true,
@@ -31,7 +31,7 @@
             "text": "**Close CRISPR bench before the Aug 20 travel** — sHDR re-run at lower dose · long-HDR ddPCR **on existing material** (decoupled from the next transfection round) · SKOV3 western. *(Triage gel dropped Aug 9 per Goetsch. Full-dose HEPG2 transfection is a separate thread with a September readout, gated on insert supply.)*"
           }
         ],
-        "done": 1,
+        "done": 2,
         "total": 4,
         "backlog": false
       },
@@ -80,9 +80,9 @@
         "backlog": true
       }
     ],
-    "focusDone": 2,
+    "focusDone": 3,
     "focusTotal": 9,
-    "doneTotal": 2,
+    "doneTotal": 3,
     "taskTotal": 11,
     "blockers": [
       "September bench time is allowed, reserved for selective gap-filling (revised Aug 9). ddPCR is the must-finish item; viability and T7 are acceptable losses. Target 1–2 lab days a week, down from the usual 6.",
@@ -122,9 +122,9 @@
     },
     {
       "name": "The CT gene paper",
-      "status": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "status": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building — not pipeline work** (clarified Aug 10, 2026; the earlier \"not computational\" read too narrowly). Goetsch runs the pipeline and hands over the output. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
       "short": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise?",
-      "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual and written, not computational** — literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building — not pipeline work** (clarified Aug 10, 2026; the earlier \"not computational\" read too narrowly). Goetsch runs the pipeline and hands over the output. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
       "next": ""
     },
     {
@@ -136,31 +136,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-09",
+    "lastEntryDate": "2026-08-10",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-10 (Mon, cont.)",
+        "contexts": [
+          "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox"
+        ]
+      },
+      {
+        "date": "2026-08-10 (Monday)",
+        "contexts": [
+          "Ovarian RNA-seq: the DE tables already exist; Block 3 is a reproducibility gap, not an analysis gap"
+        ]
+      },
       {
         "date": "2026-08-09 (Sunday, cont.)",
         "contexts": [
           "Screening session closed: 1,116, bet met"
         ]
-      },
-      {
-        "date": "2026-08-09 (Sunday)",
-        "contexts": [
-          "Review: screening scope questions settled",
-          "Systematic review — title/abstract screening against the Aug 10 Dallas bet. Scope"
-        ]
-      },
-      {
-        "date": "2026-08-08 (Saturday)",
-        "contexts": [
-          "SKOV3 western: sample plates collected"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:5a9203f061bc",
+      "kind": "commit",
+      "xp": 18,
+      "label": "CT gene: chunk Aim 3 into seven dated intermediate deadlines",
+      "date": "2026-08-10"
+    },
     {
       "id": "commit:021a2b598e1a",
       "kind": "commit",
@@ -610,20 +616,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:f4a61a7de0c8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "PROSPERO registration submitted; review scope settled at two aims",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "lab:1771ecb60fea",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Sequencing forensics: the four \"shallow\" SKOV3 Tier-2 IPs were sequenced fine; failure is library complexity",
-      "date": "2026-07-21"
-    },
-    {
       "id": "lab:f4e67822f6be",
       "kind": "lab",
       "xp": 20,
@@ -783,6 +775,20 @@
       "xp": 20,
       "label": "Screening session closed: 1,116, bet met",
       "date": "2026-08-09"
+    },
+    {
+      "id": "lab:1a9be788d02f",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Ovarian RNA-seq: the DE tables already exist; Block 3 is a reproducibility gap, not an analysis gap",
+      "date": "2026-08-10"
+    },
+    {
+      "id": "lab:25528cecb4e8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox",
+      "date": "2026-08-10"
     }
   ]
 }
