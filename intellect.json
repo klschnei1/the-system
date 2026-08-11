@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-11T16:44:42-04:00",
+  "generatedAt": "2026-08-11T16:45:29-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -198,6 +198,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d0d5c3c288da",
+      "kind": "commit",
+      "xp": 12,
+      "label": "BACKLOG: cell-culture log tried and dropped (file deleted Aug 11)",
+      "date": "2026-08-11"
+    },
     {
       "id": "commit:01fbbc494329",
       "kind": "commit",
