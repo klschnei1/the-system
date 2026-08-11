@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-10T12:55:39-04:00",
+  "generatedAt": "2026-08-11T16:44:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": null,
     "daysRemaining": null
   },
-  "defenseTarget": "early November 2026 — committee polled Aug 8 over a Nov 3–20 window, preferring the earlier half. *(Was \"late October, before Halloween\" until Aug 8 2026; the date is now set by committee availability and by working backward from the Dec 7 Grad School submission wall, not by the Halloween aim.)*",
+  "defenseTarget": "**Nov 19–20, 2026** — polled Aug 8 over Nov 3–20, but Techtmann is in Brazil Nov 3–18, which removes the preferred earlier half. *(Was \"late October, before Halloween\" until Aug 8 2026; the date is now set by committee availability and by working backward from the Dec 7 Grad School submission wall, not by the Halloween aim.)*",
   "week": {
     "label": "(Aug 10 – Aug 14)",
     "deliverable": "*(set Monday — proposed)* **DESeq2 Block 3 → Fig 2.** Carried three weeks, it is the keystone dry task, and the ovarian chapter draft it gates is due Aug 28.",
@@ -23,20 +23,36 @@
             "text": "**Ovarian RNA-seq → Fig 2. Karl drafts, Claude repairs.** *Sequence agreed Aug 10: RNA-only first, then ChIP promoter peaks → gene list → back to RNA with it.*"
           },
           {
-            "done": false,
-            "text": "**Block 6 QC runs FIRST** — VST + sample-distance + PCA over all 24. It decides SKOV3 Untreated rep 1 **and** re-tests the withdrawn SKOV3 PAR5x flag with the proper instrument"
+            "done": true,
+            "text": "**Blocks 3/4/5/6/7 written and run (Aug 10, 12:43–12:46)** — 24 samples, tech reps summed, per-line fits, QC plots, cross-line concordance. All outputs in `results/`. **Still uncommitted.**"
+          },
+          {
+            "done": true,
+            "text": "**Block 6 QC read (Aug 11).** Verdict on the two questions it existed to answer:"
           },
           {
             "done": false,
-            "text": "**Blocks 3/4/5/7** — Karl drafts in RStudio, broken is fine"
+            "text": "**SNP concordance off the existing BAMs** — the arbiter for `SKOV3_PAR5x_3`; allele fractions would also quantify a mixture if there is one"
+          },
+          {
+            "done": false,
+            "text": "**Re-run Block 7 once identity is resolved** — SKOV3 PAR5x is either n=2 or corrected. **`de_SKOV3_PAR5x_vs_Untreated.csv` and `concordance_PAR5x.csv` are not readable until then**"
+          },
+          {
+            "done": false,
+            "text": "**Commit `02_deseq2.R`** — sat dirty in the tree since Aug 10"
           },
           {
             "done": false,
             "text": "RNA-only panels: **PCA · volcano per line per contrast (Paul asked for volcanoes) · MA · cross-line L2FC concordance scatter · RB–DREAM heatmap + box-plot grid for named genes**"
           },
           {
+            "done": true,
+            "text": "**Read-distribution job ran (HRI 44235, Aug 10).** Intergenic carries the excess — 12.5% (PG018M) → 59.3% (PG016D), vs 1.8% → 22.4% intronic. Points at gDNA carryover by the rule fixed in advance."
+          },
+          {
             "done": false,
-            "text": "**Determine the cause of the untreated-baseline non-exonic fraction** — RSeQC `read_distribution.py` or Qualimap on the BAMs. Intergenic-heavy ⇒ gDNA carryover (counts biased by gene length, needs a methods sentence); intron-heavy ⇒ pre-mRNA or degradation (benign). **Until this runs, write \"non-exonic fraction of undetermined origin,\" not a gDNA claim.**"
+            "text": "**Two caveats before the gDNA call is made** — interpretation is Karl's and not yet made; standing wording stays *\"non-exonic fraction of undetermined origin.\"*"
           },
           {
             "done": false,
@@ -51,8 +67,8 @@
             "text": "**Close CRISPR bench before the Aug 20 travel** — sHDR re-run at lower dose · long-HDR ddPCR **on existing material** (decoupled from the next transfection round) · SKOV3 western. *(Triage gel dropped Aug 9 per Goetsch. Full-dose HEPG2 transfection is a separate thread with a September readout, gated on insert supply.)*"
           }
         ],
-        "done": 2,
-        "total": 9,
+        "done": 5,
+        "total": 13,
         "backlog": false
       },
       {
@@ -100,10 +116,10 @@
         "backlog": true
       }
     ],
-    "focusDone": 3,
-    "focusTotal": 14,
-    "doneTotal": 3,
-    "taskTotal": 16,
+    "focusDone": 6,
+    "focusTotal": 18,
+    "doneTotal": 6,
+    "taskTotal": 20,
     "blockers": [
       "September bench time is allowed, reserved for selective gap-filling (revised Aug 9). ddPCR is the must-finish item; viability and T7 are acceptable losses. Target 1–2 lab days a week, down from the usual 6.",
       "Order reagents now. The window is open this month; lead times make ordering a month out too late.",
@@ -149,37 +165,46 @@
     },
     {
       "name": "The dissertation",
-      "status": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers.",
+      "status": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers. **The bar** (Karl, Aug 9 2026): a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
       "short": "three chapters.",
-      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers.",
+      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers. **The bar** (Karl, Aug 9 2026): a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
       "next": ""
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-10",
+    "lastEntryDate": "2026-08-11",
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-08-10 (Mon, cont. 2)",
+        "date": "2026-08-11 (Tue, cont.)",
         "contexts": [
-          "Ovarian RNA-seq QC: the untreated baseline has a large non-exonic fraction; cause unresolved, pipeline exonerated"
+          "The untreated-baseline \"composition problem\" is withdrawn",
+          "Ovarian paper / Aim 1."
         ]
       },
       {
-        "date": "2026-08-10 (Mon, cont.)",
+        "date": "2026-08-11 (Tue, cont.)",
         "contexts": [
-          "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox"
+          "Top-20 by padj, arrest-matched contrasts; and match on arrest, not dose",
+          "Ovarian paper / Aim 1, Fig 2."
         ]
       },
       {
-        "date": "2026-08-10 (Monday)",
+        "date": "2026-08-11 (Tue, cont.)",
         "contexts": [
-          "Ovarian RNA-seq: the DE tables already exist; Block 3 is a reproducibility gap, not an analysis gap"
+          "Corrections to the entry above: prep batch, not sequencing run; and the mix hypothesis is disfavored"
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:01fbbc494329",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Withdraw the ovarian composition finding; cut CLAUDE.md to a map; route non-dates out of SCHEDULE",
+      "date": "2026-08-11"
+    },
     {
       "id": "commit:4032eadee51e",
       "kind": "commit",
@@ -650,34 +675,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:8bd18a608800",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Goetsch 1:1: ChIP direction, the peak-count discrepancy, and the \"quiescence program\" framing",
-      "date": "2026-07-21"
-    },
-    {
-      "id": "lab:306abf2d023b",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Goetsch 1:1 part 2: visualization workflow, and the CT gene project as Aim 3",
-      "date": "2026-07-21"
-    },
-    {
-      "id": "lab:9de923dc0e06",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA Stage-3 results read; Fig-1 composition figures built; two QC flags",
-      "date": "2026-07-21"
-    },
-    {
-      "id": "lab:7d9be13cc356",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA: read the classify script; the composition numbers are premature (three upstream issues) + chrM reframe",
-      "date": "2026-07-21"
-    },
-    {
       "id": "lab:dbfc591d20c4",
       "kind": "lab",
       "xp": 20,
@@ -823,6 +820,34 @@
       "xp": 20,
       "label": "Ovarian RNA-seq QC: the untreated baseline has a large non-exonic fraction; cause unresolved, pipeline exonerated",
       "date": "2026-08-10"
+    },
+    {
+      "id": "lab:16e7f9383822",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Block 6 QC + read-distribution results read; one PAR5x library sits with the wrong cell line",
+      "date": "2026-08-11"
+    },
+    {
+      "id": "lab:5263cdb6aa1d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Corrections to the entry above: prep batch, not sequencing run; and the mix hypothesis is disfavored",
+      "date": "2026-08-11"
+    },
+    {
+      "id": "lab:f37745a3cb57",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Top-20 by padj, arrest-matched contrasts; and match on arrest, not dose",
+      "date": "2026-08-11"
+    },
+    {
+      "id": "lab:ec290dd5551d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "The untreated-baseline \"composition problem\" is withdrawn",
+      "date": "2026-08-11"
     }
   ]
 }
