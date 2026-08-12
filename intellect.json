@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T11:56:25-04:00",
+  "generatedAt": "2026-08-12T12:06:59-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -11,9 +11,9 @@
   "projects": [
     {
       "name": "The ovarian paper",
-      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition). Quiescence/EOC. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
-      "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition).",
-      "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3; PAR condition). Quiescence/EOC. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. ChIP was done on P0, so it shares a timepoint with the 1× RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3).",
+      "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. ChIP was done on P0, so it shares a timepoint with the 1× RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
       "next": ""
     },
     {
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:323fd4237b1f",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Fix four project misconceptions in the canon",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:62b8835f04ae",
       "kind": "commit",
