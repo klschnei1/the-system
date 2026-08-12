@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T09:20:42-04:00",
+  "generatedAt": "2026-08-12T09:31:32-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:fbe7501e5274",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Ban prose from SCHEDULE with a lint, not a rule",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:fea367c8a313",
       "kind": "commit",
