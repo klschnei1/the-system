@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T10:36:47-04:00",
+  "generatedAt": "2026-08-12T11:56:25-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:62b8835f04ae",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Record the ovarian condition vocabulary and the Fig 2 panel set",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:7e2daf437617",
       "kind": "commit",
