@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-12T09:48:42-04:00",
+  "generatedAt": "2026-08-12T10:13:06-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
     "date": null,
     "daysRemaining": null
   },
-  "defenseTarget": "**Nov 19–20, 2026** — polled Aug 8 over Nov 3–20, but Techtmann is in Brazil Nov 3–18, which removes the preferred earlier half. *(Was \"late October, before Halloween\" until Aug 8 2026; the date is now set by committee availability and by working backward from the Dec 7 Grad School submission wall, not by the Halloween aim.)*",
+  "defenseTarget": null,
   "week": null,
   "projects": [
     {
@@ -32,9 +32,9 @@
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined as of Aug 5, 2026** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Karl's working guess is 2nd or 3rd author with a numbered figure plus a few paragraphs. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "status": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
       "short": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model.",
-      "identity": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined as of Aug 5, 2026** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Karl's working guess is 2nd or 3rd author with a numbered figure plus a few paragraphs. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "identity": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
       "next": ""
     },
     {
@@ -46,9 +46,9 @@
     },
     {
       "name": "The dissertation",
-      "status": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers. **The bar** (Karl, Aug 9 2026): a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
+      "status": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project**, entering as an in-progress aim with tables/visuals rather than a publication-ready chapter. Skeleton scaffolded with full section headers. **The bar:** a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
       "short": "three chapters.",
-      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project** (decided with Paul, Aug 3 2026 — earlier contested, Casey and Dr. Rao had been wary; it enters the dissertation as an in-progress aim with tables/visuals, not a publication-ready chapter). Skeleton scaffolded with full section headers. **The bar** (Karl, Aug 9 2026): a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
+      "identity": "three chapters. Aims 1 and 2 are the ovarian and CRISPR papers; **Aim 3 is the CT gene project**, entering as an in-progress aim with tables/visuals rather than a publication-ready chapter. Skeleton scaffolded with full section headers. **The bar:** a defensible dissertation plus two published papers, **venue open** — *\"2 papers that I can get published literally wherever; it doesn't have to be Nature.\"* Target journals are chosen for scope-fit and review speed, and chosen **before** writing, since length limits set the figure count. Prestige-chasing is the thing most likely to cost a fall graduation.",
       "next": ""
     }
   ],
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:80ebe350571f",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Strip deprecated lines from CLAUDE.md and LOCK.md; move LOCK's dated decisions to JOURNAL",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:e9437d8ce56b",
       "kind": "commit",
