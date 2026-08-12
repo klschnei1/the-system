@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T09:31:32-04:00",
+  "generatedAt": "2026-08-12T09:37:50-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ec548e42d4d9",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Cut the prose out of SCHEDULE; move the tasks it hid into ROADMAP",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:fbe7501e5274",
       "kind": "commit",
