@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T10:13:06-04:00",
+  "generatedAt": "2026-08-12T10:23:39-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:97cb489b0bca",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Remove the Aug 20-24 travel; session_log_guard accepts either log",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:80ebe350571f",
       "kind": "commit",
