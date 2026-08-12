@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T12:06:59-04:00",
+  "generatedAt": "2026-08-12T18:24:09-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -18,9 +18,9 @@
     },
     {
       "name": "The CRISPR paper",
-      "status": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency, read out by ddPCR and T7 endonuclease assay across HEYA8, HT1080, HEPG2. Dissertation Aim 2. First-author, methods paper.",
-      "short": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates.",
-      "identity": "palbociclib + nocodazole synergy for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency, read out by ddPCR and T7 endonuclease assay across HEYA8, HT1080, HEPG2. Dissertation Aim 2. First-author, methods paper.",
+      "status": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** (A549 dropped; never synchronized in S). Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
+      "short": "palbociclib + nocodazole for improving CRISPR/HDR editing rates.",
+      "identity": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** (A549 dropped; never synchronized in S). Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
       "next": ""
     },
     {
@@ -57,29 +57,34 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-08-12 (Wed, cont.)",
+        "contexts": [
+          "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data"
+        ]
+      },
+      {
+        "date": "2026-08-12 (Wed, cont.)",
+        "contexts": [
+          "CRISPR: the four conditions, the three ddPCR assays, and the replicate structure, recorded"
+        ]
+      },
+      {
         "date": "2026-08-12 (Wed)",
         "contexts": [
           "Viability assay: calcein/EthD flow retired, prep destruction identified, in-well imaging adopted",
           "CRISPR paper (Aim 2). The viability readout has been unresolved since early June — MDA data"
         ]
-      },
-      {
-        "date": "2026-08-11 (Tue, cont.)",
-        "contexts": [
-          "The untreated-baseline \"composition problem\" is withdrawn",
-          "Ovarian paper / Aim 1."
-        ]
-      },
-      {
-        "date": "2026-08-11 (Tue, cont.)",
-        "contexts": [
-          "Top-20 by padj, arrest-matched contrasts; and match on arrest, not dose",
-          "Ovarian paper / Aim 1, Fig 2."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:5a4734aa1453",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Correct the CRISPR canon; recover the 7/2 ddPCR plate as data",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:323fd4237b1f",
       "kind": "commit",
@@ -627,20 +632,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:4fdea82da236",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Flow harvest (PAR arrest/release); donor DNA cleanup (low recovery); IVT troubleshooting vs NEB docs",
-      "date": "2026-07-23"
-    },
-    {
-      "id": "lab:f1f5c156d314",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA classify cascade: load-bearing PE→SE fix, resubmitted",
-      "date": "2026-07-29"
-    },
-    {
       "id": "lab:d1b9a6de9658",
       "kind": "lab",
       "xp": 20,
@@ -799,6 +790,20 @@
       "kind": "lab",
       "xp": 20,
       "label": "Viability assay: calcein/EthD flow retired, prep destruction identified, in-well imaging adopted",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "lab:70258145a4bb",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR: the four conditions, the three ddPCR assays, and the replicate structure, recorded",
+      "date": "2026-08-12"
+    },
+    {
+      "id": "lab:83fffac8afe2",
+      "kind": "lab",
+      "xp": 20,
+      "label": "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data",
       "date": "2026-08-12"
     }
   ]
