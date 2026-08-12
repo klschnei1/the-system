@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T09:37:50-04:00",
+  "generatedAt": "2026-08-12T09:48:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -80,6 +80,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e9437d8ce56b",
+      "kind": "commit",
+      "xp": 16,
+      "label": "JOURNAL takes over degree logistics; first dated entry",
+      "date": "2026-08-12"
+    },
     {
       "id": "commit:ec548e42d4d9",
       "kind": "commit",
