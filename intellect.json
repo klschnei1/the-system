@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T11:47:43-04:00",
+  "generatedAt": "2026-08-13T11:58:09-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,13 @@
       {
         "date": "2026-08-13 (Thu)",
         "contexts": [
+          "Resolved: Bio-Rad sanctions an overnight hold; 3–4 days is the ceiling",
+          "CRISPR paper (Aim 2), sHDR ddPCR. Closes the 11 h 4 °C hold question raised twice earlier today."
+        ]
+      },
+      {
+        "date": "2026-08-13 (Thu)",
+        "contexts": [
           "Correction: the 48 h droplet-stability figure is unsourced",
           "CRISPR paper (Aim 2), sHDR ddPCR. Corrects the entry immediately above, which set aside the 11 h 4 °C hold on the strength of a stability figure that has no traceable source."
         ]
@@ -69,16 +76,17 @@
           "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
           "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2."
         ]
-      },
-      {
-        "date": "2026-08-13 (Thu)",
-        "contexts": [
-          "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:636f7df6d18a",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Resolve the post-cycling hold question with Bio-Rad's actual wording",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:90c40bff0226",
       "kind": "commit",
@@ -682,13 +690,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:426f588991f1",
-      "kind": "lab",
-      "xp": 20,
-      "label": "cell culture: SKOV3 western setup (underseeded), HEPG2 flow re-plate, passages; BSC swap",
-      "date": "2026-08-03"
-    },
-    {
       "id": "lab:242773b0221f",
       "kind": "lab",
       "xp": 20,
@@ -854,6 +855,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Correction: the 48 h droplet-stability figure is unsourced",
+      "date": "2026-08-13"
+    },
+    {
+      "id": "lab:32e4142d2c84",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Resolved: Bio-Rad sanctions an overnight hold; 3–4 days is the ceiling",
       "date": "2026-08-13"
     }
   ]
