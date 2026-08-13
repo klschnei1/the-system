@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T09:29:28-04:00",
+  "generatedAt": "2026-08-13T09:56:19-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:064175290bd7",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Gate notebook entries on structure, and close the shell bypass",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:8880924e4a1e",
       "kind": "commit",
