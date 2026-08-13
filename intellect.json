@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T10:56:14-04:00",
+  "generatedAt": "2026-08-13T11:40:11-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,13 @@
       {
         "date": "2026-08-13 (Thu)",
         "contexts": [
+          "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
+          "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2."
+        ]
+      },
+      {
+        "date": "2026-08-13 (Thu)",
+        "contexts": [
           "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor"
         ]
       },
@@ -67,16 +74,17 @@
         "contexts": [
           "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data"
         ]
-      },
-      {
-        "date": "2026-08-12 (Wed, cont.)",
-        "contexts": [
-          "CRISPR: the four conditions, the three ddPCR assays, and the replicate structure, recorded"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:3381e6478ac6",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Log the Aug 13 sHDR plate design and the 2/23 vs 7/16 thermal blocks",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:7c5f51839ebf",
       "kind": "commit",
@@ -659,13 +667,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:9b4a87d0d946",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA: length gate shipped + validated across all 6; 05 nuclear-biotype + mito; 04 composition figures built",
-      "date": "2026-07-31"
-    },
-    {
       "id": "lab:677e8aa233f7",
       "kind": "lab",
       "xp": 20,
@@ -831,6 +832,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor",
+      "date": "2026-08-13"
+    },
+    {
+      "id": "lab:fbc11b7620e1",
+      "kind": "lab",
+      "xp": 20,
+      "label": "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
       "date": "2026-08-13"
     }
   ]
