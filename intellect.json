@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T11:42:09-04:00",
+  "generatedAt": "2026-08-13T11:47:43-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,13 @@
       {
         "date": "2026-08-13 (Thu)",
         "contexts": [
+          "Correction: the 48 h droplet-stability figure is unsourced",
+          "CRISPR paper (Aim 2), sHDR ddPCR. Corrects the entry immediately above, which set aside the 11 h 4 °C hold on the strength of a stability figure that has no traceable source."
+        ]
+      },
+      {
+        "date": "2026-08-13 (Thu)",
+        "contexts": [
           "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
           "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2."
         ]
@@ -68,16 +75,17 @@
         "contexts": [
           "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor"
         ]
-      },
-      {
-        "date": "2026-08-12 (Wed, cont.)",
-        "contexts": [
-          "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:90c40bff0226",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Correct the 48 h droplet-stability claim: it has no source",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:99833b81ca39",
       "kind": "commit",
@@ -674,13 +682,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:677e8aa233f7",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA: figure strategy locked; journal/framing confirmed; fragment-length scripts written",
-      "date": "2026-07-31"
-    },
-    {
       "id": "lab:426f588991f1",
       "kind": "lab",
       "xp": 20,
@@ -846,6 +847,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
+      "date": "2026-08-13"
+    },
+    {
+      "id": "lab:e02bef3faacd",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Correction: the 48 h droplet-stability figure is unsourced",
       "date": "2026-08-13"
     }
   ]
