@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T10:00:28-04:00",
+  "generatedAt": "2026-08-13T10:56:14-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:7c5f51839ebf",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Consolidate the document checks behind one dispatcher",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:950fd6fd4093",
       "kind": "commit",
