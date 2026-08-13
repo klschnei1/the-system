@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T18:24:09-04:00",
+  "generatedAt": "2026-08-13T09:29:28-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-12",
+    "lastEntryDate": "2026-08-13",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-13 (Thu)",
+        "contexts": [
+          "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor"
+        ]
+      },
       {
         "date": "2026-08-12 (Wed, cont.)",
         "contexts": [
@@ -67,17 +73,17 @@
         "contexts": [
           "CRISPR: the four conditions, the three ddPCR assays, and the replicate structure, recorded"
         ]
-      },
-      {
-        "date": "2026-08-12 (Wed)",
-        "contexts": [
-          "Viability assay: calcein/EthD flow retired, prep destruction identified, in-well imaging adopted",
-          "CRISPR paper (Aim 2). The viability readout has been unresolved since early June — MDA data"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8880924e4a1e",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Correct the 'DNA only' samples: donor-carryover control, not a WT floor",
+      "date": "2026-08-13"
+    },
     {
       "id": "commit:5a4734aa1453",
       "kind": "commit",
@@ -632,13 +638,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:d1b9a6de9658",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA: SE cascade inspected; \"miRNA\" bin is gDNA (length-gate needed); analysis reframed to between-line differential",
-      "date": "2026-07-31"
-    },
-    {
       "id": "lab:9b4a87d0d946",
       "kind": "lab",
       "xp": 20,
@@ -805,6 +804,13 @@
       "xp": 20,
       "label": "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data",
       "date": "2026-08-12"
+    },
+    {
+      "id": "lab:8b9126181dee",
+      "kind": "lab",
+      "xp": 20,
+      "label": "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor",
+      "date": "2026-08-13"
     }
   ]
 }
