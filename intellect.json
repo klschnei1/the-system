@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T11:58:09-04:00",
+  "generatedAt": "2026-08-14T12:14:16-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,33 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-13",
+    "lastEntryDate": "2026-08-14",
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-08-13 (Thu)",
+        "date": "2026-08-14 (Fri)",
         "contexts": [
-          "Resolved: Bio-Rad sanctions an overnight hold; 3–4 days is the ceiling",
-          "CRISPR paper (Aim 2), sHDR ddPCR. Closes the 11 h 4 °C hold question raised twice earlier today."
+          "CRISPR paper (Aim 2), short-HDR arm. Plate 1, loaded and cycled Aug 13, read today."
         ]
       },
       {
         "date": "2026-08-13 (Thu)",
         "contexts": [
-          "Correction: the 48 h droplet-stability figure is unsourced",
-          "CRISPR paper (Aim 2), sHDR ddPCR. Corrects the entry immediately above, which set aside the 11 h 4 °C hold on the strength of a stability figure that has no traceable source."
+          "CRISPR paper (Aim 2). As-run record for plate 1, and the quantification work that preceded it. Supersedes parts of the design entry above."
         ]
       },
       {
         "date": "2026-08-13 (Thu)",
         "contexts": [
-          "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
-          "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2."
+          "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2. Written before loading, so any as-run change reads as a deviation. Supersedes the well allocation sketched in the Aug 12 entry (4 lines × 6/6/6/2 wells per arm)."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4fcc6fc6ad9d",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Add /eod, fix the renderer's one-entry-per-day bug, name STROMA",
+      "date": "2026-08-14"
+    },
     {
       "id": "commit:636f7df6d18a",
       "kind": "commit",
@@ -690,27 +694,6 @@
       "date": "2026-06-18"
     },
     {
-      "id": "lab:242773b0221f",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Goetsch meeting: his ChIP pipeline handed over; exoRNA framing + a DNase-protection idea",
-      "date": "2026-08-04"
-    },
-    {
-      "id": "lab:68a567436dc5",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ChIP: Goetsch pipeline pulled + diffed against code/chipseq/",
-      "date": "2026-08-04"
-    },
-    {
-      "id": "lab:de56a1fa3f9d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ChIP: Goetsch's QC read out; both blocking unknowns resolved; a retraction",
-      "date": "2026-08-05"
-    },
-    {
       "id": "lab:e9cc3f12738a",
       "kind": "lab",
       "xp": 20,
@@ -863,6 +846,27 @@
       "xp": 20,
       "label": "Resolved: Bio-Rad sanctions an overnight hold; 3–4 days is the ceiling",
       "date": "2026-08-13"
+    },
+    {
+      "id": "lab:acf97c54a182",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2. Written before loading, so any as-run change reads as a deviation. Supersedes the well allocation sketched in the Aug 12 entry (4 lines × 6/6/6/2 wells per arm).",
+      "date": "2026-08-13"
+    },
+    {
+      "id": "lab:2476bdae8fa3",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR paper (Aim 2). As-run record for plate 1, and the quantification work that preceded it. Supersedes parts of the design entry above.",
+      "date": "2026-08-13"
+    },
+    {
+      "id": "lab:368be26cd4de",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR paper (Aim 2), short-HDR arm. Plate 1, loaded and cycled Aug 13, read today.",
+      "date": "2026-08-14"
     }
   ]
 }
