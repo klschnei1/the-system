@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T19:29:52-04:00",
+  "generatedAt": "2026-08-19T19:32:27-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:064f1173624d",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Save Fig 2 gene-set + framing citations (Liberzon 2015, Fischer 2016; Thangavel 2011, Acevedo 2016) with DOIs/PMIDs",
+      "date": "2026-08-19"
+    },
     {
       "id": "commit:46b104896557",
       "kind": "commit",
