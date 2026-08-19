@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T10:56:10-04:00",
+  "generatedAt": "2026-08-19T19:29:52-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-17",
-    "daysSinceLastEntry": 2,
+    "lastEntryDate": "2026-08-19",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-19 (Wed)",
+        "contexts": [
+          "Two threads — cell-culture maintenance and the HEPG2 synchrony/transfection setup across the panel, and building the first-pass RNA-seq Figure 2 panels for the ovarian quiescence paper (Aim 1)."
+        ]
+      },
       {
         "date": "2026-08-17 (Mon)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "CRISPR paper (Aim 2), short-HDR arm. Plate 1, loaded and cycled Aug 13, read today."
         ]
-      },
-      {
-        "date": "2026-08-13 (Thu)",
-        "contexts": [
-          "CRISPR paper (Aim 2). As-run record for plate 1, and the quantification work that preceded it. Supersedes parts of the design entry above."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:46b104896557",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Aug 19 session: Fig 2 first-pass panels + notebook log; fix two misfiring guards; merge SCHEDULE validators",
+      "date": "2026-08-19"
+    },
     {
       "id": "commit:f1f6ad9907c1",
       "kind": "commit",
@@ -701,13 +708,6 @@
       "date": "2026-06-25"
     },
     {
-      "id": "lab:63a1620b171f",
-      "kind": "lab",
-      "xp": 20,
-      "label": "exoRNA: job 43396 verified complete; project parked pending role + materials from Bianca",
-      "date": "2026-08-05"
-    },
-    {
       "id": "lab:72b3a457c5b1",
       "kind": "lab",
       "xp": 20,
@@ -874,6 +874,13 @@
       "xp": 20,
       "label": "Weekly passage/maintenance across the panel, plus clonal isolation of the HT1080 Rb-mScarlet knock-in line (round 2). Starting material was a 96-well plate itself derived from a prior ring-pick, so it is already enriched (not selected) for mScarlet⁺.",
       "date": "2026-08-17"
+    },
+    {
+      "id": "lab:a0129b407ddb",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Two threads — cell-culture maintenance and the HEPG2 synchrony/transfection setup across the panel, and building the first-pass RNA-seq Figure 2 panels for the ovarian quiescence paper (Aim 1).",
+      "date": "2026-08-19"
     }
   ]
 }
