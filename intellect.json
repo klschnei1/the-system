@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T18:18:52-04:00",
+  "generatedAt": "2026-08-19T10:56:10-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,7 +54,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-08-17",
-    "daysSinceLastEntry": 0,
+    "daysSinceLastEntry": 2,
     "recentEntries": [
       {
         "date": "2026-08-17 (Mon)",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f1f6ad9907c1",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Ledger hygiene: enforce dates-only via a date-format lint; reconcile BMES and CT-gene rows",
+      "date": "2026-08-19"
+    },
     {
       "id": "commit:c68d6381a8b0",
       "kind": "commit",
