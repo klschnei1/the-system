@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T19:32:27-04:00",
+  "generatedAt": "2026-08-20T11:22:24-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-19",
+    "lastEntryDate": "2026-08-20",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-20 (Thu)",
+        "contexts": [
+          "CRISPR (Aim 2) — HEPG2 sHDR/lHDR transfection at the S-phase release window, and whether SKOV3 can join the CRISPR paper as a synchronisation line. Ovarian is existing-data-only, so the SKOV3 PAR/release work is CRISPR-oriented, not new ovarian sequencing."
+        ]
+      },
       {
         "date": "2026-08-19 (Wed)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Weekly passage/maintenance across the panel, plus clonal isolation of the HT1080 Rb-mScarlet knock-in line (round 2). Starting material was a 96-well plate itself derived from a prior ring-pick, so it is already **enriched (not selected)** for mScarlet⁺."
         ]
-      },
-      {
-        "date": "2026-08-14 (Fri)",
-        "contexts": [
-          "CRISPR paper (Aim 2), short-HDR arm. Plate 1, loaded and cycled Aug 13, read today."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:df154caaa8e8",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Defense locked Nov 19; calendar cruft purged; Aug 20 bench log",
+      "date": "2026-08-20"
+    },
     {
       "id": "commit:064f1173624d",
       "kind": "commit",
@@ -715,13 +722,6 @@
       "date": "2026-06-25"
     },
     {
-      "id": "lab:72b3a457c5b1",
-      "kind": "lab",
-      "xp": 20,
-      "label": "ddPCR: all runs pulled off the reader laptop; 7/16 failure diagnosed as overloading; 2/23 sHDR plate reads out",
-      "date": "2026-08-05"
-    },
-    {
       "id": "lab:e283de905936",
       "kind": "lab",
       "xp": 20,
@@ -888,6 +888,13 @@
       "xp": 20,
       "label": "Two threads — cell-culture maintenance and the HEPG2 synchrony/transfection setup across the panel, and building the first-pass RNA-seq Figure 2 panels for the ovarian quiescence paper (Aim 1).",
       "date": "2026-08-19"
+    },
+    {
+      "id": "lab:c3da88a46ade",
+      "kind": "lab",
+      "xp": 20,
+      "label": "CRISPR (Aim 2) — HEPG2 sHDR/lHDR transfection at the S-phase release window, and whether SKOV3 can join the CRISPR paper as a synchronisation line. Ovarian is existing-data-only, so the SKOV3 PAR/release work is CRISPR-oriented, not new ovarian sequencing.",
+      "date": "2026-08-20"
     }
   ]
 }
