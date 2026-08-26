@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T18:01:28-04:00",
+  "generatedAt": "2026-08-26T18:05:35-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ba7678ab2679",
+      "kind": "commit",
+      "xp": 12,
+      "label": "ddPCR run slips Aug 26 -> Aug 28 (bench day full); calendar moved",
+      "date": "2026-08-26"
+    },
     {
       "id": "commit:57eaa6686ad1",
       "kind": "commit",
