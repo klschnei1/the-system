@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T16:14:54-04:00",
+  "generatedAt": "2026-08-26T17:53:35-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:3b46121e13ab",
+      "kind": "commit",
+      "xp": 20,
+      "label": "Rebuild Goetsch 1:1 notes: charset fix + short-list/free-form layout",
+      "date": "2026-08-26"
+    },
     {
       "id": "commit:cf80f04596c4",
       "kind": "commit",
