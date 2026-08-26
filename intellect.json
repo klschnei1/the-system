@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T09:06:45-04:00",
+  "generatedAt": "2026-08-26T16:14:54-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,12 @@
       {
         "date": "2026-08-26 (Wed)",
         "contexts": [
+          "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level."
+        ]
+      },
+      {
+        "date": "2026-08-26 (Wed)",
+        "contexts": [
           "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk."
         ]
       },
@@ -67,16 +73,17 @@
         "contexts": [
           "Aim 1 (ovarian) RNA-seq Fig 2 build. The per-line PCA (Untreated / 1x / 5x) surfaced a QC call on SKOV3."
         ]
-      },
-      {
-        "date": "2026-08-25 (Tue)",
-        "contexts": [
-          "Aim 1 (ovarian) — read the stage-04 IDR logs off HRI; settle the E2F4 call and the per-IP QC picture."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:cf80f04596c4",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Aug 26 Goetsch 1:1: Paper-1 figure architecture locked at panel level",
+      "date": "2026-08-26"
+    },
     {
       "id": "commit:d37cf6885e88",
       "kind": "commit",
@@ -722,13 +729,6 @@
       "date": "2026-06-30"
     },
     {
-      "id": "lab:f37745a3cb57",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Top-20 by padj, arrest-matched contrasts; and match on arrest, not dose",
-      "date": "2026-08-11"
-    },
-    {
       "id": "lab:ec290dd5551d",
       "kind": "lab",
       "xp": 20,
@@ -894,6 +894,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk.",
+      "date": "2026-08-26"
+    },
+    {
+      "id": "lab:75a93c5e1f0c",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level.",
       "date": "2026-08-26"
     }
   ]
