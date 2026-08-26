@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T16:51:56-04:00",
+  "generatedAt": "2026-08-26T09:06:45-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,44 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-21",
+    "lastEntryDate": "2026-08-26",
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-08-21 (Fri)",
+        "date": "2026-08-26 (Wed)",
         "contexts": [
-          "CRISPR (Aim 2) — bank the HT1080 Rb-mScarlet backup, harvest the Aug 20 HEPG2 transfections, and start gDNA isolation to feed the Tue Aug 25 long-HDR ddPCR run; mScarlet imaging attempted on the knock-in line."
+          "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk."
         ]
       },
       {
-        "date": "2026-08-21 (Fri)",
+        "date": "2026-08-25 (Tue)",
         "contexts": [
-          "Planning/triage session, no new bench execution — long-HDR ddPCR scheduling and donor question, HEPG2 harvest timing, and the SKOV3 release-window design. Today's hands-on work is Fig 2 (due Aug 22) + EVOS imaging."
+          "Aim 1 (ovarian) RNA-seq Fig 2 build. The per-line PCA (Untreated / 1x / 5x) surfaced a QC call on SKOV3."
         ]
       },
       {
-        "date": "2026-08-20 (Thu)",
+        "date": "2026-08-25 (Tue)",
         "contexts": [
-          "CRISPR (Aim 2) — HEPG2 sHDR/lHDR transfection at the S-phase release window, and whether SKOV3 can join the CRISPR paper as a synchronisation line. Ovarian is existing-data-only, so the SKOV3 PAR/release work is CRISPR-oriented, not new ovarian sequencing."
+          "Aim 1 (ovarian) — read the stage-04 IDR logs off HRI; settle the E2F4 call and the per-IP QC picture."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d37cf6885e88",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Fig 2 panels + repo structure cleanup; schedule reconciled to real Aug 26/27 load",
+      "date": "2026-08-26"
+    },
+    {
+      "id": "commit:769200cb796f",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Fig 2 planning: lock RNA-only structure + build-everything rule; schedule hygiene",
+      "date": "2026-08-25"
+    },
     {
       "id": "commit:562cac154d70",
       "kind": "commit",
@@ -708,83 +722,6 @@
       "date": "2026-06-30"
     },
     {
-      "id": "commit:ac5f9d143160",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Add exosome RNA-seq STAR pipeline scripts (refs, index, align)",
-      "date": "2026-06-25"
-    },
-    {
-      "id": "commit:79b2df930975",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Consolidate memory into repo, refresh LOCK.md to 6/25, point CLAUDE.md at memory/",
-      "date": "2026-06-25"
-    },
-    {
-      "id": "commit:b1e669450870",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Resume operational repo: backfill notebook 6/22–6/25, commit pending scaffold",
-      "date": "2026-06-25"
-    },
-    {
-      "id": "lab:35d660e230e8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "SKOV3 western: sample plates collected",
-      "date": "2026-08-08"
-    },
-    {
-      "id": "lab:567af2115b45",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Review: screening scope questions settled",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "lab:6578f5c299b2",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Screening session closed: 1,116, bet met",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "lab:1a9be788d02f",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Ovarian RNA-seq: the DE tables already exist; Block 3 is a reproducibility gap, not an analysis gap",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "lab:25528cecb4e8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Correction: the pooled 1×/5× contrast is supplement-grade, and may be manufacturing the DE-count paradox",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "lab:1b615174e7dd",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Ovarian RNA-seq QC: the untreated baseline has a large non-exonic fraction; cause unresolved, pipeline exonerated",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "lab:16e7f9383822",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Block 6 QC + read-distribution results read; one PAR5x library sits with the wrong cell line",
-      "date": "2026-08-11"
-    },
-    {
-      "id": "lab:5263cdb6aa1d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Corrections to the entry above: prep batch, not sequencing run; and the mix hypothesis is disfavored",
-      "date": "2026-08-11"
-    },
-    {
       "id": "lab:f37745a3cb57",
       "kind": "lab",
       "xp": 20,
@@ -902,6 +839,62 @@
       "xp": 20,
       "label": "CRISPR (Aim 2) — bank the HT1080 Rb-mScarlet backup, harvest the Aug 20 HEPG2 transfections, and start gDNA isolation to feed the Tue Aug 25 long-HDR ddPCR run; mScarlet imaging attempted on the knock-in line.",
       "date": "2026-08-21"
+    },
+    {
+      "id": "lab:7fb6422c73a9",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 ovarian/quiescence — executed the SKOV3 palbociclib release-window timecourse (defines release→S-phase re-entry kinetics; also informs a possible SKOV3 CRISPR synchronisation arm). Aim 2 — the HEPG2 long-HDR gDNA isolation started Fri was meant to complete for Tue's ddPCR.",
+      "date": "2026-08-22"
+    },
+    {
+      "id": "lab:372b72f5e17e",
+      "kind": "lab",
+      "xp": 20,
+      "label": "lab −20 °C freezer failure (door seal — cracked for some time, per Goetsch) + the Sunday bench that Saturday's entry left open (SKOV3 harvest, HEPG2 long-HDR isolation).",
+      "date": "2026-08-23"
+    },
+    {
+      "id": "lab:192c8a13fc68",
+      "kind": "lab",
+      "xp": 20,
+      "label": "cell-line upkeep for the ovarian (Aim 1) and CRISPR (Aim 2) work.",
+      "date": "2026-08-24"
+    },
+    {
+      "id": "lab:d8f30a05706d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 2 (CRISPR) — long-HDR ddPCR plate design for the Aug 25 run.",
+      "date": "2026-08-24"
+    },
+    {
+      "id": "lab:6ad8cb91487e",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 (ovarian) — ChIP analysis planning: reconciling my code/chipseq/ pipeline against Goetsch's, and scoping what Fig 3 can claim.",
+      "date": "2026-08-25"
+    },
+    {
+      "id": "lab:b73d23164da3",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 (ovarian) — read the stage-04 IDR logs off HRI; settle the E2F4 call and the per-IP QC picture.",
+      "date": "2026-08-25"
+    },
+    {
+      "id": "lab:02c0ea72e3d9",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 (ovarian) RNA-seq Fig 2 build. The per-line PCA (Untreated / 1x / 5x) surfaced a QC call on SKOV3.",
+      "date": "2026-08-25"
+    },
+    {
+      "id": "lab:3bfe7724fbb1",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk.",
+      "date": "2026-08-26"
     }
   ]
 }
