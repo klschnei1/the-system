@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T18:05:35-04:00",
+  "generatedAt": "2026-08-26T18:18:30-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:9f663f4ce098",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Ovarian full chapter draft slips Aug 28 -> Sep 4 (+1 wk, Karl)",
+      "date": "2026-08-26"
+    },
     {
       "id": "commit:ba7678ab2679",
       "kind": "commit",
