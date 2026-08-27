@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T09:33:15-04:00",
+  "generatedAt": "2026-08-27T09:44:16-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,12 @@
       {
         "date": "2026-08-26 (Wed)",
         "contexts": [
+          "Aim 2 (CRISPR/HDR). Screened two 96-well plates for mScarlet+ (long-HDR knock-in) cells on the EVOS, after swapping the CY5 light cube out for the RFP cube to read mScarlet."
+        ]
+      },
+      {
+        "date": "2026-08-26 (Wed)",
+        "contexts": [
           "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level."
         ]
       },
@@ -67,16 +73,17 @@
         "contexts": [
           "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk."
         ]
-      },
-      {
-        "date": "2026-08-25 (Tue)",
-        "contexts": [
-          "Aim 1 (ovarian) RNA-seq Fig 2 build. The per-line PCA (Untreated / 1x / 5x) surfaced a QC call on SKOV3."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:19ab9a4e0d6d",
+      "kind": "commit",
+      "xp": 14,
+      "label": "EVOS scan done (negative); priority reset toward writing/analysis",
+      "date": "2026-08-27"
+    },
     {
       "id": "commit:32b63e22e8a0",
       "kind": "commit",
@@ -764,13 +771,6 @@
       "date": "2026-06-30"
     },
     {
-      "id": "lab:ec290dd5551d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "The untreated-baseline \"composition problem\" is withdrawn",
-      "date": "2026-08-11"
-    },
-    {
       "id": "lab:605ceee4e8d0",
       "kind": "lab",
       "xp": 20,
@@ -936,6 +936,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level.",
+      "date": "2026-08-26"
+    },
+    {
+      "id": "lab:486ca0f85b67",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 2 (CRISPR/HDR). Screened two 96-well plates for mScarlet+ (long-HDR knock-in) cells on the EVOS, after swapping the CY5 light cube out for the RFP cube to read mScarlet.",
       "date": "2026-08-26"
     }
   ]
