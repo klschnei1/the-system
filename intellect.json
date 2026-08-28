@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T09:44:16-04:00",
+  "generatedAt": "2026-08-28T10:55:01-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-26",
+    "lastEntryDate": "2026-08-27",
     "daysSinceLastEntry": 1,
     "recentEntries": [
+      {
+        "date": "2026-08-27 (Thu)",
+        "contexts": [
+          "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories."
+        ]
+      },
       {
         "date": "2026-08-26 (Wed)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level."
         ]
-      },
-      {
-        "date": "2026-08-26 (Wed)",
-        "contexts": [
-          "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ed2f2d578aea",
+      "kind": "commit",
+      "xp": 15,
+      "label": "update docs: CT-gene grouping lit + body-map design; ledger reconciled",
+      "date": "2026-08-28"
+    },
     {
       "id": "commit:19ab9a4e0d6d",
       "kind": "commit",
@@ -771,13 +778,6 @@
       "date": "2026-06-30"
     },
     {
-      "id": "lab:605ceee4e8d0",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Viability assay: calcein/EthD flow retired, prep destruction identified, in-well imaging adopted",
-      "date": "2026-08-12"
-    },
-    {
       "id": "lab:70258145a4bb",
       "kind": "lab",
       "xp": 20,
@@ -944,6 +944,13 @@
       "xp": 20,
       "label": "Aim 2 (CRISPR/HDR). Screened two 96-well plates for mScarlet+ (long-HDR knock-in) cells on the EVOS, after swapping the CY5 light cube out for the RFP cube to read mScarlet.",
       "date": "2026-08-26"
+    },
+    {
+      "id": "lab:125d8ef61323",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories.",
+      "date": "2026-08-27"
     }
   ]
 }
