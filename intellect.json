@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T10:55:01-04:00",
+  "generatedAt": "2026-08-30T18:46:39-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-27",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-08-30",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-08-30 (Sun)",
+        "contexts": [
+          "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch."
+        ]
+      },
+      {
+        "date": "2026-08-28 (Fri)",
+        "contexts": [
+          "Aim 2 (CRISPR), long-HDR mScarlet-junction ddPCR. Prep for the Aug 28 run. This is the first time the junction assay is run — every prior ddPCR was drop-off or sHDR — so today's plate is as much a validation of the duplex as a measurement."
+        ]
+      },
       {
         "date": "2026-08-27 (Thu)",
         "contexts": [
           "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories."
         ]
-      },
-      {
-        "date": "2026-08-26 (Wed)",
-        "contexts": [
-          "Aim 2 (CRISPR/HDR). Screened two 96-well plates for mScarlet+ (long-HDR knock-in) cells on the EVOS, after swapping the CY5 light cube out for the RFP cube to read mScarlet."
-        ]
-      },
-      {
-        "date": "2026-08-26 (Wed)",
-        "contexts": [
-          "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:1997f87670d4",
+      "kind": "commit",
+      "xp": 30,
+      "label": "memory: consolidate append-log rot; retire stale tooling/conference status",
+      "date": "2026-08-30"
+    },
     {
       "id": "commit:ed2f2d578aea",
       "kind": "commit",
@@ -750,48 +757,6 @@
       "date": "2026-07-06"
     },
     {
-      "id": "commit:fc2b38407117",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Move draft deadline Aug 28 -> Sept 15; INTELLECT parser now date-generic",
-      "date": "2026-07-01"
-    },
-    {
-      "id": "commit:bb77e6cff251",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Lab notebook: in-session render + SessionStart reminder hook",
-      "date": "2026-07-01"
-    },
-    {
-      "id": "commit:4ad2e978be3b",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Add markdown-driven LOCKED dashboard + correct stale blockers",
-      "date": "2026-06-30"
-    },
-    {
-      "id": "commit:574dcb27f106",
-      "kind": "commit",
-      "xp": 19,
-      "label": "Document exosome RNA-seq pipeline (code/rnaseq/README.md)",
-      "date": "2026-06-30"
-    },
-    {
-      "id": "lab:70258145a4bb",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR: the four conditions, the three ddPCR assays, and the replicate structure, recorded",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "lab:83fffac8afe2",
-      "kind": "lab",
-      "xp": 20,
-      "label": "The 7/2 gRNA-only plate is readable: target labels are swapped in the export, and the plate contains real NHEJ data",
-      "date": "2026-08-12"
-    },
-    {
       "id": "lab:8b9126181dee",
       "kind": "lab",
       "xp": 20,
@@ -951,6 +916,20 @@
       "xp": 20,
       "label": "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories.",
       "date": "2026-08-27"
+    },
+    {
+      "id": "lab:4c106158c9d5",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 2 (CRISPR), long-HDR mScarlet-junction ddPCR. Prep for the Aug 28 run. This is the first time the junction assay is run — every prior ddPCR was drop-off or sHDR — so today's plate is as much a validation of the duplex as a measurement.",
+      "date": "2026-08-28"
+    },
+    {
+      "id": "lab:2555f6a510fa",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch.",
+      "date": "2026-08-30"
     }
   ]
 }
