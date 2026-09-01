@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T15:44:42-04:00",
+  "generatedAt": "2026-09-01T15:45:00-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:dc7382a1f66c",
+      "kind": "commit",
+      "xp": 13,
+      "label": "plate_map: add long-HDR as-run (transposed) map",
+      "date": "2026-09-01"
+    },
     {
       "id": "commit:8d2c8b0fe19e",
       "kind": "commit",
