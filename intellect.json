@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T15:45:00-04:00",
+  "generatedAt": "2026-09-01T15:56:06-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -57,6 +57,12 @@
     "daysSinceLastEntry": 0,
     "recentEntries": [
       {
+        "date": "2026-09-01 (Tue)",
+        "contexts": [
+          "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. *(The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)*"
+        ]
+      },
+      {
         "date": "2026-09-01 (Mon)",
         "contexts": [
           "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter."
@@ -67,16 +73,17 @@
         "contexts": [
           "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch."
         ]
-      },
-      {
-        "date": "2026-08-28 (Fri)",
-        "contexts": [
-          "Aim 2 (CRISPR), long-HDR mScarlet-junction ddPCR. Prep for the Aug 28 run. This is the first time the junction assay is run — every prior ddPCR was drop-off or sHDR — so today's plate is as much a validation of the duplex as a measurement."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:3f077afdee22",
+      "kind": "commit",
+      "xp": 14,
+      "label": "docs: Sep 1 sync — cultures closed out, BMES registered, defense slot set",
+      "date": "2026-09-01"
+    },
     {
       "id": "commit:dc7382a1f66c",
       "kind": "commit",
@@ -778,13 +785,6 @@
       "date": "2026-07-06"
     },
     {
-      "id": "lab:fbc11b7620e1",
-      "kind": "lab",
-      "xp": 20,
-      "label": "sHDR ddPCR plate: thermal blocks compared, 2/23 vs 7/16",
-      "date": "2026-08-13"
-    },
-    {
       "id": "lab:e02bef3faacd",
       "kind": "lab",
       "xp": 20,
@@ -950,6 +950,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter.",
+      "date": "2026-09-01"
+    },
+    {
+      "id": "lab:04aed16b16b3",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. (The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)",
       "date": "2026-09-01"
     }
   ]
