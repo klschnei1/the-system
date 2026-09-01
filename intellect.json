@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T12:05:22-04:00",
+  "generatedAt": "2026-09-01T15:44:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-08-30",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-09-01",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-01 (Mon)",
+        "contexts": [
+          "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter."
+        ]
+      },
       {
         "date": "2026-08-30 (Sun)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Aim 2 (CRISPR), long-HDR mScarlet-junction ddPCR. Prep for the Aug 28 run. This is the first time the junction assay is run — every prior ddPCR was drop-off or sHDR — so today's plate is as much a validation of the duplex as a measurement."
         ]
-      },
-      {
-        "date": "2026-08-27 (Thu)",
-        "contexts": [
-          "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8d2c8b0fe19e",
+      "kind": "commit",
+      "xp": 27,
+      "label": "Fig 2 (ovarian RNA-seq) built: 11 panels to figures/ovarian/",
+      "date": "2026-09-01"
+    },
     {
       "id": "commit:d9b0c30f3c68",
       "kind": "commit",
@@ -764,13 +771,6 @@
       "date": "2026-07-06"
     },
     {
-      "id": "lab:8b9126181dee",
-      "kind": "lab",
-      "xp": 20,
-      "label": "\"DNA only\" samples corrected: they are a donor-carryover control for the long-HDR assay, not a WT floor",
-      "date": "2026-08-13"
-    },
-    {
       "id": "lab:fbc11b7620e1",
       "kind": "lab",
       "xp": 20,
@@ -937,6 +937,13 @@
       "xp": 20,
       "label": "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch.",
       "date": "2026-08-30"
+    },
+    {
+      "id": "lab:dddc245a4b04",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter.",
+      "date": "2026-09-01"
     }
   ]
 }
