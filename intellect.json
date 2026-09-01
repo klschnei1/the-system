@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T16:22:52-04:00",
+  "generatedAt": "2026-09-01T16:28:41-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:646faec18a46",
+      "kind": "commit",
+      "xp": 12,
+      "label": "docs: correct the flow-call entry — FOM booking, Attune stays air-gapped",
+      "date": "2026-09-01"
+    },
     {
       "id": "commit:14fa9787e886",
       "kind": "commit",
