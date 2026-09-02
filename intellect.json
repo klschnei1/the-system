@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T15:10:49-04:00",
+  "generatedAt": "2026-09-02T15:43:48-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:948f0b859150",
+      "kind": "commit",
+      "xp": 16,
+      "label": "memory: Attune cell-cycle acquisition + normalization SOP, in Karl's words",
+      "date": "2026-09-02"
+    },
     {
       "id": "commit:ba1fd938fb0d",
       "kind": "commit",
