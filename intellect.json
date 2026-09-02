@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T16:28:41-04:00",
+  "generatedAt": "2026-09-02T15:10:49-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-01",
+    "lastEntryDate": "2026-09-02",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-02 (Wed)",
+        "contexts": [
+          "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: **most of the existing flow archive is probably usable after all**, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off."
+        ]
+      },
       {
         "date": "2026-09-01 (Tue)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter."
         ]
-      },
-      {
-        "date": "2026-08-30 (Sun)",
-        "contexts": [
-          "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ba1fd938fb0d",
+      "kind": "commit",
+      "xp": 13,
+      "label": "notebook: Sep 2 Attune call — width-gating scheme reopens the flow archive",
+      "date": "2026-09-02"
+    },
     {
       "id": "commit:646faec18a46",
       "kind": "commit",
@@ -799,13 +806,6 @@
       "date": "2026-07-06"
     },
     {
-      "id": "lab:e02bef3faacd",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Correction: the 48 h droplet-stability figure is unsourced",
-      "date": "2026-08-13"
-    },
-    {
       "id": "lab:32e4142d2c84",
       "kind": "lab",
       "xp": 20,
@@ -972,6 +972,13 @@
       "xp": 20,
       "label": "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. (The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)",
       "date": "2026-09-01"
+    },
+    {
+      "id": "lab:c8378a41d2b6",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: most of the existing flow archive is probably usable after all, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off.",
+      "date": "2026-09-02"
     }
   ]
 }
