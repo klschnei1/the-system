@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T11:37:38-04:00",
+  "generatedAt": "2026-09-03T12:12:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:2fe0be619e4b",
+      "kind": "commit",
+      "xp": 12,
+      "label": "roadmap: palbo 10x confirmed by flow; sHDR repeat scoped to three lines",
+      "date": "2026-09-03"
+    },
     {
       "id": "commit:92181556257e",
       "kind": "commit",
