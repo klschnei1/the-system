@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T08:54:09-04:00",
+  "generatedAt": "2026-09-03T11:37:38-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:92181556257e",
+      "kind": "commit",
+      "xp": 12,
+      "label": "schedule: ovarian chapter draft +2wk; Fig 1 westerns run on HEYA8 first",
+      "date": "2026-09-03"
+    },
     {
       "id": "commit:aaba859bb989",
       "kind": "commit",
