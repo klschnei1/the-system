@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T12:47:09-04:00",
+  "generatedAt": "2026-09-03T13:14:58-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f442ae44ab55",
+      "kind": "commit",
+      "xp": 12,
+      "label": "journal: BMES flights booked — United DFSD57, $521.01",
+      "date": "2026-09-03"
+    },
     {
       "id": "commit:46075a31239b",
       "kind": "commit",
