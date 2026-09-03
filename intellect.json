@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T08:52:46-04:00",
+  "generatedAt": "2026-09-03T08:54:09-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:aaba859bb989",
+      "kind": "commit",
+      "xp": 12,
+      "label": "roadmap: drop the VL1 constraint from the viability-dye item",
+      "date": "2026-09-03"
+    },
     {
       "id": "commit:c1ac813c9d73",
       "kind": "commit",
