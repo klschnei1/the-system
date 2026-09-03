@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T15:43:48-04:00",
+  "generatedAt": "2026-09-03T08:52:46-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-02",
+    "lastEntryDate": "2026-09-03",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-03 (Thu)",
+        "contexts": [
+          "Two flow sample-prep changes from the Sep 2 Noah Alberts-Grill call that the Sep 2 entry left out (it covered gating and normalization only). Plus the palbociclib dose problem found today."
+        ]
+      },
       {
         "date": "2026-09-02 (Wed)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. *(The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)*"
         ]
-      },
-      {
-        "date": "2026-09-01 (Mon)",
-        "contexts": [
-          "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:c1ac813c9d73",
+      "kind": "commit",
+      "xp": 13,
+      "label": "notebook: Sep 3 — palbociclib 10x dose suspicion + flow prep changes",
+      "date": "2026-09-03"
+    },
     {
       "id": "commit:948f0b859150",
       "kind": "commit",
@@ -813,13 +820,6 @@
       "date": "2026-07-06"
     },
     {
-      "id": "lab:32e4142d2c84",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Resolved: Bio-Rad sanctions an overnight hold; 3–4 days is the ceiling",
-      "date": "2026-08-13"
-    },
-    {
       "id": "lab:acf97c54a182",
       "kind": "lab",
       "xp": 20,
@@ -986,6 +986,13 @@
       "xp": 20,
       "label": "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: most of the existing flow archive is probably usable after all, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off.",
       "date": "2026-09-02"
+    },
+    {
+      "id": "lab:a7cff4a0c882",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Two flow sample-prep changes from the Sep 2 Noah Alberts-Grill call that the Sep 2 entry left out (it covered gating and normalization only). Plus the palbociclib dose problem found today.",
+      "date": "2026-09-03"
     }
   ]
 }
