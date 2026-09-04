@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T14:17:23-04:00",
+  "generatedAt": "2026-09-04T14:28:01-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:7d52a7347de3",
+      "kind": "commit",
+      "xp": 12,
+      "label": "schedule: HRI travel grant + BMES travel award submitted Sep 4",
+      "date": "2026-09-04"
+    },
     {
       "id": "commit:6a835c185e18",
       "kind": "commit",
