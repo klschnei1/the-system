@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T14:11:52-04:00",
+  "generatedAt": "2026-09-04T14:17:23-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6a835c185e18",
+      "kind": "commit",
+      "xp": 12,
+      "label": "journal: BMES trip budget table for the HRI + GSG applications",
+      "date": "2026-09-04"
+    },
     {
       "id": "commit:415a7838225c",
       "kind": "commit",
