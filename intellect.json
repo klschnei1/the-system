@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T12:11:41-04:00",
+  "generatedAt": "2026-09-04T14:11:52-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:415a7838225c",
+      "kind": "commit",
+      "xp": 13,
+      "label": "journal: BMES hotel booked — Z9HRXNDA, $874.13, 3 nights",
+      "date": "2026-09-04"
+    },
     {
       "id": "commit:d67b104fc00a",
       "kind": "commit",
@@ -860,13 +867,6 @@
       "xp": 30,
       "label": "Memory: consolidate + reframe rules as positive targets",
       "date": "2026-07-07"
-    },
-    {
-      "id": "commit:490fb3ee8cd3",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Session: toolchain + gamified dashboard; flush pending docs/memory",
-      "date": "2026-07-06"
     },
     {
       "id": "lab:acf97c54a182",
