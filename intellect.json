@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T11:07:23-04:00",
+  "generatedAt": "2026-09-05T11:10:33-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:3491139ff8f7",
+      "kind": "commit",
+      "xp": 12,
+      "label": "roadmap: untreated reference is unt/DF/PRO — flow script unblocked",
+      "date": "2026-09-05"
+    },
     {
       "id": "commit:6f5f95f432f2",
       "kind": "commit",
