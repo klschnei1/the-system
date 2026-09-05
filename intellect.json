@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T14:28:01-04:00",
+  "generatedAt": "2026-09-05T11:07:23-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-03",
+    "lastEntryDate": "2026-09-04",
     "daysSinceLastEntry": 1,
     "recentEntries": [
+      {
+        "date": "2026-09-04 (Fri)",
+        "contexts": [
+          "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today."
+        ]
+      },
       {
         "date": "2026-09-03 (Thu)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: **most of the existing flow archive is probably usable after all**, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off."
         ]
-      },
-      {
-        "date": "2026-09-01 (Tue)",
-        "contexts": [
-          "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. *(The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)*"
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6f5f95f432f2",
+      "kind": "commit",
+      "xp": 15,
+      "label": "update docs: Sep 4 flow pipeline design; ledger reconciled; NEXT set",
+      "date": "2026-09-05"
+    },
     {
       "id": "commit:7d52a7347de3",
       "kind": "commit",
@@ -883,13 +890,6 @@
       "date": "2026-07-07"
     },
     {
-      "id": "lab:acf97c54a182",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR paper (Aim 2), short-HDR arm. Plate 1 of the re-run; reader booked 8 AM–8 PM, Friday held for plate 2. Written before loading, so any as-run change reads as a deviation. Supersedes the well allocation sketched in the Aug 12 entry (4 lines × 6/6/6/2 wells per arm).",
-      "date": "2026-08-13"
-    },
-    {
       "id": "lab:2476bdae8fa3",
       "kind": "lab",
       "xp": 20,
@@ -1056,6 +1056,13 @@
       "xp": 20,
       "label": "Two flow sample-prep changes from the Sep 2 Noah Alberts-Grill call that the Sep 2 entry left out (it covered gating and normalization only). Plus the palbociclib dose problem found today.",
       "date": "2026-09-03"
+    },
+    {
+      "id": "lab:b2a284b5973a",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today.",
+      "date": "2026-09-04"
     }
   ]
 }
