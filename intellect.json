@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T11:22:30-04:00",
+  "generatedAt": "2026-09-05T11:37:07-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f90781b9f508",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Rebuild ROADMAP and SCHEDULE around the real remaining work",
+      "date": "2026-09-05"
+    },
     {
       "id": "commit:82ab2bdac1b1",
       "kind": "commit",
