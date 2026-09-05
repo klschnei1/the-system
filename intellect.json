@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T11:37:07-04:00",
+  "generatedAt": "2026-09-05T11:58:15-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:34fce794ab5c",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Chapters first, papers derived; screening moves to the critical path",
+      "date": "2026-09-05"
+    },
     {
       "id": "commit:f90781b9f508",
       "kind": "commit",
