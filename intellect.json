@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T11:58:15-04:00",
+  "generatedAt": "2026-09-05T12:01:11-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:c78ce3393cdf",
+      "kind": "commit",
+      "xp": 12,
+      "label": "roadmap: papers form pre-defense, pruned as chapters land",
+      "date": "2026-09-05"
+    },
     {
       "id": "commit:34fce794ab5c",
       "kind": "commit",
