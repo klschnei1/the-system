@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T12:01:11-04:00",
+  "generatedAt": "2026-09-07T12:27:51-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-04",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-09-07",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-07 (Mon)",
+        "contexts": [
+          "Labor Day holiday session. TC-room restart prep for the CRISPR closing culture list, plus two analysis decisions — the palbociclib dose direction left open in the Sep 6 entry, and how `SKOV3_Untreated_1` is handled in the Fig 2 DE tables."
+        ]
+      },
+      {
+        "date": "2026-09-06 (Sun)",
+        "contexts": [
+          "No bench work. Two analysis findings, both affecting the flow archive for Paper 1 (ovarian Fig 1) and Paper 2 (CRISPR synchronization). The first changes which parameter cell cycle is read from; the second closes out the \"suspected 10× palbociclib overdose\" flagged Sep 3."
+        ]
+      },
       {
         "date": "2026-09-04 (Fri)",
         "contexts": [
           "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today."
         ]
-      },
-      {
-        "date": "2026-09-03 (Thu)",
-        "contexts": [
-          "Two flow sample-prep changes from the Sep 2 Noah Alberts-Grill call that the Sep 2 entry left out (it covered gating and normalization only). Plus the palbociclib dose problem found today."
-        ]
-      },
-      {
-        "date": "2026-09-02 (Wed)",
-        "contexts": [
-          "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: **most of the existing flow archive is probably usable after all**, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d380bebd6111",
+      "kind": "commit",
+      "xp": 20,
+      "label": "Reconcile docs with the Sep 6 findings; settle palbo direction and the SKOV3 pseudorep question",
+      "date": "2026-09-07"
+    },
     {
       "id": "commit:c78ce3393cdf",
       "kind": "commit",
@@ -918,27 +925,6 @@
       "date": "2026-07-10"
     },
     {
-      "id": "commit:260321fa5113",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Memory: consolidate + reframe rules as positive targets",
-      "date": "2026-07-07"
-    },
-    {
-      "id": "lab:2476bdae8fa3",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR paper (Aim 2). As-run record for plate 1, and the quantification work that preceded it. Supersedes parts of the design entry above.",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "lab:368be26cd4de",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR paper (Aim 2), short-HDR arm. Plate 1, loaded and cycled Aug 13, read today.",
-      "date": "2026-08-14"
-    },
-    {
       "id": "lab:95c68bcab96d",
       "kind": "lab",
       "xp": 20,
@@ -1098,6 +1084,20 @@
       "xp": 20,
       "label": "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today.",
       "date": "2026-09-04"
+    },
+    {
+      "id": "lab:65d0348da971",
+      "kind": "lab",
+      "xp": 20,
+      "label": "No bench work. Two analysis findings, both affecting the flow archive for Paper 1 (ovarian Fig 1) and Paper 2 (CRISPR synchronization). The first changes which parameter cell cycle is read from; the second closes out the \"suspected 10× palbociclib overdose\" flagged Sep 3.",
+      "date": "2026-09-06"
+    },
+    {
+      "id": "lab:a02788cb39ca",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Labor Day holiday session. TC-room restart prep for the CRISPR closing culture list, plus two analysis decisions — the palbociclib dose direction left open in the Sep 6 entry, and how SKOV3_Untreated_1 is handled in the Fig 2 DE tables.",
+      "date": "2026-09-07"
     }
   ]
 }
