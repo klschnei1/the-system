@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T12:27:51-04:00",
+  "generatedAt": "2026-09-09T12:57:45-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-07",
+    "lastEntryDate": "2026-09-09",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-09 (Wed)",
+        "contexts": [
+          "Fig 1 design for Paper 1, plus two flow-pipeline facts that were wrong in the docs and in `triage_flow.py`. No bench work."
+        ]
+      },
+      {
+        "date": "2026-09-08 (Tue)",
+        "contexts": [
+          "The closing culture list opens — the CRISPR (Aim 2) sHDR repeat plus the Paper 1 flow re-acquisition. TC room was staged Sep 7."
+        ]
+      },
       {
         "date": "2026-09-07 (Mon)",
         "contexts": [
           "Labor Day holiday session. TC-room restart prep for the CRISPR closing culture list, plus two analysis decisions — the palbociclib dose direction left open in the Sep 6 entry, and how `SKOV3_Untreated_1` is handled in the Fig 2 DE tables."
         ]
-      },
-      {
-        "date": "2026-09-06 (Sun)",
-        "contexts": [
-          "No bench work. Two analysis findings, both affecting the flow archive for Paper 1 (ovarian Fig 1) and Paper 2 (CRISPR synchronization). The first changes which parameter cell cycle is read from; the second closes out the \"suspected 10× palbociclib overdose\" flagged Sep 3."
-        ]
-      },
-      {
-        "date": "2026-09-04 (Fri)",
-        "contexts": [
-          "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4dfd2713b5e2",
+      "kind": "commit",
+      "xp": 22,
+      "label": "Review off the critical path; Fig 1 settled; writing workspace",
+      "date": "2026-09-09"
+    },
     {
       "id": "commit:d380bebd6111",
       "kind": "commit",
@@ -876,69 +883,6 @@
       "date": "2026-07-14"
     },
     {
-      "id": "commit:d17577f48a74",
-      "kind": "commit",
-      "xp": 17,
-      "label": "Add positive-framing lint hook for memory writes",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:0a133e89b8fd",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Add memory: check the clock before stating any time of day",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:431b6cb904bf",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Log 2026-07-10 CRISPR HDR transfection (HEPG2 + HT1080)",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:82ea6dafa861",
-      "kind": "commit",
-      "xp": 12,
-      "label": "LOCK/index: wire next-session continuity to the Run 018 pull",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:b81ab8e0ca86",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Decode ovarian sample sheet -> full sample manifest (runs 015-019)",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:b00952b68fad",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Correct data-location plan: ovarian RNA-seq + Tier-2 ChIP already on HRI",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "commit:836a96acd952",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Ovarian paper: take analysis in-house; figure toolchain + validated theme",
-      "date": "2026-07-10"
-    },
-    {
-      "id": "lab:95c68bcab96d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Weekly passage/maintenance across the panel, plus clonal isolation of the HT1080 Rb-mScarlet knock-in line (round 2). Starting material was a 96-well plate itself derived from a prior ring-pick, so it is already enriched (not selected) for mScarlet⁺.",
-      "date": "2026-08-17"
-    },
-    {
-      "id": "lab:a0129b407ddb",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Two threads — cell-culture maintenance and the HEPG2 synchrony/transfection setup across the panel, and building the first-pass RNA-seq Figure 2 panels for the ovarian quiescence paper (Aim 1).",
-      "date": "2026-08-19"
-    },
-    {
       "id": "lab:c3da88a46ade",
       "kind": "lab",
       "xp": 20,
@@ -1098,6 +1042,20 @@
       "xp": 20,
       "label": "Labor Day holiday session. TC-room restart prep for the CRISPR closing culture list, plus two analysis decisions — the palbociclib dose direction left open in the Sep 6 entry, and how SKOV3_Untreated_1 is handled in the Fig 2 DE tables.",
       "date": "2026-09-07"
+    },
+    {
+      "id": "lab:36dcbe970a9b",
+      "kind": "lab",
+      "xp": 20,
+      "label": "The closing culture list opens — the CRISPR (Aim 2) sHDR repeat plus the Paper 1 flow re-acquisition. TC room was staged Sep 7.",
+      "date": "2026-09-08"
+    },
+    {
+      "id": "lab:38e629b94cfc",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Fig 1 design for Paper 1, plus two flow-pipeline facts that were wrong in the docs and in triage_flow.py. No bench work.",
+      "date": "2026-09-09"
     }
   ]
 }
