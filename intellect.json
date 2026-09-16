@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T10:01:29-04:00",
+  "generatedAt": "2026-09-16T10:02:42-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:da0f14013a91",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Prune Claude's injections from ROADMAP and memory, per Karl's line-by-line calls",
+      "date": "2026-09-16"
+    },
     {
       "id": "commit:c851857eba91",
       "kind": "commit",
