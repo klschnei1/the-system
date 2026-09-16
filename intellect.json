@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T10:02:42-04:00",
+  "generatedAt": "2026-09-16T10:21:05-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-15",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-09-16",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-09-16 (Wed)",
+        "contexts": [
+          "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection."
+        ]
+      },
       {
         "date": "2026-09-15 (Tue)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Same-day correction to the Fig 1 entry above. The entry above carries a Claude-authored framing of what Fig 1 argues, which I did not write and do not agree with."
         ]
-      },
-      {
-        "date": "2026-09-09 (Wed)",
-        "contexts": [
-          "Fig 1 design for Paper 1, plus two flow-pipeline facts that were wrong in the docs and in `triage_flow.py`. No bench work."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6d2d219e5eaf",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Sep 16: PAR/release harvest, transfection moved to Thursday",
+      "date": "2026-09-16"
+    },
     {
       "id": "commit:da0f14013a91",
       "kind": "commit",
@@ -820,13 +827,6 @@
       "date": "2026-07-19"
     },
     {
-      "id": "lab:495dcd083ba8",
-      "kind": "lab",
-      "xp": 20,
-      "label": "CRISPR (Aim 2) — bank the HT1080 Rb-mScarlet backup, harvest the Aug 20 HEPG2 transfections, and start gDNA isolation to feed the Tue Aug 25 long-HDR ddPCR run; mScarlet imaging attempted on the knock-in line.",
-      "date": "2026-08-21"
-    },
-    {
       "id": "lab:7fb6422c73a9",
       "kind": "lab",
       "xp": 20,
@@ -993,6 +993,13 @@
       "xp": 20,
       "label": "Nothing happened over the weekend. Yesterday Zach made a couple polyacrylamide gels for western blots this week and plated 2 6 wells each of SKOV3 and HEYA8 for the PAR/release test.",
       "date": "2026-09-15"
+    },
+    {
+      "id": "lab:c7acd38bf89e",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection.",
+      "date": "2026-09-16"
     }
   ]
 }
