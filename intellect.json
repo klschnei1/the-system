@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T10:21:05-04:00",
+  "generatedAt": "2026-09-20T10:53:24-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-16",
-    "daysSinceLastEntry": 0,
+    "lastEntryDate": "2026-09-17",
+    "daysSinceLastEntry": 3,
     "recentEntries": [
+      {
+        "date": "2026-09-17 (Thu)",
+        "contexts": [
+          "MDA-MB-231, HEPG2 and HT1080 24-well plates, palbociclib-treated the night of Sep 15 for a Thursday-morning transfection rather than Friday. Recorded retroactively Sep 20."
+        ]
+      },
+      {
+        "date": "2026-09-20 (Sun)",
+        "contexts": [
+          "The SKOV3 western re-run started Sep 16 after the flow harvest — the split-lysate heat test against the blank Sep 1–3 blot. Result recorded here retroactively; no bench work today."
+        ]
+      },
       {
         "date": "2026-09-16 (Wed)",
         "contexts": [
           "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection."
         ]
-      },
-      {
-        "date": "2026-09-15 (Tue)",
-        "contexts": [
-          "Nothing happened over the weekend. Yesterday Zach made a couple polyacrylamide gels for western blots this week and plated 2 6 wells each of SKOV3 and HEYA8 for the PAR/release test."
-        ]
-      },
-      {
-        "date": "2026-09-09 (Wed)",
-        "contexts": [
-          "Same-day correction to the Fig 1 entry above. The entry above carries a Claude-authored framing of what Fig 1 argues, which I did not write and do not agree with."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a7b1fb751b20",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Reconcile the ledger after the lost weekend; split the Oct 26 wall",
+      "date": "2026-09-20"
+    },
     {
       "id": "commit:6d2d219e5eaf",
       "kind": "commit",
@@ -757,90 +764,6 @@
       "date": "2026-07-22"
     },
     {
-      "id": "commit:eb73a04239e4",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Memory: CT gene project, outside-lab contacts, build-before-documenting",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "commit:ebfcf4326d40",
-      "kind": "commit",
-      "xp": 17,
-      "label": "Read project status from SCHEDULE; widen the deadline parser",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "commit:bfbc200b5417",
-      "kind": "commit",
-      "xp": 24,
-      "label": "Add staleness hooks for the week and the schedule; scope the log guard",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "commit:b8e97adb7c2c",
-      "kind": "commit",
-      "xp": 25,
-      "label": "Restructure the operating layer: one horizon and one trigger per file",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "commit:04288e35262b",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Carry in prior-session work: exoRNA Stage-3 tweak, figures, notebook + memory",
-      "date": "2026-07-20"
-    },
-    {
-      "id": "commit:94b240917a3a",
-      "kind": "commit",
-      "xp": 12,
-      "label": "session_log_guard: ignore machine-generated dashboard.html",
-      "date": "2026-07-19"
-    },
-    {
-      "id": "commit:9b4599b11f08",
-      "kind": "commit",
-      "xp": 12,
-      "label": "CAREER: GM Safety Performance Integration Eng submitted 7/19 (mis-file caught + fixed; no cover-letter field)",
-      "date": "2026-07-19"
-    },
-    {
-      "id": "commit:6793e3cdcaf4",
-      "kind": "commit",
-      "xp": 12,
-      "label": "CAREER: log Anthropic RS + RA submitted; add bench-first RS (Experimental Biology) to TASKS",
-      "date": "2026-07-19"
-    },
-    {
-      "id": "commit:28fd38840cff",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Add CAREER.md — job-hunt & career-transition tracker",
-      "date": "2026-07-19"
-    },
-    {
-      "id": "commit:4baa008ccf13",
-      "kind": "commit",
-      "xp": 26,
-      "label": "Methods citation bibs (per-paper) + exoRNA classify scaffold + miRBase URL fix",
-      "date": "2026-07-19"
-    },
-    {
-      "id": "lab:7fb6422c73a9",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 1 ovarian/quiescence — executed the SKOV3 palbociclib release-window timecourse (defines release→S-phase re-entry kinetics; also informs a possible SKOV3 CRISPR synchronisation arm). Aim 2 — the HEPG2 long-HDR gDNA isolation started Fri was meant to complete for Tue's ddPCR.",
-      "date": "2026-08-22"
-    },
-    {
-      "id": "lab:372b72f5e17e",
-      "kind": "lab",
-      "xp": 20,
-      "label": "lab −20 °C freezer failure (door seal — cracked for some time, per Goetsch) + the Sunday bench that Saturday's entry left open (SKOV3 harvest, HEPG2 long-HDR isolation).",
-      "date": "2026-08-23"
-    },
-    {
       "id": "lab:192c8a13fc68",
       "kind": "lab",
       "xp": 20,
@@ -1000,6 +923,20 @@
       "xp": 20,
       "label": "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection.",
       "date": "2026-09-16"
+    },
+    {
+      "id": "lab:13eb388f1b56",
+      "kind": "lab",
+      "xp": 20,
+      "label": "The SKOV3 western re-run started Sep 16 after the flow harvest — the split-lysate heat test against the blank Sep 1–3 blot. Result recorded here retroactively; no bench work today.",
+      "date": "2026-09-20"
+    },
+    {
+      "id": "lab:e392f4601523",
+      "kind": "lab",
+      "xp": 20,
+      "label": "MDA-MB-231, HEPG2 and HT1080 24-well plates, palbociclib-treated the night of Sep 15 for a Thursday-morning transfection rather than Friday. Recorded retroactively Sep 20.",
+      "date": "2026-09-17"
     }
   ]
 }
