@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T12:40:18-04:00",
+  "generatedAt": "2026-10-01T19:12:18-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:0505c6721b0c",
+      "kind": "commit",
+      "xp": 30,
+      "label": "crispr: sHDR assay schematic generator + design coordinates",
+      "date": "2026-10-01"
+    },
     {
       "id": "commit:b036f580240b",
       "kind": "commit",
