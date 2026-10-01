@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T10:53:24-04:00",
+  "generatedAt": "2026-10-01T12:40:18-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -32,9 +32,9 @@
     },
     {
       "name": "The exosome paper (Bianca's)",
-      "status": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
-      "short": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model.",
-      "identity": "a **bioseparation/methods paper** (target: ACS Biomacromolecules) on the technique for separating and characterizing exosomal vesicles, plus an FEM model. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "status": "a **characterization paper about isolation methods** for small extracellular vesicles, by **TEM and AFM**. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
+      "short": "a **characterization paper about isolation methods** for small extracellular vesicles, by **TEM and AFM**.",
+      "identity": "a **characterization paper about isolation methods** for small extracellular vesicles, by **TEM and AFM**. Bianca is first author. Karl's contribution is the **cargo/output characterization** of what the separation recovers — RNA isolation, library prep, and sequencing for MDA-MB-231 vs MCF10A (n=3 each), then the composition breakdown via a sequential small-RNA classification pipeline (rRNA→tRNA→miRNA→remainder→genome) in `code/exorna/`. **Karl's author position and figure allocation are undefined** — not settled by anyone. Authority runs through Bianca as first author and potentially **Dr. Caryn Heldt** (her other co-advisor); Goetsch is the less-involved co-advisor and asked *Karl* what his role was. Co-authored publication, outside the dissertation. *(The originally intended contribution was a miRNA comparison between the two lines; the available kits could not do it — see `RECEIPTS.md`.)*",
       "next": ""
     },
     {
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-09-17",
+    "lastEntryDate": "2026-09-28",
     "daysSinceLastEntry": 3,
     "recentEntries": [
       {
-        "date": "2026-09-17 (Thu)",
+        "date": "2026-09-28 (Mon)",
         "contexts": [
-          "MDA-MB-231, HEPG2 and HT1080 24-well plates, palbociclib-treated the night of Sep 15 for a Thursday-morning transfection rather than Friday. Recorded retroactively Sep 20."
+          "Flow samples collected in parallel with the Sep 17 transfections — MDA, HEPG2, HT1080. Recorded Sep 29."
         ]
       },
       {
         "date": "2026-09-20 (Sun)",
         "contexts": [
-          "The SKOV3 western re-run started Sep 16 after the flow harvest — the split-lysate heat test against the blank Sep 1–3 blot. Result recorded here retroactively; no bench work today."
+          "Aim 1 (ovarian) — turning the stage-04 IDR peak sets into annotated gene lists, for Fig 3A and the Fig 4 integration. Recorded Sep 23."
         ]
       },
       {
-        "date": "2026-09-16 (Wed)",
+        "date": "2026-09-20 (Sun)",
         "contexts": [
-          "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection."
+          "Correction to the SKOV3 western entry earlier today. That entry, written by Claude from my one-line summary, recorded the Sep 1–3 blank as explained by the Sep 16 result. It is not."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:b036f580240b",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Oct 1 rebuild: every self-imposed date reformed around current state",
+      "date": "2026-10-01"
+    },
     {
       "id": "commit:a7b1fb751b20",
       "kind": "commit",
@@ -743,48 +750,6 @@
       "date": "2026-08-05"
     },
     {
-      "id": "commit:d8adfc821368",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Session 7/31: exoRNA Fig-1 composition — length gate, biotype/mito, figures",
-      "date": "2026-07-31"
-    },
-    {
-      "id": "commit:fe163750a7cf",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Session 7/22: dissolve dashboard_state.md; systems-design session memory",
-      "date": "2026-07-22"
-    },
-    {
-      "id": "commit:14993fb1fc87",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Session 7/21: ChIP forensics, exoRNA composition + pipeline audit, Goetsch 1:1",
-      "date": "2026-07-22"
-    },
-    {
-      "id": "lab:192c8a13fc68",
-      "kind": "lab",
-      "xp": 20,
-      "label": "cell-line upkeep for the ovarian (Aim 1) and CRISPR (Aim 2) work.",
-      "date": "2026-08-24"
-    },
-    {
-      "id": "lab:d8f30a05706d",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 2 (CRISPR) — long-HDR ddPCR plate design for the Aug 25 run.",
-      "date": "2026-08-24"
-    },
-    {
-      "id": "lab:6ad8cb91487e",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 1 (ovarian) — ChIP analysis planning: reconciling my code/chipseq/ pipeline against Goetsch's, and scoping what Fig 3 can claim.",
-      "date": "2026-08-25"
-    },
-    {
       "id": "lab:b73d23164da3",
       "kind": "lab",
       "xp": 20,
@@ -937,6 +902,27 @@
       "xp": 20,
       "label": "MDA-MB-231, HEPG2 and HT1080 24-well plates, palbociclib-treated the night of Sep 15 for a Thursday-morning transfection rather than Friday. Recorded retroactively Sep 20.",
       "date": "2026-09-17"
+    },
+    {
+      "id": "lab:e36bd84e3de8",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Correction to the SKOV3 western entry earlier today. That entry, written by Claude from my one-line summary, recorded the Sep 1–3 blank as explained by the Sep 16 result. It is not.",
+      "date": "2026-09-20"
+    },
+    {
+      "id": "lab:280192adaa85",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 (ovarian) — turning the stage-04 IDR peak sets into annotated gene lists, for Fig 3A and the Fig 4 integration. Recorded Sep 23.",
+      "date": "2026-09-20"
+    },
+    {
+      "id": "lab:d7dda0989037",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Flow samples collected in parallel with the Sep 17 transfections — MDA, HEPG2, HT1080. Recorded Sep 29.",
+      "date": "2026-09-28"
     }
   ]
 }
