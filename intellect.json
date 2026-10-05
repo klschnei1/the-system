@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T01:04:49-04:00",
+  "generatedAt": "2026-10-05T16:10:48-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-01",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-10-05",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-10-05 (Mon)",
+        "contexts": [
+          "Revisiting automated usability assessment of the pre-fix flow archive. The triage script was dropped Sep 20 as inferior to manual assessment; this session rewrote its peak finder and ran it over the whole archive."
+        ]
+      },
+      {
+        "date": "2026-10-02 (Fri)",
+        "contexts": [
+          "New FlowJo exports pulled for the lab-meeting update — an HT1080 release timecourse, an A549 release timecourse, and the MDA-MB-231 viability assay run on the CRISPR drug conditions."
+        ]
+      },
       {
         "date": "2026-10-01 (Thu)",
         "contexts": [
           "Gating the CRISPR-conditions flow for all three lines, and pulling the sHDR ddPCR data together for the lab meeting tomorrow."
         ]
-      },
-      {
-        "date": "2026-09-28 (Mon)",
-        "contexts": [
-          "Flow samples collected in parallel with the Sep 17 transfections — MDA, HEPG2, HT1080. Recorded Sep 29."
-        ]
-      },
-      {
-        "date": "2026-09-20 (Sun)",
-        "contexts": [
-          "Aim 1 (ovarian) — turning the stage-04 IDR peak sets into annotated gene lists, for Fig 3A and the Fig 4 integration. Recorded Sep 23."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:1728fffd2941",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Oct 5: flow archive triage rebuilt on a pair-constrained peak finder",
+      "date": "2026-10-05"
+    },
     {
       "id": "commit:2fe4eb7e5b42",
       "kind": "commit",
@@ -736,48 +743,6 @@
       "date": "2026-08-08"
     },
     {
-      "id": "commit:5c6220ef3bbd",
-      "kind": "commit",
-      "xp": 16,
-      "label": "ddPCR 8/5: notebook entry + TASKS — assay usable, 7/16 was overloading",
-      "date": "2026-08-05"
-    },
-    {
-      "id": "commit:2f13501f9c73",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Session 8/5: ddPCR export pipeline + runbook; TASKS prune; cross-file dedupe",
-      "date": "2026-08-05"
-    },
-    {
-      "id": "commit:826c0691a6b8",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Memory index: active-learning contract",
-      "date": "2026-08-05"
-    },
-    {
-      "id": "commit:5c9412d5e393",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Session 8/4-8/5: Goetsch ChIP pipeline diffed; his QC settles E2F4/p130; learning deck",
-      "date": "2026-08-05"
-    },
-    {
-      "id": "lab:02c0ea72e3d9",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 1 (ovarian) RNA-seq Fig 2 build. The per-line PCA (Untreated / 1x / 5x) surfaced a QC call on SKOV3.",
-      "date": "2026-08-25"
-    },
-    {
-      "id": "lab:3bfe7724fbb1",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 1 (ovarian) RNA-seq. Continued building Fig 2 panels off the DE tables on disk.",
-      "date": "2026-08-26"
-    },
-    {
       "id": "lab:75a93c5e1f0c",
       "kind": "lab",
       "xp": 20,
@@ -937,6 +902,20 @@
       "xp": 20,
       "label": "Gating the CRISPR-conditions flow for all three lines, and pulling the sHDR ddPCR data together for the lab meeting tomorrow.",
       "date": "2026-10-01"
+    },
+    {
+      "id": "lab:4d96c44d8b45",
+      "kind": "lab",
+      "xp": 20,
+      "label": "New FlowJo exports pulled for the lab-meeting update — an HT1080 release timecourse, an A549 release timecourse, and the MDA-MB-231 viability assay run on the CRISPR drug conditions.",
+      "date": "2026-10-02"
+    },
+    {
+      "id": "lab:f5e3d7d57c68",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Revisiting automated usability assessment of the pre-fix flow archive. The triage script was dropped Sep 20 as inferior to manual assessment; this session rewrote its peak finder and ran it over the whole archive.",
+      "date": "2026-10-05"
     }
   ]
 }
