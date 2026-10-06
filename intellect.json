@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T16:10:48-04:00",
+  "generatedAt": "2026-10-06T15:24:46-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-05",
+    "lastEntryDate": "2026-10-06",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-10-06 (Tue)",
+        "contexts": [
+          "HEYA8 CRISPR-condition flow (DF / P / N / P+N) from the archive, and the sHDR ddPCR for the 9/16 transfection samples."
+        ]
+      },
       {
         "date": "2026-10-05 (Mon)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "New FlowJo exports pulled for the lab-meeting update — an HT1080 release timecourse, an A549 release timecourse, and the MDA-MB-231 viability assay run on the CRISPR drug conditions."
         ]
-      },
-      {
-        "date": "2026-10-01 (Thu)",
-        "contexts": [
-          "Gating the CRISPR-conditions flow for all three lines, and pulling the sHDR ddPCR data together for the lab meeting tomorrow."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:b3b6934f39d2",
+      "kind": "commit",
+      "xp": 23,
+      "label": "Oct 6: flow triage enforces G2 headroom; sHDR ddPCR run sheet",
+      "date": "2026-10-06"
+    },
     {
       "id": "commit:1728fffd2941",
       "kind": "commit",
@@ -743,13 +750,6 @@
       "date": "2026-08-08"
     },
     {
-      "id": "lab:75a93c5e1f0c",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Weekly 1:1 with Goetsch. Locked the Paper-1 (ovarian quiescence) figure architecture at the panel level.",
-      "date": "2026-08-26"
-    },
-    {
       "id": "lab:486ca0f85b67",
       "kind": "lab",
       "xp": 20,
@@ -916,6 +916,13 @@
       "xp": 20,
       "label": "Revisiting automated usability assessment of the pre-fix flow archive. The triage script was dropped Sep 20 as inferior to manual assessment; this session rewrote its peak finder and ran it over the whole archive.",
       "date": "2026-10-05"
+    },
+    {
+      "id": "lab:32014668e965",
+      "kind": "lab",
+      "xp": 20,
+      "label": "HEYA8 CRISPR-condition flow (DF / P / N / P+N) from the archive, and the sHDR ddPCR for the 9/16 transfection samples.",
+      "date": "2026-10-06"
     }
   ]
 }
