@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T15:24:46-04:00",
+  "generatedAt": "2026-10-12T11:46:22-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,7 +54,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-10-06",
-    "daysSinceLastEntry": 0,
+    "daysSinceLastEntry": 6,
     "recentEntries": [
       {
         "date": "2026-10-06 (Tue)",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d56cd9f91cfe",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Oct 12 ledger: sHDR ddPCR + GSG done; CRISPR slides to Oct 16; intro draft to Oct 21",
+      "date": "2026-10-12"
+    },
     {
       "id": "commit:b3b6934f39d2",
       "kind": "commit",
@@ -468,286 +475,6 @@
       "xp": 14,
       "label": "Correct the 48 h droplet-stability claim: it has no source",
       "date": "2026-08-13"
-    },
-    {
-      "id": "commit:99833b81ca39",
-      "kind": "commit",
-      "xp": 13,
-      "label": "Record the novelty-over-accuracy failure as a memory entry",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:3381e6478ac6",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Log the Aug 13 sHDR plate design and the 2/23 vs 7/16 thermal blocks",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:7c5f51839ebf",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Consolidate the document checks behind one dispatcher",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:950fd6fd4093",
-      "kind": "commit",
-      "xp": 19,
-      "label": "Add the elapsed-deadline gate, sharing one block mechanism",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:064175290bd7",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Gate notebook entries on structure, and close the shell bypass",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:8880924e4a1e",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Correct the 'DNA only' samples: donor-carryover control, not a WT floor",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:5a4734aa1453",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Correct the CRISPR canon; recover the 7/2 ddPCR plate as data",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:323fd4237b1f",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Fix four project misconceptions in the canon",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:62b8835f04ae",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Record the ovarian condition vocabulary and the Fig 2 panel set",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:7e2daf437617",
-      "kind": "commit",
-      "xp": 20,
-      "label": "Goetsch funds BMES, ASBMB dropped",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:97cb489b0bca",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Remove the Aug 20-24 travel; session_log_guard accepts either log",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:80ebe350571f",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Strip deprecated lines from CLAUDE.md and LOCK.md; move LOCK's dated decisions to JOURNAL",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:e9437d8ce56b",
-      "kind": "commit",
-      "xp": 16,
-      "label": "JOURNAL takes over degree logistics; first dated entry",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:ec548e42d4d9",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Cut the prose out of SCHEDULE; move the tasks it hid into ROADMAP",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:fbe7501e5274",
-      "kind": "commit",
-      "xp": 17,
-      "label": "Ban prose from SCHEDULE with a lint, not a rule",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:fea367c8a313",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Retire TASKS.md and the dashboard it fed",
-      "date": "2026-08-12"
-    },
-    {
-      "id": "commit:d0d5c3c288da",
-      "kind": "commit",
-      "xp": 12,
-      "label": "BACKLOG: cell-culture log tried and dropped (file deleted Aug 11)",
-      "date": "2026-08-11"
-    },
-    {
-      "id": "commit:01fbbc494329",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Withdraw the ovarian composition finding; cut CLAUDE.md to a map; route non-dates out of SCHEDULE",
-      "date": "2026-08-11"
-    },
-    {
-      "id": "commit:4032eadee51e",
-      "kind": "commit",
-      "xp": 17,
-      "label": "QC job: locate the untreated-baseline non-exonic reads (exon vs gene-body vs intergenic)",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "commit:71d5267d3b59",
-      "kind": "commit",
-      "xp": 21,
-      "label": "Ovarian RNA-seq QC: untreated baseline is compositionally compromised",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "commit:5a9203f061bc",
-      "kind": "commit",
-      "xp": 18,
-      "label": "CT gene: chunk Aim 3 into seven dated intermediate deadlines",
-      "date": "2026-08-10"
-    },
-    {
-      "id": "commit:021a2b598e1a",
-      "kind": "commit",
-      "xp": 12,
-      "label": "SCHEDULE: front-load the hard weeks into Sept/Oct",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:d38b5c60c6be",
-      "kind": "commit",
-      "xp": 12,
-      "label": "SCHEDULE: enumerate advisor-dependent gates and how to de-gate each",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:7c354002b21d",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Record the publication bar: two papers, venue open",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:def57cd04391",
-      "kind": "commit",
-      "xp": 13,
-      "label": "SCHEDULE + ROADMAP: clear items superseded by today's decisions",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:3f008e711f6a",
-      "kind": "commit",
-      "xp": 12,
-      "label": "TASKS: clear four stale items before Monday morning",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:5e86040aa1ef",
-      "kind": "commit",
-      "xp": 12,
-      "label": "TASKS: check HRI for existing counts before regenerating them",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:d5a139dc64c1",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Memory: Karl's working-time model; dashboard rebuild timestamp",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:da6fbfe775ad",
-      "kind": "commit",
-      "xp": 12,
-      "label": "SCHEDULE: tag clerical milestones so ten minutes stops looking like three weeks",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:d5b42541635c",
-      "kind": "commit",
-      "xp": 12,
-      "label": "BACKLOG: track-view timeline promoted to Tier 1, mockup validated",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:96ab841cb074",
-      "kind": "commit",
-      "xp": 13,
-      "label": "SCHEDULE: chunk the Oct 15 -> defense stretch; drop chunk numbers; fix date order",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:8af90ea07b30",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Amendment item 1: keep Karl's resource-constraint rationale for dropping Embase/CENTRAL",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:19fea4e7faf6",
-      "kind": "commit",
-      "xp": 12,
-      "label": "PROSPERO amendment consolidated into a five-item checklist",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:ae607904f62a",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Dallas bet met at 1,116; companion-report linking added to the amendment",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:dc0f657c20c6",
-      "kind": "commit",
-      "xp": 13,
-      "label": "SCHEDULE: weekly Friday chunks through the Oct 15 draft; bench scope narrowed",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:908ab9ed8356",
-      "kind": "commit",
-      "xp": 13,
-      "label": "BACKLOG: promote deadline chunking to Tier 1; fix screening counts",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:a467edddfbd1",
-      "kind": "commit",
-      "xp": 18,
-      "label": "Review screening scope settled; BACKLOG reranked into cost-weighted tiers",
-      "date": "2026-08-09"
-    },
-    {
-      "id": "commit:ee492dd0e8f0",
-      "kind": "commit",
-      "xp": 25,
-      "label": "Docs are shared memory: SessionStart loads the ledger; fix milestone parser",
-      "date": "2026-08-08"
-    },
-    {
-      "id": "commit:edf60b574e8d",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Wave 2 Chunk 1: rebuild the live docs into single-role files",
-      "date": "2026-08-08"
-    },
-    {
-      "id": "commit:20a45a4ff337",
-      "kind": "commit",
-      "xp": 20,
-      "label": "Sessions 8/5-8/6: WoS export/import + screening rules; drift_guard hook (10 no-tool turns)",
-      "date": "2026-08-08"
     },
     {
       "id": "lab:486ca0f85b67",
