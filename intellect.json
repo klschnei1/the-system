@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T11:15:25-04:00",
+  "generatedAt": "2026-10-13T11:24:01-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:68987140b052",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Oct 13: seminar is Thu Oct 15; chapter draft moved to Oct 19",
+      "date": "2026-10-13"
+    },
     {
       "id": "commit:4806c268307c",
       "kind": "commit",
