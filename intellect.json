@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T11:46:22-04:00",
+  "generatedAt": "2026-10-13T11:15:25-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-06",
-    "daysSinceLastEntry": 6,
+    "lastEntryDate": "2026-10-13",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-10-13 (Tue)",
+        "contexts": [
+          "New forward primer."
+        ]
+      },
+      {
+        "date": "2026-10-07 (Wed)",
+        "contexts": [
+          "Read the MDA + HT1080 sHDR plate loaded Oct 6. Recorded Oct 13."
+        ]
+      },
       {
         "date": "2026-10-06 (Tue)",
         "contexts": [
           "HEYA8 CRISPR-condition flow (DF / P / N / P+N) from the archive, and the sHDR ddPCR for the 9/16 transfection samples."
         ]
-      },
-      {
-        "date": "2026-10-05 (Mon)",
-        "contexts": [
-          "Revisiting automated usability assessment of the pre-fix flow archive. The triage script was dropped Sep 20 as inferior to manual assessment; this session rewrote its peak finder and ran it over the whole archive."
-        ]
-      },
-      {
-        "date": "2026-10-02 (Fri)",
-        "contexts": [
-          "New FlowJo exports pulled for the lab-meeting update — an HT1080 release timecourse, an A549 release timecourse, and the MDA-MB-231 viability assay run on the CRISPR drug conditions."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4806c268307c",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Oct 13: sHDR Oct 7 read logged; repeat ddPCR + CRISPR seminar on Oct 14",
+      "date": "2026-10-13"
+    },
     {
       "id": "commit:d56cd9f91cfe",
       "kind": "commit",
@@ -463,34 +470,6 @@
       "date": "2026-08-14"
     },
     {
-      "id": "commit:636f7df6d18a",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Resolve the post-cycling hold question with Bio-Rad's actual wording",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "commit:90c40bff0226",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Correct the 48 h droplet-stability claim: it has no source",
-      "date": "2026-08-13"
-    },
-    {
-      "id": "lab:486ca0f85b67",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 2 (CRISPR/HDR). Screened two 96-well plates for mScarlet+ (long-HDR knock-in) cells on the EVOS, after swapping the CY5 light cube out for the RFP cube to read mScarlet.",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "lab:125d8ef61323",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 3 (CT gene). Grounding the tumor-vs-normal tissue groupings in the literature and settling the body-map figure design, ahead of finalizing categories.",
-      "date": "2026-08-27"
-    },
-    {
       "id": "lab:4c106158c9d5",
       "kind": "lab",
       "xp": 20,
@@ -650,6 +629,20 @@
       "xp": 20,
       "label": "HEYA8 CRISPR-condition flow (DF / P / N / P+N) from the archive, and the sHDR ddPCR for the 9/16 transfection samples.",
       "date": "2026-10-06"
+    },
+    {
+      "id": "lab:9382f5594613",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Read the MDA + HT1080 sHDR plate loaded Oct 6. Recorded Oct 13.",
+      "date": "2026-10-07"
+    },
+    {
+      "id": "lab:1cda424cdd71",
+      "kind": "lab",
+      "xp": 20,
+      "label": "New forward primer.",
+      "date": "2026-10-13"
     }
   ]
 }
