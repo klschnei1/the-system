@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T11:24:01-04:00",
+  "generatedAt": "2026-10-14T09:57:20-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-13",
+    "lastEntryDate": "2026-10-14",
     "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-10-14 (Wed)",
+        "contexts": [
+          "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides."
+        ]
+      },
       {
         "date": "2026-10-13 (Tue)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Read the MDA + HT1080 sHDR plate loaded Oct 6. Recorded Oct 13."
         ]
-      },
-      {
-        "date": "2026-10-06 (Tue)",
-        "contexts": [
-          "HEYA8 CRISPR-condition flow (DF / P / N / P+N) from the archive, and the sHDR ddPCR for the 9/16 transfection samples."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8d66ee3a7373",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Oct 14: NECi temp job; seminar moved to Thu; transfection-window read",
+      "date": "2026-10-14"
+    },
     {
       "id": "commit:68987140b052",
       "kind": "commit",
@@ -470,20 +477,6 @@
       "date": "2026-08-17"
     },
     {
-      "id": "commit:4fcc6fc6ad9d",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Add /eod, fix the renderer's one-entry-per-day bug, name STROMA",
-      "date": "2026-08-14"
-    },
-    {
-      "id": "lab:4c106158c9d5",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 2 (CRISPR), long-HDR mScarlet-junction ddPCR. Prep for the Aug 28 run. This is the first time the junction assay is run — every prior ddPCR was drop-off or sHDR — so today's plate is as much a validation of the duplex as a measurement.",
-      "date": "2026-08-28"
-    },
-    {
       "id": "lab:2555f6a510fa",
       "kind": "lab",
       "xp": 20,
@@ -650,6 +643,13 @@
       "xp": 20,
       "label": "New forward primer.",
       "date": "2026-10-13"
+    },
+    {
+      "id": "lab:ca05c1e436be",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides.",
+      "date": "2026-10-14"
     }
   ]
 }
