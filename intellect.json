@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T09:15:24-04:00",
+  "generatedAt": "2026-10-15T10:55:20-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,12 @@
       {
         "date": "2026-10-14 (Wed)",
         "contexts": [
+          "sHDR repeat ddPCR — HEPG2 sHDR samples plus repeats of the Oct 6 MDA-MB-231 and HT1080 plate. Sep 17 transfection."
+        ]
+      },
+      {
+        "date": "2026-10-14 (Wed)",
+        "contexts": [
           "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides."
         ]
       },
@@ -67,16 +73,17 @@
         "contexts": [
           "New forward primer."
         ]
-      },
-      {
-        "date": "2026-10-07 (Wed)",
-        "contexts": [
-          "Read the MDA + HT1080 sHDR plate loaded Oct 6. Recorded Oct 13."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:dc228aa53898",
+      "kind": "commit",
+      "xp": 29,
+      "label": "Oct 14: sHDR repeat ddPCR run sheet + well key; HEPG2 Qubit cap logged",
+      "date": "2026-10-15"
+    },
     {
       "id": "commit:0e52ade5bcd0",
       "kind": "commit",
@@ -484,13 +491,6 @@
       "date": "2026-08-17"
     },
     {
-      "id": "lab:2555f6a510fa",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Aim 3 (CT gene) — body-map figure design and tumor/normal tissue groupings. Body-map V1 sketch done; groupings updated with Goetsch.",
-      "date": "2026-08-30"
-    },
-    {
       "id": "lab:dddc245a4b04",
       "kind": "lab",
       "xp": 20,
@@ -656,6 +656,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides.",
+      "date": "2026-10-14"
+    },
+    {
+      "id": "lab:69f0d360c19d",
+      "kind": "lab",
+      "xp": 20,
+      "label": "sHDR repeat ddPCR — HEPG2 sHDR samples plus repeats of the Oct 6 MDA-MB-231 and HT1080 plate. Sep 17 transfection.",
       "date": "2026-10-14"
     }
   ]
