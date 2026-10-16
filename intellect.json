@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T10:55:20-04:00",
+  "generatedAt": "2026-10-16T13:19:43-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,9 +53,15 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-14",
+    "lastEntryDate": "2026-10-15",
     "daysSinceLastEntry": 1,
     "recentEntries": [
+      {
+        "date": "2026-10-15 (Thu)",
+        "contexts": [
+          "Second sHDR ddPCR plate — loaded and cycled Oct 14, read this morning. MDA-MB-231 and HT1080 gDNA came from the same tubes as the Oct 6/7 plate; HEPG2 is new to this round. Numbers were needed the same day for the CRISPR seminar."
+        ]
+      },
       {
         "date": "2026-10-14 (Wed)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides."
         ]
-      },
-      {
-        "date": "2026-10-13 (Tue)",
-        "contexts": [
-          "New forward primer."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6c8778578da8",
+      "kind": "commit",
+      "xp": 21,
+      "label": "Oct 15: sHDR round 2 read; seminar results slides rebuilt",
+      "date": "2026-10-16"
+    },
     {
       "id": "commit:dc228aa53898",
       "kind": "commit",
@@ -491,13 +498,6 @@
       "date": "2026-08-17"
     },
     {
-      "id": "lab:dddc245a4b04",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Paper 1 (ovarian quiescence) — Fig 2, the RNA-seq figure. Building every candidate panel from the DESeq2 DE tables on disk. Per Goetsch (Aug 26): volcano-per-line is the main panel, PCA/MA → supplement, cross-line as both a Venn and a concordance scatter.",
-      "date": "2026-09-01"
-    },
-    {
       "id": "lab:04aed16b16b3",
       "kind": "lab",
       "xp": 20,
@@ -664,6 +664,13 @@
       "xp": 20,
       "label": "sHDR repeat ddPCR — HEPG2 sHDR samples plus repeats of the Oct 6 MDA-MB-231 and HT1080 plate. Sep 17 transfection.",
       "date": "2026-10-14"
+    },
+    {
+      "id": "lab:bd031ba7c153",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Second sHDR ddPCR plate — loaded and cycled Oct 14, read this morning. MDA-MB-231 and HT1080 gDNA came from the same tubes as the Oct 6/7 plate; HEPG2 is new to this round. Numbers were needed the same day for the CRISPR seminar.",
+      "date": "2026-10-15"
     }
   ]
 }
