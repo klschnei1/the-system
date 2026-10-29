@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T13:19:43-04:00",
+  "generatedAt": "2026-10-29T10:37:10-04:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,7 +54,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-10-15",
-    "daysSinceLastEntry": 1,
+    "daysSinceLastEntry": 14,
     "recentEntries": [
       {
         "date": "2026-10-15 (Thu)",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:fd20a996ec25",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Oct 28-29: CRISPR methods review, results assembly, sHDR donor verified",
+      "date": "2026-10-29"
+    },
     {
       "id": "commit:6c8778578da8",
       "kind": "commit",
@@ -384,118 +391,6 @@
       "xp": 30,
       "label": "memory: consolidate append-log rot; retire stale tooling/conference status",
       "date": "2026-08-30"
-    },
-    {
-      "id": "commit:ed2f2d578aea",
-      "kind": "commit",
-      "xp": 15,
-      "label": "update docs: CT-gene grouping lit + body-map design; ledger reconciled",
-      "date": "2026-08-28"
-    },
-    {
-      "id": "commit:19ab9a4e0d6d",
-      "kind": "commit",
-      "xp": 14,
-      "label": "EVOS scan done (negative); priority reset toward writing/analysis",
-      "date": "2026-08-27"
-    },
-    {
-      "id": "commit:32b63e22e8a0",
-      "kind": "commit",
-      "xp": 17,
-      "label": "CT grouping drafts (breast = own group); reconcile 2 slipped Aug 26 rows",
-      "date": "2026-08-27"
-    },
-    {
-      "id": "commit:9f663f4ce098",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Ovarian full chapter draft slips Aug 28 -> Sep 4 (+1 wk, Karl)",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:ba7678ab2679",
-      "kind": "commit",
-      "xp": 12,
-      "label": "ddPCR run slips Aug 26 -> Aug 28 (bench day full); calendar moved",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:57eaa6686ad1",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Goetsch 1:1 notes: per-must-ask answer field",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:3b46121e13ab",
-      "kind": "commit",
-      "xp": 20,
-      "label": "Rebuild Goetsch 1:1 notes: charset fix + short-list/free-form layout",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:cf80f04596c4",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Aug 26 Goetsch 1:1: Paper-1 figure architecture locked at panel level",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:d37cf6885e88",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Fig 2 panels + repo structure cleanup; schedule reconciled to real Aug 26/27 load",
-      "date": "2026-08-26"
-    },
-    {
-      "id": "commit:769200cb796f",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Fig 2 planning: lock RNA-only structure + build-everything rule; schedule hygiene",
-      "date": "2026-08-25"
-    },
-    {
-      "id": "commit:562cac154d70",
-      "kind": "commit",
-      "xp": 20,
-      "label": "Aug 21 /eod: bench log + BMES/defense journal; long-HDR ddPCR → Tue; knowledge-web pilot",
-      "date": "2026-08-21"
-    },
-    {
-      "id": "commit:df154caaa8e8",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Defense locked Nov 19; calendar cruft purged; Aug 20 bench log",
-      "date": "2026-08-20"
-    },
-    {
-      "id": "commit:064f1173624d",
-      "kind": "commit",
-      "xp": 12,
-      "label": "Save Fig 2 gene-set + framing citations (Liberzon 2015, Fischer 2016; Thangavel 2011, Acevedo 2016) with DOIs/PMIDs",
-      "date": "2026-08-19"
-    },
-    {
-      "id": "commit:46b104896557",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Aug 19 session: Fig 2 first-pass panels + notebook log; fix two misfiring guards; merge SCHEDULE validators",
-      "date": "2026-08-19"
-    },
-    {
-      "id": "commit:f1f6ad9907c1",
-      "kind": "commit",
-      "xp": 15,
-      "label": "Ledger hygiene: enforce dates-only via a date-format lint; reconcile BMES and CT-gene rows",
-      "date": "2026-08-19"
-    },
-    {
-      "id": "commit:c68d6381a8b0",
-      "kind": "commit",
-      "xp": 17,
-      "label": "Reconcile ledger, log 8/17 cell culture, prune generated ROADMAP cruft",
-      "date": "2026-08-17"
     },
     {
       "id": "lab:04aed16b16b3",
