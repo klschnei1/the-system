@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T22:44:45-05:00",
+  "generatedAt": "2026-11-01T23:26:31-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8666b0441623",
+      "kind": "commit",
+      "xp": 19,
+      "label": "Nov 1: HEYA8 Fig 1C/1D densitometry — pRb/total-Rb by lane profile",
+      "date": "2026-11-01"
+    },
     {
       "id": "commit:7fe66eebe14e",
       "kind": "commit",
