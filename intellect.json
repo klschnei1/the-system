@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T01:37:05-05:00",
+  "generatedAt": "2026-11-02T01:50:06-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a3e565093c19",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Nov 2: ledger re-dated; intro read in full; comment-anchor error corrected",
+      "date": "2026-11-02"
+    },
     {
       "id": "commit:a09747b20a97",
       "kind": "commit",
