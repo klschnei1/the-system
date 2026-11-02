@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T10:37:10-04:00",
+  "generatedAt": "2026-11-01T22:44:45-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -11,16 +11,16 @@
   "projects": [
     {
       "name": "The ovarian paper",
-      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. ChIP was done on P0, so it shares a timepoint with the 1× RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "status": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. Dose is set per line for equivalent arrest — **1× arrests SKOV3, 5× arrests HEYA8** — so each line has one matched contrast, read as an arrest match rather than a dose response. ChIP was harvested at P0; **HEYA8 ChIP was done at 5×**, pairing it with the HEYA8 PAR5x RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
       "short": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3).",
-      "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. ChIP was done on P0, so it shares a timepoint with the 1× RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
+      "identity": "CDK4/6 inhibitor cocktail in ovarian cancer cells (HEYA8, SKOV3). Quiescence/EOC. **PAR = palbociclib + abemaciclib + ribociclib** (1× = 333/333/667 nM); conditions are **Untreated · PAR1x_P0 · PAR5x · P6_release**, where **P0 and P6 count hours after drug removal**, independent of passage. Dose is set per line for equivalent arrest — **1× arrests SKOV3, 5× arrests HEYA8** — so each line has one matched contrast, read as an arrest match rather than a dose response. ChIP was harvested at P0; **HEYA8 ChIP was done at 5×**, pairing it with the HEYA8 PAR5x RNA arm. Karl runs the full analysis in-house: RNA-seq (fastp→STAR→DESeq2) and ChIP-seq (bowtie2→SPP→IDR, the advisor's method) against Rb, p130, E2F1, E2F4, LIN54 — the Rb–E2F and DREAM repressive complexes. Pipelines in `code/ovarian/`, `code/chipseq/`. Dissertation Aim 1. First-author.",
       "next": ""
     },
     {
       "name": "The CRISPR paper",
-      "status": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** (A549 dropped; never synchronized in S). Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
+      "status": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** plus **A549**, which is in the panel and in the writing: it arrested, then trickled back into the cell cycle without S-phase enrichment on release, so it received no ddPCR. That failure to synchronize is itself a result worth noting. Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
       "short": "palbociclib + nocodazole for improving CRISPR/HDR editing rates.",
-      "identity": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** (A549 dropped; never synchronized in S). Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
+      "identity": "palbociclib + nocodazole for improving CRISPR/HDR editing rates. Cell-cycle synchronization as a method for raising HDR efficiency: **palbociclib arrests, and transfection is timed 10–16 h after release to land in S phase**, with the nocodazole arm testing whether it adds anything beyond synchrony. Four lines — **HEYA8, HEPG2, HT1080, MDA-MB-231** plus **A549**, which is in the panel and in the writing: it arrested, then trickled back into the cell cycle without S-phase enrichment on release, so it received no ddPCR. That failure to synchronize is itself a result worth noting. Four conditions — **DF · P · N · P+N**. Two constructs — a **short ssODN** (3 silent edits) and a **long mScarlet PCR fragment** (35 bp homology arms) — plus gRNA-only, each with its own ddPCR assay (drop-off · silent-edit probe · mScarlet-junction). **Read out by ddPCR**; T7 endonuclease is a retired arm. Dissertation Aim 2. First-author, methods paper. *Conditions, assays, and replicate structure in full: `LAB_NOTEBOOK.md` Aug 12 2026.*",
       "next": ""
     },
     {
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-10-15",
-    "daysSinceLastEntry": 14,
+    "lastEntryDate": "2026-11-01",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
       {
-        "date": "2026-10-15 (Thu)",
+        "date": "2026-11-01 (Sun)",
         "contexts": [
-          "Second sHDR ddPCR plate — loaded and cycled Oct 14, read this morning. MDA-MB-231 and HT1080 gDNA came from the same tubes as the Oct 6/7 plate; HEPG2 is new to this round. Numbers were needed the same day for the CRISPR seminar."
+          "Fig 1C/1D densitometry for Paper 1, working from the HEYA8 7-2-2026 westerns on flash drive `USB20FD`."
         ]
       },
       {
-        "date": "2026-10-14 (Wed)",
+        "date": "2026-10-30 (Fri)",
         "contexts": [
-          "sHDR repeat ddPCR — HEPG2 sHDR samples plus repeats of the Oct 6 MDA-MB-231 and HT1080 plate. Sep 17 transfection."
+          "Paper 1 (ovarian) Fig 1: the arrest and release phenotype by flow in SKOV3 and HEYA8, comparing Vehicle, PAR and PAR + 16 h release. The 10× arm was also acquired."
         ]
       },
       {
-        "date": "2026-10-14 (Wed)",
+        "date": "2026-10-29 (Thu)",
         "contexts": [
-          "Reading the Sep 17 drug arms against the release timecourse while building the Thursday seminar slides."
+          "Paper 1 (ovarian) Aim 1 discussion — sprint §3. Pathway enrichment on the arrest-matched contrasts (SKOV3 PAR1x, HEYA8 PAR5x), each against the DMSO vehicle arm."
         ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:7fe66eebe14e",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Oct 30-Nov 1: intro aims drafted; Fig 1 flow script; western filename swap",
+      "date": "2026-11-01"
+    },
     {
       "id": "commit:fd20a996ec25",
       "kind": "commit",
@@ -330,90 +337,6 @@
       "date": "2026-09-03"
     },
     {
-      "id": "commit:948f0b859150",
-      "kind": "commit",
-      "xp": 16,
-      "label": "memory: Attune cell-cycle acquisition + normalization SOP, in Karl's words",
-      "date": "2026-09-02"
-    },
-    {
-      "id": "commit:ba1fd938fb0d",
-      "kind": "commit",
-      "xp": 13,
-      "label": "notebook: Sep 2 Attune call — width-gating scheme reopens the flow archive",
-      "date": "2026-09-02"
-    },
-    {
-      "id": "commit:646faec18a46",
-      "kind": "commit",
-      "xp": 12,
-      "label": "docs: correct the flow-call entry — FOM booking, Attune stays air-gapped",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "commit:14fa9787e886",
-      "kind": "commit",
-      "xp": 13,
-      "label": "docs: NEXT set for Sep 2 flow call; room timing corrected; car reg tracked",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "commit:3f077afdee22",
-      "kind": "commit",
-      "xp": 14,
-      "label": "docs: Sep 1 sync — cultures closed out, BMES registered, defense slot set",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "commit:dc7382a1f66c",
-      "kind": "commit",
-      "xp": 13,
-      "label": "plate_map: add long-HDR as-run (transposed) map",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "commit:8d2c8b0fe19e",
-      "kind": "commit",
-      "xp": 27,
-      "label": "Fig 2 (ovarian RNA-seq) built: 11 panels to figures/ovarian/",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "commit:d9b0c30f3c68",
-      "kind": "commit",
-      "xp": 15,
-      "label": "doc_lint: guard Karl's .R scripts from direct edits; re-date Fig 2",
-      "date": "2026-08-31"
-    },
-    {
-      "id": "commit:1997f87670d4",
-      "kind": "commit",
-      "xp": 30,
-      "label": "memory: consolidate append-log rot; retire stale tooling/conference status",
-      "date": "2026-08-30"
-    },
-    {
-      "id": "lab:04aed16b16b3",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Cross-project bench housekeeping and the start of the SKOV3 western. Covers Mon Aug 31 (logged retroactively) and today. (The Fig 2 entry above is dated 2026-09-01 but headed \"(Mon)\" — Sep 1 2026 is a Tuesday. Append-only, so noted here rather than corrected in place.)",
-      "date": "2026-09-01"
-    },
-    {
-      "id": "lab:c8378a41d2b6",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Attune NxT guided run with Noah Alberts-Grill (ThermoFisher Field Applications, Attune NxT / eBioscience), 1–2 PM Teams. The call that closes the Aug 27 flow gate. Outcome: most of the existing flow archive is probably usable after all, provided the area scaling factor on that experiment was reasonable. This supersedes the salvage framing that had HEYA8 and SKOV3 mostly written off.",
-      "date": "2026-09-02"
-    },
-    {
-      "id": "lab:a7cff4a0c882",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Two flow sample-prep changes from the Sep 2 Noah Alberts-Grill call that the Sep 2 entry left out (it covered gating and normalization only). Plus the palbociclib dose problem found today.",
-      "date": "2026-09-03"
-    },
-    {
       "id": "lab:b2a284b5973a",
       "kind": "lab",
       "xp": 20,
@@ -566,6 +489,27 @@
       "xp": 20,
       "label": "Second sHDR ddPCR plate — loaded and cycled Oct 14, read this morning. MDA-MB-231 and HT1080 gDNA came from the same tubes as the Oct 6/7 plate; HEPG2 is new to this round. Numbers were needed the same day for the CRISPR seminar.",
       "date": "2026-10-15"
+    },
+    {
+      "id": "lab:a4087b61f3b7",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Paper 1 (ovarian) Aim 1 discussion — sprint §3. Pathway enrichment on the arrest-matched contrasts (SKOV3 PAR1x, HEYA8 PAR5x), each against the DMSO vehicle arm.",
+      "date": "2026-10-29"
+    },
+    {
+      "id": "lab:5e4073be1759",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Paper 1 (ovarian) Fig 1: the arrest and release phenotype by flow in SKOV3 and HEYA8, comparing Vehicle, PAR and PAR + 16 h release. The 10× arm was also acquired.",
+      "date": "2026-10-30"
+    },
+    {
+      "id": "lab:6aad8be6f177",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Fig 1C/1D densitometry for Paper 1, working from the HEYA8 7-2-2026 westerns on flash drive USB20FD.",
+      "date": "2026-11-01"
     }
   ]
 }
