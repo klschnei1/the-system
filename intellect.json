@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T23:26:31-05:00",
+  "generatedAt": "2026-11-02T01:37:05-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,8 +54,14 @@
   ],
   "lab": {
     "lastEntryDate": "2026-11-01",
-    "daysSinceLastEntry": 0,
+    "daysSinceLastEntry": 1,
     "recentEntries": [
+      {
+        "date": "2026-11-01 (Sun)",
+        "contexts": [
+          "Paper 1 Fig 1C/1D densitometry, and saturation in the SKOV3 blots. Quantifying phospho-Rb against total Rb on the HEYA8 7-2-2026 pair, then checking which SKOV3 exposures can be quantified."
+        ]
+      },
       {
         "date": "2026-11-01 (Sun)",
         "contexts": [
@@ -67,16 +73,17 @@
         "contexts": [
           "Paper 1 (ovarian) Fig 1: the arrest and release phenotype by flow in SKOV3 and HEYA8, comparing Vehicle, PAR and PAR + 16 h release. The 10× arm was also acquired."
         ]
-      },
-      {
-        "date": "2026-10-29 (Thu)",
-        "contexts": [
-          "Paper 1 (ovarian) Aim 1 discussion — sprint §3. Pathway enrichment on the arrest-matched contrasts (SKOV3 PAR1x, HEYA8 PAR5x), each against the DMSO vehicle arm."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a09747b20a97",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Nov 1: densitometry entry — HEYA8 ratio, SKOV3 clipping",
+      "date": "2026-11-02"
+    },
     {
       "id": "commit:8666b0441623",
       "kind": "commit",
@@ -344,13 +351,6 @@
       "date": "2026-09-03"
     },
     {
-      "id": "lab:b2a284b5973a",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Paper 1 (ovarian), Fig 1 flow panels. Designing the analysis pipeline that turns the reopened flow archive into 1A/1B, now that the width-gating scheme and the per-experiment normalization exist. No bench work today.",
-      "date": "2026-09-04"
-    },
-    {
       "id": "lab:65d0348da971",
       "kind": "lab",
       "xp": 20,
@@ -516,6 +516,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Fig 1C/1D densitometry for Paper 1, working from the HEYA8 7-2-2026 westerns on flash drive USB20FD.",
+      "date": "2026-11-01"
+    },
+    {
+      "id": "lab:29251404a210",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Paper 1 Fig 1C/1D densitometry, and saturation in the SKOV3 blots. Quantifying phospho-Rb against total Rb on the HEYA8 7-2-2026 pair, then checking which SKOV3 exposures can be quantified.",
       "date": "2026-11-01"
     }
   ]
