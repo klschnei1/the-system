@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T01:50:06-05:00",
+  "generatedAt": "2026-11-02T13:39:53-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a64f44c377a8",
+      "kind": "commit",
+      "xp": 16,
+      "label": "Nov 2: clipping check in the macro; Karl's PCNA and E2F6 words recovered",
+      "date": "2026-11-02"
+    },
     {
       "id": "commit:a3e565093c19",
       "kind": "commit",
@@ -307,55 +314,6 @@
       "xp": 12,
       "label": "schedule: travel grants Sep 3 -> Sep 4, gated on the hotel total",
       "date": "2026-09-04"
-    },
-    {
-      "id": "commit:f442ae44ab55",
-      "kind": "commit",
-      "xp": 12,
-      "label": "journal: BMES flights booked — United DFSD57, $521.01",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:46075a31239b",
-      "kind": "commit",
-      "xp": 12,
-      "label": "roadmap: drop the author-release item — not applicable (Karl, Sep 3)",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:85ff1a6819eb",
-      "kind": "commit",
-      "xp": 12,
-      "label": "schedule: BMES podium slot confirmed — Sat Oct 24, 12:30-2:00 PM",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:2fe0be619e4b",
-      "kind": "commit",
-      "xp": 12,
-      "label": "roadmap: palbo 10x confirmed by flow; sHDR repeat scoped to three lines",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:92181556257e",
-      "kind": "commit",
-      "xp": 12,
-      "label": "schedule: ovarian chapter draft +2wk; Fig 1 westerns run on HEYA8 first",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:aaba859bb989",
-      "kind": "commit",
-      "xp": 12,
-      "label": "roadmap: drop the VL1 constraint from the viability-dye item",
-      "date": "2026-09-03"
-    },
-    {
-      "id": "commit:c1ac813c9d73",
-      "kind": "commit",
-      "xp": 13,
-      "label": "notebook: Sep 3 — palbociclib 10x dose suspicion + flow prep changes",
-      "date": "2026-09-03"
     },
     {
       "id": "lab:65d0348da971",
