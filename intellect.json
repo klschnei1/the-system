@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T13:39:53-05:00",
+  "generatedAt": "2026-11-03T12:22:14-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -53,30 +53,37 @@
     }
   ],
   "lab": {
-    "lastEntryDate": "2026-11-01",
-    "daysSinceLastEntry": 1,
+    "lastEntryDate": "2026-11-03",
+    "daysSinceLastEntry": 0,
     "recentEntries": [
+      {
+        "date": "2026-11-03 (Tue)",
+        "contexts": [
+          "Aim 1 Fig 4 — joining Goetsch's ChIP peak genes to the DESeq2 tables. His `InterestingGenes.xlsx` holds the genes under his peaks, split by binding class and by RNA direction."
+        ]
+      },
+      {
+        "date": "2026-11-02 (Mon)",
+        "contexts": [
+          "Aim 1 chapter drafting session. ChIP QC questions that came up while writing the Fig 3 Results paragraph, plus the target-gene-set audit."
+        ]
+      },
       {
         "date": "2026-11-01 (Sun)",
         "contexts": [
           "Paper 1 Fig 1C/1D densitometry, and saturation in the SKOV3 blots. Quantifying phospho-Rb against total Rb on the HEYA8 7-2-2026 pair, then checking which SKOV3 exposures can be quantified."
         ]
-      },
-      {
-        "date": "2026-11-01 (Sun)",
-        "contexts": [
-          "Fig 1C/1D densitometry for Paper 1, working from the HEYA8 7-2-2026 westerns on flash drive `USB20FD`."
-        ]
-      },
-      {
-        "date": "2026-10-30 (Fri)",
-        "contexts": [
-          "Paper 1 (ovarian) Fig 1: the arrest and release phenotype by flow in SKOV3 and HEYA8, comparing Vehicle, PAR and PAR + 16 h release. The 10× arm was also acquired."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:0a39dd93eb3f",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Nov 2-3: Aim 1 ChIP integration; 03 split into 03 + 04",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:a64f44c377a8",
       "kind": "commit",
@@ -309,27 +316,6 @@
       "date": "2026-09-04"
     },
     {
-      "id": "commit:d67b104fc00a",
-      "kind": "commit",
-      "xp": 12,
-      "label": "schedule: travel grants Sep 3 -> Sep 4, gated on the hotel total",
-      "date": "2026-09-04"
-    },
-    {
-      "id": "lab:65d0348da971",
-      "kind": "lab",
-      "xp": 20,
-      "label": "No bench work. Two analysis findings, both affecting the flow archive for Paper 1 (ovarian Fig 1) and Paper 2 (CRISPR synchronization). The first changes which parameter cell cycle is read from; the second closes out the \"suspected 10× palbociclib overdose\" flagged Sep 3.",
-      "date": "2026-09-06"
-    },
-    {
-      "id": "lab:a02788cb39ca",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Labor Day holiday session. TC-room restart prep for the CRISPR closing culture list, plus two analysis decisions — the palbociclib dose direction left open in the Sep 6 entry, and how SKOV3_Untreated_1 is handled in the Fig 2 DE tables.",
-      "date": "2026-09-07"
-    },
-    {
       "id": "lab:36dcbe970a9b",
       "kind": "lab",
       "xp": 20,
@@ -489,6 +475,20 @@
       "xp": 20,
       "label": "Paper 1 Fig 1C/1D densitometry, and saturation in the SKOV3 blots. Quantifying phospho-Rb against total Rb on the HEYA8 7-2-2026 pair, then checking which SKOV3 exposures can be quantified.",
       "date": "2026-11-01"
+    },
+    {
+      "id": "lab:11e10a4b91c3",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 chapter drafting session. ChIP QC questions that came up while writing the Fig 3 Results paragraph, plus the target-gene-set audit.",
+      "date": "2026-11-02"
+    },
+    {
+      "id": "lab:7807e7dc1afb",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Aim 1 Fig 4 — joining Goetsch's ChIP peak genes to the DESeq2 tables. His InterestingGenes.xlsx holds the genes under his peaks, split by binding class and by RNA direction.",
+      "date": "2026-11-03"
     }
   ]
 }
