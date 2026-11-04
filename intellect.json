@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T23:19:17-05:00",
+  "generatedAt": "2026-11-03T23:29:12-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:42558fa38d1f",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Nov 3: Figure 3 - droplet panel back to C",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:8a1a692546dd",
       "kind": "commit",
