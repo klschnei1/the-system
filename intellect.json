@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T15:43:17-05:00",
+  "generatedAt": "2026-11-04T15:51:45-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:fd1335fee333",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Nov 4: verify the build against the guide text; fix three format defects",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:54f4282fb4e0",
       "kind": "commit",
