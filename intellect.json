@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T11:12:08-05:00",
+  "generatedAt": "2026-11-04T11:18:24-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:94405caef909",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Nov 4: source packet for the CT gene intro",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:8146b91dc9f9",
       "kind": "commit",
