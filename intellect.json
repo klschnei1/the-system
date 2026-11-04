@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T13:12:30-05:00",
+  "generatedAt": "2026-11-04T13:19:48-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:1bb75d4ae369",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: move CT antigens up, load it with clinical-relevance facts",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:b686e75eb8f6",
       "kind": "commit",
