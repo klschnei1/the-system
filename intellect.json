@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T11:08:21-05:00",
+  "generatedAt": "2026-11-04T11:12:08-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8146b91dc9f9",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: MTU format compliance - page numbers, Times New Roman, no duplicate TOC",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:bf00156ea4fb",
       "kind": "commit",
