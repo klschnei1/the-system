@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T15:20:43-05:00",
+  "generatedAt": "2026-11-04T15:39:54-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:716e1539cdb7",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Nov 4: supplement mechanism + first-pass abstracts for the assembled draft",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:08554d7dca30",
       "kind": "commit",
