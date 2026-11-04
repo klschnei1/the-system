@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T14:50:13-05:00",
+  "generatedAt": "2026-11-04T15:12:57-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:90fca1ce35a4",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: Chapter 1 transition out of the cell-cycle history into CRISPR",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:61279b4bed4b",
       "kind": "commit",
