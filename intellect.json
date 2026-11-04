@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T16:27:18-05:00",
+  "generatedAt": "2026-11-04T16:33:40-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6fe45e67ece4",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: park the Aim 2 statistics in the elf file",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:6404cf7b202f",
       "kind": "commit",
