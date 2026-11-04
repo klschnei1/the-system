@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T13:20:28-05:00",
+  "generatedAt": "2026-11-04T13:35:34-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e3441e6d62d8",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Nov 4: merge CT function and antigen sections into one paragraph",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:cc9c53f79da0",
       "kind": "commit",
