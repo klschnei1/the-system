@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T23:10:12-05:00",
+  "generatedAt": "2026-11-03T23:19:17-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8a1a692546dd",
+      "kind": "commit",
+      "xp": 16,
+      "label": "Nov 3: Figure 3 - panel order as a switch, dumbbell variant",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:765a43237417",
       "kind": "commit",
