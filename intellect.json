@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T14:41:22-05:00",
+  "generatedAt": "2026-11-04T14:42:29-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:729948e12826",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: Chapter 1 subsection is a move, not fresh writing",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:1b63acf80c1b",
       "kind": "commit",
