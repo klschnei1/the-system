@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T14:33:26-05:00",
+  "generatedAt": "2026-11-04T14:38:04-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e4c5238d00b0",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: correct the relocation proposal after reading 1_Intro properly",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:9fd0a22a8620",
       "kind": "commit",
