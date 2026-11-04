@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T21:53:56-05:00",
+  "generatedAt": "2026-11-03T22:06:10-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:c42d9b593b6f",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 3: Figure 1 assembled — two columns, landscape",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:f98aeb548220",
       "kind": "commit",
