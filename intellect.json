@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T12:22:14-05:00",
+  "generatedAt": "2026-11-03T21:53:56-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f98aeb548220",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Nov 3: Aim 2 figure scripts — flow panels and Figure 1 schematics",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:0a39dd93eb3f",
       "kind": "commit",
@@ -293,27 +300,6 @@
       "xp": 15,
       "label": "update docs: Sep 4 flow pipeline design; ledger reconciled; NEXT set",
       "date": "2026-09-05"
-    },
-    {
-      "id": "commit:7d52a7347de3",
-      "kind": "commit",
-      "xp": 12,
-      "label": "schedule: HRI travel grant + BMES travel award submitted Sep 4",
-      "date": "2026-09-04"
-    },
-    {
-      "id": "commit:6a835c185e18",
-      "kind": "commit",
-      "xp": 12,
-      "label": "journal: BMES trip budget table for the HRI + GSG applications",
-      "date": "2026-09-04"
-    },
-    {
-      "id": "commit:415a7838225c",
-      "kind": "commit",
-      "xp": 13,
-      "label": "journal: BMES hotel booked — Z9HRXNDA, $874.13, 3 nights",
-      "date": "2026-09-04"
     },
     {
       "id": "lab:36dcbe970a9b",
