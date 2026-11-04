@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T15:19:16-05:00",
+  "generatedAt": "2026-11-04T15:20:43-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:08554d7dca30",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: record the stratification/scaling/affordability motif",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:1593ac23a57d",
       "kind": "commit",
