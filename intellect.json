@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T10:17:27-05:00",
+  "generatedAt": "2026-11-04T10:20:15-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ee98d26458c0",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: ratio as a 2x2 grid, expected vs observed on a log axis",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:3420e8aefbc3",
       "kind": "commit",
