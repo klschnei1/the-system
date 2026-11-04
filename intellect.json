@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T17:06:33-05:00",
+  "generatedAt": "2026-11-04T17:21:53-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:5d01918b7430",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 4: verify drop-off formula, record Karl's HEYA8 dose observation",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:d6cc404a9e22",
       "kind": "commit",
