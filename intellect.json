@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T10:20:15-05:00",
+  "generatedAt": "2026-11-04T10:53:43-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6f00f0e0b3c1",
+      "kind": "commit",
+      "xp": 22,
+      "label": "Nov 4: dissertation assembly from the chapter Google Docs",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:ee98d26458c0",
       "kind": "commit",
@@ -404,20 +411,6 @@
       "kind": "commit",
       "xp": 13,
       "label": "Chapters first, papers derived; screening moves to the critical path",
-      "date": "2026-09-05"
-    },
-    {
-      "id": "commit:f90781b9f508",
-      "kind": "commit",
-      "xp": 30,
-      "label": "Rebuild ROADMAP and SCHEDULE around the real remaining work",
-      "date": "2026-09-05"
-    },
-    {
-      "id": "commit:82ab2bdac1b1",
-      "kind": "commit",
-      "xp": 12,
-      "label": "schedule: drop \"chunk\"; roadmap: flag the undefined figure sets",
       "date": "2026-09-05"
     },
     {
