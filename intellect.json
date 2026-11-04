@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T13:03:23-05:00",
+  "generatedAt": "2026-11-04T13:04:28-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6dc3d68540d6",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Nov 4: assembled reading order for the CT intro",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:4b8689c0468a",
       "kind": "commit",
