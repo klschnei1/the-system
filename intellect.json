@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T12:31:46-05:00",
+  "generatedAt": "2026-11-04T13:03:23-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4b8689c0468a",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: consolidate the CT intro source list into the elf draft",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:5483be5f1b0b",
       "kind": "commit",
