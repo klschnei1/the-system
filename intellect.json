@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T23:32:35-05:00",
+  "generatedAt": "2026-11-03T23:35:46-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f1b686143b03",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 3: Figure 3 - ratio variant of the combination panel",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:903eea744b04",
       "kind": "commit",
