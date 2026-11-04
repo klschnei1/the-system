@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T22:06:10-05:00",
+  "generatedAt": "2026-11-03T23:10:12-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -59,6 +59,12 @@
       {
         "date": "2026-11-03 (Tue)",
         "contexts": [
+          "Rebuilding the ddPCR result panels for Aim 2. Supersedes the causal claim attached to the HEX-per-ng measurement in the Oct 15 entry."
+        ]
+      },
+      {
+        "date": "2026-11-03 (Tue)",
+        "contexts": [
           "Aim 1 Fig 4 — joining Goetsch's ChIP peak genes to the DESeq2 tables. His `InterestingGenes.xlsx` holds the genes under his peaks, split by binding class and by RNA direction."
         ]
       },
@@ -67,16 +73,17 @@
         "contexts": [
           "Aim 1 chapter drafting session. ChIP QC questions that came up while writing the Fig 3 Results paragraph, plus the target-gene-set audit."
         ]
-      },
-      {
-        "date": "2026-11-01 (Sun)",
-        "contexts": [
-          "Paper 1 Fig 1C/1D densitometry, and saturation in the SKOV3 blots. Quantifying phospho-Rb against total Rb on the HEYA8 7-2-2026 pair, then checking which SKOV3 exposures can be quantified."
-        ]
       }
     ]
   },
   "ledger": [
+    {
+      "id": "commit:765a43237417",
+      "kind": "commit",
+      "xp": 26,
+      "label": "Nov 3: Aim 2 Figure 3 - ddPCR results",
+      "date": "2026-11-03"
+    },
     {
       "id": "commit:c42d9b593b6f",
       "kind": "commit",
@@ -309,13 +316,6 @@
       "date": "2026-09-05"
     },
     {
-      "id": "lab:36dcbe970a9b",
-      "kind": "lab",
-      "xp": 20,
-      "label": "The closing culture list opens — the CRISPR (Aim 2) sHDR repeat plus the Paper 1 flow re-acquisition. TC room was staged Sep 7.",
-      "date": "2026-09-08"
-    },
-    {
       "id": "lab:38e629b94cfc",
       "kind": "lab",
       "xp": 20,
@@ -481,6 +481,13 @@
       "kind": "lab",
       "xp": 20,
       "label": "Aim 1 Fig 4 — joining Goetsch's ChIP peak genes to the DESeq2 tables. His InterestingGenes.xlsx holds the genes under his peaks, split by binding class and by RNA direction.",
+      "date": "2026-11-03"
+    },
+    {
+      "id": "lab:0c0be1d389a6",
+      "kind": "lab",
+      "xp": 20,
+      "label": "Rebuilding the ddPCR result panels for Aim 2. Supersedes the causal claim attached to the HEX-per-ng measurement in the Oct 15 entry.",
       "date": "2026-11-03"
     }
   ]
