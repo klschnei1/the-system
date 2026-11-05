@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T11:35:55-05:00",
+  "generatedAt": "2026-11-05T13:04:57-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:94295ae32032",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 5: map the proposal's 41 references against the Zotero library",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:27d80444249d",
       "kind": "commit",
