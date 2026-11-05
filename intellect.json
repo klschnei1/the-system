@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:18:01-05:00",
+  "generatedAt": "2026-11-04T21:26:24-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:edb713e94001",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: Karl's framing for the nocodazole paradox as a Discussion topic",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:5f7f44cbc08c",
       "kind": "commit",
