@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T20:34:15-05:00",
+  "generatedAt": "2026-11-04T20:37:07-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:2c08cac0adbb",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Nov 4: drop title and subtitle from the coefficient plot",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:9ccce86d6235",
       "kind": "commit",
