@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T20:37:07-05:00",
+  "generatedAt": "2026-11-04T20:43:30-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:d4f211465d84",
+      "kind": "commit",
+      "xp": 16,
+      "label": "Nov 4: add the drug-arm panel, and test the confound it exposes",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:2c08cac0adbb",
       "kind": "commit",
