@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T11:27:09-05:00",
+  "generatedAt": "2026-11-05T11:35:55-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:27d80444249d",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Nov 5: verified PMIDs for the cell-cycle history passage",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:efdaa39d2210",
       "kind": "commit",
