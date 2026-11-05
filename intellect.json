@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T14:18:20-05:00",
+  "generatedAt": "2026-11-05T14:21:38-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:88fe25fad186",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Nov 5: conclusion v6, written from scratch in the Chapter 4 register",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:773a69fad35e",
       "kind": "commit",
