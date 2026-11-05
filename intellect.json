@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T13:29:56-05:00",
+  "generatedAt": "2026-11-05T13:30:42-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:bc60322c1544",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Nov 5: figure caption drafts for Chapters 2 and 3",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:ddb9e8065538",
       "kind": "commit",
