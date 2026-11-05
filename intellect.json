@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T02:29:38-05:00",
+  "generatedAt": "2026-11-05T02:59:55-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:9514828e25cf",
+      "kind": "commit",
+      "xp": 14,
+      "label": "Nov 5: fix html2docx bold detection; build from Karl's HTML exports",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:e33147d1a5c5",
       "kind": "commit",
