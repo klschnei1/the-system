@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T10:32:37-05:00",
+  "generatedAt": "2026-11-05T11:27:09-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:efdaa39d2210",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 5: list the intro sources that were never in Zotero",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:689688a238c3",
       "kind": "commit",
