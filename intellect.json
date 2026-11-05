@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T03:26:16-05:00",
+  "generatedAt": "2026-11-05T09:51:42-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:8b194361a0c4",
+      "kind": "commit",
+      "xp": 21,
+      "label": "Nov 5: ordered citation map from the existing source lists",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:76f0eeab9409",
       "kind": "commit",
