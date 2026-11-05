@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:27:36-05:00",
+  "generatedAt": "2026-11-04T21:27:54-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:0ee7fa3019e2",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Nov 4: future work paragraph for Aim 2",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:6cc01e5c4a93",
       "kind": "commit",
