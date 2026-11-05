@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T13:12:35-05:00",
+  "generatedAt": "2026-11-05T13:29:56-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ddb9e8065538",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Nov 5: Claude-written general conclusion draft, at Karl's request",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:ec2ade02414d",
       "kind": "commit",
