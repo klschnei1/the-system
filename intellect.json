@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:32:18-05:00",
+  "generatedAt": "2026-11-04T21:33:39-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:22fd0aa2f86f",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: R9 -- SKOV3 PCNA-mScarlet is the P+N long-HDR product",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:1e377a6392df",
       "kind": "commit",
