@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T13:10:07-05:00",
+  "generatedAt": "2026-11-05T13:12:35-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:ec2ade02414d",
+      "kind": "commit",
+      "xp": 15,
+      "label": "Nov 5: sources found for the uncited DREAM/Rb and CDK4-6i claims",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:d1575a342dbe",
       "kind": "commit",
