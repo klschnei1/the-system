@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T20:22:30-05:00",
+  "generatedAt": "2026-11-04T20:28:22-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:adab6cad2bb5",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Nov 4: park the cell-cycle visualisation exploration; fix arm order",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:6731306e6a5c",
       "kind": "commit",
