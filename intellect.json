@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T13:30:42-05:00",
+  "generatedAt": "2026-11-05T13:46:18-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:fc1671b6d7a8",
+      "kind": "commit",
+      "xp": 18,
+      "label": "Nov 5: rewrite the conclusion -- drop the aim-by-aim summary",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:bc60322c1544",
       "kind": "commit",
