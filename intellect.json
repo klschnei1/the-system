@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:43:01-05:00",
+  "generatedAt": "2026-11-04T21:54:02-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:cedc051a21b8",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 4: capture the tagging-method rationale for the short homology arms",
+      "date": "2026-11-04"
+    },
     {
       "id": "commit:981d05bb8afe",
       "kind": "commit",
