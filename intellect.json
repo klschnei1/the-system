@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T03:02:53-05:00",
+  "generatedAt": "2026-11-05T03:26:16-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:76f0eeab9409",
+      "kind": "commit",
+      "xp": 13,
+      "label": "Nov 5: title settled, and Karl's arrest-and-escape thread for Chapter 1",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:1774a2229a3c",
       "kind": "commit",
