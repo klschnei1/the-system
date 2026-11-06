@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T20:39:17-05:00",
+  "generatedAt": "2026-11-05T21:01:20-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:bd1c53463a38",
+      "kind": "commit",
+      "xp": 13,
+      "label": "memory: institutional facts come from MTU sources or Karl's inbox",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:96c5f5364162",
       "kind": "commit",
