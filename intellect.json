@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T16:50:34-05:00",
+  "generatedAt": "2026-11-05T20:39:17-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:96c5f5364162",
+      "kind": "commit",
+      "xp": 12,
+      "label": "Nov 5: committee draft, defense notification and Canvas upload all landed",
+      "date": "2026-11-05"
+    },
     {
       "id": "commit:08107c681d56",
       "kind": "commit",
