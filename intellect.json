@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T15:56:17-05:00",
+  "generatedAt": "2026-11-14T18:11:43-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:afc0702ed7d8",
+      "kind": "commit",
+      "xp": 22,
+      "label": "Nov 14 evening: deck second pass, bench plan, PAR citation gap closed",
+      "date": "2026-11-14"
+    },
     {
       "id": "commit:e46ec1086701",
       "kind": "commit",
