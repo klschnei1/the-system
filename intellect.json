@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T17:37:42-05:00",
+  "generatedAt": "2026-11-14T15:56:17-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -39,9 +39,9 @@
     },
     {
       "name": "The CT gene paper",
-      "status": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building — not pipeline work** (clarified Aug 10, 2026; the earlier \"not computational\" read too narrowly). Goetsch runs the pipeline and hands over the output. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "status": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building**: he contributed conceptually to brainstorming what to create before the analysis pipeline existed, and contributed extensively to all the sections of writing (corrected Nov 12, 2026; the earlier \"not pipeline work\" undersold this). **Goetsch ran the pipeline** and hands over the output, with contributions from **Zayne** and **Lucy Arbanas**; the **ANOVA was Clara Mosentine's** idea. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
       "short": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise?",
-      "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building — not pipeline work** (clarified Aug 10, 2026; the earlier \"not computational\" read too narrowly). Goetsch runs the pipeline and hands over the output. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
+      "identity": "how cancer/testis (CT) genes get **activated in the first place**: a coordinated germ-cell program, or stochastic noise? The field has largely studied CT *antigens* as immunotherapy targets and treats activation as stochastic; this asks the mechanistic question underneath. Built on two lab MS theses — **Clara Mosentine** (50 CT genes elevated in stage IV; most known CT genes activate *early*, not at metastasis) and **Zayne** (TCGA/GTEx/cell-line differential expression → a 28-gene mechanistic shortlist). Proposed discriminating test: compare testis-vs-normal, cancer-vs-normal, then (testis/normal) vs (cancer/normal); open threads include separating cancer-germline from cancer-testis, and comparison against embryo data. **Karl's contribution is conceptual, editorial, and figure-building**: he contributed conceptually to brainstorming what to create before the analysis pipeline existed, and contributed extensively to all the sections of writing (corrected Nov 12, 2026; the earlier \"not pipeline work\" undersold this). **Goetsch ran the pipeline** and hands over the output, with contributions from **Zayne** and **Lucy Arbanas**; the **ANOVA was Clara Mosentine's** idea. Karl sets the normal-tissue/cancer groupings — the anatomy and tissue-relevance call Goetsch, a *C. elegans* geneticist, is not positioned to make — builds the body map and the figures from that output, and writes the background: literature review; the semantics, etymology, and ontology of this niche's terminology; and the discussion (what \"germline\" means, and whether a soma-to-germline program in tumorigenesis is credible or stochastic).",
       "next": ""
     },
     {
@@ -54,7 +54,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-11-09",
-    "daysSinceLastEntry": 2,
+    "daysSinceLastEntry": 5,
     "recentEntries": [
       {
         "date": "2026-11-09 (Mon)",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e46ec1086701",
+      "kind": "commit",
+      "xp": 30,
+      "label": "Nov 14: defense deck restarted from the FINAL .docx; 12-figure audit before building",
+      "date": "2026-11-14"
+    },
     {
       "id": "commit:a85f417f2130",
       "kind": "commit",
