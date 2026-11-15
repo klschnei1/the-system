@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T12:04:17-05:00",
+  "generatedAt": "2026-11-15T12:11:03-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:a443a8d5faef",
+      "kind": "commit",
+      "xp": 14,
+      "label": "memory: add the NECi job — it was in CAREER.md but never in memory",
+      "date": "2026-11-15"
+    },
     {
       "id": "commit:624dd8e27bd2",
       "kind": "commit",
