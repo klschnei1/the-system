@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T11:58:46-05:00",
+  "generatedAt": "2026-11-15T12:04:17-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:624dd8e27bd2",
+      "kind": "commit",
+      "xp": 14,
+      "label": "memory: record Karl's Aim 3 position verbatim instead of my compression of it",
+      "date": "2026-11-15"
+    },
     {
       "id": "commit:910b6ad6ef29",
       "kind": "commit",
