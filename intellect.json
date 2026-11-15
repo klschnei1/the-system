@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T18:11:43-05:00",
+  "generatedAt": "2026-11-15T11:58:46-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,7 +54,7 @@
   ],
   "lab": {
     "lastEntryDate": "2026-11-09",
-    "daysSinceLastEntry": 5,
+    "daysSinceLastEntry": 6,
     "recentEntries": [
       {
         "date": "2026-11-09 (Mon)",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:910b6ad6ef29",
+      "kind": "commit",
+      "xp": 30,
+      "label": "memory: consolidation pass — 89 files to 81, index 20.6KB to 12.9KB",
+      "date": "2026-11-15"
+    },
     {
       "id": "commit:afc0702ed7d8",
       "kind": "commit",
@@ -1044,32 +1051,11 @@
       "date": "2026-09-20"
     },
     {
-      "id": "commit:6d2d219e5eaf",
-      "kind": "commit",
-      "xp": 13,
-      "label": "Sep 16: PAR/release harvest, transfection moved to Thursday",
-      "date": "2026-09-16"
-    },
-    {
-      "id": "commit:da0f14013a91",
-      "kind": "commit",
-      "xp": 14,
-      "label": "Prune Claude's injections from ROADMAP and memory, per Karl's line-by-line calls",
-      "date": "2026-09-16"
-    },
-    {
-      "id": "commit:c851857eba91",
-      "kind": "commit",
-      "xp": 30,
-      "label": "doc_lint: provenance gate — these docs record Karl's words",
-      "date": "2026-09-16"
-    },
-    {
-      "id": "lab:8e848d764a29",
+      "id": "lab:eebfeba1c37e",
       "kind": "lab",
       "xp": 20,
-      "label": "Nothing happened over the weekend. Yesterday Zach made a couple polyacrylamide gels for western blots this week and plated 2 6 wells each of SKOV3 and HEYA8 for the PAR/release test.",
-      "date": "2026-09-15"
+      "label": "short title",
+      "date": "YYYY-MM-DD"
     },
     {
       "id": "lab:c7acd38bf89e",
