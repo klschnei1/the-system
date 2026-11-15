@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T12:11:03-05:00",
+  "generatedAt": "2026-11-15T12:13:00-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -77,6 +77,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:dbf5dd4fc864",
+      "kind": "commit",
+      "xp": 12,
+      "label": "memory: NECi agreement — lead with the non-compete, not the IP clause",
+      "date": "2026-11-15"
+    },
     {
       "id": "commit:a443a8d5faef",
       "kind": "commit",
