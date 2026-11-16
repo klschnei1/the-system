@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T12:14:08-05:00",
+  "generatedAt": "2026-11-16T12:23:54-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -54,12 +54,13 @@
   ],
   "lab": {
     "lastEntryDate": "2026-11-09",
-    "daysSinceLastEntry": 6,
+    "daysSinceLastEntry": 7,
     "recentEntries": [
       {
         "date": "2026-11-09 (Mon)",
         "contexts": [
-          "Ten days out from the defense. Sorting what finishes before Nov 19 from what gets"
+          "Ten days out from the defense. Sorting what finishes before Nov 19 from what gets",
+          "Filling the gaps in the Chapter 3 release data before the Nov 19 defense. Figure 3.3A"
         ]
       },
       {
@@ -77,6 +78,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:6b83a1faa22a",
+      "kind": "commit",
+      "xp": 25,
+      "label": "Nov 14-16: release time courses, A549 dose curve, HT1080 order-of-arrest design",
+      "date": "2026-11-16"
+    },
     {
       "id": "commit:ec73a31af97c",
       "kind": "commit",
@@ -1084,13 +1092,6 @@
       "xp": 20,
       "label": "short title",
       "date": "YYYY-MM-DD"
-    },
-    {
-      "id": "lab:c7acd38bf89e",
-      "kind": "lab",
-      "xp": 20,
-      "label": "Harvesting the PAR/release plates for Fig 1, and the CRISPR 24 well plates dosed for the transfection.",
-      "date": "2026-09-16"
     },
     {
       "id": "lab:13eb388f1b56",
