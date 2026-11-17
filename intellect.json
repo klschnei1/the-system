@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T15:04:59-05:00",
+  "generatedAt": "2026-11-17T15:14:00-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:229c2cf79df0",
+      "kind": "commit",
+      "xp": 17,
+      "label": "Ch4: provenance document for the gene lists, at Goetsch's request",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:e92d3deb02d7",
       "kind": "commit",
