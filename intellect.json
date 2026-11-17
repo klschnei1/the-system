@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T12:14:41-05:00",
+  "generatedAt": "2026-11-17T12:23:27-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:4abdf9415cdb",
+      "kind": "commit",
+      "xp": 27,
+      "label": "Nov 17 (later): tier_enrichment.R rewritten with sourced gene lists",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:cd4e8d65e017",
       "kind": "commit",
