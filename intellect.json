@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T12:23:27-05:00",
+  "generatedAt": "2026-11-17T12:26:52-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:00fd48091709",
+      "kind": "commit",
+      "xp": 12,
+      "label": "tier_enrichment.R: fix forward-fill bug, footnote leak, hardcoded palette",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:4abdf9415cdb",
       "kind": "commit",
