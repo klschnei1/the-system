@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T13:17:46-05:00",
+  "generatedAt": "2026-11-17T15:04:59-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e92d3deb02d7",
+      "kind": "commit",
+      "xp": 16,
+      "label": "ctgene: two overlap classes, translucent Venns, forest and heatmap variants",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:e21275550bbd",
       "kind": "commit",
