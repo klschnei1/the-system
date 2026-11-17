@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T13:09:00-05:00",
+  "generatedAt": "2026-11-17T13:16:57-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:f61a7c4a93d5",
+      "kind": "commit",
+      "xp": 14,
+      "label": "compartment_breakdown: name the overlaps instead of greying them; roomier layouts",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:180195dce632",
       "kind": "commit",
