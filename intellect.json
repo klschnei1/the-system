@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T12:56:05-05:00",
+  "generatedAt": "2026-11-17T13:02:59-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:48706ee5cfc7",
+      "kind": "commit",
+      "xp": 13,
+      "label": "compartment_breakdown: drop unassigned from plots, flatten Venn fill, document the background choice",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:82f4790fb530",
       "kind": "commit",
