@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T13:02:59-05:00",
+  "generatedAt": "2026-11-17T13:09:00-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:180195dce632",
+      "kind": "commit",
+      "xp": 14,
+      "label": "ctgene: add multipanel assembly to both scripts",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:48706ee5cfc7",
       "kind": "commit",
