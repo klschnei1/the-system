@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T12:48:17-05:00",
+  "generatedAt": "2026-11-17T12:56:05-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:82f4790fb530",
+      "kind": "commit",
+      "xp": 15,
+      "label": "ctgene figures: fix grouping label, gate the slope plot, counts not ratios, lighter Venn",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:70316ab62b0d",
       "kind": "commit",
