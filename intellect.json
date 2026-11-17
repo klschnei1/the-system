@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T13:16:57-05:00",
+  "generatedAt": "2026-11-17T13:17:46-05:00",
   "source": "LOCKED (Google Drive)",
   "deadline": {
     "label": "Dissertation to committee",
@@ -79,6 +79,13 @@
     ]
   },
   "ledger": [
+    {
+      "id": "commit:e21275550bbd",
+      "kind": "commit",
+      "xp": 13,
+      "label": "compartment_breakdown: stop claiming 8,580 genes 'match none'",
+      "date": "2026-11-17"
+    },
     {
       "id": "commit:f61a7c4a93d5",
       "kind": "commit",
